@@ -5,10 +5,10 @@ A 2D Game engine and farming RPG for windows and Linux.
 
 # Docs
 
-- [Asset Tools](engine/docs/AssetTools.md)
-- [Entities](engine/docs/Entities.md)
-- [Game](engine/docs/Game.md)
-- [UI](engine/docs/UI.md)
+- [Asset Tools](Stardew/engine/docs/AssetTools.md)
+- [Entities](Stardew/engine/docs/Entities.md)
+- [Game](Stardew/engine/docs/Game.md)
+- [UI](Stardew/engine/docs/UI.md)
 
 # Build
 

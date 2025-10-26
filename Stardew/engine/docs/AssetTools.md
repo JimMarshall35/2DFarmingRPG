@@ -1,6 +1,14 @@
 # Asset Tools
 
-These are scripts and tools in the scripts folder, for specific command line usage pass -h to them
+These are scripts and tools in the scripts folder, together they provide a means of converting source assets:
+- [Tiled](https://www.mapeditor.org/) map files
+- image files, .png's, .jpegs etc
+
+Into the game engines binary format files:
+- .atlas files
+- .tilemap files (misnomer: also contain entities, will be renamed)
+
+For specific command line usage pass -h to them.
 
 # ConvertTiled.py
 

@@ -14,7 +14,7 @@ For specific command line usage pass -h to them.
 
 Create level files for your game using the program [Tiled](https://www.mapeditor.org/). Into the object layers you can add entities that are defined however you like defined as points, lines, polygons, boxes etc. Define the entities you want this way and give them custom properties that they will need to have. Be consistant with the class names. 
 
-Next we run a python script to convert the tiled .json file into a binary file the engine will load. To add your own type of entities to the file, extend the script the engine provides, ConvertTiled.py
+Next we run a python script to convert the tiled .json file into a binary file the engine will load. To add your own type of entities to the file, extend the script the engine provides, ConvertTiled.py, like so:
 
 ```python
 

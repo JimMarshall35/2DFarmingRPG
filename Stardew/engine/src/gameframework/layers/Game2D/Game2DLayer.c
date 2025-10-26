@@ -14,6 +14,7 @@
 #include "FreeLookCameraMode.h"
 #include "EntityQuadTree.h"
 #include "FloatingPointLib.h"
+#include "Camera2D.h"
 
 int gTilesRendered = 0;
 
@@ -22,6 +23,12 @@ static void LoadTilesUncompressedV1(struct TileMapLayer* pLayer, struct BinarySe
 	int allocSize = pLayer->heightTiles * pLayer->widthTiles * sizeof(TileIndex);
 	pLayer->Tiles = malloc(allocSize);
 	BS_BytesRead(pBS, allocSize, (char*)pLayer->Tiles);
+}
+
+
+void TilemapLayer_GetTLBR(vec2 tl, vec2 br, struct TileMapLayer* pTMLayer)
+{
+
 }
 
 static void LoadTilesRLEV1(struct TileMapLayer* pTileMap, struct BinarySerializer* pBS)
@@ -194,7 +201,11 @@ static void Update(struct GameFrameworkLayer* pLayer, float deltaT)
 		.deltaT =deltaT,
 		.pLayer = pLayer
 	};
+	Ph_PhysicsWorldDoCollisionEvents(pLayer);
 	Et2D_IterateEntities(&pData->entities, &PostPhysicsEntities, &postPhysCtx);
+	
+	if(pData->cameraClampedToTilemapLayer >= 0)
+		UpdateCameraClamp(pData);
 }
 
 void OutputSpriteVertices(
@@ -203,7 +214,8 @@ void OutputSpriteVertices(
 	VECTOR(VertIndexT)* pOutInd,
 	VertIndexT* pNextIndex,
 	int col,
-	int row
+	int row,
+	struct Transform2D* pTMLayerTransform
 )
 {
 	VECTOR(Worldspace2DVert) outVert = *pOutVert;
@@ -211,23 +223,25 @@ void OutputSpriteVertices(
 
 	VertIndexT base = *pNextIndex;
 	*pNextIndex += 4;
-	ivec2 dims = {
+	vec2 dims = {
 		pSprite->widthPx,
 		pSprite->heightPx
 	};
-	ivec2 topLeft = {
+	vec2 topLeft = {
 		col * pSprite->widthPx,
 		row * pSprite->heightPx
 	};
-	ivec2 bottomRight;
-	glm_ivec2_add(topLeft, dims, bottomRight);
 
-	ivec2 topRight = {
+	glm_vec2_add(pTMLayerTransform->position, topLeft, topLeft);
+	vec2 bottomRight;
+	glm_vec2_add(topLeft, dims, bottomRight);
+
+	vec2 topRight = {
 		topLeft[0] + pSprite->widthPx,
 		topLeft[1]
 	};
 
-	ivec2 bottomLeft = {
+	vec2 bottomLeft = {
 		topLeft[0],
 		topLeft[1] + pSprite->heightPx
 	};
@@ -320,7 +334,7 @@ static void OutputTilemapLayerVertices(
 			}
 			hSprite sprite = At_TilemapIndexToSprite(atlas, tile);
 			AtlasSprite* pSprite = At_GetSprite(sprite, atlas);
-			OutputSpriteVertices(pSprite, &outVert, &outInd, pNextIndex, col, row);
+			OutputSpriteVertices(pSprite, &outVert, &outInd, pNextIndex, col, row, &pLayer->transform);
 			gTilesRendered++;
 		}
 	}
@@ -529,8 +543,14 @@ void GameLayer2D_OnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawCont
 		.pLayer = pLayer
 	};
 	Et2D_IterateEntities(&pData->entities, &InitEntities, &ctx);
-	Ev_SubscribeEvent("onDebugLayerPushed", &OnDebugLayerPushed, pData);
+	pData->pDebugListener = Ev_SubscribeEvent("onDebugLayerPushed", &OnDebugLayerPushed, pData);
 	//XMLUI_PushGameFrameworkLayer("./Assets/debug_overlay.xml");
+
+	/*
+		HACK:
+		todo sort out the availabilty of these draw and input contexts
+	*/
+	pData->pDrawContext = drawContext;
 }
 
 void Game2DLayer_OnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
@@ -556,6 +576,7 @@ void Game2DLayer_Get(struct GameFrameworkLayer* pLayer, struct Game2DLayerOption
 	struct GameLayer2DData* pData = pLayer->userData;
 
 	pData->pLayer = pLayer;
+	pData->cameraClampedToTilemapLayer = -1;
 	pData->tilemap.layers = NEW_VECTOR(struct TileMapLayer);
 
 	EASSERT(strlen(pData->tilemapFilePath) < 128);

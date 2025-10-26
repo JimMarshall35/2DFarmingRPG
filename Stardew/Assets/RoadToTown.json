@@ -98,7 +98,7 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"To",
+                         "name":"to",
                          "type":"string",
                          "value":"Farm"
                         }],

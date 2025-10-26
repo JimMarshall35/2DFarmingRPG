@@ -43,3 +43,26 @@ void WfWorld_SetCurrentLocationName(const char* name)
     EASSERT(strlen(name) < MAX_LOCATION_NAME_LEN);
     strcpy(gWorld.currentLocation, name);
 }
+
+void WfWorld_ClearLocations()
+{
+    // HashmapDeleteItem()
+    struct HashmapKeyIterator itr = GetKeyIterator(&gWorld.locationsHashMap);
+    char* key = NULL;
+    VECTOR(char*) keys = NEW_VECTOR(char*);
+    keys = VectorResize(keys, 10);
+    keys = VectorClear(keys);
+    while(key = NextHashmapKey(&itr))
+    {
+        char* cpy = malloc(strlen(key) + 1);
+        strcpy(cpy, key);
+        keys = VectorPush(keys, &cpy);
+    }
+    for(int i=0; i< VectorSize(keys); i++)
+    {
+        HashmapDeleteItem(&gWorld.locationsHashMap, keys[i]);
+        free(keys[i]);
+    }
+    DestoryVector(keys);
+    WfWorld_SetCurrentLocationName("UNINITIALIZED");
+}

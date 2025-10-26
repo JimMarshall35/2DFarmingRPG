@@ -13,7 +13,6 @@
 #include "WfGameLayer.h"
 
 
-
 void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {
     struct GameLayer2DData* pEngineLayer = pLayer->userData;

@@ -23,6 +23,10 @@ struct GameLayer2DData;
 
 typedef void (*PreFirstInitFn)(struct GameLayer2DData* pGameLayerData);
 
+struct GameFrameworkLayer;
+struct DrawContext;
+typedef struct DrawContext DrawContext;
+
 // the real type of this should be hSprite ie u32 but i want to save memory so u16 it is - that 
 // should be enough for anyone - just store the tiles in the first 16 bits worth of indexes
 
@@ -93,6 +97,12 @@ struct GameLayer2DData
 	struct Transform2D camera;
 
 	/*
+		Which layer, if any, is the camera clamped to.
+		If it is not clamped (the default) then this should be -1 
+	*/
+	int cameraClampedToTilemapLayer;
+
+	/*
 		controls for free look mode
 	*/
 	struct FreeLookCameraModeControls freeLookCtrls;
@@ -159,6 +169,12 @@ struct GameLayer2DData
 		An opportunity for your game to load sprite handles from the atlas that the entities will use in their init methods.
 	*/
 	PreFirstInitFn preFirstInitCallback;
+
+	/*
+		HACK:
+		todo sort out the availabilty of these draw and input contexts
+	*/
+	DrawContext* pDrawContext;
 };
 
 struct Game2DLayerOptions
@@ -170,9 +186,7 @@ struct Game2DLayerOptions
 	
 };
 
-struct GameFrameworkLayer;
-struct DrawContext;
-typedef struct DrawContext DrawContext;
+void TilemapLayer_GetTLBR(vec2 tl, vec2 br, struct TileMapLayer* pTMLayer);
 
 void Game2DLayer_Get(struct GameFrameworkLayer* pLayer, struct Game2DLayerOptions* pOptions, DrawContext* pDC);
 

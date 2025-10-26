@@ -424,7 +424,7 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"To",
+                         "name":"to",
                          "type":"string",
                          "value":"RoadToTown"
                         }],
@@ -474,7 +474,7 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"To",
+                         "name":"to",
                          "type":"string",
                          "value":"House"
                         }],

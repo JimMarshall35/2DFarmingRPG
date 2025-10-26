@@ -8,6 +8,7 @@
 #include "GameFramework.h"
 #include "AnimatedSprite.h"
 #include "Camera2D.h"
+#include "WfEntities.h"
 #include <string.h>
 
 #define WALKING_UP_MALE "walk-base-male-up"
@@ -71,6 +72,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     pPlayerEntData->bMovingThisFrame = false;
     pPlayerEntData->metersPerSecondWalkSpeedBase = 100.0f;
     pPlayerEntData->speedMultiplier = 3.0f;
+    ClampCameraToTileLayer(pLayer->userData, 0);
 }
 
 static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)
@@ -197,6 +199,7 @@ void WfMakeIntoPlayerEntity(struct Entity2D* pEnt, struct GameLayer2DData* pData
     gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform[0] = -32;
     gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform[1] = -60;
     pEnt->numComponents = 0;
+    pEnt->type = WfEntityType_Player;
     /*
         Animated Sprite
     */
@@ -219,6 +222,10 @@ void WfMakeIntoPlayerEntity(struct Entity2D* pEnt, struct GameLayer2DData* pData
     pComponent2->data.dynamicCollider.shape.data.circle.center[0] = spawnAtGroundPos[0];
     pComponent2->data.dynamicCollider.shape.data.circle.center[1] = spawnAtGroundPos[1];
     pComponent2->data.dynamicCollider.shape.data.circle.radius = 10;
+    pComponent2->data.dynamicCollider.bIsSensor = false;
+    pComponent2->data.dynamicCollider.bGenerateSensorEvents = true;
+    pComponent2->data.dynamicCollider.onSensorOverlapBegin = NULL;
+    pComponent2->data.dynamicCollider.onSensorOverlapEnd = NULL;
 
     glm_vec2_add(spawnAtGroundPos, gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform, pEnt->transform.position);
     pEnt->transform.scale[0] = 1.0;

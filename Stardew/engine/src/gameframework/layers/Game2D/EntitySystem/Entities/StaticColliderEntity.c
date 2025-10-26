@@ -61,6 +61,10 @@ void DeSerialize2DRectStaticColliderEntityV1(struct BinarySerializer* bs, struct
     {
         .type = ETE_StaticCollider,
         .data.staticCollider.id = NULL_HANDLE,
+        .data.staticCollider.bIsSensor = false,
+        .data.staticCollider.onSensorOverlapBegin = NULL,
+        .data.staticCollider.onSensorOverlapEnd = NULL,
+        .data.staticCollider.bGenerateSensorEvents = false,
         .data.staticCollider.shape = {
             .type = PBT_Rect,
             .data.rect = {
@@ -127,6 +131,10 @@ void DeSerialize2DCircleStaticColliderEntityV1(struct BinarySerializer* bs, stru
     {
         .type = ETE_StaticCollider,
         .data.staticCollider.id = NULL_HANDLE,
+        .data.staticCollider.bIsSensor = false,
+        .data.staticCollider.onSensorOverlapBegin = NULL,
+        .data.staticCollider.onSensorOverlapEnd = NULL,
+        .data.staticCollider.bGenerateSensorEvents = false,
         .data.staticCollider.shape = {
             .type = PBT_Circle,
             .data.circle = {

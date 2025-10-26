@@ -262,23 +262,42 @@ static void LoadEntities(struct BinarySerializer* bs, struct GameLayer2DData* pD
     }
 }
 
-static void SaveEntities(struct Entity2DCollection* pCollection, struct BinarySerializer* bs, struct GameLayer2DData* pData)
+static u32 NumEntsToSerialize(struct Entity2DCollection* pCollection)
 {
-    EASSERT(bs->bSaving);
-    BS_SerializeU32(pCollection->gNumEnts, bs);
+    int i = 0;
     HEntity2D hOn = pCollection->gEntityListHead;
     while(hOn != NULL_HANDLE)
     {
         struct Entity2D* pOn = &pCollection->pEntityPool[hOn];
-        BS_SerializeU32(pOn->type, bs);
-        Et2D_SerializeCommon(bs, pOn);
-        if(pOn->type < VectorSize(pSerializers))
+        if(pOn->bSerialize)
         {
-            pSerializers[pOn->type].serialize(bs, pOn, pData);
+            i++;
         }
-        else 
+        hOn = pOn->nextSibling;
+    }
+    return i;
+}
+
+static void SaveEntities(struct Entity2DCollection* pCollection, struct BinarySerializer* bs, struct GameLayer2DData* pData)
+{
+    EASSERT(bs->bSaving);
+    BS_SerializeU32(NumEntsToSerialize(pCollection), bs);
+    HEntity2D hOn = pCollection->gEntityListHead;
+    while(hOn != NULL_HANDLE)
+    {
+        struct Entity2D* pOn = &pCollection->pEntityPool[hOn];
+        if(pOn->bSerialize)
         {
-            printf("Entity Serializer type %i out of range\n", pOn->type);
+            BS_SerializeU32(pOn->type, bs);
+            Et2D_SerializeCommon(bs, pOn);
+            if(pOn->type < VectorSize(pSerializers))
+            {
+                pSerializers[pOn->type].serialize(bs, pOn, pData);
+            }
+            else 
+            {
+                printf("Entity Serializer type %i out of range\n", pOn->type);
+            }
         }
         hOn = pOn->nextSibling;
     }

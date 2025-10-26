@@ -5,6 +5,7 @@
 #include "Components.h"
 #include "Atlas.h"
 #include "WfGameLayerData.h"
+#include "WfEntities.h"
 
 struct WfTreeEntityData
 {
@@ -77,6 +78,7 @@ void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y, struct
     pEnt->transform.rotation = 0.0f;
     pEnt->bKeepInQuadtree = true;
     pEnt->bKeepInDynamicList = false;
+    pEnt->type = WfEntityType_Tree;
 
     struct Component2D* pComponent1 = &pEnt->components[pEnt->numComponents++];
     struct Component2D* pComponent2 = &pEnt->components[pEnt->numComponents++];
@@ -123,6 +125,10 @@ void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y, struct
     pComponent3->data.staticCollider.shape.data.circle.center[0] = x;//transform2Ground[0];
     pComponent3->data.staticCollider.shape.data.circle.center[1] = y;//transform2Ground[1];
     pComponent3->data.staticCollider.shape.data.circle.radius = 6;
+    pComponent3->data.staticCollider.bIsSensor = false;
+    pComponent3->data.staticCollider.onSensorOverlapBegin = NULL;
+    pComponent3->data.staticCollider.onSensorOverlapEnd = NULL;
+    pComponent3->data.staticCollider.bGenerateSensorEvents = false;
 
     HGeneric hTreeData = NULL_HANDLE;
     gTreeDataObjectPool = GetObjectPoolIndex(gTreeDataObjectPool, &hTreeData);

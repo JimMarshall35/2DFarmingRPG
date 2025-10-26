@@ -266,11 +266,14 @@
             "scaleInEditor": 1
         },
         "Farm.json": {
-            "scale": 0.5841,
+            "expandedObjectLayers": [
+                6
+            ],
+            "scale": 1.1046,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 2923.300804656737,
-                "y": 680.5341551104264
+                "x": 2640.3222886112617,
+                "y": 672.1890277023358
             }
         },
         "Farm.tmj": {
@@ -285,11 +288,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 1.9445312499999998,
-            "selectedLayer": 2,
+            "scale": 1.183,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 140.65086380072322,
-                "y": 244.53194053836884
+                "x": 195.68892645815723,
+                "y": 375.7396449704142
             }
         },
         "Interior 2.json": {

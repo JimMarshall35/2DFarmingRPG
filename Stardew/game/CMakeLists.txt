@@ -1,5 +1,6 @@
 add_executable( WarFarmer
     src/main.c
+    src/cwalk.c
     src/WfEntities.c
     src/entities/WfDebrisField.c
     src/entities/WfExit.c

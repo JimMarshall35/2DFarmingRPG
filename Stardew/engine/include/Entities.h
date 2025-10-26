@@ -31,19 +31,14 @@ typedef void(*EntitySerializeFn)(struct BinarySerializer* bs, struct Entity2D* p
 
 typedef void(*RegisterGameEntitiesFn)(void);
 
+typedef void(*OnSensorShapeOverlapBeginFn)(struct GameFrameworkLayer* pLayer, HEntity2D hOverlappingEntity, HEntity2D thisSensorEntity);
+typedef void(*OnSensorShapeOverlapEndFn)(struct GameFrameworkLayer* pLayer, HEntity2D hOverlappingEntity, HEntity2D thisSensorEntity);
+
 struct EntitySerializerPair
 {
     EntityDeserializeFn deserialize;
     EntitySerializeFn serialize;
 };
-
-// static HEntity2D gEntityListHead = NULL_HANDLE;struct GameFrameworkLayer
-// static HEntity2D gEntityListTail = NULL_HANDLE;
-// static int gNumEnts = 0;
-
-// static OBJECT_POOL(struct Entity2D) pEntityPool = NULL;
-
-
 
 typedef i32 EntityType;
 
@@ -70,6 +65,11 @@ struct StaticCollider
 {
     H2DBody id;
     struct PhysicsShape2D shape;
+    bool bIsSensor;
+    /* If this is a non-sensor, does it generate sensor overlap events? Best for performance to only enable this if necessary */
+    bool bGenerateSensorEvents; 
+    OnSensorShapeOverlapBeginFn onSensorOverlapBegin;
+    OnSensorShapeOverlapEndFn onSensorOverlapEnd;
 };
 
 struct DynamicCollider
@@ -77,6 +77,11 @@ struct DynamicCollider
     H2DBody id;
     struct PhysicsShape2D shape;
     struct KinematicBodyOptions options;
+    bool bIsSensor;
+    /* If this is a non-sensor, does it generate sensor overlap events? Best for performance to only enable this if necessary */
+    bool bGenerateSensorEvents;
+    OnSensorShapeOverlapBeginFn onSensorOverlapBegin;
+    OnSensorShapeOverlapEndFn onSensorOverlapEnd;
 };
 
 struct TextSprite

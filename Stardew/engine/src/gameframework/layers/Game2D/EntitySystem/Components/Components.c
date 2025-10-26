@@ -17,10 +17,27 @@ void Co_InitComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLaye
         case ETE_Sprite:
             break;
         case ETE_StaticCollider:
-            entity->components[i].data.staticCollider.id = Ph_GetStaticBody2D(pGameLayerData->hPhysicsWorld, &entity->components[i].data.staticCollider.shape, &entity->transform);
+            entity->components[i].data.staticCollider.id = Ph_GetStaticBody2D(
+                pGameLayerData->hPhysicsWorld,
+                &entity->components[i].data.staticCollider.shape, 
+                &entity->transform, 
+                entity->thisEntity,
+                entity->components[i].data.staticCollider.bIsSensor,
+                i,
+                entity->components[i].data.staticCollider.bGenerateSensorEvents
+            );
             break;
         case ETE_DynamicCollider:
-            entity->components[i].data.dynamicCollider.id = Ph_GetKinematicBody(pGameLayerData->hPhysicsWorld, &entity->components[i].data.dynamicCollider.shape, &entity->components[i].data.dynamicCollider.options, &entity->transform);
+            entity->components[i].data.dynamicCollider.id = Ph_GetDynamicBody(
+                pGameLayerData->hPhysicsWorld, 
+                &entity->components[i].data.dynamicCollider.shape, 
+                &entity->components[i].data.dynamicCollider.options, 
+                &entity->transform, 
+                entity->thisEntity,
+                entity->components[i].data.dynamicCollider.bIsSensor,
+                i,
+                entity->components[i].data.dynamicCollider.bGenerateSensorEvents
+            );
             break;
         case ETE_TextSprite:
             break;

@@ -21,6 +21,7 @@ HDynamicEntityListItem DynL_AddEntity(struct DynamicEnt2DList* pDynList, HEntity
         pDynList->hDynamicListTail = hItem;
     }
     pDynList->nDynamicListSize++;
+    return hItem;
 }
 
 void DynL_RemoveItem(struct DynamicEnt2DList* pDynList, HDynamicEntityListItem hListItem)

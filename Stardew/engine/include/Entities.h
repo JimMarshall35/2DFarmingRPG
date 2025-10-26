@@ -159,7 +159,7 @@ void Et2D_DeserializeCommon(struct BinarySerializer* bs, struct Entity2D* pOutEn
 void Et2D_SerializeCommon(struct BinarySerializer* bs, struct Entity2D* pInEnt);
 
 void Et2D_InitCollection(struct Entity2DCollection* pCollection);
-void Et2D_DestroyCollection(struct Entity2DCollection* pCollection);
+void Et2D_DestroyCollection(struct Entity2DCollection* pCollection, struct GameFrameworkLayer* pLayer);
 
 struct Entity2D
 {
@@ -210,7 +210,7 @@ struct Entity2D
     */
     int inDrawLayer;
 
-    /* do we serialize when the level is serialized? (TODO: IMPLEMENT)*/
+    /* do we serialize when the level is serialized? */
     bool bSerialize;
 };
 

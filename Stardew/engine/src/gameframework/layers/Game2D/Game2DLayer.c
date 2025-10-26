@@ -557,7 +557,7 @@ void Game2DLayer_OnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
 {
 	struct GameLayer2DData* pData = pLayer->userData;
 	EASSERT(pData->pDebugListener);
-	Et2D_DestroyCollection(&pData->entities);
+	Et2D_DestroyCollection(&pData->entities, pLayer);
 	Ev_UnsubscribeEvent(pData->pDebugListener);
 	Ph_DestroyPhysicsWorld(pData->hPhysicsWorld);
 }

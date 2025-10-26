@@ -77,6 +77,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
 
 static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)
 {
+    FreeObjectPoolIndex(gPlayerEntDataPool, pEnt->user.hData);
     Entity2DOnDestroy(pEnt, pData);
 }
 
@@ -195,7 +196,7 @@ void WfMakeIntoPlayerEntity(struct Entity2D* pEnt, struct GameLayer2DData* pData
 {
     pEnt->nextSibling = NULL_HANDLE;
     pEnt->previousSibling = NULL_HANDLE;
-    GetObjectPoolIndex(gPlayerEntDataPool, &pEnt->user.hData);
+    gPlayerEntDataPool = GetObjectPoolIndex(gPlayerEntDataPool, &pEnt->user.hData);
     gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform[0] = -32;
     gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform[1] = -60;
     pEnt->numComponents = 0;

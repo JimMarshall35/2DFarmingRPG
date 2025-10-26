@@ -17,3 +17,8 @@ python3 engine/scripts/MergeAtlases.py ./Assets/out/atlas.xml ./Assets/out/expan
 
 # compile another atlas file containing sprites and fonts for the games UI 
 ./build/atlastool/AtlasTool ./Assets/ui_atlas.xml -o ./Assets/ui_atlas.atlas -bmp UIAtlas.bmp
+
+# copy tilemap files into the dev save folder
+cp ./Assets/out/Farm.tilemap ./Assets/Saves/Dev
+cp ./Assets/out/House.tilemap ./Assets/Saves/Dev
+cp ./Assets/out/RoadToTown.tilemap ./Assets/Saves/Dev

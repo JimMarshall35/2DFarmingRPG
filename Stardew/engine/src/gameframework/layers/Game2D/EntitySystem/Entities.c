@@ -14,8 +14,17 @@ static VECTOR(struct EntitySerializerPair) pSerializers = NULL;
 
 static OBJECT_POOL(struct DynamicEntityListItem) gDynamicListPool = NULL;
 
-void Et2D_DestroyCollection(struct Entity2DCollection* pCollection)
+bool DestroyCollectionItr(struct Entity2D* pEnt, int i, void* pUser)
 {
+    struct GameFrameworkLayer* pLayer = pUser;
+    pEnt->onDestroy(pEnt, pLayer);
+    return true;
+}
+
+void Et2D_DestroyCollection(struct Entity2DCollection* pCollection, struct GameFrameworkLayer* pLayer)
+{
+    Et2D_IterateEntities(pCollection, &DestroyCollectionItr, pLayer);
+    
     pCollection->pEntityPool = FreeObjectPool(pCollection->pEntityPool);
 }
 

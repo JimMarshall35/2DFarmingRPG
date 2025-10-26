@@ -363,26 +363,26 @@
                  "y":0
                 }, 
                 {
-                 "height":672,
+                 "height":679.242440702517,
                  "id":9,
                  "name":"",
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
-                 "width":40,
-                 "x":3160,
+                 "width":51.7689661415898,
+                 "x":3148.23103385841,
                  "y":96
                 }, 
                 {
-                 "height":2368,
+                 "height":2384.29549158066,
                  "id":10,
                  "name":"",
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
-                 "width":32,
-                 "x":3168,
-                 "y":832
+                 "width":49.2007966684773,
+                 "x":3150.79920333152,
+                 "y":815.704508419337
                 }, 
                 {
                  "height":3096,
@@ -419,7 +419,7 @@
                  "y":752
                 }, 
                 {
-                 "height":64,
+                 "height":37.7461524533769,
                  "id":14,
                  "name":"",
                  "properties":[
@@ -433,7 +433,7 @@
                  "visible":true,
                  "width":40,
                  "x":3160,
-                 "y":768
+                 "y":777.053050878146
                 }, 
                 {
                  "height":160.702710651439,

@@ -10,6 +10,7 @@
 #include "RootWidget.h"
 #include "Geometry.h"
 #include "WidgetVertexOutputHelpers.h"
+#include "FloatingPointLib.h"
 
 static struct WidgetPadding zeroPadding =
 {
@@ -153,8 +154,8 @@ static bool ContentExceedsSize(struct CanvasData* pCanvasData, struct UIWidget* 
 	
 	float contentW = BBWidth(pCanvasData->contentBB);
 	float contentH = BBHeight(pCanvasData->contentBB);
-	*pOutExceedsWidth = contentW > w;
-	*pOutExceedsHeight = contentH > h;
+	*pOutExceedsWidth =  !CompareFloat(contentW, w) && contentW > w;
+	*pOutExceedsHeight = !CompareFloat(contentH, h) && contentH > h;
 
 	return *pOutExceedsWidth || *pOutExceedsHeight;
 }

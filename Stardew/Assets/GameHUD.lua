@@ -17,6 +17,8 @@ function GetGameHUDViewModel()
                     scaleX="1.2,",
                     scaleY="1.2",
                     paddingBottom="32",
+                    paddingLeft="5",
+                    paddingRight="5",
                     children = {
                         {
                             type = "static",

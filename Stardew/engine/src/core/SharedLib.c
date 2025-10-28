@@ -27,7 +27,7 @@ void* SharedLib_GetProc(struct SharedLib* pSharedLib, const char* procName)
 
 #else if defined(__WIN32__)
 
-#include <libloaderapi.h>
+#include <windows.h>
 
 struct SharedLib
 {

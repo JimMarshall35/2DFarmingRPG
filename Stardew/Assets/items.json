@@ -1,0 +1,14 @@
+{ "columns":32,
+ "image":"Image\/LPC Submissions\/Extensions\/items1.png",
+ "imageheight":512,
+ "imagewidth":512,
+ "margin":0,
+ "name":"items",
+ "spacing":0,
+ "tilecount":1024,
+ "tiledversion":"1.11.1-99-gec89c545",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.11"
+}

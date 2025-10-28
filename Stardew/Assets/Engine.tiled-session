@@ -272,8 +272,8 @@
             "scale": 1.1046,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 3062.1944595328623,
-                "y": 902.1365200072426
+                "x": 1599.6740901683866,
+                "y": 1599.2214376244794
             }
         },
         "Farm.tmj": {
@@ -291,8 +291,8 @@
             "scale": 1.183,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 195.68892645815723,
-                "y": 375.7396449704142
+                "x": 163.56720202874047,
+                "y": 192.3076923076923
             }
         },
         "Interior 2.json": {
@@ -313,8 +313,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 8.5,
-                "y": 744.5
+                "x": 799.5,
+                "y": 479.5
             }
         },
         "Soil.json": {
@@ -347,7 +347,7 @@
     },
     "last.exportedFilePath": "C:/Users/User1/source/repos/ReacherRPG/ReacherRPG/json",
     "last.externalTilesetPath": "C:/Users/User1/source/repos/TileMapRendererExperiments/Engine/Assets",
-    "last.imagePath": "/home/jimmarshall/Jim/TileMapRendererExperiments/Stardew/Assets/Image/lpc_base_assets/LPC Base Assets/sprites/people",
+    "last.imagePath": "/home/jimmarshall/Jim/TileMapRendererExperiments/Stardew/Assets/Image/LPC Submissions/Extensions",
     "map.fixedSize": true,
     "map.height": 12,
     "map.lastUsedExportFilter": "JSON map files (*.json)",
@@ -384,8 +384,8 @@
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 16,
+        "width": 16
     },
     "tileset.transparentColor": "#000000",
     "tileset.type": 0,

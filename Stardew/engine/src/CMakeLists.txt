@@ -14,6 +14,7 @@ core/DataNode.c
 core/StringKeyHashMap.c
 core/Bitfield2D.c
 core/Random.c
+core/SharedLib.c
 gameframework/GameFramework.c
 gameframework/GameFrameworkEvent.c
 gameframework/layers/UI/XMLUIGameLayer.c

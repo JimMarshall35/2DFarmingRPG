@@ -8,6 +8,7 @@
 
 static VECTOR(struct WfGameSave) gSaves = NULL;
 
+
 static void PopulateSavesList()
 {
     FILE * fp;

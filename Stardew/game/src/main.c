@@ -14,6 +14,10 @@
 #include "WfGameLayer.h"
 #include "WfWorld.h"
 #include "WfGame.h"
+#include "WfItem.h"
+#include "XMLUIGameLayer.h"
+#include "WfHUD.h"
+
 
 void WfEngineInit()
 {
@@ -29,10 +33,13 @@ void GameInit(InputContext* pIC, DrawContext* pDC)
     WfGameInit();
     WfEngineInit();
     WfInit();
+    WfRegisterItemScriptFunctions();
     //WfInitWorldLevels(); /* temporary - a world will be loaded as part of a game file, to be implemented in WfGame.c */
     VECTOR(struct WfGameSave) pSaves = WfGameGetSaves();
     WfSetCurrentSaveGame(&pSaves[0]);
     WfWorld_LoadLocation("House", pDC);
+    WfPushHUD(pDC);
+
     printf("done\n");
 }
 

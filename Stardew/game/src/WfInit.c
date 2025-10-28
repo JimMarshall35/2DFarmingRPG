@@ -4,6 +4,7 @@
 #include "WfPlayer.h"
 #include "WfWorld.h"
 #include "WfExit.h"
+#include "WfItem.h"
 
 void WfInit()
 {
@@ -12,5 +13,6 @@ void WfInit()
     WfInitPlayer();
     WfWorldInit();
     WfInitExit();
+    WfInitItems();
 }
 

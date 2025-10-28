@@ -87,6 +87,7 @@ bool Sc_IsString();
 bool Sc_IsInteger();
 bool Sc_IsBool();
 bool Sc_IsNumber();
+int Sc_Type();
 
 
 void Sc_Pop();
@@ -103,6 +104,12 @@ void Sc_DumpStack();
 */
 typedef struct lua_State lua_State;
 void Sc_RegisterCFunction(const char* name, int(*fn)(lua_State*));
+
+/* will add these as and when needed for the game */
+void Sc_NewTableOnStack(int arrayElementHint, int nonArrayElementHint);
+void Sc_SetIntAtTableIndex(int index, int value);
+int Sc_RefTable();
+void Sc_UnRefTable(int ref);
 
 #ifdef __cplusplus
 }

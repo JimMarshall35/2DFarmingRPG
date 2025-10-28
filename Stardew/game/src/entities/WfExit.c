@@ -8,6 +8,7 @@
 #include "Entities.h"
 #include "WfEntities.h"
 #include "WfWorld.h"
+#include "WfHUD.h"
 
 struct WfExitEntityData
 {
@@ -39,7 +40,9 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
         struct WfExitEntityData* pSensorData = &gExitEntityDataPool[pSensorEnt->user.hData];
         /* TODO: add a bDirty flag on the GameLayer2DData indicating whether we need to save the level here */
         GF_PopGameFrameworkLayer();
+        GF_PopGameFrameworkLayer();
         WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
+        WfPushHUD(pLayerData->pDrawContext);
     }
 }
 

@@ -12,6 +12,10 @@
 #include "WfGameLayerData.h"
 #include "WfGameLayer.h"
 
+static void WfOnHUDLayerPushed(void* pUserData, void* pEventData)
+{
+
+}
 
 void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {
@@ -19,6 +23,7 @@ void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
     pEngineLayer->pUserData = malloc(sizeof(struct WfGameLayerData));
     memset(pEngineLayer->pUserData, 0, sizeof(struct WfGameLayerData));
     GameLayer2D_OnPush(pLayer, drawContext, inputContext);
+    Ev_SubscribeEvent("onHUDLayerPushed", &WfOnHUDLayerPushed, pLayer);
 }
 
 void WfPreFirstInit(struct GameLayer2DData* pEngineLayer)

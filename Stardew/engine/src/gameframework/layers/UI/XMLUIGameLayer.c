@@ -161,6 +161,8 @@ static void Update(struct GameFrameworkLayer* pLayer, float deltaT)
 		struct WidgetChildrenChangeRequest* pReq = &pData->pChildrenChangeRequests[0];
 		FreeWidgetChildren(pReq->hWidget);
 		Sc_CallFuncInRegTableEntryTable(pReq->regIndex, pReq->funcName, NULL, 0, 1);
+		int t = Sc_Type();
+		printf("%i\n", t);
 		if (Sc_IsTable())
 		{
 			for (int i = 1; i <= Sc_TableLen(); i++)
@@ -332,7 +334,7 @@ static void Input(struct GameFrameworkLayer* pLayer, InputContext* ctx)
 	pWidgetsRemained = VectorClear(pWidgetsRemained);
 
 	XMLUIData* pUIData = pLayer->userData;
-	pUIData->pChildrenChangeRequests = VectorClear(pUIData->pChildrenChangeRequests);
+	//pUIData->pChildrenChangeRequests = VectorClear(pUIData->pChildrenChangeRequests);
 	float w, h;
 
 	if (gMouseX.index == NULL_HANDLE)

@@ -1,0 +1,10 @@
+
+<UIroot>
+	<atlas binary="./Assets/ui_atlas.atlas">
+	</atlas>
+    <screen viewmodelFile="./Assets/GameHUD.lua" viewmodelFunction="GetGameHUDViewModel">
+        <stackpanel orientation="horizontal" childrenBinding="InventoryChildren" paddingBottom="32" dockPoint="bottomMiddle">
+
+        </stackpanel>
+    </screen>
+</UIroot>

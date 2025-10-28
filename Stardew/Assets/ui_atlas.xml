@@ -16,4 +16,12 @@
 		<size type="pts" val="16"/>
 		<size type="pts" val="32"/>
 	</font>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="288" left="192" width="32" height="32" name="no-item"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="224" left="160" width="32" height="32" name="basic-axe"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="128" left="192" width="32" height="32" name="basic-sword"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="0"   left="96"  width="32" height="32" name="basic-pickaxe"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="288" left="96"  width="32" height="32" name="basic-scythe"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="256" left="128" width="32" height="32" name="basic-hoe"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="224" left="384" width="32" height="32" name="basic-fishing-rod"/>
+	<sprite source="./Assets/Image/LPC Submissions/Extensions/items1.png" top="32"  left="128" width="32" height="32" name="basic-bow"/>
 </atlas>

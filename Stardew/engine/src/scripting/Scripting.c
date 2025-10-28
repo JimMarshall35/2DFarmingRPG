@@ -43,8 +43,9 @@ static void OnPropertyChangedInternal(XMLUIData* pUIData, HWidget hWidget, const
 						hWidget
 					};
 					printf("pUIData->pChildrenChangeRequests: %p\n", pUIData->pChildrenChangeRequests);
-
+					volatile VectorData* pDbg = VectorData_DEBUG(pUIData->pChildrenChangeRequests);
 					pUIData->pChildrenChangeRequests = VectorPush(pUIData->pChildrenChangeRequests, &r);
+					pDbg = VectorData_DEBUG(pUIData->pChildrenChangeRequests);
 					printf("pushed request\n");
 
 				}
@@ -464,6 +465,11 @@ bool Sc_IsTable()
 	return lua_istable(gL, -1);
 }
 
+int Sc_Type()
+{
+	return lua_type(gL, -1);
+}
+
 void Sc_Pop()
 {
 	lua_pop(gL, 1);
@@ -530,4 +536,27 @@ bool Sc_StringCmp(const char* cmpTo)
 	EASSERT(Sc_IsString());
 	const char* str = lua_tostring(gL, -1);
 	return strcmp(str, cmpTo) == 0;
+}
+
+void Sc_NewTableOnStack(int arrayElementHint, int nonArrayElementHint)
+{
+	lua_createtable(gL, arrayElementHint, nonArrayElementHint);
+}
+
+void Sc_SetIntAtTableIndex(int index, int value)
+{
+	EASSERT(Sc_IsTable());
+	lua_pushinteger(gL, index);
+	lua_pushinteger(gL, value);
+	lua_settable(gL, -3);
+}
+
+int Sc_RefTable()
+{
+	return luaL_ref(gL, LUA_REGISTRYINDEX);
+}
+
+void Sc_UnRefTable(int ref)
+{
+	luaL_unref(gL, LUA_REGISTRYINDEX, ref);
 }

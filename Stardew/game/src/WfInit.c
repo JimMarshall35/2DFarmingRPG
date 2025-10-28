@@ -5,6 +5,7 @@
 #include "WfWorld.h"
 #include "WfExit.h"
 #include "WfItem.h"
+#include "WfPersistantGameData.h"
 
 void WfInit()
 {
@@ -14,5 +15,6 @@ void WfInit()
     WfWorldInit();
     WfInitExit();
     WfInitItems();
+    WfPersistantDataInit();
 }
 

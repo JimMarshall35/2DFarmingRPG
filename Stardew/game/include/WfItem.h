@@ -7,6 +7,19 @@
 struct Entity2D;
 struct GameFrameworkLayer;
 
+
+enum WfItemIndices
+{
+    WfBasicAxe,
+    WfBasicSword,
+    WfBasicPickAxe,
+    WfBasicScythe,
+    WfBasicFishingRod,
+    WfBasicHoe,
+    WfBasicBow,
+    WfNumBuiltinItems
+};
+
 enum WfEquipSlot
 {
     Ring1,

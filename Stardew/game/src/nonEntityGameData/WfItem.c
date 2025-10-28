@@ -13,16 +13,6 @@
 #include "WfBasicScythe.h"
 #include "WfBasicSword.h"
 
-enum WfItemIndices
-{
-    WfBasicAxe,
-    WfBasicSword,
-    WfBasicPickAxe,
-    WfBasicScythe,
-    WfBasicFishingRod,
-    WfBasicHoe,
-    WfBasicBow,
-};
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 

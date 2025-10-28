@@ -16,6 +16,7 @@ add_executable( WarFarmer
     src/entities/WfRock.c
     src/entities/WfTree.c
     src/entities/WfWoodedArea.c
+    src/nonEntityGameData/WfPersistantGameData.c
     src/nonEntityGameData/WfItem.c
     src/items/WfBasicAxe.c
     src/items/WfBasicBow.c

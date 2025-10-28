@@ -108,8 +108,19 @@ void Sc_RegisterCFunction(const char* name, int(*fn)(lua_State*));
 /* will add these as and when needed for the game */
 void Sc_NewTableOnStack(int arrayElementHint, int nonArrayElementHint);
 void Sc_SetIntAtTableIndex(int index, int value);
+void Sc_SetIntAtTableKey(const char* key, int val);
 int Sc_RefTable();
 void Sc_UnRefTable(int ref);
+
+/* 
+	(stack on table)
+	push index onto stack
+	push something to set at the index
+	call this to set the value at the index
+*/
+void Sc_SetTable();
+
+void Sc_PushInt(int i);
 
 #ifdef __cplusplus
 }

@@ -551,6 +551,24 @@ void Sc_SetIntAtTableIndex(int index, int value)
 	lua_settable(gL, -3);
 }
 
+void Sc_SetTable()
+{
+	lua_settable(gL, -3);
+}
+
+void Sc_PushInt(int i)
+{
+	lua_pushinteger(gL, i);
+}
+
+
+void Sc_SetIntAtTableKey(const char* key, int val)
+{
+	EASSERT(Sc_IsTable());
+	lua_pushinteger(gL, val);
+	lua_setfield(gL, -2, key);
+}
+
 int Sc_RefTable()
 {
 	return luaL_ref(gL, LUA_REGISTRYINDEX);

@@ -12,6 +12,7 @@ struct GameLayer2DData;
 struct WfGameLayerData
 {
     struct WfSprites sprites;
+    struct GameFrameworkEventListener* HUDPushedEventListener;
 };
 
 void WfInitGameLayerData(struct GameLayer2DData* pGameLayerData, struct WfGameLayerData* pOutData);

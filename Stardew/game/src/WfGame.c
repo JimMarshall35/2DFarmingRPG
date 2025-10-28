@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "WfPersistantGameData.h"
 
 static VECTOR(struct WfGameSave) gSaves = NULL;
 
@@ -69,6 +70,10 @@ void WfSetCurrentSaveGame(struct WfGameSave* pSave)
     cwk_path_join(pSave->folderPath, "RoadToTown.tilemap", locaton.levelFilePath, 256);
     locaton.bIsInterior = false;
     WfWorld_AddLocation(&locaton, "RoadToTown");
+
+    char buf[256];
+    cwk_path_join(pSave->folderPath, "Persistant.game", buf, 256);
+    WfLoadPersistantDataFile(buf);
 
     WfWorld_SetCurrentLocationName("Bed");
 }

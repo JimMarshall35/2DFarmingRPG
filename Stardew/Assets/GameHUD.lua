@@ -1,14 +1,27 @@
+function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
 function GetGameHUDViewModel()
     return {
         _inventoryChangedListener = nil,
-        _items = { 0, 1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1 },
+        _items = { },--0, 1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1 },
         widgetChildren = {},
         InventoryChildren = function(self)
             self.widgetChildren = {}
             for index, item in pairs(self._items) do
                 local spriteName = "no-item"
-                if item >= 0 then
-                    spriteName = WfGetItemSpriteName(item)
+                if item.item >= 0 then
+                    spriteName = WfGetItemSpriteName(item.item)
                 end
                 table.insert(self.widgetChildren, 
                 {
@@ -39,6 +52,7 @@ function GetGameHUDViewModel()
             return self.widgetChildren
         end,
         OnInventoryChanged = function(self, msg)
+            --print(dump(msg))
 			self._items = msg
 			OnPropertyChanged(self, "InventoryChildren")
 		end,
@@ -47,6 +61,7 @@ function GetGameHUDViewModel()
             print("ONPUSHXML")
             self._inventoryChangedListener = SubscribeGameFrameworkEvent("InventoryChanged", self, self.OnInventoryChanged)
             OnPropertyChanged(self, "InventoryChildren")
+            FireGameFrameworkEvent({vm=self, type="basic"}, "onHUDLayerPushed")
         end
     }
 end

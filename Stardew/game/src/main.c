@@ -43,8 +43,50 @@ void GameInit(InputContext* pIC, DrawContext* pDC)
     printf("done\n");
 }
 
+enum WfExeMode
+{
+    NormalGame,
+    CreatePersistantDataFile
+};
+
+struct CmdLineArgs
+{
+    enum WfExeMode mode;
+    const char* outPersistantDataFilePath;
+};
+
+struct CmdLineArgs ParseCmdLineArgs(int argc, char** argv)
+{
+    struct CmdLineArgs args;
+    args.mode = NormalGame;
+    if(argc == 3)
+    {
+        if(strcmp(argv[1], "--outPersistantFile") == 0)
+        {
+            args.mode = CreatePersistantDataFile;
+            args.outPersistantDataFilePath = argv[2];
+        }
+    }
+    return args;
+}
+
 int main(int argc, char** argv)
 {
-
-    EngineStart(argc, argv, &GameInit);
+    struct CmdLineArgs args = ParseCmdLineArgs(argc, argv);
+    switch (args.mode)
+    {
+    case NormalGame:
+        EngineStart(argc, argv, &GameInit);
+        break;
+    case CreatePersistantDataFile:
+        {
+            WfPersistantDataInit();
+            WfNewSavePersistantData();
+            WfSavePersistantDataFile(args.outPersistantDataFilePath);
+        }
+        break;
+    default:
+        break;
+    }
+    
 }

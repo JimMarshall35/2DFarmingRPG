@@ -38,7 +38,7 @@ struct SharedLib* SharedLib_LoadSharedLib(const char* path)
 {
     struct SharedLib* pLib = malloc(sizeof(struct SharedLib));
     memset(pLib, 0, sizeof(struct SharedLib));
-    pLib->handle = LoadLibraryA(path, NULL, 0);
+    pLib->handle = LoadLibraryExA(path, NULL, 0);
     return pLib;
 }
 

@@ -60,6 +60,7 @@ int main(int argc, char **argv) {
         real_port = (uint16_t) port;
     }
     printf("Creating socket\n");
+    fflush(stdout);
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
         printf("Unable to create socket.  errno %d\n", errno);
@@ -67,6 +68,7 @@ int main(int argc, char **argv) {
     }
 
     printf("Binding socket socket\n");
+    fflush(stdout);
     { /* Bind to address */
         struct sockaddr_in my_addr;
         memset(&my_addr, 0, sizeof(my_addr));

@@ -20,7 +20,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-
+#include <libgen.h>
 /**
  * The server listens on the specified port for UDP packets.  It then
  * alternates between two states as it receives messages from clients.
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
         }
 
         // Reply with what we know.
-        ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, &next_data,
+        ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, (struct sockaddr *)&next_data,
             sizeof(next_data));
         if (sendret < 0) {
             printf("Error on sendto.  errno %d\n", errno);

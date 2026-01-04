@@ -36,12 +36,13 @@
 int main(int argc, char **argv) {
     printf("Matchmaking server\n");
     if (argc != 2) {
+        printf("BAD!");
         printf("Usage: %s port\n", basename(argv [0]));
         return 1;
     }
 
     int port;
-    int ret = sscanf(argv [1], "%d", &port);
+    int ret = sscanf(argv[1], "%d", &port);
     printf("Port %i passed\n", port);
     uint16_t real_port;
     if (ret != 1) {

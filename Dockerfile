@@ -1,6 +1,5 @@
-FROM alpine:3.14
-RUN apk add build-base
-RUN set -ex && apk --no-cache add sudo
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get install -y gcc make
 RUN mkdir -p /app
 COPY ./hole-punch-master /app
 WORKDIR /app

@@ -1,5 +1,4 @@
 FROM alpine:3.14 AS builder
-RUN build-base
 RUN apk add build-base
 RUN mkdir -p /app
 COPY ./hole-punch-master /app

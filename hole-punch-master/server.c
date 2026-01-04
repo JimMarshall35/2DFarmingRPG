@@ -38,12 +38,14 @@ int main(int argc, char **argv) {
     if (argc != 2) {
         printf("BAD!");
         printf("Usage: %s port\n", basename(argv [0]));
+        fflush(stdout); //
         return 1;
     }
 
     int port;
     int ret = sscanf(argv[1], "%d", &port);
     printf("Port %i passed\n", port);
+    fflush(stdout);
     uint16_t real_port;
     if (ret != 1) {
         printf("Unable to parse port number.\n");
@@ -82,6 +84,7 @@ int main(int argc, char **argv) {
     }
 
     printf("Started on port %i", port);
+    fflush(stdout); //
 
     /* Type-pun for a packed struct */
     uint32_t * last_addr;

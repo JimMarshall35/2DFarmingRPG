@@ -1,6 +1,7 @@
 FROM alpine:3.14
 RUN mkdir -p /app
-COPY ./hole-punch-master/hole_punch_server /app
+COPY ./hole-punch-master /app
 WORKDIR /app
+RUN make
 EXPOSE 666
-CMD [ "ls". "/app" ]
+CMD [ "/app/hole_punch_server", "666" ]

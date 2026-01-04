@@ -11,21 +11,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build Server Src
-      run: |
-        cd hole-punch-master
-        make
-    - uses: actions/upload-artifact@v4
-      with:
-        name: server-exe
-        path: |
-          ./hole-punch-master/hole_punch_server
-          ./Dockerfile
 
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -39,13 +24,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
-      - uses: actions/download-artifact@v4
-        with:
-          name: server-exe
-          path: |
-            ./hole-punch-master/hole_punch_server
-            ./Dockerfile
-
+      - name: Build Server Src
+        run: |
+          cd hole-punch-master
+          make
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:

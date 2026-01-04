@@ -82,6 +82,7 @@ int main(int argc, char **argv) {
         if (bindret < 0) {
             printf("Unable to bind to port %d.  errno %d\n", port,
                 errno);
+            fflush(stdout);
             return 7;
         }
     }

@@ -7,4 +7,4 @@ WORKDIR /app
 RUN make
 RUN ls 
 EXPOSE 666
-ENTRYPOINT su-exec "/app/hole_punch_server"
+ENTRYPOINT [ "su-exec", "jim", "/app/hole_punch_server", "666" ]

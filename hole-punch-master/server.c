@@ -34,14 +34,14 @@
  * connect to the listening client.
  */
 int main(int argc, char **argv) {
-    // printf("Matchmaking server\n");
-    // if (argc != 2) {
-    //     fprintf(stderr, "Usage: %s port\n", basename(argv [0]));
-    //     return 1;
-    // }
+    printf("Matchmaking server\n");
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s port\n", basename(argv [0]));
+        return 1;
+    }
 
-    int port = 666;
-    int ret =  1;//sscanf(argv [1], "%d", &port);
+    int port;
+    int ret = sscanf(argv [1], "%d", &port);
     uint16_t real_port;
     if (ret != 1) {
         fprintf(stderr, "Unable to parse port number.\n");
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("Started on port %i\n", port);
+    printf("Started on port %i", port);
 
     /* Type-pun for a packed struct */
     uint32_t * last_addr;

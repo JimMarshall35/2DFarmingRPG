@@ -6,6 +6,7 @@ WORKDIR /app
 RUN make
 
 FROM alpine:3.14
+RUN apk add --no-cache gcc
 RUN mkdir -p /app
 COPY --from=builder /app/hole_punch_server /app
 RUN ls /app

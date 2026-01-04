@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     fflush(stdout); //
     if (argc != 2) {
         printf("BAD!");
-        printf("Usage: %s port\n", basename(argv [0]));
+        printf("Usage: %s port\n", argv [0]);
         fflush(stdout); //
         return 1;
     }

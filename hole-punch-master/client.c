@@ -30,7 +30,7 @@
  */
 int main(int argc, char **argv) {
     if (argc != 4) {
-        fprintf(stderr, "Usage: %s addr port passes\n", basename(argv[0]));
+        fprintf(stderr, "Usage: %s addr port passes\n", argv[0]);
         return 1;
     }
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
     last_port   = (uint16_t *) (last_addr + 1);
 
     /* Ping server, sending all zeros */
-    ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, &addr, addr_len);
+    ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, (const struct sockaddr *)&addr, addr_len);
     if (sendret < 0) {
         fprintf(stderr, "Error on sendto.  errno %d\n", errno);
         return 7;
@@ -161,7 +161,7 @@ int main(int argc, char **argv) {
              * when the client receives a packet.
              */
             recvret = recvfrom(fd, &pass_buf, sizeof(pass_buf), MSG_TRUNC,
-                remote_set ? NULL : &remote,
+                remote_set ? NULL : (const struct sockaddr *)&remote,
                 remote_set ? NULL : &len);
             if (sizeof(remote) < len) {
                 fprintf(stderr, "Unsufficent buffer space for address.\n");
@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
             assert(remote_set);
             uint32_t pass_buf = htonl((uint32_t) iter / 2);
 
-            sendret = sendto(fd, &pass_buf, sizeof(pass_buf), 0, &remote,
+            sendret = sendto(fd, &pass_buf, sizeof(pass_buf), 0, (const struct sockaddr *)&remote,
                 sizeof(remote));
             if (sendret < 0) {
                 fprintf(stderr, "Error on sendto. errno %d\n", errno);

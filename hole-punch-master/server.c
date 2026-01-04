@@ -34,6 +34,7 @@
  * connect to the listening client.
  */
 int main(int argc, char **argv) {
+    printf("Matchmaking server\n");
     if (argc != 2) {
         fprintf(stderr, "Usage: %s port\n", basename(argv [0]));
         return 1;
@@ -77,7 +78,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    printf("Started on port %i", port);
+    printf("Started on port %i\n", port);
 
     /* Type-pun for a packed struct */
     uint32_t * last_addr;

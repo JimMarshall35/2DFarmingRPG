@@ -23,7 +23,10 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: server-exe
-        path: hole-punch-master/hole_punch_server
+        path: |
+          ./hole-punch-master/hole_punch_server
+          ./hole-punch-master/DockerFile
+
   build-and-push-image:
     runs-on: ubuntu-latest
 
@@ -39,7 +42,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: server-exe
-          path: hole-punch-master/hole_punch_server
+          path: |
+            ./hole-punch-master/hole_punch_server
+            ./hole-punch-master/DockerFile
+            
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:

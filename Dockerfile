@@ -1,5 +1,15 @@
-FROM debian:bullseye-slim
+FROM alpine:3.14 AS builder
+RUN build-base
+RUN apk add build-base
 RUN mkdir -p /app
-COPY ./hole-punch-master/hole_punch_server /app
-EXPOSE 666/udp 
-ENTRYPOINT [ "/app/hole_punch_server", "666" ]
+COPY ./hole-punch-master /app
+WORKDIR /app
+RUN make
+
+FROM alpine:3.14
+RUN mkdir -p /app
+COPY --from=build /app/hole_punch_server /app
+RUN ls /app
+EXPOSE 666/udp
+ENTRYPOINT [ "/app/hole_punch_server" ]
+CMD [ "666" ]

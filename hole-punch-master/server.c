@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
 
     int port;
     int ret = sscanf(argv [1], "%d", &port);
+    printf("Port %i passed\n", port);
     uint16_t real_port;
     if (ret != 1) {
         printf("Unable to parse port number.\n");
@@ -55,13 +56,14 @@ int main(int argc, char **argv) {
     } else {
         real_port = (uint16_t) port;
     }
-
+    printf("Creating socket\n");
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
         printf("Unable to create socket.  errno %d\n", errno);
         return 2;
     }
 
+    printf("Binding socket socket\n");
     { /* Bind to address */
         struct sockaddr_in my_addr;
         memset(&my_addr, 0, sizeof(my_addr));

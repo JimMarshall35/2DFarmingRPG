@@ -8,7 +8,7 @@ RUN make
 
 FROM alpine:3.14
 RUN mkdir -p /app
-COPY --from=build /app/hole_punch_server /app
+COPY --from=builder /app/hole_punch_server /app
 RUN ls /app
 EXPOSE 666/udp
 ENTRYPOINT [ "/app/hole_punch_server" ]

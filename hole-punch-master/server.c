@@ -50,12 +50,15 @@ int main(int argc, char **argv) {
     uint16_t real_port;
     if (ret != 1) {
         printf("Unable to parse port number.\n");
+        fflush(stdout);
         return 4;
     } else if (port <= 0) {
         printf("Port (%d) must be positive.\n", port);
+        fflush(stdout);
         return 5;
     } else if (port >= 65536) {
         printf("Port (%d) must be less than 65536.\n", port);
+        fflush(stdout);
         return 6;
     } else {
         real_port = (uint16_t) port;
@@ -65,6 +68,7 @@ int main(int argc, char **argv) {
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
         printf("Unable to create socket.  errno %d\n", errno);
+        fflush(stdout);
         return 2;
     }
 
@@ -112,6 +116,8 @@ int main(int argc, char **argv) {
             printf("Error on recvfrom.  errno %d\n", errno);
             return 3;
         }
+        printf("Recieved packet from client\n");
+        fflush(stdout); 
 
         // Reply with what we know.
         ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, (struct sockaddr *)&next_data,

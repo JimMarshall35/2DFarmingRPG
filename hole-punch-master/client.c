@@ -110,6 +110,7 @@ int main(int argc, char **argv) {
     ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, (const struct sockaddr *)&addr, addr_len);
     if (sendret < 0) {
         fprintf(stderr, "Error on sendto.  errno %d\n", errno);
+        fflush(stdout);
         return 7;
     }
 
@@ -117,8 +118,12 @@ int main(int argc, char **argv) {
     ssize_t recvret = recvfrom(fd, buf, sizeof(buf), MSG_TRUNC, NULL, NULL);
     if (recvret < 0) {
         fprintf(stderr, "Error on recvfrom.  errno %d\n", errno);
+        fflush(stdout);
         return 8;
     }
+
+    printf("recieved packet from server\n");
+    fflush(stdout);
 
     /* Take turns sending and receiving data.
      *
@@ -161,7 +166,7 @@ int main(int argc, char **argv) {
              * when the client receives a packet.
              */
             recvret = recvfrom(fd, &pass_buf, sizeof(pass_buf), MSG_TRUNC,
-                remote_set ? NULL : (const struct sockaddr *)&remote,
+                remote_set ? NULL : (const struct sockaddr *)&remote,       /*  */
                 remote_set ? NULL : &len);
             if (sizeof(remote) < len) {
                 fprintf(stderr, "Unsufficent buffer space for address.\n");

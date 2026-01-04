@@ -1,10 +1,6 @@
-FROM debian:bullseye-slim
-RUN apt-get update && apt-get install -y gcc make
-RUN apt-get install sudo
+FROM alpine:3.14
 RUN mkdir -p /app
-COPY ./hole-punch-master /app
+COPY ./hole-punch-master/hole_punch_server /app
 WORKDIR /app
-RUN make
-RUN ls 
-EXPOSE 666/udp 
-ENTRYPOINT [ "/app/hole_punch_server", "666" ]
+EXPOSE 666
+CMD [ "/app/hole_punch_server", "666" ]

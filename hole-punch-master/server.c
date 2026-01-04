@@ -35,6 +35,7 @@
  */
 int main(int argc, char **argv) {
     printf("Matchmaking server\n");
+    fflush(stdout); //
     if (argc != 2) {
         printf("BAD!");
         printf("Usage: %s port\n", basename(argv [0]));

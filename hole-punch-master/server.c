@@ -77,6 +77,8 @@ int main(int argc, char **argv) {
         }
     }
 
+    printf("Started on port %i", port);
+
     /* Type-pun for a packed struct */
     uint32_t * last_addr;
     uint16_t * last_port;

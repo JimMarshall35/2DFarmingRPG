@@ -1,15 +1,15 @@
-FROM alpine:3.14 AS builder
+FROM alpine:latest AS builder
 RUN apk add build-base
 RUN mkdir -p /app
 COPY ./hole-punch-master /app
 WORKDIR /app
 RUN make
 
-FROM alpine:3.14
+FROM alpine:latest
 RUN apk add --no-cache gcc
 RUN mkdir -p /app
-COPY --from=builder /app/hole_punch_server /app
+COPY --from=builder /app/hole_punch_server .
 RUN ls /app
 EXPOSE 666/udp
-ENTRYPOINT [ "/app/hole_punch_server" ]
+ENTRYPOINT [ "./hole_punch_server" ]
 CMD [ "666" ]

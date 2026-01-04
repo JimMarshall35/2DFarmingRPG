@@ -3,4 +3,4 @@ RUN mkdir -p /app
 COPY ./hole-punch-master/hole_punch_server /app
 WORKDIR /app
 EXPOSE 666
-CMD [ "/app/hole_punch_server", "666" ]
+CMD [ "ls". "/app" ]

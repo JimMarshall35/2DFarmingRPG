@@ -1,7 +1,5 @@
-FROM alpine:3.14
+FROM debian:bullseye-slim
 RUN mkdir -p /app
 COPY ./hole-punch-master/hole_punch_server /app
-RUN ls /app
-EXPOSE 666/udp
-ENTRYPOINT [ "/app/hole_punch_server" ]
-CMD [ "666" ]
+EXPOSE 666/udp 
+ENTRYPOINT [ "/app/hole_punch_server", "666" ]

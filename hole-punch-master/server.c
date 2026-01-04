@@ -36,7 +36,7 @@
 int main(int argc, char **argv) {
     printf("Matchmaking server\n");
     if (argc != 2) {
-        fprintf(stderr, "Usage: %s port\n", basename(argv [0]));
+        printf("Usage: %s port\n", basename(argv [0]));
         return 1;
     }
 
@@ -44,13 +44,13 @@ int main(int argc, char **argv) {
     int ret = sscanf(argv [1], "%d", &port);
     uint16_t real_port;
     if (ret != 1) {
-        fprintf(stderr, "Unable to parse port number.\n");
+        printf("Unable to parse port number.\n");
         return 4;
     } else if (port <= 0) {
-        fprintf(stderr, "Port (%d) must be positive.\n", port);
+        printf("Port (%d) must be positive.\n", port);
         return 5;
     } else if (port >= 65536) {
-        fprintf(stderr, "Port (%d) must be less than 65536.\n", port);
+        printf("Port (%d) must be less than 65536.\n", port);
         return 6;
     } else {
         real_port = (uint16_t) port;
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     if (fd == -1) {
-        fprintf(stderr, "Unable to create socket.  errno %d\n", errno);
+        printf("Unable to create socket.  errno %d\n", errno);
         return 2;
     }
 
@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
         int bindret = bind(fd, (const struct sockaddr *)&my_addr,
             sizeof(my_addr));
         if (bindret < 0) {
-            fprintf(stderr, "Unable to bind to port %d.  errno %d\n", port,
+            printf("Unable to bind to port %d.  errno %d\n", port,
                 errno);
             return 7;
         }
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
         ssize_t recvret = recvfrom(fd, NULL, 0, MSG_TRUNC,
             (struct sockaddr *) &next_data, &next_len);
         if (recvret < 0) {
-            fprintf(stderr, "Error on recvfrom.  errno %d\n", errno);
+            printf("Error on recvfrom.  errno %d\n", errno);
             return 3;
         }
 
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
         ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, &next_data,
             sizeof(next_data));
         if (sendret < 0) {
-            fprintf(stderr, "Error on sendto.  errno %d\n", errno);
+            printf("Error on sendto.  errno %d\n", errno);
             return 6;
         }
 

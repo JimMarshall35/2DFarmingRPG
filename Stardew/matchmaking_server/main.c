@@ -59,7 +59,8 @@ int main( int argc, char ** argv )
     double delta_time = 1.0 / 60.0;
 
     printf( "[server]\n" );
-
+    fflush(stdout);
+    
     #define TEST_PROTOCOL_ID 0x1122334455667788
 
     char * server_address = "0.0.0.0:666";

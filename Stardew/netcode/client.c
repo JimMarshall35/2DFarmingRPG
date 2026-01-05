@@ -75,7 +75,7 @@ int main( int argc, char ** argv )
         return 1;
     }
 
-    NETCODE_CONST char * server_address = ( argc != 2 ) ? "127.0.0.1:40000" : argv[1];        
+    NETCODE_CONST char * server_address = ( argc != 2 ) ? "188.245.203.39:666" : argv[1];        
 
     uint64_t client_id = 0;
     netcode_random_bytes( (uint8_t*) &client_id, 8 );
@@ -107,6 +107,13 @@ int main( int argc, char ** argv )
 
         if ( netcode_client_state( client ) == NETCODE_CLIENT_STATE_CONNECTED )
         {
+            static int b = 0;
+            if(!b)
+            {
+                b = 1;
+                printf("Connected!\n");
+            }
+            
             netcode_client_send_packet( client, packet_data, NETCODE_MAX_PACKET_SIZE );
         }
 
@@ -115,6 +122,7 @@ int main( int argc, char ** argv )
             int packet_bytes;
             uint64_t packet_sequence;
             void * packet = netcode_client_receive_packet( client, &packet_bytes, &packet_sequence );
+            printf("recieved packet!\n");
             if ( !packet )
                 break;
             (void) packet_sequence;

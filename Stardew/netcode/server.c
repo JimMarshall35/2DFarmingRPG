@@ -94,6 +94,8 @@ int main( int argc, char ** argv )
 
         if ( netcode_server_client_connected( server, 0 ) )
         {
+            printf("client connected!\n");
+            fflush(stdout);
             netcode_server_send_packet( server, 0, packet_data, NETCODE_MAX_PACKET_SIZE );
         }
 

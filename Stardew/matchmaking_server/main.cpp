@@ -16,6 +16,7 @@ int sock_fd;
 
 int main(int argc, char *argv[])
 {
+  cout << "UDP echo server" << endl;
   if (argc==1)
   {
      cout<<"Please pass the port number on which you want the server to listen."<<endl;

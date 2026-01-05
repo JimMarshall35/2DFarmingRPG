@@ -684,8 +684,164 @@ static void ServiceClientConnectionEvents(struct GameClient* gameClient, struct 
     ServiceConnectionEventsBase(gameClient, -1, pQueues, &IsConnectedToServer, client);
 }
 
+enum MatchmakingProtocolMessageType
+{
+    MM_ClientSeekServer,
+    MM_ServerSeekClient,
+    MM_GameConnection,
+};
+
+struct PlayerInfo
+{
+    char username[64];
+};
+
+struct ClientMatchmakingInfo
+{
+    struct PlayerInfo playerInfo;
+};
+
+// ip numbers = (4 * groups of 3 + 3 dots) + ':' + 5 numbers for port + null terminator
+#define IP_AND_PORT_BUF_SIZE (15 + 3 + 1 + 5 + 1) 
+
+struct ServerMatchmakingInfo
+{
+    struct PlayerInfo playerInfo;
+    int availableSlots;
+};
+
+struct PeerAddress
+{
+    char username[64];
+    char address[IP_AND_PORT_BUF_SIZE];
+};
+
+struct MatchMakingMessage
+{
+    enum MatchmakingProtocolMessageType type;
+    union
+    {
+        struct ClientMatchmakingInfo clientInfo;
+        struct ServerMatchmakingInfo serverInfo;
+        struct PeerAddress peer;
+    }data;
+};
+
+struct MatchMakingMessage gMatchmakingInfo;
+
+/// @brief blocks until a match is found
+/// @return game server address to connect to 
+static char* MatchmakeClient()
+{
+    gCmdArgs.serverAddress = NULL;
+    gMatchmakingInfo.type = MM_ClientSeekServer;
+    strcpy(gMatchmakingInfo.data.clientInfo.playerInfo.username, gCmdArgs.playerName);
+    double time = 0.0;
+    double delta_time = 1.0 / 60.0;
+    struct netcode_client_config_t client_config;
+    netcode_default_client_config( &client_config );
+    struct netcode_client_t * client = netcode_client_create( gCmdArgs.clientAddress, &client_config, time );
+    uint64_t client_id = 0;
+    netcode_random_bytes( (uint8_t*) &client_id, 8 );
+    Log_Info( "client id is %lu" , client_id );
+
+    NETCODE_CONST char* server_address = gCmdArgs.matchmakingServerAddress;
+
+    client_id = 0;
+    uint8_t user_data[NETCODE_USER_DATA_BYTES];
+
+    netcode_random_bytes( (uint8_t*) &client_id, 8 );
+    Log_Info( "client id is %lu" , client_id );
+
+    uint8_t connect_token[NETCODE_CONNECT_TOKEN_BYTES];
+
+    if ( netcode_generate_connect_token( 1, &server_address, &server_address, CONNECT_TOKEN_EXPIRY, CONNECT_TOKEN_TIMEOUT, client_id, GAME_PROTOCOL_ID, private_key, user_data, connect_token ) != NETCODE_OK )
+    {
+        Log_Error( "error: failed to generate connect token" );
+        return (void*)1;
+    }
+
+    netcode_client_connect( client, connect_token );
+
+    bool quit = false;
+
+    while ( !quit )
+    {
+        netcode_client_update( client, time );
+        netcode_sleep( delta_time );
+
+        
+        netcode_client_send_packet(client, &gMatchmakingInfo, sizeof(struct MatchMakingMessage));
+
+        while ( 1 )     
+        {
+            int packet_bytes;
+            uint64_t packet_sequence;
+            void * packet = netcode_client_receive_packet( client, &packet_bytes, &packet_sequence );
+            if(packet)
+            {
+                EASSERT(packet_bytes == sizeof(struct MatchMakingMessage));
+                struct MatchMakingMessage* pMsg = packet_bytes;
+                switch(pMsg->type)
+                {
+                case MM_ServerSeekClient:
+                case MM_ClientSeekServer:
+                    EASSERT(false);
+                    break;
+                case MM_GameConnection:
+                    gCmdArgs.serverAddress = malloc(strlen(pMsg->data.peer.address) + 1);
+                    strcpy(gCmdArgs.serverAddress, pMsg->data.peer.address);
+                    break;
+                }
+                netcode_client_free_packet( client, packet );
+                break;
+            }
+        }
+        
+        
+
+        time += delta_time;
+    }
+game_found:
+    netcode_client_destroy( client );
+    return gCmdArgs.serverAddress;
+}
+
+static void MatchmakeClientServerUpdate(struct netcode_client_t * client)
+{
+    netcode_client_send_packet(client, &gMatchmakingInfo, sizeof(struct MatchMakingMessage));
+    while ( 1 )     
+    {
+        int packet_bytes;
+        uint64_t packet_sequence;
+        void * packet = netcode_client_receive_packet( client, &packet_bytes, &packet_sequence );
+        if(packet)
+        {
+            EASSERT(packet_bytes == sizeof(struct MatchMakingMessage));
+            struct MatchMakingMessage* pMsg = packet_bytes;
+            switch(pMsg->type)
+            {
+            case MM_ServerSeekClient:
+            case MM_ClientSeekServer:
+                EASSERT(false);
+                break;
+            case MM_GameConnection:
+                gCmdArgs.serverAddress = malloc(strlen(pMsg->data.peer.address) + 1);
+                strcpy(gCmdArgs.serverAddress, pMsg->data.peer.address);
+                break;
+            }
+            netcode_client_free_packet( client, packet );
+            break;
+        }
+    }
+}
+
 DECLARE_THREAD_PROC(ClientThread, arg)
 {
+    if(gCmdArgs.matchmakingServerAddress)
+    {
+        MatchmakeClient();
+    }
     struct GameClient gameClient = 
     {
         .state = GCS_Disconnected
@@ -708,7 +864,7 @@ DECLARE_THREAD_PROC(ClientThread, arg)
     struct netcode_client_config_t client_config;
     netcode_default_client_config( &client_config );
     client_config.network_simulator = GetNetworkSimulator();
-    struct netcode_client_t * client = netcode_client_create( "0.0.0.0:667", &client_config, time );
+    struct netcode_client_t * client = netcode_client_create( gCmdArgs.clientAddress, &client_config, time );
 
     if ( !client )
     {
@@ -832,8 +988,48 @@ static void ServiceServerConnectionEvents(struct GameClient* client, struct netc
     ServiceConnectionEventsBase(client, clientIndex, pQueues, &IsServerClientConnected, server);
 }
 
+/// @brief return a client to the matchmaking server that a game server uses to advertise itself for matchmaking
+static struct netcode_client_t* CreateServerMatchmakingClient()
+{
+    gMatchmakingInfo.type = MM_ClientSeekServer;
+    strcpy(gMatchmakingInfo.data.clientInfo.playerInfo.username, gCmdArgs.playerName);
+    double time = 0.0;
+    double delta_time = 1.0 / 60.0;
+    struct netcode_client_config_t client_config;
+    netcode_default_client_config( &client_config );
+    struct netcode_client_t * client = netcode_client_create( gCmdArgs.clientAddress, &client_config, time );
+    uint64_t client_id = 0;
+    netcode_random_bytes( (uint8_t*) &client_id, 8 );
+    Log_Info( "client id is %lu" , client_id );
+
+    NETCODE_CONST char* server_address = gCmdArgs.matchmakingServerAddress;
+
+    client_id = 0;
+    uint8_t user_data[NETCODE_USER_DATA_BYTES];
+
+    netcode_random_bytes( (uint8_t*) &client_id, 8 );
+    Log_Info( "client id is %lu" , client_id );
+
+    uint8_t connect_token[NETCODE_CONNECT_TOKEN_BYTES];
+
+    if ( netcode_generate_connect_token( 1, &server_address, &server_address, CONNECT_TOKEN_EXPIRY, CONNECT_TOKEN_TIMEOUT, client_id, GAME_PROTOCOL_ID, private_key, user_data, connect_token ) != NETCODE_OK )
+    {
+        Log_Error( "error: failed to generate connect token" );
+        return (void*)1;
+    }
+
+    netcode_client_connect( client, connect_token );
+    return client;
+}
+
+
 DECLARE_THREAD_PROC(ClientServerThread, arg)
 {
+    struct netcode_client_t* pMatchmakingServerClient = NULL;
+    if(gCmdArgs.matchmakingServerAddress)
+    {
+        pMatchmakingServerClient = CreateServerMatchmakingClient();
+    }
 
     struct GameClient gameClients[GAME_MAX_CLIENTS];
     struct NetworkThreadQueues* pQueues = arg; 
@@ -875,6 +1071,16 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
         if(server_config.network_simulator)
         {
             netcode_network_simulator_update(server_config.network_simulator, time);
+        }
+
+        if(pMatchmakingServerClient)
+        {
+            netcode_client_update(pMatchmakingServerClient, time);
+        }
+
+        if(pMatchmakingServerClient)
+        {
+            MatchmakeClientServerUpdate(pMatchmakingServerClient);
         }
 
         netcode_server_update( server, time );

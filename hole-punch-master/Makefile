@@ -33,9 +33,6 @@ hole_punch_server: $(SERVEROBJS)
 %.o: %.c Makefile
 	$(CC) $(CFLAGS) -fPIC -MMD -MP -c $< -o $@
 
-%.o: %.cpp Makefile
-	$(CXX) $(CXXFLAGS) -fPIC -MMD -MP -c $< -o $@
-
 clean:
 	-$(RM) -f $(CLIENTOBJS) client $(SERVEROBJS) server *.d
 

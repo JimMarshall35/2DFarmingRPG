@@ -109,6 +109,8 @@ void Engine_ParseCmdArgs(int argc, char** argv, ArgHandlerFn handlerFn)
     gCmdArgs.role = GR_Singleplayer;
     gCmdArgs.serverAddress = "127.0.0.1:40000";
     gCmdArgs.clientAddress = "0.0.0.0";
+    gCmdArgs.matchmakingServerAddress = NULL;
+    gCmdArgs.playerName = "Jim";
     gCmdArgs.bLogTextColoured = true;
     gCmdArgs.bIncludeLogTimeStamps = true;
     gCmdArgs.bLogTIDs = true;
@@ -121,6 +123,13 @@ void Engine_ParseCmdArgs(int argc, char** argv, ArgHandlerFn handlerFn)
         {
             
             Log_Info("Cmd arg %i: %s", i, argv[i]);
+            if(strcmp(argv[i], "--name") == 0 || strcmp(argv[i], "-n") == 0)
+            {
+                EASSERT(i + 1 < argc);
+                i++;
+                Log_Info("Cmd arg %i: %s", i, argv[i]);
+                gCmdArgs.playerName = argv[i];
+            }
             if(strcmp(argv[i], "--role") == 0 || strcmp(argv[i], "-r") == 0)
             {
                 EASSERT(i + 1 < argc);
@@ -148,6 +157,13 @@ void Engine_ParseCmdArgs(int argc, char** argv, ArgHandlerFn handlerFn)
                 i++;
                 Log_Info("Cmd arg %i: %s", i, argv[i]);
                 gCmdArgs.clientAddress = argv[i];
+            }
+            else if(strcmp(argv[i], "--matchmaking_address") == 0 || strcmp(argv[i], "-m") == 0)
+            {
+                EASSERT(i + 1 < argc);
+                i++;
+                Log_Info("Cmd arg %i: %s", i, argv[i]);
+                gCmdArgs.matchmakingServerAddress = argv[i];
             }
             else if(strcmp(argv[i], "--log_level") == 0 || strcmp(argv[i], "-l") == 0)
             {

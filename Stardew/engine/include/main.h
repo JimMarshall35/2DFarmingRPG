@@ -29,6 +29,8 @@ struct CommandLineArgs
     enum GameRole role;
     char* serverAddress;
     char* clientAddress;
+    char* matchmakingServerAddress;
+    char* playerName;
     bool bLogTextColoured;
     bool bIncludeLogTimeStamps;
     bool bLogTIDs;

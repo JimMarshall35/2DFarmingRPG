@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Usage: %s addr port passes\n", argv[0]);
         return 1;
     }
+    printf("hello\n");
 
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
@@ -107,6 +108,7 @@ int main(int argc, char **argv) {
     last_port   = (uint16_t *) (last_addr + 1);
 
     /* Ping server, sending all zeros */
+    printf("pinging server %s:%s\n", argv[1], argv[2]);
     ssize_t sendret = sendto(fd, buf, sizeof(buf), 0, (const struct sockaddr *)&addr, addr_len);
     if (sendret < 0) {
         fprintf(stderr, "Error on sendto.  errno %d\n", errno);

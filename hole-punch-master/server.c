@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <libgen.h>
+
 /**
  * The server listens on the specified port for UDP packets.  It then
  * alternates between two states as it receives messages from clients.
@@ -124,6 +125,7 @@ int main(int argc, char **argv) {
             sizeof(next_data));
         if (sendret < 0) {
             printf("Error on sendto.  errno %d\n", errno);
+            fflush(stdout); 
             return 6;
         }
 

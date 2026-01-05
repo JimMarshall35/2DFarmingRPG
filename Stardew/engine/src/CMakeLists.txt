@@ -1,6 +1,4 @@
 
-file(GLOB SODIUM_SRC vendor/netcode-1.2.3/sodium/*.c)
-
 add_library( StardewEngine SHARED
 core/Atlas.c
 core/BinarySerializer.c
@@ -62,8 +60,6 @@ rendering/DrawContext.c
 scripting/Scripting.c
 input/InputContext.c
 main.c
-vendor/netcode-1.2.3/netcode.c
-${SODIUM_SRC}
 )
 
 # add_executable( NetcodeExampleServer

@@ -1,13 +1,7 @@
-FROM alpine:latest AS builder
-RUN apk add build-base
-RUN apk add cmake
-RUN apk add glfw-dev
-RUN apk add libxml2-dev
-RUN apk add box2d-dev
-RUN apk add freetype-dev
-RUN apk add gtest-dev
-RUN apk add lua5.4-dev
-RUN apk add lua5.4-libs
+FROM debian:bookworm-slim AS builder
+RUN sudo apt-get update
+RUN sudo apt-get install -y cmake build-essential
+RUN sudo apt-get install -y libxml2 liblua5.4-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev
 
 RUN mkdir -p /app
 COPY ./Stardew /app
@@ -16,9 +10,9 @@ WORKDIR /app/build
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release
 
 
-FROM alpine:latest
+FROM debian:bookworm-slim
 RUN mkdir -p /app
-COPY --from=builder /app/build/matchmaking_server /app/
+COPY --from=builder /app/build/matchmaking_server/MatchmakingServer /app/
 RUN ls /app
 EXPOSE 666/udp
 ENTRYPOINT [ "/app/MatchmakingServer" ]

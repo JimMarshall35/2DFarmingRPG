@@ -16,4 +16,4 @@ COPY --from=builder /app/build/matchmaking_server/MatchmakingServer /app/
 RUN ls /app
 EXPOSE 40000/udp
 ENTRYPOINT [ "/app/MatchmakingServer" ]
-CMD [ "0.0.0.0:40000" ]
+CMD [ "40000" ]

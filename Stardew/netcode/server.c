@@ -62,7 +62,7 @@ int main( int argc, char ** argv )
 
     #define TEST_PROTOCOL_ID 0x1122334455667788
 
-    char * server_address = "0.0.0.0:666";
+    char * server_address = "127.0.0.1:40000";
     if ( argc == 2 )
         server_address = argv[1];
 

@@ -34,12 +34,6 @@ target_include_directories(StardewEngine  PRIVATE ../netcode/sodium)
 
 set_property(TARGET StardewEngine PROPERTY C_STANDARD 11)
 
-# target_include_directories(NetcodeExampleServer  PRIVATE src/vendor/netcode-1.2.3)
-# target_include_directories(NetcodeExampleServer  PRIVATE src/vendor/netcode-1.2.3/sodium)
-
-# target_include_directories(NetcodeExampleClient  PRIVATE src/vendor/netcode-1.2.3)
-# target_include_directories(NetcodeExampleClient  PRIVATE src/vendor/netcode-1.2.3/sodium)
-
 target_include_directories(StardewEngine PUBLIC ${FREETYPE_INCLUDE_DIRS})
 target_include_directories(StardewEngine PUBLIC ${LUA_INCLUDE_DIR})
 target_include_directories(StardewEngine PUBLIC ${LIBXML2_INCLUDE_DIR})

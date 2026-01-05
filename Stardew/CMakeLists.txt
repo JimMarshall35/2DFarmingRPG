@@ -1,6 +1,7 @@
 include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.25)
 project(WarFarmer)
+
 add_subdirectory(netcode)
 
 
@@ -8,6 +9,7 @@ add_subdirectory(engine)
 add_subdirectory(game)
 add_subdirectory(enginetest)
 add_subdirectory(atlastool)
+add_subdirectory(matchmaking_server)
 
 
 if(NOT WIN32)

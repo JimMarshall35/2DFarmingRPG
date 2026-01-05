@@ -1,5 +1,5 @@
 add_executable(MatchmakingServer 
-main.c
+main.cpp
 )
 
 target_link_libraries(MatchmakingServer PUBLIC Netcode)

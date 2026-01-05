@@ -1,12 +1,12 @@
 FROM alpine:latest AS builder
 RUN apk add build-base
 RUN apk add cmake
-RUN apk add glfw
-RUN apk add libxml2
-RUN apk add box2d
-RUN apk add freetype
-RUN apk add gtest
-RUN apk add lua5.4
+RUN apk add glfw-dev
+RUN apk add libxml2-dev
+RUN apk add box2d-dev
+RUN apk add freetype-dev
+RUN apk add gtest-dev
+RUN apk add lua5.4-dev
 
 RUN mkdir -p /app
 COPY ./Stardew /app

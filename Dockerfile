@@ -7,6 +7,7 @@ RUN apk add box2d-dev
 RUN apk add freetype-dev
 RUN apk add gtest-dev
 RUN apk add lua5.4-dev
+RUN apk add lua5.4-libs
 
 RUN mkdir -p /app
 COPY ./Stardew /app

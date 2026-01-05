@@ -14,6 +14,6 @@ FROM debian:bookworm-slim
 RUN mkdir -p /app
 COPY --from=builder /app/build/matchmaking_server/MatchmakingServer /app/
 RUN ls /app
-EXPOSE 666/udp
+EXPOSE 40000/udp
 ENTRYPOINT [ "/app/MatchmakingServer" ]
-CMD [ "0.0.0.0:666" ]
+CMD [ "0.0.0.0:40000" ]

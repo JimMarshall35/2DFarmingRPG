@@ -9,7 +9,7 @@ find_package(freetype CONFIG REQUIRED)
 find_package(libxml2 CONFIG REQUIRED)
 else()
 find_package(glfw3 REQUIRED)
-find_package(Lua REQUIRED)
+find_package(Lua 5.4 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(LibXml2 REQUIRED)
 

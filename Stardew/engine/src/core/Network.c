@@ -684,48 +684,6 @@ static void ServiceClientConnectionEvents(struct GameClient* gameClient, struct 
     ServiceConnectionEventsBase(gameClient, -1, pQueues, &IsConnectedToServer, client);
 }
 
-enum MatchmakingProtocolMessageType
-{
-    MM_ClientSeekServer,
-    MM_ServerSeekClient,
-    MM_GameConnection,
-};
-
-struct PlayerInfo
-{
-    char username[64];
-};
-
-struct ClientMatchmakingInfo
-{
-    struct PlayerInfo playerInfo;
-};
-
-// ip numbers = (4 * groups of 3 + 3 dots) + ':' + 5 numbers for port + null terminator
-#define IP_AND_PORT_BUF_SIZE (15 + 3 + 1 + 5 + 1) 
-
-struct ServerMatchmakingInfo
-{
-    struct PlayerInfo playerInfo;
-    int availableSlots;
-};
-
-struct PeerAddress
-{
-    char username[64];
-    char address[IP_AND_PORT_BUF_SIZE];
-};
-
-struct MatchMakingMessage
-{
-    enum MatchmakingProtocolMessageType type;
-    union
-    {
-        struct ClientMatchmakingInfo clientInfo;
-        struct ServerMatchmakingInfo serverInfo;
-        struct PeerAddress peer;
-    }data;
-};
 
 struct MatchMakingMessage gMatchmakingInfo;
 

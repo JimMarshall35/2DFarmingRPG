@@ -1,6 +1,10 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "ThreadSafeQueue.h"
 #include "SharedPtr.h"
 #include "IntTypes.h"
@@ -30,6 +34,59 @@
 
     Some better memory usage arrangement needs to be come up with at some point.
 */
+
+enum MatchmakingProtocolMessageType
+{
+    /// @brief client sends to matchmaking server to seek a game server
+    MM_ClientSeekServer,
+
+    /// @brief game server sends to matchmaking server to begin seeking clients
+    MM_ServerSeekClient,
+
+    /// @brief send from the game server to the matchmaking server to indicate a player has joined
+    MM_ServerPeerJoined,
+
+    /// @brief send to client with address of server to join
+    MM_GameConnection,
+};
+
+
+struct PlayerInfo
+{
+    char username[64];
+};
+
+struct ClientMatchmakingInfo
+{
+    struct PlayerInfo playerInfo;
+};
+
+// ip numbers = (4 * groups of 3 + 3 dots) + ':' + 5 numbers for port + null terminator
+#define IP_AND_PORT_BUF_SIZE (15 + 3 + 1 + 5 + 1) 
+
+struct ServerMatchmakingInfo
+{
+    struct PlayerInfo playerInfo;
+    int availableSlots;
+};
+
+struct PeerAddress
+{
+    char username[64];
+    char address[IP_AND_PORT_BUF_SIZE];
+};
+
+struct MatchMakingMessage
+{
+    enum MatchmakingProtocolMessageType type;
+    union
+    {
+        struct ClientMatchmakingInfo clientInfo;
+        struct ServerMatchmakingInfo serverInfo;
+        struct PeerAddress peer;
+    }data;
+};
+
 
 struct NetworkQueueItem
 {
@@ -83,5 +140,9 @@ bool NW_DequeueConnectionEvent(struct NetworkConnectionEvent* pOut);
 void NW_EnqueueData(struct NetworkQueueItem* pIn);
 
 enum GameRole NW_GetRole();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

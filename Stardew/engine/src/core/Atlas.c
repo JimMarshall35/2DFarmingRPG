@@ -19,6 +19,7 @@
 #include "BitField2D.h"
 #include "StringKeyHashMap.h"
 #include "Log.h"
+#include "StardewString.h"
 
 FT_Library  gFTLib;
 static int gSpriteId = 1;
@@ -1548,7 +1549,7 @@ float Fo_StringWidth(hAtlas hAtlas, HFont hFont, const char* stringVal)
 	return width;
 }
 
-float Fo_StringHeight(hAtlas hAtlas, HFont hFont, const char* stringVal)
+float Fo_StringHeightSingleLine(hAtlas hAtlas, HFont hFont, const char* stringVal)
 {
 	ATLAS_HANDLE_BOUNDS_CHECK(hAtlas, 0.0f);
 	FONT_HANDLE_BOUNDS_CHECK(hAtlas, hFont, false);
@@ -1585,6 +1586,21 @@ float Fo_StringHeight(hAtlas hAtlas, HFont hFont, const char* stringVal)
 	return r;
 }
 
+float Fo_StringHeight(hAtlas hAtlas, HFont hFont, const char* stringVal)
+{
+	DECLARE_STATIC_STRING_COPY(sCopy, stringVal)
+	int numTokens = Str_Tokenize(sCopy, '\n');
+	char* line = sCopy;
+	float height = 0.0f;
+	for(int i=0; i<numTokens; i++)
+	{
+		height += Fo_StringHeightSingleLine(hAtlas, hFont, line);
+		Str_AdvanceToNextToken(&line);
+	}
+	
+	return Fo_StringHeightSingleLine(hAtlas, hFont, stringVal);
+}
+
 AtlasSprite* Fo_GetCharSprite(hAtlas hAtlas, HFont hFont, char c)
 {
 	ATLAS_HANDLE_BOUNDS_CHECK(hAtlas, NULL);
@@ -1616,6 +1632,30 @@ float Fo_GetMaxYBearing(hAtlas hAtlas, HFont hFont, const char* str)
 	return maxBearing;
 }
 
+float Fo_GetMinYBearing(hAtlas hAtlas, HFont hFont, const char* str)
+{
+	ATLAS_HANDLE_BOUNDS_CHECK(hAtlas, false);
+	FONT_HANDLE_BOUNDS_CHECK(hAtlas, hFont, false);
+
+	float maxBearing = 100000000.0f;
+	struct AtlasFont* pFont = &gAtlases[hAtlas].fonts[hFont];
+	
+	size_t len = strlen(str);
+	for (int i = 0; i < len; i++)
+	{
+		char c = str[i];
+		if (IsCharLoaded(pFont, c))
+		{
+			if (pFont->spriteData[c].bearing[1] < maxBearing)
+			{
+				maxBearing = pFont->spriteData[c].bearing[1];
+			}
+		}
+	}
+	return maxBearing;
+}
+
+
 bool Fo_TryGetCharBearing(hAtlas hAtlas, HFont hFont, char c, vec2 outBearing)
 {
 	ATLAS_HANDLE_BOUNDS_CHECK(hAtlas, false);
@@ -1634,12 +1674,9 @@ bool Fo_TryGetCharAdvance(hAtlas hAtlas, HFont hFont, char c, float* outAdvance)
 {
 	ATLAS_HANDLE_BOUNDS_CHECK(hAtlas, false);
 	FONT_HANDLE_BOUNDS_CHECK(hAtlas, hFont, false);
+	outAdvance[0] = gAtlases[hAtlas].fonts[hFont].spriteData[(u8)c].advance[0];
+	outAdvance[1] = gAtlases[hAtlas].fonts[hFont].spriteData[(u8)c].advance[1];
 
-	// if (!gAtlases[hAtlas].fonts[hFont].sprites[(u8)c].individualTileBytes)
-	// {
-	// 	return false;
-	// }
-	*outAdvance = gAtlases[hAtlas].fonts[hFont].spriteData[(u8)c].advance[0];
 	return true;
 }
 

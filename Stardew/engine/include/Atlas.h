@@ -120,9 +120,27 @@ HFont Fo_FindFont(hAtlas hAtlas, const char* fontName, float sizePts);
 float Fo_CharWidth(hAtlas hAtlas, HFont hFont, char c);
 float Fo_CharHeight(hAtlas hAtlas, HFont hFont, char c);
 float Fo_StringWidth(hAtlas hAtlas, HFont hFont, const char* stringVal);
+
+float Fo_StringHeightSingleLine(hAtlas hAtlas, HFont hFont, const char* stringVal);
 float Fo_StringHeight(hAtlas hAtlas, HFont hFont, const char* stringVal);
 AtlasSprite* Fo_GetCharSprite(hAtlas hAtlas, HFont hFont, char c);
+
+/// @brief get the maximum y bearing value for a string:
+///		- bearing is offset from pen position to bounding box edge
+/// @param hAtlas 
+/// @param hFont 
+/// @param str 
+/// @return max Y bearing
 float Fo_GetMaxYBearing(hAtlas hAtlas, HFont hFont, const char* str);
+
+/// @brief get the minimum y bearing value for a string:
+///		- bearing is offset from pen position to bounding box edge
+///		- used to position the string by its top left corner
+/// @param hAtlas 
+/// @param hFont 
+/// @param str 
+/// @return min Y bearing
+float Fo_GetMinYBearing(hAtlas hAtlas, HFont hFont, const char* str);
 
 bool Fo_TryGetCharBearing(hAtlas hAtlas, HFont hFont, char c, vec2 outBearing);
 bool Fo_TryGetCharAdvance(hAtlas hAtlas, HFont hFont, char c, float* outAdvance);

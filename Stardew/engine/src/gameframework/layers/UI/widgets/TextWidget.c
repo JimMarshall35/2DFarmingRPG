@@ -10,6 +10,7 @@
 #include "Scripting.h"
 #include "RootWidget.h"
 #include "Log.h"
+#include "StardewString.h"
 
 void TextWidget_Destroy(struct TextWidgetData* pData)
 {
@@ -42,18 +43,31 @@ static void OnDestroy(struct UIWidget* pWidget)
 	free(pData);
 }
 
+
+
 void* TextWidget_OutputVerts(float left, float top, const struct WidgetPadding* padding, struct TextWidgetData* pData, VECTOR(WidgetVertex) pOutVerts)
 {
-	//struct TextWidgetData* pData = pThisWidget->pImplementationData;
+	DECLARE_STATIC_STRING_COPY(sCopyBuffer, pData->content)
+	int numLines = Str_Tokenize(sCopyBuffer, '\n');
+	char* currentLine = sCopyBuffer;
+
 	float maxYBearing = Fo_GetMaxYBearing(pData->atlas, pData->font, pData->content);
 	vec2 pen = { left + padding->paddingLeft, top + maxYBearing + padding->paddingTop };
-	size_t len = strlen(pData->content);
+	vec2 start = { pen[0], pen[1] };
 	for (int i = 0; i < len; i++)
 	{
 		char c = pData->content[i];
+		if(c == '\n')
+		{
+			float height = Fo_StringHeightSingleLine(pData->atlas, pData->font, currentLine);
+			Str_AdvanceToNextToken(&currentLine);
+			pen[0] = start[0];
+			pen[1] += height;
+			//continue;
+		}
 		AtlasSprite* pAtlasSprite = Fo_GetCharSprite(pData->atlas, pData->font, c);
 		vec2 bearing = { 0,0 };
-		float advance = 0.0f;
+		vec2 advance = { 0.0, 0.0 };
 		vec2 output = { 0,0 };
 		vec2 bearingApplied = { 0,0 };
 
@@ -66,7 +80,7 @@ void* TextWidget_OutputVerts(float left, float top, const struct WidgetPadding* 
 
 		EVERIFY(Fo_TryGetCharBearing(pData->atlas, pData->font, c, bearing));
 		bearing[1] *= -1.0f; // FT coordinate system for bearing has increasing Y as up, in our game coordinate system that is decreasing y 
-		EVERIFY(Fo_TryGetCharAdvance(pData->atlas, pData->font, c, &advance));
+		EVERIFY(Fo_TryGetCharAdvance(pData->atlas, pData->font, c, advance));
 		WidgetQuad quad;
 		PopulateWidgetQuadWholeSprite(&quad, pAtlasSprite);
 		SetWidgetQuadColour(&quad, pData->r, pData->g, pData->b, pData->a);
@@ -74,9 +88,9 @@ void* TextWidget_OutputVerts(float left, float top, const struct WidgetPadding* 
 		// topleft
 		glm_vec2_add(bearing, pen, output);
 		TranslateWidgetQuad(output, &quad);
-		pOutVerts = OutputWidgetQuad(pOutVerts, &quad);
 
-		pen[0] += advance;
+		pOutVerts = OutputWidgetQuad(pOutVerts, &quad);
+		glm_vec2_add(advance, pen, pen);
 	}
 
 	return pOutVerts;
@@ -85,15 +99,27 @@ void* TextWidget_OutputVerts(float left, float top, const struct WidgetPadding* 
 void* TextWidget_OutputAtLetter(float left, float top, const struct WidgetPadding* padding, struct TextWidgetData* pData, char charOverlay, int letterOverlay, VECTOR(WidgetVertex) pOutVerts)
 {
 	//struct TextWidgetData* pData = pThisWidget->pImplementationData;
+	DECLARE_STATIC_STRING_COPY(sCopyBuffer, pData->content)
+	int numLines = Str_Tokenize(sCopyBuffer, '\n');
+	char* currentLine = sCopyBuffer;
+
 	float maxYBearing = Fo_GetMaxYBearing(pData->atlas, pData->font, pData->content);
 	vec2 pen = { left + padding->paddingLeft, top + maxYBearing + padding->paddingTop };
-	size_t len = strlen(pData->content);
-	for (int i = 0; i <= len; i++)
+	vec2 start = { pen[0], pen[1] };
+	for (int i = 0; i < len; i++)
 	{
 		char c = pData->content[i];
+		if(c == '\n')
+		{
+			float height = Fo_StringHeightSingleLine(pData->atlas, pData->font, currentLine);
+			Str_AdvanceToNextToken(&currentLine);
+			pen[0] = start[0];
+			pen[1] += height;
+			continue;
+		}
 		AtlasSprite* pAtlasSprite = Fo_GetCharSprite(pData->atlas, pData->font, c);
 		vec2 bearing = { 0,0 };
-		float advance = 0.0f;
+		vec2 advance = { 0.0, 0.0 };
 		vec2 output = { 0,0 };
 		vec2 bearingApplied = { 0,0 };
 
@@ -104,20 +130,16 @@ void* TextWidget_OutputAtLetter(float left, float top, const struct WidgetPaddin
 			return pOutVerts;
 		}
 
-		if(i == letterOverlay)
-		{
-			EVERIFY(Fo_TryGetCharBearing(pData->atlas, pData->font, charOverlay, bearing));
-		}
-		
+		EVERIFY(Fo_TryGetCharBearing(pData->atlas, pData->font, c, bearing));
 		bearing[1] *= -1.0f; // FT coordinate system for bearing has increasing Y as up, in our game coordinate system that is decreasing y 
-		EVERIFY(Fo_TryGetCharAdvance(pData->atlas, pData->font, c, &advance));
-		
-		
-
+		EVERIFY(Fo_TryGetCharAdvance(pData->atlas, pData->font, c, advance));
+		WidgetQuad quad;
+		PopulateWidgetQuadWholeSprite(&quad, pAtlasSprite);
+		SetWidgetQuadColour(&quad, pData->r, pData->g, pData->b, pData->a);
 
 		// topleft
 		glm_vec2_add(bearing, pen, output);
-
+		TranslateWidgetQuad(output, &quad);
 		output[1] = top;
 		if(i == letterOverlay)
 		{
@@ -128,11 +150,9 @@ void* TextWidget_OutputAtLetter(float left, float top, const struct WidgetPaddin
 			TranslateWidgetQuad(output, &quad);
 			pOutVerts = OutputWidgetQuad(pOutVerts, &quad);
 		}
-		
-		
-		pen[0] += advance;
+		glm_vec2_add(advance, pen, pen);
 	}
-
+	
 	return pOutVerts;
 }
 

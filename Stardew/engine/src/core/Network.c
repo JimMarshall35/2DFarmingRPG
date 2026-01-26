@@ -796,10 +796,7 @@ static void MatchmakeClientServerUpdate(struct netcode_client_t * client)
 
 DECLARE_THREAD_PROC(ClientThread, arg)
 {
-    if(gCmdArgs.matchmakingServerAddress)
-    {
-        MatchmakeClient();
-    }
+    
     struct GameClient gameClient = 
     {
         .state = GCS_Disconnected
@@ -812,7 +809,12 @@ DECLARE_THREAD_PROC(ClientThread, arg)
         return (void*)1;
     }
 
-    netcode_log_level( NETCODE_LOG_LEVEL_INFO );
+    if(gCmdArgs.matchmakingServerAddress)
+    {
+        MatchmakeClient();
+    }
+
+    netcode_log_level( NETCODE_LOG_LEVEL_DEBUG );
 
     double time = 0.0;
     double delta_time = 1.0 / 60.0;
@@ -821,7 +823,7 @@ DECLARE_THREAD_PROC(ClientThread, arg)
 
     struct netcode_client_config_t client_config;
     netcode_default_client_config( &client_config );
-    client_config.network_simulator = GetNetworkSimulator();
+    client_config.network_simulator = NULL;//GetNetworkSimulator();
     struct netcode_client_t * client = netcode_client_create( gCmdArgs.clientAddress, &client_config, time );
 
     if ( !client )
@@ -957,8 +959,6 @@ static struct netcode_client_t* CreateServerMatchmakingClient()
     netcode_default_client_config( &client_config );
     struct netcode_client_t * client = netcode_client_create( gCmdArgs.clientAddress, &client_config, time );
     uint64_t client_id = 0;
-    netcode_random_bytes( (uint8_t*) &client_id, 8 );
-    Log_Info( "client id is %lu" , client_id );
 
     NETCODE_CONST char* server_address = gCmdArgs.matchmakingServerAddress;
 
@@ -975,14 +975,23 @@ static struct netcode_client_t* CreateServerMatchmakingClient()
         Log_Error( "error: failed to generate connect token" );
         return (void*)1;
     }
-
+    Log_Info("Generated connection token OK");
     netcode_client_connect( client, connect_token );
+    Log_Info("Connected OK");
     return client;
 }
 
 
 DECLARE_THREAD_PROC(ClientServerThread, arg)
 {
+    netcode_log_level( NETCODE_LOG_LEVEL_DEBUG );
+    netcode_set_printf_function(&NetcodeLog);
+    if ( netcode_init() != NETCODE_OK )
+    {
+        Log_Error( "failed to initialize netcode" );
+        return (void*)1;
+    }
+
     struct netcode_client_t* pMatchmakingServerClient = NULL;
     if(gCmdArgs.matchmakingServerAddress)
     {
@@ -992,14 +1001,8 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
     struct GameClient gameClients[GAME_MAX_CLIENTS];
     struct NetworkThreadQueues* pQueues = arg; 
     InitClients(&gameClients[0]);
-    netcode_set_printf_function(&NetcodeLog);
-    if ( netcode_init() != NETCODE_OK )
-    {
-        Log_Error( "failed to initialize netcode" );
-        return (void*)1;
-    }
-
-    netcode_log_level( NETCODE_LOG_LEVEL_INFO );
+    
+    
 
     double time = 0.0;
     double delta_time = 1.0 / 60.0;
@@ -1013,15 +1016,15 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
     server_config.protocol_id = GAME_PROTOCOL_ID;
     memcpy( &server_config.private_key, private_key, NETCODE_KEY_BYTES );
 
-    struct netcode_server_t * server = netcode_server_create( server_address, &server_config, time );
+    //struct netcode_server_t * server = netcode_server_create( server_address, &server_config, time );
 
-    if ( !server )
-    {
-        Log_Info( "error: failed to create server" );
-        return (void*)1;
-    }
+    // if ( !server )
+    // {
+    //     Log_Info( "error: failed to create server" );
+    //     return (void*)1;
+    // }
 
-    netcode_server_start( server, GAME_MAX_CLIENTS );
+    //netcode_server_start( server, GAME_MAX_CLIENTS );
     bool quit = false;
     while ( !quit )
     {
@@ -1041,22 +1044,22 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
             MatchmakeClientServerUpdate(pMatchmakingServerClient);
         }
 
-        netcode_server_update( server, time );
+        //netcode_server_update( server, time );
         
         /* pass messages to the game thread about clients connecting and disconnecting */
         for(int i=0; i<GAME_MAX_CLIENTS; i++)
         {
-            ServiceServerConnectionEvents(&gameClients[i], server, i, pQueues);
+            //ServiceServerConnectionEvents(&gameClients[i], server, i, pQueues);
         }
 
         /* resend any reliable packets that haven't been acknowledged after a certain threshold of time */
-        ServerResendReliablePackets(time, server);
+        //ServerResendReliablePackets(time, server);
 
         /* transmit any data from the game thread to clients */
-        DoTXQueueServer(pQueues, server, time);
+        //DoTXQueueServer(pQueues, server, time);
 
         /* recieve any packets from clients and push to game thread */
-        ServerRecievePackets(server, pQueues);
+        //ServerRecievePackets(server, pQueues);
 
         netcode_sleep( delta_time );
 
@@ -1068,7 +1071,7 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
         Log_Info( "shutting netcode thread down" );
     }
 
-    netcode_server_destroy( server );
+    //netcode_server_destroy( server );
 
     if(server_config.network_simulator)
     {

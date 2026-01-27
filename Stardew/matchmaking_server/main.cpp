@@ -26,7 +26,7 @@
 #include <array>
 #include <bitset>
 #include <assert.h>
-
+#include <iostream>
 static volatile int quit = 0;
 
 static uint8_t private_key[NETCODE_KEY_BYTES] = { 0x60, 0x6a, 0xbe, 0x6e, 0xc9, 0x19, 0x10, 0xea, 
@@ -275,6 +275,7 @@ private:
 
 int main( int argc, char ** argv )
 {
+    std::cout << "Matchmaking server version" << std::endl;
     (void) argc;
     (void) argv;
 

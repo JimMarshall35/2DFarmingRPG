@@ -1016,15 +1016,15 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
     server_config.protocol_id = GAME_PROTOCOL_ID;
     memcpy( &server_config.private_key, private_key, NETCODE_KEY_BYTES );
 
-    //struct netcode_server_t * server = netcode_server_create( server_address, &server_config, time );
+    struct netcode_server_t * server = netcode_server_create( server_address, &server_config, time );
 
-    // if ( !server )
-    // {
-    //     Log_Info( "error: failed to create server" );
-    //     return (void*)1;
-    // }
+    if ( !server )
+    {
+        Log_Info( "error: failed to create server" );
+        return (void*)1;
+    }
 
-    //netcode_server_start( server, GAME_MAX_CLIENTS );
+    netcode_server_start( server, GAME_MAX_CLIENTS );
     bool quit = false;
     while ( !quit )
     {
@@ -1044,22 +1044,22 @@ DECLARE_THREAD_PROC(ClientServerThread, arg)
             MatchmakeClientServerUpdate(pMatchmakingServerClient);
         }
 
-        //netcode_server_update( server, time );
+        netcode_server_update( server, time );
         
         /* pass messages to the game thread about clients connecting and disconnecting */
         for(int i=0; i<GAME_MAX_CLIENTS; i++)
         {
-            //ServiceServerConnectionEvents(&gameClients[i], server, i, pQueues);
+            ServiceServerConnectionEvents(&gameClients[i], server, i, pQueues);
         }
 
         /* resend any reliable packets that haven't been acknowledged after a certain threshold of time */
-        //ServerResendReliablePackets(time, server);
+        ServerResendReliablePackets(time, server);
 
         /* transmit any data from the game thread to clients */
-        //DoTXQueueServer(pQueues, server, time);
+        DoTXQueueServer(pQueues, server, time);
 
         /* recieve any packets from clients and push to game thread */
-        //ServerRecievePackets(server, pQueues);
+        ServerRecievePackets(server, pQueues);
 
         netcode_sleep( delta_time );
 

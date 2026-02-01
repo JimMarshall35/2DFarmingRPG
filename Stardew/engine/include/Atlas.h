@@ -23,6 +23,11 @@ typedef struct _AtlasSprite
 	int widthPx;
 	int heightPx;
 
+	int actualWidthPX;
+	int actualHeightPX;
+	int xOffsetToActual;
+	int yOffsetToActual;
+
 	int atlasTopLeftXPx;
 	int atlasTopLeftYPx;
 

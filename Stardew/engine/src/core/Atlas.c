@@ -120,6 +120,148 @@ void At_BeginAtlas()
 	atlas->tilesetIndexEnd = -1;
 }
 
+static void FindMinimalSpriteBox(int inTLXPx, int inTLYPx, int inWPx, int inHPx, const struct ImageFile* pImgIn,
+	int* pOutTLXPx, int* pOutTLYPx, int* pOutWPx, int* pOutHPx)
+{
+	u8* pData = pImgIn->pData;
+	/*
+		find first row of non empty pixels - use to set pOutTLYPx
+	*/
+	size_t rowWidth = pImgIn->width * CHANNELS_PER_PIXEL;
+	size_t startIndex = (inTLYPx * rowWidth) + (inTLXPx * CHANNELS_PER_PIXEL);
+	u8* readStart = &pData[startIndex];
+	int inHPXCpy = inHPx;
+	for (int i = 0; i < inHPXCpy; i++)
+	{
+		size_t startRow = startIndex + i * rowWidth;
+		bool bRowEmpty = true;
+		for(int j = 0; j < inWPx * CHANNELS_PER_PIXEL; j += CHANNELS_PER_PIXEL)
+		{
+			/* check alpha pixel */
+			if(readStart[j + 3] != 0)
+			{
+				bRowEmpty = false;
+				break;
+			}
+			
+		}
+		if(!bRowEmpty)
+		{
+			break;
+		}
+		inTLYPx++;
+		inHPx--;
+		readStart += rowWidth;
+	}
+	/* 
+		find last row of non empty pixels 
+	*/
+	startIndex = ((inTLYPx + (inHPx - 1)) * rowWidth) + (inTLXPx * CHANNELS_PER_PIXEL);
+	readStart = &pData[startIndex];
+	inHPXCpy = inHPx;
+	for (int i = 0; i < inHPXCpy; i++)
+	{
+		size_t startRow = startIndex + i * rowWidth;
+		bool bRowEmpty = true;
+		for(int j = 0; j < inWPx * CHANNELS_PER_PIXEL; j += CHANNELS_PER_PIXEL)
+		{
+			/* check alpha pixel */
+			if(readStart[j + 3] != 0)
+			{
+				bRowEmpty = false;
+				break;
+			}
+		}
+		if(!bRowEmpty)
+		{
+			break;
+		}
+		inHPx--;
+		readStart -= rowWidth;
+	}
+	/*
+		find smallest number of empty pixels at the start of any row,
+		use to increment inTLXPx and decrement width
+	*/
+	startIndex = (inTLYPx * rowWidth) + (inTLXPx * CHANNELS_PER_PIXEL);
+	readStart = &pData[startIndex];
+	inHPXCpy = inHPx;
+	int maxXSkip = INT_MAX;
+	for (int i = 0; i < inHPXCpy; i++)
+	{
+		int thisRowXSkip = 0;
+		for(int j = 0; j < inWPx * CHANNELS_PER_PIXEL; j += CHANNELS_PER_PIXEL)
+		{
+			/* check alpha pixel */
+			if(readStart[j + 3] != 0)
+			{
+				break;
+			}
+			thisRowXSkip++;
+		}
+		if(thisRowXSkip < maxXSkip)
+		{
+			maxXSkip = thisRowXSkip;
+		}
+		readStart += rowWidth;
+	}
+	if(maxXSkip == INT_MAX)
+	{
+		maxXSkip = 0;
+	}
+	inTLXPx += maxXSkip;
+	inWPx -= maxXSkip;
+	/*
+		find the smallest number of empty pixels at the end of any row,
+		use to decrement width
+	*/
+	startIndex = (inTLYPx * rowWidth) + ((inTLXPx  + (inWPx - 1))* CHANNELS_PER_PIXEL);
+	readStart = &pData[startIndex];
+	inHPXCpy = inHPx;
+	maxXSkip = INT_MAX;
+	for (int i = 0; i < inHPXCpy; i++)
+	{
+		int thisRowXSkip = 0;
+		for(int j = 0; j > -(inWPx * CHANNELS_PER_PIXEL); j -= CHANNELS_PER_PIXEL)
+		{
+			/* check alpha pixel */
+			if(readStart[j + 3] != 0)
+			{
+				break;
+			}
+			thisRowXSkip++;
+		}
+		if(thisRowXSkip < maxXSkip)
+		{
+			maxXSkip = thisRowXSkip;
+		}
+		readStart += rowWidth;
+	}
+	if(maxXSkip == INT_MAX)
+	{
+		maxXSkip = 0;
+	}
+	inWPx -= maxXSkip;
+	/*
+		write to out pointers
+	*/
+	*pOutHPx = inHPx;
+	*pOutWPx = inWPx;
+	*pOutTLXPx = inTLXPx;
+	*pOutTLYPx = inTLYPx;
+}
+
+static void CallMinimalSpriteBoxAndLog(int inTLXPx, int inTLYPx, int inWPx, int inHPx, const struct ImageFile* pImgIn)
+{
+	int minTLXPx = 0;
+	int minTLYPx = 0;
+	int minWPx = 0;
+	int minHPx = 0;
+	FindMinimalSpriteBox(inTLXPx, inTLYPx, inWPx, inHPx, pImgIn, &minTLXPx, &minTLYPx, &minWPx, &minHPx);
+	printf("FindMinimalSpriteBox:\nIN: tlx: %i tly: %i, w: %i, h: %i OUT: tlx: %i tly: %i w: %i h: %i\n", inTLXPx, inTLYPx, inWPx, inHPx,
+	minTLXPx, minTLYPx, minWPx, minHPx);
+}
+
 hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int widthPx, int heightPx, const char* name)
 {
 	HImage img = IR_LookupHandleByPath(imgPath);
@@ -137,7 +279,7 @@ hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int wi
 	sprite.atlas = gCurrentAtlasIndex;
 	sprite.srcImage = img;
 	size_t sizeOfSpriteData = widthPx * heightPx * CHANNELS_PER_PIXEL;
-	//sprite.individualTileBytes = malloc(sizeOfSpriteData);
+	sprite.individualTileBytes = malloc(sizeOfSpriteData);
 	sprite.name = malloc(strlen(name) + 1);
 	sprite.id = gSpriteId++;
 
@@ -145,11 +287,11 @@ hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int wi
 	
 	u8* pData = IR_GetImageData(img);
 	const struct ImageFile* pImg = IR_GetImageFile(img);
-	sprite.individualTileBytes = pData;
-
+	printf("sprite: %s\n", sprite.name);
+	CallMinimalSpriteBoxAndLog(topLeftXPx, topLeftYPx, widthPx, heightPx, pImg);
 	size_t rowWidth = pImg->width * CHANNELS_PER_PIXEL;
 	size_t startIndex = (topLeftYPx * rowWidth) + (topLeftXPx * CHANNELS_PER_PIXEL);
-	u8* writeStart = pData;
+	u8* writeStart = sprite.individualTileBytes;
 	for (int i = 0; i < heightPx; i++)
 	{
 		size_t startRow = startIndex + i * rowWidth;

@@ -870,6 +870,8 @@ int netcode_socket_receive_packet( struct netcode_socket_t * socket, struct netc
     }
 #endif // #if NETCODE_PLATFORM == NETCODE_PLATFORM_WINDOWS
 
+    netcode_printf(NETCODE_LOG_LEVEL_INFO, "recieved a packet");
+
     if ( sockaddr_from.ss_family == AF_INET6 )
     {
         struct sockaddr_in6 * addr_ipv6 = (struct sockaddr_in6*) &sockaddr_from;

@@ -480,10 +480,8 @@ int SortFunc(const void* a, const void* b)
 {
 	AtlasSprite* pSprite1 = (AtlasSprite*)a;
 	AtlasSprite* pSprite2 = (AtlasSprite*)b;
-	/*return
-		pSprite1->heightPx > pSprite2->heightPx ? -1 : 0;*/
-	int area1 = pSprite1->heightPx * pSprite1->widthPx;
-	int area2 = pSprite2->heightPx * pSprite2->widthPx;
+	int area1 = pSprite1->actualHeightPX * pSprite1->actualWidthPX;
+	int area2 = pSprite2->actualHeightPX * pSprite2->actualWidthPX;
 	return
 		area1 < area2;
 }

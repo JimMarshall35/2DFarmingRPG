@@ -251,17 +251,6 @@ static void FindMinimalSpriteBox(int inTLXPx, int inTLYPx, int inWPx, int inHPx,
 	*pOutTLYPx = inTLYPx;
 }
 
-static void CallMinimalSpriteBoxAndLog(int inTLXPx, int inTLYPx, int inWPx, int inHPx, const struct ImageFile* pImgIn)
-{
-	int minTLXPx = 0;
-	int minTLYPx = 0;
-	int minWPx = 0;
-	int minHPx = 0;
-	FindMinimalSpriteBox(inTLXPx, inTLYPx, inWPx, inHPx, pImgIn, &minTLXPx, &minTLYPx, &minWPx, &minHPx);
-	printf("FindMinimalSpriteBox:\nIN: tlx: %i tly: %i, w: %i, h: %i OUT: tlx: %i tly: %i w: %i h: %i\n", inTLXPx, inTLYPx, inWPx, inHPx,
-	minTLXPx, minTLYPx, minWPx, minHPx);
-}
-
 hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int widthPx, int heightPx, const char* name, bool bMinimizeSpace)
 {
 	HImage img = IR_LookupHandleByPath(imgPath);
@@ -286,8 +275,6 @@ hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int wi
 	
 	u8* pData = IR_GetImageData(img);
 	const struct ImageFile* pImg = IR_GetImageFile(img);
-	// printf("sprite: %s\n", sprite.name);
-	// CallMinimalSpriteBoxAndLog(topLeftXPx, topLeftYPx, widthPx, heightPx, pImg);
 	int minTLXPx = 0;
 	int minTLYPx = 0;
 	int minWPx = 0;

@@ -165,6 +165,70 @@
 		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right7" />
 		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right8" />
 	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg5" />
+	</animation-frames>
 	<animation-frames name="walk-axe-male-up" fps="10">
 		<sprite source="./WfAssets/Image/axe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up0" />
 		<sprite source="./WfAssets/Image/axe.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up1" />
@@ -209,6 +273,70 @@
 		<sprite source="./WfAssets/Image/axe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right7" />
 		<sprite source="./WfAssets/Image/axe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right8" />
 	</animation-frames>
+	<animation-frames name="axe-slash-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg5" />
+	</animation-frames>
 	<animation-frames name="walk-hoe-male-up" fps="10">
 		<sprite source="./WfAssets/Image/hoe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up0" />
 		<sprite source="./WfAssets/Image/hoe.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up1" />
@@ -252,5 +380,85 @@
 		<sprite source="./WfAssets/Image/hoe.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right6" />
 		<sprite source="./WfAssets/Image/hoe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right7" />
 		<sprite source="./WfAssets/Image/hoe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right8" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg7" />
 	</animation-frames>
 </atlas>

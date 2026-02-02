@@ -214,6 +214,104 @@
                 numFrames="9"
                 bMinimizeSpace="true"/>
 
+
+    <animation name="pickaxe-slash-male-up-fg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_fg.png"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="pickaxe-slash-male-up-bg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_bg.png"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="pickaxe-slash-male-left-fg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_fg.png"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="pickaxe-slash-male-left-bg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_bg.png"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="pickaxe-slash-male-down-fg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_fg.png"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="pickaxe-slash-male-down-bg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_bg.png"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    
+    <animation name="pickaxe-slash-male-right-fg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_fg.png"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="pickaxe-slash-male-right-bg"
+                fps="10"
+                source="./WfAssets/Image/pickaxe_slash_bg.png"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
                 <!-- Axe -->
 
     
@@ -265,9 +363,103 @@
                 numFrames="9"
                 bMinimizeSpace="true"/>
 
+    <animation name="axe-slash-male-up-fg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_fg.png"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="axe-slash-male-up-bg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_bg.png"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="axe-slash-male-left-fg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_fg.png"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="axe-slash-male-left-bg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_bg.png"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
 
+    <animation name="axe-slash-male-down-fg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_fg.png"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
 
+    <animation name="axe-slash-male-down-bg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_bg.png"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
 
+    
+    <animation name="axe-slash-male-right-fg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_fg.png"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="axe-slash-male-right-bg"
+                fps="10"
+                source="./WfAssets/Image/axe_slash_bg.png"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
                 <!-- Hoe -->
 
 
@@ -318,6 +510,102 @@
                 width="64"
                 height="64"
                 numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="hoe-thrust-male-up-fg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_fg.png"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="hoe-thrust-male-left-fg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_fg.png"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="hoe-thrust-male-down-fg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_fg.png"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="hoe-thrust-male-right-fg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_fg.png"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="hoe-thrust-male-up-bg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_bg.png"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="hoe-thrust-male-left-bg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_bg.png"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="hoe-thrust-male-down-bg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_bg.png"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="hoe-thrust-male-right-bg"
+                fps="10"
+                source="./WfAssets/Image/hoe_thrust_bg.png"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
                 bMinimizeSpace="true"/>
 
 </atlas>

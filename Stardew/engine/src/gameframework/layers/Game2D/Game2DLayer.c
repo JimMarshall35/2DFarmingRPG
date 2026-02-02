@@ -342,27 +342,33 @@ void OutputSpriteVertices(
 	VertIndexT base = *pNextIndex;
 	*pNextIndex += 4;
 	vec2 dims = {
-		pSprite->widthPx,
-		pSprite->heightPx
+		pSprite->actualWidthPX,
+		pSprite->actualHeightPX
 	};
 	vec2 topLeft = {
 		col * pSprite->widthPx,
 		row * pSprite->heightPx
 	};
+	vec2 offset = {
+		pSprite->xOffsetToActual,
+		pSprite->yOffsetToActual
+	};
+	glm_vec2_add(topLeft, offset, topLeft);
 
 	glm_vec2_add(pTMLayerTransform->position, topLeft, topLeft);
 	vec2 bottomRight;
 	glm_vec2_add(topLeft, dims, bottomRight);
 
 	vec2 topRight = {
-		topLeft[0] + pSprite->widthPx,
+		topLeft[0] + pSprite->actualWidthPX,
 		topLeft[1]
 	};
 
 	vec2 bottomLeft = {
 		topLeft[0],
-		topLeft[1] + pSprite->heightPx
+		topLeft[1] + pSprite->actualHeightPX
 	};
+	
 	Worldspace2DVert vert = {
 		topLeft[0], topLeft[1],
 		pSprite->topLeftUV_U, pSprite->topLeftUV_V

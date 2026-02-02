@@ -51,6 +51,7 @@ def expand_animation(animation_node):
     fps = animation_node.attrib["fps"]
     width = int(animation_node.attrib["width"])
     height = int(animation_node.attrib["height"])
+    bMinimizeSpace = bool(animation_node.attrib["bMinimizeSpace"])
     animation_node.attrib = {
         "name" : animation_name,
         "fps" : fps
@@ -62,6 +63,7 @@ def expand_animation(animation_node):
             "left" : str(startx),
             "width" : str(width),
             "height" : str(height),
+            "bMinimizeSpace" : "true" if bMinimizeSpace else "false",
             "name" : f"{animation_name}{i}"
         })
         startx += incx

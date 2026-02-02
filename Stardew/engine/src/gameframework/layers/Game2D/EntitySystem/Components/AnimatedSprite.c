@@ -89,10 +89,37 @@ void AnimatedSprite_GetBoundingBox(struct Entity2D* pEnt, struct AnimatedSprite*
 
 }
 
+static void SpriteComp_GetBoundingBoxInternal(struct Entity2D* pEnt, struct AnimatedSprite* pAnimatedSprite, struct GameFrameworkLayer* pLayer, vec2 outTL, vec2 outBR)
+{
+    struct GameLayer2DData* pLayerData = pLayer->userData;
+    if(!pAnimatedSprite->bDraw) return;
+    AtlasSprite* pSprite = At_GetSprite(pAnimatedSprite->pSprites[pAnimatedSprite->onSprite], pLayerData->hAtlas);
+    vec2 tl = {pEnt->transform.position[0], pEnt->transform.position[1]};
+    vec2 br;
+    vec2 size = {
+        pSprite->actualWidthPX  * pEnt->transform.scale[0] * pAnimatedSprite->transform.scale[0],
+        pSprite->actualHeightPX * pEnt->transform.scale[1] * pAnimatedSprite->transform.scale[1]
+    };
+    glm_vec2_add(pEnt->transform.position, size, br);
+    glm_vec2_add(tl, pAnimatedSprite->transform.position, tl);
+    glm_vec2_add(br, pAnimatedSprite->transform.position, br);
+
+    vec2 offset = {pSprite->xOffsetToActual * pEnt->transform.scale[0] * pAnimatedSprite->transform.scale[0], 
+        pSprite->yOffsetToActual * pEnt->transform.scale[0] * pAnimatedSprite->transform.scale[0]};
+
+    glm_vec2_add(tl, offset, tl);
+    glm_vec2_add(br, offset, br);
+    
+	outTL[0] = tl[0];
+	outTL[1] = tl[1];
+	outBR[0] = br[0];
+	outBR[1] = br[1];
+}
+
 void AnimatedSprite_Draw(struct AnimatedSprite* pSpriteComp, struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(Worldspace2DVert)* outVerts, VECTOR(VertIndexT)* outIndices, VertIndexT* pNextIndex)
 {
     vec2 tl, br;
-    AnimatedSprite_GetBoundingBox(pEnt, pSpriteComp, pLayer, tl, br);
+    SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
     struct GameLayer2DData* pLayerData = pLayer->userData;
     AtlasSprite* pSprite = At_GetSprite(pSpriteComp->pSprites[pSpriteComp->onSprite], pLayerData->hAtlas);
     OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br);

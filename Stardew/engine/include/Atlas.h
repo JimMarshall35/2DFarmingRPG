@@ -13,6 +13,7 @@ struct BinarySerializer;
 
 #define VECTOR(a) a*
 
+/// @brief A sprite stored in the atlas
 typedef struct _AtlasSprite
 {
 	hAtlas atlas;
@@ -20,13 +21,24 @@ typedef struct _AtlasSprite
 	char* name;
 	int srcImageTopLeftXPx;
 	int srcImageTopLeftYPx;
+
+	/// @brief the "notional" width that gameplay code should use
 	int widthPx;
+
+	/// @brief the "notional" height that gameplay code should use
 	int heightPx;
 
+	/// @brief the actual width of the sprite stored in the atlas  - used by low level rendering code 
 	int actualWidthPX;
+
+	/// @brief the actual height of the sprite stored in the atlas - used by low level rendering code 
 	int actualHeightPX;
-	int xOffsetToActual;
-	int yOffsetToActual;
+
+	/// @brief the X offset from the point to draw the sprite to the point where it should "actually" be drawn - used by low level rendering code
+	float xOffsetToActual;
+
+	/// @brief the Y offset from the point to draw the sprite to the point where it should "actually" be drawn - used by low level rendering code
+	float yOffsetToActual;
 
 	int atlasTopLeftXPx;
 	int atlasTopLeftYPx;
@@ -83,7 +95,16 @@ struct FontAtlasAdditionSpec
 void At_Init();
 void At_BeginAtlas();
 
-hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topRightYPx, int widthPx, int heightPx, const char* name);
+/// @brief Add a sprite to the atlas, cuts out the pixels for that specific sprite to be nested when At_EndAtlas is called
+/// @param imgPath path to img file
+/// @param topLeftXPx sprite TL coords
+/// @param topRightYPx sprite TR coords
+/// @param widthPx "notional" width
+/// @param heightPx "notional" height
+/// @param name sprite name, for referencing when it's in the atlas
+/// @param bMinimizeSpace find minimum rect to store the sprite, if false action dims == "notional" dims
+/// @return 
+hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topRightYPx, int widthPx, int heightPx, const char* name, bool bMinimizeSpace);
 HFont At_AddFont(const struct FontAtlasAdditionSpec* pFontSpec);
 hAtlas At_EndAtlas(struct DrawContext* pDC);
 

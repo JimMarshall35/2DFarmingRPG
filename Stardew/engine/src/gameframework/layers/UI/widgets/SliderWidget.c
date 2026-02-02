@@ -89,8 +89,8 @@ static void Populate3PanelRailQuads(float left, float top, WidgetQuad* pOutQuads
 		{
 			AtlasSprite* pSprite = At_GetSprite(pData->railStaticData.sprite, pData->railStaticData.atlas);
 			vec2 tl = { 0,0 };
-			vec2 br = { pSprite->widthPx, pSprite->heightPx / 3 };
-			vec2 addition = { 0, pSprite->heightPx / 3 };
+			vec2 br = { pSprite->widthPx, pSprite->heightPx / 3.0f };
+			vec2 addition = { 0, pSprite->heightPx / 3.0f };
 			PopulateWidgetQuad(&pOutQuads[0], pSprite, tl, br);
 			glm_vec2_add(tl, addition, tl);
 			glm_vec2_add(br, addition, br);

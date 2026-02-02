@@ -262,7 +262,7 @@ static void CallMinimalSpriteBoxAndLog(int inTLXPx, int inTLYPx, int inWPx, int 
 	minTLXPx, minTLYPx, minWPx, minHPx);
 }
 
-hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int widthPx, int heightPx, const char* name)
+hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int widthPx, int heightPx, const char* name, bool bMinimizeSpace)
 {
 	HImage img = IR_LookupHandleByPath(imgPath);
 	Atlas* pAtlas = GetCurrentAtlas();
@@ -278,8 +278,7 @@ hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int wi
 	sprite.heightPx = heightPx;
 	sprite.atlas = gCurrentAtlasIndex;
 	sprite.srcImage = img;
-	size_t sizeOfSpriteData = widthPx * heightPx * CHANNELS_PER_PIXEL;
-	sprite.individualTileBytes = malloc(sizeOfSpriteData);
+	
 	sprite.name = malloc(strlen(name) + 1);
 	sprite.id = gSpriteId++;
 
@@ -287,16 +286,42 @@ hSprite At_AddSprite(const char* imgPath, int topLeftXPx, int topLeftYPx, int wi
 	
 	u8* pData = IR_GetImageData(img);
 	const struct ImageFile* pImg = IR_GetImageFile(img);
-	printf("sprite: %s\n", sprite.name);
-	CallMinimalSpriteBoxAndLog(topLeftXPx, topLeftYPx, widthPx, heightPx, pImg);
+	// printf("sprite: %s\n", sprite.name);
+	// CallMinimalSpriteBoxAndLog(topLeftXPx, topLeftYPx, widthPx, heightPx, pImg);
+	int minTLXPx = 0;
+	int minTLYPx = 0;
+	int minWPx = 0;
+	int minHPx = 0;
+	if(bMinimizeSpace)
+	{
+		FindMinimalSpriteBox(topLeftXPx, topLeftYPx, widthPx, heightPx, pImg, &minTLXPx, &minTLYPx, &minWPx, &minHPx);
+	}
+	else
+	{
+		minTLXPx = topLeftXPx;
+		minTLYPx = topLeftYPx;
+		minWPx = widthPx;
+		minHPx = heightPx;
+	}
+	
+	size_t sizeOfSpriteData = minWPx * minHPx * CHANNELS_PER_PIXEL;
+	
+	sprite.individualTileBytes = malloc(sizeOfSpriteData);
+	sprite.actualHeightPX = minHPx;
+	sprite.actualWidthPX = minWPx;
+	sprite.xOffsetToActual = (float)(minTLXPx - sprite.atlasTopLeftXPx);
+	sprite.yOffsetToActual = (float)(minTLYPx - sprite.atlasTopLeftYPx);
+	sprite.atlasTopLeftXPx = minTLXPx;
+	sprite.atlasTopLeftYPx = minTLYPx;
+	
 	size_t rowWidth = pImg->width * CHANNELS_PER_PIXEL;
-	size_t startIndex = (topLeftYPx * rowWidth) + (topLeftXPx * CHANNELS_PER_PIXEL);
+	size_t startIndex = (minTLYPx * rowWidth) + (minTLXPx * CHANNELS_PER_PIXEL);
 	u8* writeStart = sprite.individualTileBytes;
-	for (int i = 0; i < heightPx; i++)
+	for (int i = 0; i < minHPx; i++)
 	{
 		size_t startRow = startIndex + i * rowWidth;
-		memcpy(writeStart, &pData[startRow], widthPx * CHANNELS_PER_PIXEL);
-		writeStart += widthPx * CHANNELS_PER_PIXEL;
+		memcpy(writeStart, &pData[startRow], minWPx * CHANNELS_PER_PIXEL);
+		writeStart += minWPx * CHANNELS_PER_PIXEL;
 	}
 
 	pAtlas->sprites = VectorPush(pAtlas->sprites, &sprite);
@@ -428,6 +453,10 @@ HFont At_AddFont(const struct FontAtlasAdditionSpec* pFontSpec)
 			AtlasSprite* pSprite = &font.sprites[j];
 			pSprite->widthPx = (*face)->glyph->bitmap.width;
 			pSprite->heightPx = (*face)->glyph->bitmap.rows;
+			pSprite->actualHeightPX = pSprite->heightPx;
+			pSprite->actualWidthPX = pSprite->widthPx;
+			pSprite->xOffsetToActual = 0.0f;
+			pSprite->yOffsetToActual = 0.0f;
 			pSprite->individualTileBytes = FTBitmapToNestableBitmap(&(*face)->glyph->bitmap);
 			pSprite->bSet = true;
 			pSprite->id = gSpriteId++;
@@ -497,8 +526,8 @@ VECTOR(struct AtlasRect) AddNewFreeSpace(VECTOR(struct AtlasRect) outFreeSpace, 
 
 bool FitsInRect(const AtlasSprite* sprite, const struct AtlasRect* rect)
 {
-	return sprite->widthPx <= (rect->w - (ATLAS_SPRITE_BORDER_PXLS * 2)) && 
-		sprite->heightPx <= (rect->h - (ATLAS_SPRITE_BORDER_PXLS * 2));
+	return sprite->actualWidthPX <= (rect->w - (ATLAS_SPRITE_BORDER_PXLS * 2)) && 
+		sprite->actualHeightPX <= (rect->h - (ATLAS_SPRITE_BORDER_PXLS * 2));
 }
 
 int FindFittingFreeSpace(const AtlasSprite* sprite, VECTOR(struct AtlasRect) freeSpace)
@@ -673,16 +702,16 @@ static VECTOR(struct AtlasRect) NestSingleSprite(int* outW, int* outH, AtlasSpri
 
 		pSprite->atlasTopLeftXPx = rct->x;
 		pSprite->atlasTopLeftYPx = rct->y;
-		int newRightX = rct->x + pSprite->widthPx + (2 * ATLAS_SPRITE_BORDER_PXLS);
+		int newRightX = rct->x + pSprite->actualWidthPX + (2 * ATLAS_SPRITE_BORDER_PXLS);
 		int newRightY = rct->y;
-		int newW = rct->w - (pSprite->widthPx + (2 * ATLAS_SPRITE_BORDER_PXLS));
-		int newH = pSprite->heightPx + (2 * ATLAS_SPRITE_BORDER_PXLS);
+		int newW = rct->w - (pSprite->actualWidthPX + (2 * ATLAS_SPRITE_BORDER_PXLS));
+		int newH = pSprite->actualHeightPX + (2 * ATLAS_SPRITE_BORDER_PXLS);
 		struct AtlasRect region1 = { newW, newH, newRightX, newRightY, false };
 
 		newRightX = rct->x;
-		newRightY = rct->y + (pSprite->heightPx + (2 * ATLAS_SPRITE_BORDER_PXLS));
+		newRightY = rct->y + (pSprite->actualHeightPX + (2 * ATLAS_SPRITE_BORDER_PXLS));
 		newW = rct->w;
-		newH = rct->h - (pSprite->heightPx + (2 * ATLAS_SPRITE_BORDER_PXLS));
+		newH = rct->h - (pSprite->actualHeightPX + (2 * ATLAS_SPRITE_BORDER_PXLS));
 		struct AtlasRect region2 = { newW, newH, newRightX, newRightY, false };
 
 		if (region1.w * region1.h > 1e-4)
@@ -725,14 +754,14 @@ static void NestSprites(int* outW, int* outH, AtlasSprite* sortedSpritesTallestT
 	VECTOR(struct AtlasRect) freeSpace = NEW_VECTOR(struct AtlasRect);
 
 	
-	int tallestHeight = sortedSpritesTallestToShortest->heightPx;
+	int tallestHeight = sortedSpritesTallestToShortest->actualHeightPX;
 
 	int currentW = 1;
 	int currentH = 1;
 	if (pOptions->bUseBiggestSpriteForInitialAtlasSize)
 	{
-		currentW = sortedSpritesTallestToShortest[0].widthPx + ATLAS_SPRITE_BORDER_PXLS;
-		currentH = sortedSpritesTallestToShortest[0].heightPx + ATLAS_SPRITE_BORDER_PXLS;
+		currentW = sortedSpritesTallestToShortest[0].actualWidthPX + ATLAS_SPRITE_BORDER_PXLS;
+		currentH = sortedSpritesTallestToShortest[0].actualHeightPX + ATLAS_SPRITE_BORDER_PXLS;
 	}
 	else
 	{
@@ -775,7 +804,7 @@ void BlitAtlasSprite(u8* dst, size_t dstWidthPx, AtlasSprite* pSprite)
 
 	const u8* readPtr = pSprite->individualTileBytes;
 	u8* writePtr = &dst[startPx];
-	size_t lineBytes = pSprite->widthPx * CHANNELS_PER_PIXEL;
+	size_t lineBytes = pSprite->actualWidthPX * CHANNELS_PER_PIXEL;
 
 	/* top border */
 	writePtr += CHANNELS_PER_PIXEL;
@@ -783,7 +812,7 @@ void BlitAtlasSprite(u8* dst, size_t dstWidthPx, AtlasSprite* pSprite)
 	writePtr -= CHANNELS_PER_PIXEL;
 	writePtr += dstWidthPx * CHANNELS_PER_PIXEL;
 
-	for (int i = 0; i < pSprite->heightPx; i++)
+	for (int i = 0; i < pSprite->actualHeightPX; i++)
 	{
 		u8* pStart = writePtr;
 		/* left border */
@@ -864,8 +893,8 @@ static void CalculateSpriteUVs(AtlasSprite* pSprt, int atlasW, int atlasH)
 	pSprt->topLeftUV_U = (float)pSprt->atlasTopLeftXPx / (float)atlasW;
 	pSprt->topLeftUV_V = (float)pSprt->atlasTopLeftYPx / (float)atlasH;
 
-	pSprt->bottomRightUV_U = (float)(pSprt->atlasTopLeftXPx + pSprt->widthPx) / (float)atlasW;
-	pSprt->bottomRightUV_V = (float)(pSprt->atlasTopLeftYPx + pSprt->heightPx) / (float)atlasH;
+	pSprt->bottomRightUV_U = (float)(pSprt->atlasTopLeftXPx + pSprt->actualWidthPX) / (float)atlasW;
+	pSprt->bottomRightUV_V = (float)(pSprt->atlasTopLeftYPx + pSprt->actualHeightPX) / (float)atlasH;
 
 }
 
@@ -1154,6 +1183,16 @@ static hSprite LoadAtlasSprite(xmlNode* pChild, int onChild)
 	xmlChar* spriteName = NULL;
 	xmlChar* attribute = NULL;
 	hSprite rVal = NULL_HANDLE;
+
+	/* 
+		minimize space, you can specify a notional width and height for the sprite that can be different to
+		the actual space in the atlas. The pixels stored in the atlas are the smallest amount, with pixels that are
+		fully transparent being culled.
+
+		Low level rendering functions in Sprite and Animated Sprite do the adjustment.
+		UI does no such adjustment.
+	*/
+	bool bMinimizeSpace = false;
 	if (attribute = xmlGetProp(pChild, "source"))
 	{
 		spritePath = attribute;
@@ -1188,6 +1227,17 @@ static hSprite LoadAtlasSprite(xmlNode* pChild, int onChild)
 		xmlFree(attribute);
 		bHeightSet = true;
 	}
+	if (attribute = xmlGetProp(pChild, "bMinimizeSpace"))
+	{
+		if(strcmp(attribute, "true") == 0)
+		{
+			bMinimizeSpace = true;
+		}
+		else if(strcmp(attribute, "false") == 0)
+		{
+			bMinimizeSpace = false;
+		}
+	}
 	if (!bPathSet)
 	{
 		Log_Error("%s atlas child %i path not set", __FUNCTION__, onChild);
@@ -1221,7 +1271,7 @@ static hSprite LoadAtlasSprite(xmlNode* pChild, int onChild)
 	if (bAllSet)
 	{
 		Log_Verbose("adding sprite %s", spritePath);
-		rVal = At_AddSprite(spritePath, left, top, width, height, spriteName);
+		rVal = At_AddSprite(spritePath, left, top, width, height, spriteName, bMinimizeSpace);
 		EASSERT(spritePath);
 		EASSERT(spriteName);
 		xmlFree(spritePath);
@@ -1256,7 +1306,6 @@ static void LoadAnimationFrames(xmlNode* child0, int* pOnChild)
 	{
 		HashmapInsert(&pAtlas->animations, attribute, &anim);
 	}
-
 }
 
 
@@ -1421,6 +1470,10 @@ static void SerializeAtlasSprite(const AtlasSprite* pSprite, struct BinarySerial
 	BS_SerializeFloat(pSprite->bottomRightUV_V, pSerializer);
 	BS_SerializeBool(pSprite->bSet, pSerializer);
 	BS_SerializeI32(pSprite->id, pSerializer);
+	BS_SerializeI32(pSprite->actualHeightPX, pSerializer);
+	BS_SerializeI32(pSprite->actualWidthPX, pSerializer);
+	BS_SerializeFloat(pSprite->xOffsetToActual, pSerializer);
+	BS_SerializeFloat(pSprite->yOffsetToActual, pSerializer);
 }
 
 static void SerializeAtlasFont(const struct AtlasFont* pFont, struct BinarySerializer* pSerializer)
@@ -1450,6 +1503,12 @@ static void DeserializeAtlasSpriteV1(AtlasSprite* pSprite, struct BinarySerializ
 	BS_DeSerializeFloat(&pSprite->bottomRightUV_V, pSerializer);
 	BS_DeSerializeBool(&pSprite->bSet, pSerializer);
 	BS_DeSerializeI32(&pSprite->id, pSerializer);
+
+	BS_DeSerializeI32(&pSprite->actualHeightPX, pSerializer);
+	BS_DeSerializeI32(&pSprite->actualWidthPX, pSerializer);
+	BS_DeSerializeFloat(&pSprite->xOffsetToActual, pSerializer);
+	BS_DeSerializeFloat(&pSprite->yOffsetToActual, pSerializer);
+
 }
 
 static void DeserializeAtlasFontV1(struct AtlasFont* pFont, struct BinarySerializer* pSerializer)

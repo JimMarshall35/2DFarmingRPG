@@ -82,6 +82,18 @@ The good thing about this is one openGL texture can be used to draw the whole ga
 
 In order to eliminate bleeding of texels from adjacent sprites the sprites in the atlas have a 1 pixel border that mimics GL_CLAMP_TO_EDGE texture clamping
 
+### Minimize Space
+
+An optimization to make smaller atlases
+
+You can pass `bMinimizeSpace` as an xml attribute for a sprite, it allows you to define a notional width and height for a sprite, for example all sprites are 64x64, but the tool will trim all transparent space from around the sprite storing the minimum pixels.
+
+The sprite struct stores a widthPx and heightPx as well as an "actualWidthPx" and "actualHeightPx", as well as an offset from the top left to apply to the "actual" sprite.
+
+Low level rendering code in Sprite.c and AnimatedSprite.c handle the offset, so that gameplay code can operate on large sprites when only the minimum pixels are stored in the atlas.
+
+Don't pass `bMinimizeSpace` for sprites used in UI, because that rendering code doesn't handle it.
+
 ## ExpandAnimations.py
 
 Expands </animation> nodes in xml files. You can write an animation node like this in an atlas xml file:
@@ -96,22 +108,23 @@ Expands </animation> nodes in xml files. You can write an animation node like th
             incy="64"
             width="64"
             height="64"
-            numFrames="9"/>
+            numFrames="9"
+            bMinimizeSpace="true"/>
 ```
 
 And this script will expand it like so:
 
 ```xml
 <animation-frames name="walk-base-female-down" fps="10.0">
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="0" width="64" height="64" name="walk-base-female-down0" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="64" width="64" height="64" name="walk-base-female-down1" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="128" width="64" height="64" name="walk-base-female-down2" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="192" width="64" height="64" name="walk-base-female-down3" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="256" width="64" height="64" name="walk-base-female-down4" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="320" width="64" height="64" name="walk-base-female-down5" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="384" width="64" height="64" name="walk-base-female-down6" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="448" width="64" height="64" name="walk-base-female-down7" />
-    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="512" width="64" height="64" name="walk-base-female-down8" />
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="0" width="64" height="64" name="walk-base-female-down0" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="64" width="64" height="64" name="walk-base-female-down1" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="128" width="64" height="64" name="walk-base-female-down2" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="192" width="64" height="64" name="walk-base-female-down3" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="256" width="64" height="64" name="walk-base-female-down4" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="320" width="64" height="64" name="walk-base-female-down5" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="384" width="64" height="64" name="walk-base-female-down6" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="448" width="64" height="64" name="walk-base-female-down7" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/female_walkcycle.png" top="128" left="512" width="64" height="64" name="walk-base-female-down8" bMinimizeSpace="true"/>
 </animation-frames>
 ```
 

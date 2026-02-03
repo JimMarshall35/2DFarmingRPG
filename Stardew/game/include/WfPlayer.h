@@ -14,9 +14,19 @@ struct GameFrameworkLayer;
 
 #define NUM_ANIMATIONS NumDirections
 
+#define PLAYER_SPRITE_COMP_INDEX 3
+#define PLAYER_BG_SPRITE_COMP_START 1
+#define PLAYER_NUM_BG_SPRITES 2
+
+#define PLAYER_COLLIDER_COMP_INDEX 0
+
+
+/// @brief A set of animations for everything the player can do
 struct WfAnimationSetLayer
 {
-    const char* animationNames[NUM_ANIMATIONS];
+    const char* walkAnimations[NUM_ANIMATIONS];
+    const char* slashAnimations[NUM_ANIMATIONS];
+    const char* thrustAnimations[NUM_ANIMATIONS];
 };
 
 /* layers on top of the base */
@@ -29,11 +39,28 @@ enum WfAnimationLayerNames
     WfNumAnimationLayers
 };
 
-/* a set of animations that overlay the base animation in layers */
+/* layers behind the base */
+enum WfBGAnimationLayerNames
+{
+    WfBG1,
+    WfBG2,
+    WfNumBackgroundAnimationLayers
+};
+
+/// @brief A set of anumations drawn behind and in front of the base sprite
 struct WfAnimationSet
 {
+    /// @brief Layers behind the sprite
+    struct WfAnimationSetLayer bgLayers[WfNumBackgroundAnimationLayers];
+    
+    /// @brief Layers in front of the sprite
     struct WfAnimationSetLayer layers[WfNumAnimationLayers];
+    
+    /// @brief which layers in front are drawn
     unsigned int layersMask;
+
+    /// @brief which layers behind are drawn
+    unsigned int bgLayersMask;
 };
 
 enum WfPlayerState

@@ -10,10 +10,24 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
-    pEntData->animationSet.layers[WfToolAnimationLayer].animationNames[Up] = "walk-pickaxe-male-up";
-    pEntData->animationSet.layers[WfToolAnimationLayer].animationNames[Down] = "walk-pickaxe-male-down";
-    pEntData->animationSet.layers[WfToolAnimationLayer].animationNames[Left] = "walk-pickaxe-male-left";
-    pEntData->animationSet.layers[WfToolAnimationLayer].animationNames[Right] = "walk-pickaxe-male-right";
+    pEntData->animationSet.bgLayersMask = 0;
+
+    pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-pickaxe-male-up";
+    pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-pickaxe-male-down";
+    pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Left] = "walk-pickaxe-male-left";
+    pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Right] = "walk-pickaxe-male-right";
+
+
+    pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Up] = "pickaxe-slash-male-up-fg";
+    pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Down] = "pickaxe-slash-male-down-fg";
+    pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Left] = "pickaxe-slash-male-left-fg";
+    pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Right] = "pickaxe-slash-male-right-fg";
+
+    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Up] = "pickaxe-slash-male-up-bg";
+    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Down] = "pickaxe-slash-male-down-bg";
+    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Left] = "pickaxe-slash-male-left-bg";
+    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Right] = "pickaxe-slash-male-right-bg";
+
 
     struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfToolAnimationLayer);
     WfSetPlayerOverlayAnimations(pEntData->directionFacing, pLayer, pEntData, pPlayer);

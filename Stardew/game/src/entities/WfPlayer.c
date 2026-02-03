@@ -32,8 +32,6 @@
 #define WALKING_LEFT_FEMALE "walk-base-female-left"
 #define WALKING_RIGHT_FEMALE "walk-base-female-right"
 
-#define PLAYER_SPRITE_COMP_INDEX 1
-#define PLAYER_COLLIDER_COMP_INDEX 0
 
 static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos, bool bNetworkControlled, int networkPlayerNum);
 
@@ -160,6 +158,17 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
     struct AnimatedSprite* pBaseAnimatedSprite = &pCompBaseAnimator->data.spriteAnimator;
     EASSERT(pCompBaseAnimator->type == ETE_SpriteAnimator);
     struct GameLayer2DData* pLayerData = pLayer->userData;
+    for(int i=0; i<WfNumBackgroundAnimationLayers; i++)
+    {
+        if(pPlayerEntData->animationSet.bgLayersMask & (1 << i))
+        {
+            struct Component2D* pComp = &pEnt->components[PLAYER_BG_SPRITE_COMP_START + i];
+            EASSERT(pComp->type == ETE_SpriteAnimator);
+            struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, pPlayerEntData->animationSet.bgLayers[i].walkAnimations[dir], false, false);
+            SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
+        }
+    }
 
     for(int i=0; i<WfNumAnimationLayers; i++)
     {
@@ -168,7 +177,7 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
             struct Component2D* pComp = &pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i];
             EASSERT(pComp->type == ETE_SpriteAnimator);
             struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;
-            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, pPlayerEntData->animationSet.layers[i].animationNames[dir], false, false);
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, pPlayerEntData->animationSet.layers[i].walkAnimations[dir], false, false);
             SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
         }
     }
@@ -467,11 +476,29 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pComponent2->data.dynamicCollider.onSensorOverlapEnd = NULL;
 
     /*
+        player background animation 1
+    */
+
+    struct Component2D* pComponent3 = &pEnt->components[pEnt->numComponents++];
+    pComponent3->type = ETE_SpriteAnimator;
+    struct AnimatedSprite* pAnimatedSprite = &pComponent3->data.spriteAnimator;
+    memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
+
+    /*
+        player background animation 2
+    */
+
+    struct Component2D* pComponent4 = &pEnt->components[pEnt->numComponents++];
+    pComponent4->type = ETE_SpriteAnimator;
+    pAnimatedSprite = &pComponent4->data.spriteAnimator;
+    memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
+
+    /*
         Base Animated Sprite
     */
     struct Component2D* pComponent1 = &pEnt->components[pEnt->numComponents++];
     pComponent1->type = ETE_SpriteAnimator;
-    struct AnimatedSprite* pAnimatedSprite = &pComponent1->data.spriteAnimator;
+    pAnimatedSprite = &pComponent1->data.spriteAnimator;
     memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
     pAnimatedSprite->animationName = WALKING_DOWN_MALE;
     pAnimatedSprite->bRepeat = true;

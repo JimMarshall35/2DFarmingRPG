@@ -78,7 +78,6 @@ enum WfPlayerDirection
     WfPD_Right = (1 << 3),
 };
 
-
 struct WfPlayerEntData
 {
     vec2 groundColliderCenter2EntTransform;
@@ -90,6 +89,7 @@ struct WfPlayerEntData
     struct ButtonBinding nextItemBinding;
     struct ButtonBinding prevItemBinding;
 
+    struct ButtonBinding mainActionBinding;
 
     struct ButtonBinding settingsMenuBinding;
     struct ActiveInputBindingsMask playerControlsMask;
@@ -123,6 +123,9 @@ struct WfPlayerEntData
     /* flags section */
     u32 bMovingLastFrame : 1;
     u32 bNetworkControlled : 1;
+
+    enum WfActionAnimation actionAnimation;
+    
 };
 
 void WfInitPlayer();

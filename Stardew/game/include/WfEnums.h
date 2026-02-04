@@ -19,4 +19,14 @@ enum WfDirection
     NumDirections
 };
 
+
+/// @brief an animation that plays and then finishes, returning back to the normal movement animations
+enum WfActionAnimation
+{
+    WfNoActionAnim,
+    WfSlashAnim,
+    WfThrustAnim
+};
+
+
 #endif

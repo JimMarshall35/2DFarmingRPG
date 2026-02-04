@@ -2,6 +2,7 @@
 #define WFITEM_H
 #include "HandleDefs.h"
 #include <stdbool.h>
+#include "WfEnums.h"
 
 #define UI_SPRITE_DIMS_PXLS 32
 struct Entity2D;
@@ -45,6 +46,7 @@ struct WfItemDef
     OnStopBeingCurrentItemFn onStopBeingCurrent;
     OnUseItemFn onUseItem;
     TryEquipFn onTryEquip;
+    enum WfActionAnimation onUseAnimation;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

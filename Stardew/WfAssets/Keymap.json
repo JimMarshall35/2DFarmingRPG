@@ -18,7 +18,8 @@
 			{ "prevTool" : 81 },
 			{ "settings" : 256 },
 			{ "nextItem" : 88 },
-			{ "prevItem" : 90 }
+			{ "prevItem" : 90 },
+			{ "mainActionBinding" : 67}
 		],
 		"MouseScroll" : [
 			{ "zoomIn" : 2 },

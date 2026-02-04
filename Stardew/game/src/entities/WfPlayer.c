@@ -27,6 +27,17 @@
 #define WALKING_LEFT_MALE "walk-base-male-left"
 #define WALKING_RIGHT_MALE "walk-base-male-right"
 
+#define SLASHING_UP_MALE "slash-base-male-up"
+#define SLASHING_DOWN_MALE "slash-base-male-down"
+#define SLASHING_LEFT_MALE "slash-base-male-left"
+#define SLASHING_RIGHT_MALE "slash-base-male-right"
+
+#define THRUSTING_UP_MALE "thrust-base-male-up"
+#define THRUSTING_DOWN_MALE "thrust-base-male-down"
+#define THRUSTING_LEFT_MALE "thrust-base-male-left"
+#define THRUSTING_RIGHT_MALE "thrust-base-male-right"
+
+
 #define WALKING_UP_FEMALE "walk-base-female-up"
 #define WALKING_DOWN_FEMALE "walk-base-female-down"
 #define WALKING_LEFT_FEMALE "walk-base-female-left"
@@ -82,6 +93,8 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     pPlayerEntData->nextItemBinding = In_FindButtonMapping(pInputCtx, "nextItem");
     pPlayerEntData->prevItemBinding = In_FindButtonMapping(pInputCtx, "prevItem");
 
+    pPlayerEntData->mainActionBinding = In_FindButtonMapping(pInputCtx, "mainActionBinding");
+
     pPlayerEntData->settingsMenuBinding = In_FindButtonMapping(pInputCtx, "settings");
     memset(&pPlayerEntData->playerControlsMask, 0, sizeof(struct ActiveInputBindingsMask));
     In_ActivateButtonBinding(pPlayerEntData->moveUpBinding, &pPlayerEntData->playerControlsMask);
@@ -91,6 +104,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     In_ActivateButtonBinding(pPlayerEntData->settingsMenuBinding, &pPlayerEntData->playerControlsMask);
     In_ActivateButtonBinding(pPlayerEntData->nextItemBinding, &pPlayerEntData->playerControlsMask);
     In_ActivateButtonBinding(pPlayerEntData->prevItemBinding, &pPlayerEntData->playerControlsMask);
+    In_ActivateButtonBinding(pPlayerEntData->mainActionBinding, &pPlayerEntData->playerControlsMask);
 
     In_SetMask(&pPlayerEntData->playerControlsMask, pInputCtx);
     
@@ -115,9 +129,53 @@ static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pD
     Entity2DOnDestroy(pEnt, pData);
 }
 
+static void SetBasePlayerActionAnimation(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt)
+{
+    struct AnimatedSprite* pSprite = &pEnt->components[PLAYER_SPRITE_COMP_INDEX].data.spriteAnimator;
+
+    switch(pPlayerEntData->actionAnimation)
+    {
+    case WfSlashAnim:
+        switch(dir)
+        {
+        case Up:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, SLASHING_UP_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Down:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, SLASHING_DOWN_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Left:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, SLASHING_LEFT_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Right:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, SLASHING_RIGHT_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        }
+        if(!pSprite->bIsAnimating)
+        {
+            pSprite->onSprite = 0;
+            pSprite->timer = 0.0f;
+            pSprite->bRepeat = true;
+            pPlayerEntData->actionAnimation = WfNoActionAnim;
+        }
+        break;
+    case WfThrustAnim:
+        break;
+    }
+}
+
 static void SetBasePlayerAnimation(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt)
 {
     struct AnimatedSprite* pSprite = &pEnt->components[PLAYER_SPRITE_COMP_INDEX].data.spriteAnimator;
+    if(pPlayerEntData->actionAnimation != WfNoActionAnim)
+    {
+        SetBasePlayerActionAnimation(dir, pLayer, pPlayerEntData, pEnt);
+        return;
+    }
     pSprite->bIsAnimating = pPlayerEntData->movementBits != 0;
     switch(dir)
     {
@@ -137,7 +195,6 @@ static void SetBasePlayerAnimation(enum WfDirection dir, struct GameFrameworkLay
         AnimatedSprite_SetAnimation(pLayer, pSprite, WALKING_RIGHT_MALE, false, false);
         pSprite->fps *= pPlayerEntData->speedMultiplier;
         break;
-    
     }
 }
 
@@ -165,7 +222,20 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
             struct Component2D* pComp = &pEnt->components[PLAYER_BG_SPRITE_COMP_START + i];
             EASSERT(pComp->type == ETE_SpriteAnimator);
             struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;
-            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, pPlayerEntData->animationSet.bgLayers[i].walkAnimations[dir], false, false);
+            const char* animName = pPlayerEntData->animationSet.bgLayers[i].walkAnimations[dir];
+            if(pPlayerEntData->actionAnimation != WfNoActionAnim)
+            {
+                switch(pPlayerEntData->actionAnimation)
+                {
+                case WfSlashAnim:
+                    animName = pPlayerEntData->animationSet.bgLayers[i].slashAnimations[dir];
+                    break;
+                case WfThrustAnim:
+                    animName = pPlayerEntData->animationSet.bgLayers[i].thrustAnimations[dir];
+                    break;
+                }
+            }
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
             SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
         }
     }
@@ -177,7 +247,20 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
             struct Component2D* pComp = &pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i];
             EASSERT(pComp->type == ETE_SpriteAnimator);
             struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;
-            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, pPlayerEntData->animationSet.layers[i].walkAnimations[dir], false, false);
+            const char* animName = pPlayerEntData->animationSet.layers[i].walkAnimations[dir];
+            if(pPlayerEntData->actionAnimation != WfNoActionAnim)
+            {
+                switch(pPlayerEntData->actionAnimation)
+                {
+                case WfSlashAnim:
+                    animName = pPlayerEntData->animationSet.layers[i].slashAnimations[dir];
+                    break;
+                case WfThrustAnim:
+                    animName = pPlayerEntData->animationSet.layers[i].thrustAnimations[dir];
+                    break;
+                }
+            }
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
             SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
         }
     }
@@ -187,7 +270,8 @@ static void SetPlayerAnimation(struct GameFrameworkLayer* pLayer, struct WfPlaye
 {
     /* set the base animation */
     struct AnimatedSprite* pSprite = &pEnt->components[PLAYER_SPRITE_COMP_INDEX].data.spriteAnimator;
-    pSprite->bIsAnimating = pPlayerEntData->movementBits != 0;
+    if(pPlayerEntData->actionAnimation == WfNoActionAnim)
+        pSprite->bIsAnimating = pPlayerEntData->movementBits != 0;
     for(int i=0; i<WfNumAnimationLayers; i++)
     {
         if(pPlayerEntData->animationSet.layersMask & (1 << i))
@@ -195,7 +279,14 @@ static void SetPlayerAnimation(struct GameFrameworkLayer* pLayer, struct WfPlaye
             pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i].data.spriteAnimator.bIsAnimating = pSprite->bIsAnimating;
         }
     }
-    if(!(pPlayerEntData->movementBits != 0) && pPlayerEntData->bMovingLastFrame)
+    for(int i=0; i<WfNumBackgroundAnimationLayers; i++)
+    {
+        if(pPlayerEntData->animationSet.bgLayersMask & (1 << i))
+        {
+            pEnt->components[PLAYER_BG_SPRITE_COMP_START + i].data.spriteAnimator.bIsAnimating = pSprite->bIsAnimating;
+        }
+    }
+    if(pPlayerEntData->actionAnimation == WfNoActionAnim && !(pPlayerEntData->movementBits != 0) && pPlayerEntData->bMovingLastFrame)
     {
         pSprite->onSprite = 0;
         for(int i=0; i<WfNumAnimationLayers; i++)
@@ -205,8 +296,21 @@ static void SetPlayerAnimation(struct GameFrameworkLayer* pLayer, struct WfPlaye
                 pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i].data.spriteAnimator.onSprite = 0;
             }
         }
+        for(int i=0; i<WfNumBackgroundAnimationLayers; i++)
+        {
+            if(pPlayerEntData->animationSet.layersMask & (1 << i))
+            {
+                pEnt->components[PLAYER_BG_SPRITE_COMP_START + i].data.spriteAnimator.onSprite = 0;
+            }
+        }
+
     }
-    if(pPlayerEntData->movementBits & WfPD_Down)
+    if(pPlayerEntData->actionAnimation != WfNoActionAnim)
+    {
+        SetBasePlayerAnimation(pPlayerEntData->directionFacing, pLayer, pPlayerEntData, pEnt);
+        WfSetPlayerOverlayAnimations(pPlayerEntData->directionFacing, pLayer, pPlayerEntData, pEnt);
+    }
+    else if(pPlayerEntData->movementBits & WfPD_Down)
     {
         // moving down
         SetBasePlayerAnimation(Down, pLayer, pPlayerEntData, pEnt);
@@ -263,36 +367,26 @@ static void GetMovementVector(u8 movementBits, vec2 movementVec)
 static void OnUpdatePlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
     struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[pEnt->user.hData];
-    switch (pPlayerEntData->state)
+    vec2 scaledMovement, mov;
+    GetMovementVector(pPlayerEntData->movementBits, mov);
+    if(pPlayerEntData->actionAnimation == WfNoActionAnim)
     {
-    case WfWalking:
-        {
-            vec2 scaledMovement, mov;
-            GetMovementVector(pPlayerEntData->movementBits, mov);
-            scaledMovement[0] = mov[0] * pPlayerEntData->metersPerSecondWalkSpeedBase * deltaT * pPlayerEntData->speedMultiplier;
-            scaledMovement[1] = mov[1] * pPlayerEntData->metersPerSecondWalkSpeedBase * deltaT * pPlayerEntData->speedMultiplier;
-            Ph_SetDynamicBodyVelocity(
-                pEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider.id,
-                scaledMovement
-            );
-            SetPlayerAnimation(pLayer, pPlayerEntData, pEnt);
-        }
-        
-        break;
-    case WfAttacking:
-        {
-            struct AnimatedSprite* pSprite = &pEnt->components[PLAYER_SPRITE_COMP_INDEX].data.spriteAnimator;
-            if(!pSprite->bIsAnimating)
-            {
-                pPlayerEntData->state = WfWalking;
-                SetBasePlayerAnimation(pPlayerEntData->directionFacing, pLayer, pPlayerEntData, pEnt);
-                WfSetPlayerOverlayAnimations(pPlayerEntData->directionFacing, pLayer, pPlayerEntData, pEnt);
-            }
-        }
-        break;
-    default:
-        break;
+        scaledMovement[0] = mov[0] * pPlayerEntData->metersPerSecondWalkSpeedBase * deltaT * pPlayerEntData->speedMultiplier;
+        scaledMovement[1] = mov[1] * pPlayerEntData->metersPerSecondWalkSpeedBase * deltaT * pPlayerEntData->speedMultiplier;
+        Ph_SetDynamicBodyVelocity(
+            pEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider.id,
+            scaledMovement
+        );
     }
+    else
+    {
+        vec2 z = {0.0f, 0.0f};
+        Ph_SetDynamicBodyVelocity(
+            pEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider.id,
+            z
+        );
+    }
+    SetPlayerAnimation(pLayer, pPlayerEntData, pEnt);
     
     Entity2DUpdate(pEnt, pLayer, deltaT);
 }
@@ -390,6 +484,19 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
     {
         ChangeItem(pLayer, pEnt, pPlayerEntData, -1);
     }
+    if(In_GetButtonPressThisFrame(context, pPlayerEntData->mainActionBinding) && 
+        pPlayerEntData->actionAnimation == WfNoActionAnim)
+    {
+        struct WfInventory* pInv = WfGetPlayerInventory(pPlayerEntData);
+        struct WfInventoryItem* pItem = &pInv->pItems[pInv->selectedItem];
+        const struct WfItemDef* def = WfGetItemDef(pItem->itemIndex);
+        pPlayerEntData->actionAnimation = def->onUseAnimation;
+        struct AnimatedSprite* pSprite = &pEnt->components[PLAYER_SPRITE_COMP_INDEX].data.spriteAnimator;
+        pSprite->bIsAnimating = true;
+        pSprite->bRepeat = false;
+        pSprite->onSprite = 0;
+        pSprite->timer = 0.0f;
+    }
 }
 
 
@@ -453,6 +560,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEntData->state = WfWalking;
     pEntData->bNetworkControlled = bNetworkControlled;
     pEntData->networkPlayerNum = networkPlayerNum - 1;
+    pEntData->actionAnimation = WfNoActionAnim;
     if(!bNetworkControlled && NW_GetRole() == GR_Client)
     {
         pEnt->networkID = NetID_GetID();
@@ -483,6 +591,8 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pComponent3->type = ETE_SpriteAnimator;
     struct AnimatedSprite* pAnimatedSprite = &pComponent3->data.spriteAnimator;
     memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
+    pAnimatedSprite->transform.scale[0] = 1.0f;
+    pAnimatedSprite->transform.scale[1] = 1.0f;
 
     /*
         player background animation 2
@@ -492,6 +602,8 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pComponent4->type = ETE_SpriteAnimator;
     pAnimatedSprite = &pComponent4->data.spriteAnimator;
     memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
+    pAnimatedSprite->transform.scale[0] = 1.0f;
+    pAnimatedSprite->transform.scale[1] = 1.0f;
 
     /*
         Base Animated Sprite

@@ -61,7 +61,8 @@ static struct WfItemDef gDef =
     .onMakeCurrent = &OnMakeCurrentItem,
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip
+    .onTryEquip = &TryEquip,
+    .onUseAnimation = WfThrustAnim
 };
 
 void WfAddBasicHoeDef()

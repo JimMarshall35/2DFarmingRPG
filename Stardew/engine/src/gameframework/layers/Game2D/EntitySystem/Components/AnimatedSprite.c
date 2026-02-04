@@ -10,11 +10,15 @@ void AnimatedSprite_OnInit(struct AnimatedSprite* pAnimatedSprite, struct Entity
 {
     struct GameLayer2DData* pData = pLayer->userData;
     if(!pAnimatedSprite->bDraw) return;
-    struct AtlasAnimation* pAnim = At_FindAnim(pData->hAtlas, pAnimatedSprite->animationName);
-    EASSERT(pAnim);
-    pAnimatedSprite->pSprites = pAnim->frames;
-    pAnimatedSprite->numSprites = VectorSize(pAnim->frames);
-    pAnimatedSprite->fps = pAnim->fps;
+    if(pAnimatedSprite->animationName)
+    {
+        struct AtlasAnimation* pAnim = At_FindAnim(pData->hAtlas, pAnimatedSprite->animationName);
+        pAnimatedSprite->numSprites = VectorSize(pAnim->frames); 
+        pAnimatedSprite->pSprites = pAnim->frames;
+        pAnimatedSprite->fps = pAnim->fps;
+    }
+    //EASSERT(pAnim);
+    
 
 }
 
@@ -26,6 +30,7 @@ void AnimatedSprite_SetAnimation(struct GameFrameworkLayer* pLayer, struct Anima
     pSpriteComp->pSprites = pAnim->frames;
     pSpriteComp->numSprites = VectorSize(pAnim->frames);
     pSpriteComp->fps = pAnim->fps;
+    pSpriteComp->bDraw = true;
     if(bResetOnFrame)
     {
         pSpriteComp->onSprite = 0;

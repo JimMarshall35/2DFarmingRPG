@@ -52,12 +52,14 @@ def expand_animation(animation_node):
     width = int(animation_node.attrib["width"])
     height = int(animation_node.attrib["height"])
     bMinimizeSpace = bool(animation_node.attrib["bMinimizeSpace"])
+    bReverse = bool(animation_node.attrib["bReverse"]) if "bReverse" in animation_node.attrib else False
     animation_node.attrib = {
         "name" : animation_name,
         "fps" : fps
     }
+    frames = []
     for i in range(numFrames):
-        ET.SubElement(animation_node, "sprite", {
+        frames.append({
             "source" : source,
             "top" : str(starty),
             "left" : str(startx),
@@ -68,6 +70,11 @@ def expand_animation(animation_node):
         })
         startx += incx
         starty += incy
+    if bReverse:
+        frames = list(reversed(frames))
+    for frame in frames:
+        ET.SubElement(animation_node, "sprite", frame)
+
 
 def main():
     args = do_cmd_args()

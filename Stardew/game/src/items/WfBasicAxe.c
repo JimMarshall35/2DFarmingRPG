@@ -59,7 +59,8 @@ static struct WfItemDef gDef =
     .onMakeCurrent = &OnMakeCurrentItem,
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip
+    .onTryEquip = &TryEquip,
+    .onUseAnimation = WfSlashAnim
 };
 
 void WfAddBasicAxeDef()

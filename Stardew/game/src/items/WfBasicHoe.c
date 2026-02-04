@@ -4,6 +4,7 @@
 #include "WfItem.h"
 #include "WfPlayer.h"
 #include "Entities.h"
+#include "EngineUtils.h"
 
 #include <stdlib.h>
 
@@ -11,8 +12,8 @@
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
-    pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
-    pEntData->animationSet.bgLayersMask = 0;
+    pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask = (1 << WfBG1);
 
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-hoe-male-up";
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-hoe-male-down";
@@ -24,10 +25,11 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     pEntData->animationSet.layers[WfToolAnimationLayer].thrustAnimations[Left] = "hoe-thrust-male-left-fg";
     pEntData->animationSet.layers[WfToolAnimationLayer].thrustAnimations[Right] = "hoe-thrust-male-right-fg";
 
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].thrustAnimations[Up] = "hoe-thrust-male-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].thrustAnimations[Down] = "hoe-thrust-male-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].thrustAnimations[Left] = "hoe-thrust-male-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].thrustAnimations[Right] = "hoe-thrust-male-bg";
+    ZeroMemory(pEntData->animationSet.bgLayers[WfBG1].walkAnimations, sizeof(const char*) * NUM_ANIMATIONS);
+    pEntData->animationSet.bgLayers[WfBG1].thrustAnimations[Up] = "hoe-thrust-male-up-bg";
+    pEntData->animationSet.bgLayers[WfBG1].thrustAnimations[Down] = "hoe-thrust-male-down-bg";
+    pEntData->animationSet.bgLayers[WfBG1].thrustAnimations[Left] = "hoe-thrust-male-left-bg";
+    pEntData->animationSet.bgLayers[WfBG1].thrustAnimations[Right] = "hoe-thrust-male-right-bg";
 
 
     struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfToolAnimationLayer);
@@ -62,7 +64,8 @@ static struct WfItemDef gDef =
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
     .onTryEquip = &TryEquip,
-    .onUseAnimation = WfThrustAnim
+    .onUseAnimation = WfThrustAnim,
+    .bCanUseItem = true
 };
 
 void WfAddBasicHoeDef()

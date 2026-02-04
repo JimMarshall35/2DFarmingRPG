@@ -136,7 +136,7 @@
                 incy="0"
                 width="64"
                 height="64"
-                numFrames="6"
+                numFrames="8"
                 bMinimizeSpace="true"/>
         
     <animation name="thrust-base-male-down"
@@ -148,7 +148,7 @@
                 incy="0"
                 width="64"
                 height="64"
-                numFrames="6"
+                numFrames="8"
                 bMinimizeSpace="true"/>
 
     <animation name="thrust-base-male-right"
@@ -160,7 +160,7 @@
                 incy="0"
                 width="64"
                 height="64"
-                numFrames="6"
+                numFrames="8"
                 bMinimizeSpace="true"/>
 
                 <!-- Pickaxe -->

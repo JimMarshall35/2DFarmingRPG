@@ -155,16 +155,35 @@ static void SetBasePlayerActionAnimation(enum WfDirection dir, struct GameFramew
             pSprite->fps *= pPlayerEntData->speedMultiplier;
             break;
         }
-        if(!pSprite->bIsAnimating)
-        {
-            pSprite->onSprite = 0;
-            pSprite->timer = 0.0f;
-            pSprite->bRepeat = true;
-            pPlayerEntData->actionAnimation = WfNoActionAnim;
-        }
         break;
     case WfThrustAnim:
+        switch(dir)
+        {
+        case Up:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, THRUSTING_UP_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Down:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, THRUSTING_DOWN_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Left:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, THRUSTING_LEFT_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        case Right:
+            AnimatedSprite_SetAnimation(pLayer, pSprite, THRUSTING_RIGHT_MALE, false, false);
+            pSprite->fps *= pPlayerEntData->speedMultiplier;
+            break;
+        }
         break;
+    }
+    if(!pSprite->bIsAnimating)
+    {
+        pSprite->onSprite = 0;
+        pSprite->timer = 0.0f;
+        pSprite->bRepeat = true;
+        pPlayerEntData->actionAnimation = WfNoActionAnim;
     }
 }
 
@@ -235,8 +254,13 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
                     break;
                 }
             }
-            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
-            SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, NULL, false, false);
+            if(animName)
+            {
+                AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
+                SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
+            }
+            
         }
     }
 
@@ -260,8 +284,12 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
                     break;
                 }
             }
-            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
-            SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
+            AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, NULL, false, false);
+            if(animName)
+            {
+                AnimatedSprite_SetAnimation(pLayer, pOverlayAnimator, animName, false, false);
+                SyncAnimA2B(pBaseAnimatedSprite, pOverlayAnimator);
+            }
         }
     }
 }
@@ -298,7 +326,7 @@ static void SetPlayerAnimation(struct GameFrameworkLayer* pLayer, struct WfPlaye
         }
         for(int i=0; i<WfNumBackgroundAnimationLayers; i++)
         {
-            if(pPlayerEntData->animationSet.layersMask & (1 << i))
+            if(pPlayerEntData->animationSet.bgLayersMask & (1 << i))
             {
                 pEnt->components[PLAYER_BG_SPRITE_COMP_START + i].data.spriteAnimator.onSprite = 0;
             }
@@ -485,7 +513,8 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
         ChangeItem(pLayer, pEnt, pPlayerEntData, -1);
     }
     if(In_GetButtonPressThisFrame(context, pPlayerEntData->mainActionBinding) && 
-        pPlayerEntData->actionAnimation == WfNoActionAnim)
+        pPlayerEntData->actionAnimation == WfNoActionAnim &&
+        WfGetInventory()->pItems[WfGetInventory()->selectedItem].itemIndex >= 0)
     {
         struct WfInventory* pInv = WfGetPlayerInventory(pPlayerEntData);
         struct WfInventoryItem* pItem = &pInv->pItems[pInv->selectedItem];
@@ -593,6 +622,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
     pAnimatedSprite->transform.scale[0] = 1.0f;
     pAnimatedSprite->transform.scale[1] = 1.0f;
+    pAnimatedSprite->bDraw = false;
 
     /*
         player background animation 2
@@ -604,6 +634,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     memset(pAnimatedSprite, 0, sizeof(struct AnimatedSprite));
     pAnimatedSprite->transform.scale[0] = 1.0f;
     pAnimatedSprite->transform.scale[1] = 1.0f;
+    pAnimatedSprite->bDraw = false;
 
     /*
         Base Animated Sprite

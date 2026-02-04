@@ -26,19 +26,29 @@ void AnimatedSprite_SetAnimation(struct GameFrameworkLayer* pLayer, struct Anima
 {
     struct GameLayer2DData* pData = pLayer->userData;
     pSpriteComp->animationName = animName;
-    struct AtlasAnimation* pAnim = At_FindAnim(pData->hAtlas, pSpriteComp->animationName);
-    pSpriteComp->pSprites = pAnim->frames;
-    pSpriteComp->numSprites = VectorSize(pAnim->frames);
-    pSpriteComp->fps = pAnim->fps;
-    pSpriteComp->bDraw = true;
-    if(bResetOnFrame)
+    if(animName)
     {
-        pSpriteComp->onSprite = 0;
+        struct AtlasAnimation* pAnim = At_FindAnim(pData->hAtlas, pSpriteComp->animationName);
+        pSpriteComp->pSprites = pAnim->frames;
+        pSpriteComp->numSprites = VectorSize(pAnim->frames);
+        pSpriteComp->fps = pAnim->fps;
+        pSpriteComp->bDraw = true;
+        if(bResetOnFrame)
+        {
+            pSpriteComp->onSprite = 0;
+        }
+        if(bResetTimer)
+        {
+            pSpriteComp->timer = 0.0f;
+        }
     }
-    if(bResetTimer)
+    else
     {
-        pSpriteComp->timer = 0.0f;
+        pSpriteComp->bDraw = 0;
+        pSpriteComp->numSprites = 0;
+        pSpriteComp->fps = 0;
     }
+    
 
 }
 

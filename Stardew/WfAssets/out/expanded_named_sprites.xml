@@ -104,6 +104,8 @@
 		<sprite source="./WfAssets/Image/thrust.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left3" />
 		<sprite source="./WfAssets/Image/thrust.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left4" />
 		<sprite source="./WfAssets/Image/thrust.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left7" />
 	</animation-frames>
 	<animation-frames name="thrust-base-male-down" fps="10.0">
 		<sprite source="./WfAssets/Image/thrust.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down0" />
@@ -112,6 +114,8 @@
 		<sprite source="./WfAssets/Image/thrust.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down3" />
 		<sprite source="./WfAssets/Image/thrust.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down4" />
 		<sprite source="./WfAssets/Image/thrust.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down7" />
 	</animation-frames>
 	<animation-frames name="thrust-base-male-right" fps="10.0">
 		<sprite source="./WfAssets/Image/thrust.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right0" />
@@ -120,6 +124,8 @@
 		<sprite source="./WfAssets/Image/thrust.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right3" />
 		<sprite source="./WfAssets/Image/thrust.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right4" />
 		<sprite source="./WfAssets/Image/thrust.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right7" />
 	</animation-frames>
 	<animation-frames name="walk-pickaxe-male-up" fps="10">
 		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up0" />

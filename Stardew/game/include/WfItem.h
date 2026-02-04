@@ -47,6 +47,7 @@ struct WfItemDef
     OnUseItemFn onUseItem;
     TryEquipFn onTryEquip;
     enum WfActionAnimation onUseAnimation;
+    bool bCanUseItem;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

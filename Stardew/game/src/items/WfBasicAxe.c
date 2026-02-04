@@ -4,13 +4,13 @@
 #include "Entities.h"
 
 #include <stdlib.h>
-
+#include "EngineUtils.h"
 
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
-    pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
-    pEntData->animationSet.bgLayersMask = 0;
+    pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask = (1 << WfBG1);
     
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-axe-male-up";
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-axe-male-down";
@@ -22,10 +22,11 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Left] = "axe-slash-male-left-fg";
     pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[Right] = "axe-slash-male-right-fg";
 
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Up] = "axe-slash-male-up-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Down] = "axe-slash-male-down-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Left] = "axe-slash-male-left-bg";
-    pEntData->animationSet.bgLayers[WfToolAnimationLayer].slashAnimations[Right] = "axe-slash-male-right-bg";
+    ZeroMemory(pEntData->animationSet.bgLayers[WfBG1].walkAnimations, sizeof(const char*) * NUM_ANIMATIONS);
+    pEntData->animationSet.bgLayers[WfBG1].slashAnimations[Up] = "axe-slash-male-up-bg";
+    pEntData->animationSet.bgLayers[WfBG1].slashAnimations[Down] = "axe-slash-male-down-bg";
+    pEntData->animationSet.bgLayers[WfBG1].slashAnimations[Left] = "axe-slash-male-left-bg";
+    pEntData->animationSet.bgLayers[WfBG1].slashAnimations[Right] = "axe-slash-male-right-bg";
 
 
     struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfToolAnimationLayer);
@@ -60,7 +61,8 @@ static struct WfItemDef gDef =
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
     .onTryEquip = &TryEquip,
-    .onUseAnimation = WfSlashAnim
+    .onUseAnimation = WfSlashAnim,
+    .bCanUseItem = true
 };
 
 void WfAddBasicAxeDef()

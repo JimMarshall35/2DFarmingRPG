@@ -870,7 +870,7 @@ int netcode_socket_receive_packet( struct netcode_socket_t * socket, struct netc
     }
 #endif // #if NETCODE_PLATFORM == NETCODE_PLATFORM_WINDOWS
 
-    netcode_printf(NETCODE_LOG_LEVEL_INFO, "recieved a packet");
+    //netcode_printf(NETCODE_LOG_LEVEL_INFO, "recieved a packet");
 
     if ( sockaddr_from.ss_family == AF_INET6 )
     {
@@ -2880,7 +2880,7 @@ void netcode_client_process_packet_internal( struct netcode_client_t * client, s
         {
             if ( client->state == NETCODE_CLIENT_STATE_SENDING_CONNECTION_REQUEST && netcode_address_equal( from, &client->server_address ) )
             {
-                netcode_printf( NETCODE_LOG_LEVEL_DEBUG, "client received connection challenge packet from server\n" );
+                //netcode_printf( NETCODE_LOG_LEVEL_DEBUG, "client received connection challenge packet from server\n" );
 
                 struct netcode_connection_challenge_packet_t * p = (struct netcode_connection_challenge_packet_t*) packet;
                 client->challenge_token_sequence = p->challenge_token_sequence;

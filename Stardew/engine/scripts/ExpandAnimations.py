@@ -53,6 +53,10 @@ def expand_animation(animation_node):
     height = int(animation_node.attrib["height"])
     bMinimizeSpace = bool(animation_node.attrib["bMinimizeSpace"])
     bReverse = bool(animation_node.attrib["bReverse"]) if "bReverse" in animation_node.attrib else False
+
+
+    bPalindrome = bool(animation_node.attrib["bPalindrome"]) if "bPalindrome" in animation_node.attrib else False
+
     animation_node.attrib = {
         "name" : animation_name,
         "fps" : fps
@@ -72,6 +76,9 @@ def expand_animation(animation_node):
         starty += incy
     if bReverse:
         frames = list(reversed(frames))
+    if bPalindrome:
+        for i in range(len(frames) - 2, -1, -1):
+            frames.append(frames[i])
     for frame in frames:
         ET.SubElement(animation_node, "sprite", frame)
 

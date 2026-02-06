@@ -25,3 +25,7 @@ python3 engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/e
 cp ./WfAssets/out/Farm.tilemap ./WfAssets/Saves/Dev
 cp ./WfAssets/out/House.tilemap ./WfAssets/Saves/Dev
 cp ./WfAssets/out/RoadToTown.tilemap ./WfAssets/Saves/Dev
+
+rm -f ./WfAssets/out/atlascombined.xml
+rm -f ./WfAssets/out/expanded_named_sprites.xml
+

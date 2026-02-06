@@ -10,9 +10,9 @@ robocopy "engine\src\Debug" "game\Debug" "StardewEngine.dll" /E /XO
 robocopy "engine\src\Debug" "enginetest\Debug" "StardewEngine.dll" /E /XO
 robocopy "engine\src\Debug" "atlastool\Debug" "StardewEngine.dll" /E /XO
 
-robocopy "engine\lib\Debug" "game\Debug" "OpenAL32.dll" /E /XO
-robocopy "engine\lib\Debug" "enginetest\Debug" "OpenAL32.dll" /E /XO
-robocopy "engine\lib\Debug" "atlastool\Debug" "OpenAL32.dll" /E /XO
+@REM robocopy "engine\lib\Debug" "game\Debug" "OpenAL32.dll" /E /XO
+@REM robocopy "engine\lib\Debug" "enginetest\Debug" "OpenAL32.dll" /E /XO
+@REM robocopy "engine\lib\Debug" "atlastool\Debug" "OpenAL32.dll" /E /XO
 
 robocopy "..\enginetest\data" "enginetest\Debug\data" /E /XO
 

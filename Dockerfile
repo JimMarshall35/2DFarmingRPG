@@ -7,7 +7,7 @@ RUN mkdir -p /app
 COPY ./Stardew /app
 RUN mkdir /app/build
 WORKDIR /app/build
-RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DNO_OPENAL
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DNO_OPENAL=ON
 RUN make
 
 FROM debian:bookworm-slim

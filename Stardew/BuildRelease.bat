@@ -9,9 +9,10 @@ robocopy "..\enginetest\data" "enginetest\Release\data" /E /XO
 robocopy "atlastool\Release" "../engine/scripts" "AtlasTool.exe" /E /XO
 robocopy "engine\src\Release" "../engine/scripts" "StardewEngine.dll" /E /XO
 
-robocopy "engine\lib\Release" "enginetest\Release" "OpenAL32.dll" /E /XO
-robocopy "engine\lib\Release" "game\Release" "OpenAL32.dll" /E /XO
-robocopy "engine\lib\Release" "../engine/scripts" "OpenAL32.dll" /E /XO
+tree /f
+@REM robocopy "engine\lib\Release" "enginetest\Release" "OpenAL32.dll" /E /XO
+@REM robocopy "engine\lib\Release" "game\Release" "OpenAL32.dll" /E /XO
+@REM robocopy "engine\lib\Release" "../engine/scripts" "OpenAL32.dll" /E /XO
 
 rem // This handles the exit code (`ErrorLevel`) returned by `robocopy` properly: (needed for CI)
 if ErrorLevel 8 (exit /B 1) else (exit /B 0)

@@ -35,6 +35,7 @@ cp "./build/game/$EXE_NAME" "./$DEB_PKG_NAME/usr/bin/$EXE_NAME"
 
 # install engine library
 cp "./build/engine/src/libStardewEngine.so" "./$DEB_PKG_NAME/usr/lib/libStardewEngine.so"
+cp "./build/engine/lib/openal-soft-1.25.1/libopenal.so" "./$DEB_PKG_NAME/usr/lib/openal-soft-1.25.1/libopenal.so"
 
 # install debian control file
 cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"
@@ -42,7 +43,7 @@ mv "./$DEB_PKG_NAME/DEBIAN/debian_control.txt" "./$DEB_PKG_NAME/DEBIAN/control"
 sed -i "s/<<VERSION>>/$VERSION_STRING/g" "./$DEB_PKG_NAME/DEBIAN/control"
 
 # install script to start the game
-echo "(cd /usr/share/; $EXE_NAME \$@)" >> "./$DEB_PKG_NAME/usr/bin/openfarmer"
+echo "(PATH="$PATH:/usr/share/"; $EXE_NAME \$@)" >> "./$DEB_PKG_NAME/usr/bin/openfarmer"
 chmod +x "./$DEB_PKG_NAME/usr/bin/openfarmer"
 
 # build debian package

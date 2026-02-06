@@ -23,14 +23,18 @@ target_link_libraries(StardewEngine PUBLIC box2d)
 
 target_link_libraries(StardewEngine PUBLIC Netcode)
 
+target_link_libraries(StardewEngine PUBLIC OpenAL)
 
 add_subdirectory(lib/cglm-0.9.6 EXCLUDE_FROM_ALL)
+add_subdirectory(lib/openal-soft-1.25.1)
 
 
 target_include_directories(StardewEngine  PUBLIC include)
 target_include_directories(StardewEngine  PRIVATE lib/glad/include)
 target_include_directories(StardewEngine  PRIVATE ../netcode)
 target_include_directories(StardewEngine  PRIVATE ../netcode/sodium)
+target_include_directories(StardewEngine  PRIVATE lib/openal-soft-1.25.1/include)
+
 
 set_property(TARGET StardewEngine PROPERTY C_STANDARD 11)
 

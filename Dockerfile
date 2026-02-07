@@ -1,7 +1,7 @@
 FROM debian:bookworm AS builder
 RUN apt-get update
 RUN apt-get install -y cmake build-essential
-RUN apt-get install -y libxml2 liblua5.4-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev
+RUN apt-get install -y libxml2 liblua5.4-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev libopenal-dev
 
 RUN mkdir -p /app
 COPY ./Stardew /app

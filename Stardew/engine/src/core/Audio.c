@@ -4,18 +4,14 @@
 #include <errno.h>
 #include <string.h>
 
-#ifndef NO_OPENAL
 #include "AL/al.h"
 #include "AL/alc.h"
 #include "AL/alext.h"
-#endif
 
 #include "Log.h"
 
 int Au_Init(char ***argv, int *argc)
 {
-
-#ifndef NO_OPENAL
     const ALCchar *name;
     ALCdevice *device;
     ALCcontext *ctx;
@@ -54,13 +50,11 @@ int Au_Init(char ***argv, int *argc)
     if(!name || alcGetError(device) != AL_NO_ERROR)
         name = alcGetString(device, ALC_DEVICE_SPECIFIER);
     Log_Info("OpenAL: Opened \"%s\"\n", name);
-#endif
     return 0;
 }
 
 void Au_DeInit()
 {
-#ifndef NO_OPENAL
     ALCdevice *device;
     ALCcontext *ctx;
 
@@ -73,6 +67,5 @@ void Au_DeInit()
     alcMakeContextCurrent(NULL);
     alcDestroyContext(ctx);
     alcCloseDevice(device);
-#endif
 }
 

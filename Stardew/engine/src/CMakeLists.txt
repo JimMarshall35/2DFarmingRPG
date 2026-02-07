@@ -1,6 +1,7 @@
 
 add_library( StardewEngine SHARED
 core/Atlas.c
+core/Audio.c
 core/BinarySerializer.c
 core/CtorDtor.c
 core/DynArray.c

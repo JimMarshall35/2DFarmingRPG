@@ -15,6 +15,7 @@
 #include "Log.h"
 #include "Network.h"
 #include "AssertLib.h"
+#include "Audio.h"
 
 #define SCR_WIDTH 640
 #define SCR_HEIGHT 480
@@ -95,7 +96,7 @@ static void GLAPIENTRY MessageCallback(GLenum source,
 {
     //if (severity >= minimumLogSeverityIncluding) 
     {
-        Log_Warning(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
+        Log_Warning("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
             (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
             type, severity, message);
     }
@@ -240,7 +241,8 @@ int EngineStart(int argc, char** argv, GameInitFn init)
     Engine_ParseCmdArgs(argc, argv, NULL);
     Log_Init();
     NW_Init();
-    
+    int audioSystemInitCode = Au_Init();
+    Log_Info("Initialized audio, return code: %i", audioSystemInitCode);
 
     Log_Verbose("testing libxml version...");
     LIBXML_TEST_VERSION
@@ -400,6 +402,11 @@ int EngineStart(int argc, char** argv, GameInitFn init)
 
     glfwTerminate();
     Log_DeInit();
+
+    if(audioSystemInitCode == 0)
+    {
+        Au_DeInit();
+    }
 }
 
 

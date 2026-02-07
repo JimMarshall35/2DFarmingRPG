@@ -6,6 +6,7 @@ find_package(glfw3 REQUIRED)
 find_package(Lua 5.4 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(LibXml2 REQUIRED)
+find_package(OpenAL REQUIRED)
 
 add_subdirectory(lib/box2d-3.1.1)
 
@@ -26,14 +27,6 @@ target_link_libraries(StardewEngine PUBLIC Netcode)
 
 add_subdirectory(lib/cglm-0.9.6 EXCLUDE_FROM_ALL)
 
-if(NOT WIN32)
-  find_package(OpenAL REQUIRED)
-  target_link_libraries(StardewEngine PUBLIC OpenAL::OpenAL)
-else()
-  add_subdirectory(lib/openal-soft-1.25.1)
-  target_link_libraries(StardewEngine PUBLIC OpenAL)
-  target_include_directories(StardewEngine  PRIVATE lib/openal-soft-1.25.1/include)
-endif()
 
 target_include_directories(StardewEngine  PUBLIC include)
 target_include_directories(StardewEngine  PRIVATE lib/glad/include)
@@ -46,7 +39,9 @@ set_property(TARGET StardewEngine PROPERTY C_STANDARD 11)
 target_include_directories(StardewEngine PUBLIC ${FREETYPE_INCLUDE_DIRS})
 target_include_directories(StardewEngine PUBLIC ${LUA_INCLUDE_DIR})
 target_include_directories(StardewEngine PUBLIC ${LIBXML2_INCLUDE_DIR})
+target_include_directories(StardewEngine PUBLIC ${LIBOPENAL_INCLUDE_DIR})
 
+target_link_libraries(StardewEngine PUBLIC OpenAL::OpenAL)
 if(WIN32)
   target_link_libraries(StardewEngine PUBLIC LibXml2::LibXml2 Freetype::Freetype lua::lua glfw)
 else()

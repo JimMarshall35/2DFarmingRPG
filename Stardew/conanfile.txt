@@ -5,6 +5,7 @@ freetype/2.13.3
 lua/5.4.7
 glfw/3.4
 gtest/1.16.0
+openal/1.22.2
 [generators]
 CMakeDeps
 CMakeToolchain

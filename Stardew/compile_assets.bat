@@ -13,4 +13,8 @@ python engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/ex
 
 robocopy "./WfAssets/" "game\Release/WfAssets/" /E /XO
 
+
+del "./WfAssets/out/atlascombined.xml" 
+del "./WfAssets/out/expanded_named_sprites.xml" 
+
 pause

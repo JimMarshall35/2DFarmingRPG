@@ -25,11 +25,11 @@ target_link_libraries(StardewEngine PUBLIC box2d)
 
 target_link_libraries(StardewEngine PUBLIC Netcode)
 
-target_link_libraries(StardewEngine PUBLIC OpenAL)
 
 add_subdirectory(lib/cglm-0.9.6 EXCLUDE_FROM_ALL)
 
 if(NOT NO_OPENAL)
+  target_link_libraries(StardewEngine PUBLIC OpenAL)
   add_subdirectory(lib/openal-soft-1.25.1)
   target_include_directories(StardewEngine  PRIVATE lib/openal-soft-1.25.1/include)
 endif()

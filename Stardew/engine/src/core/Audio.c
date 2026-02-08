@@ -149,7 +149,8 @@ int SafeMod(int a, int b)
 /// @param sampleRate sample rate
 /// @param inSfx parameters to generate sound effect
 /// @return number of samples output
-int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSound* inSfx) {
+int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSound* inSfx) 
+{
     struct ZZFXSound cpy;
     memcpy(&cpy, inSfx, sizeof(struct ZZFXSound));
     struct ZZFXSound* sfx = &cpy;
@@ -212,27 +213,27 @@ int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSo
         if (!(SafeMod(++crush , (int)(sfx->bitCrush * 100)))) 
         {
             // waveform generation
-            if (sfx->shape == 0)
+            if ((int)sfx->shape == 0)
             {
                 s = sinf(t);
             } 
-            else if (sfx->shape == 1) 
+            else if ((int)sfx->shape == 1) 
             {
                 s = 1.0f - 4.0f * fabsf(roundf(t/PI2) - t/PI2); // triangle
             } 
-            else if (sfx->shape == 2) 
+            else if ((int)sfx->shape == 2) 
             {
                 s = 1.0f - fmodf(2.0f * t / PI2 + 2.0f, 2.0f); // saw
             } 
-            else if (sfx->shape == 3) 
+            else if ((int)sfx->shape == 3) 
             {
                 s = fmaxf(fminf(tanf(t),1.0f),-1.0f); // tan
             }
-            else if (sfx->shape == 4)
+            else if ((int)sfx->shape == 4)
             {
                 s = sinf(t*t*t); // noise-like
             }
-            else if (sfx->shape == 5)
+            else if ((int)sfx->shape == 5)
             {
                 s = fmodf(t/PI2,1.0f) < sfx->shapeCurve/2.0f ? 1.0f : -1.0f; // square duty
             }

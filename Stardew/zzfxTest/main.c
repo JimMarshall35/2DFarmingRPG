@@ -53,6 +53,7 @@ struct ZZFXSound ParseZzfxCall(char* call)
 
 int main(int argc, char** argv)
 {
+    srand(time(NULL));
     int repeats = 1;
     float waitBetweenRepeats = 0.0f;
     float masterVol = 0.2f;

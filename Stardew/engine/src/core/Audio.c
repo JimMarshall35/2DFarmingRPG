@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
+#include <float.h>
 
 #include "AL/al.h"
 #include "AL/alc.h"
@@ -154,7 +155,7 @@ int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSo
     struct ZZFXSound* sfx = &cpy;
     float startSlide = sfx->slide * 500.0f * PI2 / (sampleRate * sampleRate);
     float startFrequency = sfx->frequency * 
-        (1.0f + sfx->randomness * 2.0f * ((float)rand() / (RAND_MAX + 1.0f) - sfx->randomness))
+        (1.0f + sfx->randomness * 2.0f * (RandFloat01() - sfx->randomness))
         * PI2 / sampleRate;
     
     float slide = startSlide;

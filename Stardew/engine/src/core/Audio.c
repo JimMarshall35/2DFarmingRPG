@@ -16,53 +16,13 @@
 #include "EngineUtils.h"
 #include "AssertLib.h"
 
+#include <x86intrin.h>
+
 #define PI 3.14159265358979323846
 #define PI2 (2.0 * PI)
 
 ALCint gDevRate = 0;
 ALuint gBasicSource = -1;
-
-int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSound* sfx) ;
-
-float Au_PlaySoundTest(struct ZZFXSound* sound, float masterVol)
-{
-    const float sfxBufferLenSeconds = 4;
-    size_t bufferSize = sizeof(float) * sfxBufferLenSeconds * gDevRate;
-    float* sfxBuffer = malloc(bufferSize); 
-    ZeroMemory(sfxBuffer, bufferSize);
-    float v = sound->volume;
-    sound->volume *= masterVol;
-    int samples = zzfx_Generate(sfxBuffer, bufferSize / sizeof(float), (float)gDevRate, sound);
-    sound->volume = v;
-    Log_Info("num samples %i", samples);
-    ALuint buffer = 0;
-    alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO_FLOAT32, sfxBuffer, (ALsizei)samples * sizeof(float), (ALsizei)gDevRate);
-    free(sfxBuffer);
-
-    ALenum err = alGetError();
-    if(err != AL_NO_ERROR)
-    {
-        Log_Error("OpenAL Error: %s\n", alGetString(err));
-        if(alIsBuffer(buffer))
-            alDeleteBuffers(1, &buffer);
-        return;
-    }
-
-    /* Create the source to play the sound with. */
-    ALuint source = 0;
-    alGenSources(1, &source);
-    alSourcei(source, AL_BUFFER, (ALint)buffer);
-    ALfloat source_x = 0.0f;
-    ALfloat source_y = 0.0f;
-    ALfloat source_z = 0.0f;
-    alSource3f(source, AL_POSITION, source_x, source_y, source_z);
-    EASSERT(alGetError()==AL_NO_ERROR && "Failed to setup sound source");
-    alSourcePlay(source);
-
-    alDeleteBuffers(1, &buffer);
-    return (float)samples / (float)gDevRate;
-}
 
 int Au_Init(char ***argv, int *argc)
 {
@@ -114,7 +74,6 @@ void Au_DeInit()
     alcMakeContextCurrent(NULL);
     alcDestroyContext(ctx);
     alcCloseDevice(device);
-
     
 }
 
@@ -141,6 +100,147 @@ int SafeMod(int a, int b)
         return 0;
     }
     return a % b;
+}
+
+__m256 fmodf256(__m256 _x, __m256 _y)
+{
+    //x - trunc(x / y) * y;
+    __m256 d = _mm256_div_ps(_x, _y);
+    __m256 trunc = _mm256_floor_ps(d);
+    __m256 c = _mm256_mul_ps(trunc, _y);
+    return _mm256_sub_ps(_x, c);
+}
+
+int zzfx_Generate_avx(float* buffer, int bufferSize, float sampleRate, struct ZZFXSound* inSfx) 
+{
+    struct ZZFXSound cpy;
+    memcpy(&cpy, inSfx, sizeof(struct ZZFXSound));
+    struct ZZFXSound* sfx = &cpy;
+    float startSlide = sfx->slide * 500.0f * PI2 / (sampleRate * sampleRate);
+    float startFrequency = sfx->frequency * 
+        (1.0f + sfx->randomness * 2.0f * (RandFloat01() - sfx->randomness))
+        * PI2 / sampleRate;
+    
+    float slide = startSlide;
+    float frequency = startFrequency;
+    float modOffset = 0.0f;
+    int repeat = 0;
+    int crush = 0;
+    int jump = 1;
+    
+    float t = 0.0f;
+    float s = 0.0f;
+    float f;
+
+    // biquad filter coefficients
+    float quality = 2.0f;
+    float w = PI2 * fabsf(sfx->filter) * 2.0f / sampleRate;
+    float cos_w = cosf(w);
+    float alpha = sinf(w) / 2.0f / quality;
+    float a0 = 1.0f + alpha;
+    float a1 = -2.0f * cos_w / a0;
+    float a2 = (1.0f - alpha) / a0;
+    float b0 = (1.0f + signf(sfx->filter) * cos_w) / 2.0f / a0;
+    float b1 = -(signf(sfx->filter) + cos_w) / a0;
+    float b2 = b0;
+    float x1 = 0.0f, x2 = 0.0f, y1 = 0.0f, y2 = 0.0f;
+
+    // envelope scaling
+    float minAttack = 9.0f;
+    float attack = sfx->attack * sampleRate;
+    if (attack <= 0)
+    {
+        attack = minAttack;
+    }
+    float decay = sfx->decay * sampleRate;
+    float sustain = sfx->sustain * sampleRate;
+    float release = sfx->release * sampleRate;
+    float delay = sfx->delay * sampleRate;
+    float deltaSlide = sfx->deltaSlide * 500.0f * PI2 / (sampleRate * sampleRate * sampleRate);
+    float modulation = sfx->modulation * PI2 / sampleRate;
+    float pitchJump = sfx->pitchJump * PI2 / sampleRate;
+    int pitchJumpTime = (int)(sfx->pitchJumpTime * sampleRate);
+    int repeatTime = (int)(sfx->repeatTime * sampleRate);
+    float volume = sfx->volume;
+
+    int length = (int)(attack + decay + sustain + release + delay);
+    if (length > bufferSize) length = bufferSize;
+
+    float minS = FLT_MAX;
+    float maxS = FLT_MIN;
+    float bitcrush100 = (int)(sfx->bitCrush * 100);
+    for (int i = 0; i < length; i += sizeof(__m256) / sizeof(float))
+    {
+        int crushVals[sizeof(__m256) / sizeof(float)];
+        int modVals[sizeof(__m256) / sizeof(float)];
+        float tVals[sizeof(__m256) / sizeof(float)];
+        for(int j=0; j<sizeof(__m256) / sizeof(float); j++)
+        {
+            crushVals[j] = ++crush;
+            modVals[j] = SafeMod(crushVals[j], bitcrush100);
+
+            // frequency + modulation + noise
+            f = (frequency += slide += deltaSlide) * cosf(modulation * modOffset++);
+            t += f + f * sfx->noise * sinf(powf((float)i, 5.0f));
+
+            // pitch jump
+            if (jump && (++jump > pitchJumpTime)) {
+                frequency += pitchJump;
+                startFrequency += pitchJump;
+                jump = 0;
+            }
+
+            // repeat
+            if (repeatTime && !(++repeat % repeatTime))
+            {
+                frequency = startFrequency;
+                slide = startSlide;
+                if (!jump) 
+                    jump = 1;
+            }
+            tVals[j] = t;
+        }
+        
+        
+        __m256i lengthMask = _mm256_set_epi32(
+            (i     < length ? 0xffffffff : 0),
+            (i + 1 < length ? 0xffffffff : 0),
+            (i + 2 < length ? 0xffffffff : 0),
+            (i + 3 < length ? 0xffffffff : 0),
+            (i + 4 < length ? 0xffffffff : 0),
+            (i + 5 < length ? 0xffffffff : 0),
+            (i + 6 < length ? 0xffffffff : 0),
+            (i + 7 < length ? 0xffffffff : 0));
+
+        __m256 modMask = _mm256_set_ps(
+            (!modVals[0] ? 1.0f : 0),
+            (!modVals[1] ? 1.0f : 0),
+            (!modVals[2] ? 1.0f : 0),
+            (!modVals[3] ? 1.0f : 0),
+            (!modVals[4] ? 1.0f : 0),
+            (!modVals[5] ? 1.0f : 0),
+            (!modVals[6] ? 1.0f : 0),
+            (!modVals[7] ? 1.0f : 0)); 
+            
+        
+        __m256 samples;
+
+        switch((int)sfx->shape)
+        {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        }
+        
+        _mm256_maskstore_ps(buffer + i, lengthMask, samples);
+    } 
 }
 
 /// @brief a port of https://github.com/KilledByAPixel/ZzFX - far from perfect
@@ -213,30 +313,58 @@ int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSo
         if (!(SafeMod(++crush , (int)(sfx->bitCrush * 100)))) 
         {
             // waveform generation
-            if ((int)sfx->shape == 0)
+            if (sfx->shape) 
             {
+                if (sfx->shape > 1) 
+                {
+                    if (sfx->shape > 2) 
+                    {
+                        if (sfx->shape > 3) 
+                        {
+                            if (sfx->shape > 4) 
+                            {
+                                // 5: square (duty)
+                                s = fmodf(t/PI2,1.0f) < sfx->shapeCurve/2.0f ? 1.0f : -1.0f;
+                            } 
+                            else 
+                            {
+                                // 4: noise
+                                s = sinf(t*t*t); // noise-like
+                            }
+                        } 
+                        else 
+                        {
+                            // 3: tan
+                            s = fmaxf(fminf(tanf(t),1.0f),-1.0f);
+                        }
+                    } 
+                    else 
+                    {
+                        // 2: saw
+                        //s = 1 - (2 * t / PI2 % 2 + 2) % 2;
+                        s = 1.0f - fmodf(2.0f * t / PI2 + 2.0f, 2.0f); // saw
+                        float phase = t / PI2;
+                        float doubled = 2 * phase;
+                        float wrapped = fmodf(doubled, 2.0f);
+                        float shifted = wrapped + 2;
+                        float normalized = fmodf(shifted, 2);
+
+                        s = 1 - normalized;
+
+                    }
+                } 
+                else 
+                {
+                    // 1: triangle
+                    s = 1.0f - 4.0f * fabsf(roundf(t/PI2) - t/PI2); // triangle
+                }
+            } 
+            else 
+            {
+                // 0: sine
                 s = sinf(t);
-            } 
-            else if ((int)sfx->shape == 1) 
-            {
-                s = 1.0f - 4.0f * fabsf(roundf(t/PI2) - t/PI2); // triangle
-            } 
-            else if ((int)sfx->shape == 2) 
-            {
-                s = 1.0f - fmodf(2.0f * t / PI2 + 2.0f, 2.0f); // saw
-            } 
-            else if ((int)sfx->shape == 3) 
-            {
-                s = fmaxf(fminf(tanf(t),1.0f),-1.0f); // tan
             }
-            else if ((int)sfx->shape == 4)
-            {
-                s = sinf(t*t*t); // noise-like
-            }
-            else if ((int)sfx->shape == 5)
-            {
-                s = fmodf(t/PI2,1.0f) < sfx->shapeCurve/2.0f ? 1.0f : -1.0f; // square duty
-            }
+
 
             // tremolo
             if (repeatTime)
@@ -248,11 +376,11 @@ int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSo
             // envelope
             if (i < attack) 
             {
-                s *= i / attack;
+                s *= (float)i / attack;
             }
             else if (i < attack + decay)
             {
-                s *= 1.0f - ((i - attack) / decay) * (1.0f - sfx->sustainVolume);
+                s *= 1.0f - (((float)i - attack) / decay) * (1.0f - sfx->sustainVolume);
             }
             else if (i < attack + decay + sustain)
             {
@@ -268,18 +396,29 @@ int zzfx_Generate(float* buffer, int bufferSize, float sampleRate, struct ZZFXSo
             }
 
             // delay
+            /*
+            
+
+                s = delay ? s/2 + (delay > i ? 0 :           // delay
+                    (i<length-delay? 1 : (length-i)/delay) * // release delay 
+                    b[i-delay|0]/2/volume) : s;              // sample delay
+            */
             if (delay > 0)
             {
-                int dIndex = i - (int)delay;
-                if (dIndex >= 0)
-                {
-                    s = s / 2.0f + buffer[dIndex] / 2.0f;
-                }
-                else
-                {
-                    s = s / 2.0f;
-                }
+                
+                // int dIndex = i - (int)delay;
+                // if (dIndex >= 0)
+                // {
+                //     s = s / 2.0f + buffer[dIndex] / 2.0f;
+                // }
+                // else
+                // {
+                //     s = s / 2.0f;
+                // }
             }
+            s = delay ? s/2.0f + (delay > i ? 0 : 
+                    (i < length - delay ? 1 : (length-1) / delay) * 
+                    (buffer[i-(int)delay] / 2.0) / sfx->volume) : s;
 
             // filter
             if (sfx->filter != 0)

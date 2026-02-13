@@ -30,6 +30,4 @@ int Au_Init();
 
 void Au_DeInit();
 
-float Au_PlaySoundTest(struct ZZFXSound* sound, float masterVol);
-
 #endif

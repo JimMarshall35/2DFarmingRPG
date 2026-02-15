@@ -7,7 +7,9 @@
 #include "EngineUtils.h"
 
 #include <stdlib.h>
+#include "Audio.h"
 
+struct ZZFXSound gThrustSnd = {1.0,0.05,64.799,0.023,0.129,0.395,0,1.0,0.0,-6.535,0.0,0.0,0.161,1.945,16.886331,0.464,0.229,0.461,0.156,0.0,-3441.073};
 
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
@@ -47,6 +49,7 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
 
 static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
+    Au_PlayZzFX(&gThrustSnd);
     return true;
 }
 

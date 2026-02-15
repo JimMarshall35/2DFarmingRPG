@@ -525,6 +525,11 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
         pSprite->bRepeat = false;
         pSprite->onSprite = 0;
         pSprite->timer = 0.0f;
+        if(def->onUseItem)
+        {
+            def->onUseItem(pEnt, pLayer);
+        }
+        
     }
 }
 

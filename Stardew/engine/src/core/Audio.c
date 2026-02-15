@@ -187,7 +187,6 @@ static HSFXBuffer AquireSFXBuffer()
     HSFXBuffer hR = FindReusableBuffer();
     if(hR != NULL_HANDLE)
     {
-        printf("reusing buffer\n");
         RemoveBufferFromPlayingList(hR);
         gBuffersPool[hR].timeLeft = 0;
         gBuffersPool[hR].lengthSamples = 0;
@@ -226,12 +225,10 @@ float zzfx_struct(struct ZZFXSound* pSound)
     int samples = zzfx_Generate(gSfxBuffer, gSfxBufferSize / sizeof(float), (float)gDevRate, pSound);
     pSound->volume = v;
     HSFXBuffer hBuf = AquireSFXBuffer();
-    printf("Acquired buffer %i\n", hBuf);
     gBuffersPool[hBuf].timeLeft = (float)samples / (float)gDevRate;
     gBuffersPool[hBuf].hNext = NULL_HANDLE;
     gBuffersPool[hBuf].hPrev = NULL_HANDLE;
     alSourceStop(gBuffersPool[hBuf].hALSource);
-    printf("Timeleft: %.3f\n", gBuffersPool[hBuf].timeLeft);
     if(gBuffersPool[hBuf].hALBuffer != NULL_HANDLE)
     {
         alDeleteBuffers(1, &gBuffersPool[hBuf].hALBuffer);
@@ -368,4 +365,13 @@ void Au_DeInit()
 }
 
 
-void Au_PlayZzFX(const struct ZZFXSound* pSound);
+void Au_PlayZzFX(const struct ZZFXSound* pSound)
+{
+    struct AudioQueueItem aqi = 
+    {
+        .type = AQI_PlaySFX,
+        .data.sfx.type = SET_ZzFX,
+        .data.sfx.data.zzfx = *pSound
+    };
+    TSQ_Enqueue(&gAudioTxQueue, &aqi);
+}

@@ -5,6 +5,9 @@
 
 #include <stdlib.h>
 #include "EngineUtils.h"
+#include "Audio.h"
+
+static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2.662,2.312,0.0,0.0,0.178,1.778,0.0,0.106,0.0,0.431,0.174,0.076,0.0};
 
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
@@ -45,6 +48,7 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
 
 static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
+    Au_PlayZzFX(&gSwingSound);
     return true;
 }
 

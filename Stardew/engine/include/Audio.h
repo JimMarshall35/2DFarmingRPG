@@ -1,30 +1,8 @@
 #ifndef STARDEW_AUDIO_H
 #define STARDEW_AUDIO_H
+#include "ZzFX.h"
 
-struct ZZFXSound
-{
-    float volume;
-    float randomness;
-    float frequency;
-    float attack;
-    float sustain;
-    float release;
-    float shape;
-    float shapeCurve;
-    float slide;
-    float deltaSlide;
-    float pitchJump;
-    float pitchJumpTime;
-    float repeatTime;
-    float noise;
-    float modulation;
-    float bitCrush;
-    float delay;
-    float sustainVolume;
-    float decay;
-    float tremolo;
-    float filter;
-};
+void Au_PlayZzFX(const struct ZZFXSound* pSound);
 
 int Au_Init();
 

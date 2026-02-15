@@ -73,4 +73,8 @@ void UnlockMutex(CrossPlatformMutex* pMtx);
 /// @return 
 CrossPlatformThreadID GetThisThreadsID();
 
+/// @brief Make the calling thread sleep for ms milliseconds
+/// @param ms 
+void SleepForMS(int ms);
+
 #endif

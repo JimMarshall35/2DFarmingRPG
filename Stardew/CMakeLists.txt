@@ -19,7 +19,6 @@ endif()
 target_link_libraries(WarFarmer PUBLIC StardewEngine)
 target_link_libraries(StardewEngineTest PUBLIC StardewEngine)
 target_link_libraries(AtlasTool PUBLIC StardewEngine)
-target_link_libraries(ZzFX PUBLIC StardewEngine)
 
 if(NOT WIN32)
     target_link_libraries(EngineNetTest PUBLIC StardewEngine)

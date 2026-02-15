@@ -49,6 +49,11 @@ CrossPlatformThreadID GetThisThreadsID()
     return GetThreadId(hThis);
 }
 
+void SleepForMS(int ms)
+{
+    Sleep(ms);
+}
+
 #else
 
 
@@ -96,6 +101,11 @@ CrossPlatformThreadID GetThisThreadsID()
 {
     CrossPlatformThreadID id = gettid();
     return id; 
+}
+
+void SleepForMS(int ms)
+{
+    usleep(ms * 1000);
 }
 
 #endif

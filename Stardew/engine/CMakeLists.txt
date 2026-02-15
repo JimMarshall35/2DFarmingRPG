@@ -24,6 +24,7 @@ target_link_libraries(StardewEngine PUBLIC box2d)
 
 target_link_libraries(StardewEngine PUBLIC Netcode)
 
+target_link_libraries(StardewEngine PUBLIC ZzFX)
 
 add_subdirectory(lib/cglm-0.9.6 EXCLUDE_FROM_ALL)
 
@@ -32,6 +33,7 @@ target_include_directories(StardewEngine  PUBLIC include)
 target_include_directories(StardewEngine  PRIVATE lib/glad/include)
 target_include_directories(StardewEngine  PRIVATE ../netcode)
 target_include_directories(StardewEngine  PRIVATE ../netcode/sodium)
+target_include_directories(StardewEngine  PRIVATE ../ZzFX-C/core/include)
 
 
 set_property(TARGET StardewEngine PROPERTY C_STANDARD 11)

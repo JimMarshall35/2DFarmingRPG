@@ -35,7 +35,6 @@ cp "./build/game/$EXE_NAME" "./$DEB_PKG_NAME/usr/bin/$EXE_NAME"
 
 # install engine library
 cp "./build/engine/src/libStardewEngine.so" "./$DEB_PKG_NAME/usr/lib/libStardewEngine.so"
-#cp "./build/engine/lib/openal-soft-1.25.1/libopenal.so" "./$DEB_PKG_NAME/usr/lib/openal-soft-1.25.1/libopenal.so"
 
 # install debian control file
 cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"

@@ -12,6 +12,7 @@
 struct Entity2D;
 struct Entity2DCollection;
 struct GameFrameworkLayer;
+struct EntityToEntityMessage;
 
 typedef void (*Entity2DOnInitFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx);
 typedef void (*Entity2DUpdateFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT);
@@ -35,6 +36,8 @@ typedef void(*OnSensorShapeOverlapBeginFn)(struct GameFrameworkLayer* pLayer, HE
 typedef void(*OnSensorShapeOverlapEndFn)(struct GameFrameworkLayer* pLayer, HEntity2D hOverlappingEntity, HEntity2D thisSensorEntity);
 
 typedef void(*PrintEntityInfoExtenderFn)(struct Entity2D* pInEnt);
+
+typedef void(*HandleEntityMessagefn)(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer);
 
 struct EntitySerializerPair
 {
@@ -207,6 +210,7 @@ struct Entity2D
     Entity2DGetBoundingBoxFn getBB;
     Entity2DGetPreDrawSortValueFn getSortPos;
     PrintEntityInfoExtenderFn printEntityInfo;
+    HandleEntityMessagefn handleEntityMsg;
 
     struct Transform2D transform;
     EntityType type;
@@ -284,5 +288,15 @@ void Et2D_DeserializeEntityV1Base(struct Entity2DCollection* pCollection, struct
 /// @param bs 
 /// @param pData 
 void Et2D_SerializeEntityV1Base(struct Entity2D* pOn, struct BinarySerializer* bs, struct GameLayer2DData* pData);
+
+/// @brief Do the entity messages queue, iterate through the messages, call entities callbacks, and clear the queue
+/// @param pCollection 
+/// @param pLayer 
+void Et2D_DoEntityMessagesQueue(struct Entity2DCollection* pCollection, struct GameFrameworkLayer* pLayer);
+
+/// @brief 
+/// @param pCollection 
+/// @param pMsg 
+void Et2D_SendEntity2EntityMsg(struct Entity2DCollection* pCollection, struct EntityToEntityMessage* pMsg);
 
 #endif

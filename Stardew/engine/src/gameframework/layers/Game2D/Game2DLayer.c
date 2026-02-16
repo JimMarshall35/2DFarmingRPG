@@ -324,6 +324,8 @@ static void Update(struct GameFrameworkLayer* pLayer, float deltaT)
 	
 	if(pData->cameraClampedToTilemapLayer >= 0)
 		UpdateCameraClamp(pData);
+
+	Et2D_DoEntityMessagesQueue(&pData->entities, pLayer);
 }
 
 void OutputSpriteVertices(

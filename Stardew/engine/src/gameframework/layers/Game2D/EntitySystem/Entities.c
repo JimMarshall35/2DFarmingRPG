@@ -13,6 +13,7 @@
 #include "Log.h"
 #include "NetworkID.h"
 #include "Game2DLayerNetwork.h"
+#include "DynArray.h"
 
 static VECTOR(struct EntitySerializerPair) pSerializers = NULL;
 
@@ -43,6 +44,9 @@ void Et2D_InitCollection(struct Entity2DCollection* pCollection)
     pCollection->gNumEnts = 0;
     pCollection->pEntityPool = NEW_OBJECT_POOL(struct Entity2D, 512);
     pCollection->dynamicEntities.pDynamicListItemPool = NEW_OBJECT_POOL(struct DynamicEntityListItem, 256);
+    pCollection->messageQueue = NEW_VECTOR(struct EntityToEntityMessage);
+    pCollection->messageQueue = VectorResize(pCollection->messageQueue, 256);
+    pCollection->messageQueue = VectorClear(pCollection->messageQueue);
 }
 
 void Entity2DOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx)
@@ -539,4 +543,28 @@ void Et2D_PrintEntitiesInfo(struct Entity2DCollection* pCollection)
     Et2D_IterateEntities(pCollection, &PrintCollectionItr, &count);
     Log_Info("Num entities: %i", count);
     EASSERT(count == pCollection->gNumEnts);
+}
+
+void Et2D_DoEntityMessagesQueue(struct Entity2DCollection* pCollection, struct GameFrameworkLayer* pLayer)
+{
+    for(int i = 0; i < VectorSize(pCollection->messageQueue); i++)
+    {
+        struct EntityToEntityMessage* pMsg = &pCollection->messageQueue[i];
+        struct Entity2D* pRecipient = &pCollection->pEntityPool[pMsg->recipient];
+        if(pRecipient->handleEntityMsg)
+        {
+            pRecipient->handleEntityMsg(
+                pRecipient, 
+                &pCollection->pEntityPool[pMsg->sender],
+                pMsg,
+                pLayer
+            );
+        }
+    }
+    pCollection->messageQueue = VectorClear(pCollection->messageQueue);
+}
+
+void Et2D_SendEntity2EntityMsg(struct Entity2DCollection* pCollection, struct EntityToEntityMessage* pMsg)
+{
+    pCollection->messageQueue = VectorPush(pCollection->messageQueue, pMsg);
 }

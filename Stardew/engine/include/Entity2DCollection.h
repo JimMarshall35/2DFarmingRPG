@@ -3,6 +3,8 @@
 
 #include "HandleDefs.h"
 #include "ObjectPool.h"
+#include "DynArray.h"
+#include "HandleDefs.h"
 
 /**
     @brief
@@ -26,6 +28,22 @@ struct DynamicEnt2DList
 
 };
 
+enum EngineEntity2EntityMessageType
+{
+    /* some common types, built into the engine, to illustrate the purpose of this system*/
+    E2EM_Interact,
+    E2EM_Damage,
+    E2EM_EngineLastType
+};
+
+struct EntityToEntityMessage
+{
+    int type;
+    void* pMsgData;
+    HEntity2D sender;
+    HEntity2D recipient;
+};
+
 struct Entity2DCollection
 {
     HEntity2D gEntityListHead;
@@ -33,7 +51,9 @@ struct Entity2DCollection
     int gNumEnts;
     OBJECT_POOL(struct Entity2D) pEntityPool;
     struct DynamicEnt2DList dynamicEntities;
+    VECTOR(struct EntityToEntityMessage) messageQueue;
 };
+
 
 HDynamicEntityListItem DynL_AddEntity(struct DynamicEnt2DList* pDynList, HEntity2D hEnt);
 void DynL_RemoveItem(struct DynamicEnt2DList* pDynList, HDynamicEntityListItem hListItem);

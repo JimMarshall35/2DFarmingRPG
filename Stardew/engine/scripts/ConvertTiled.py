@@ -296,6 +296,8 @@ class EntitySerializer:
         f.write(struct.pack("f", 1))
         f.write(struct.pack("f", 1))
         f.write(struct.pack("f", obj["rotation"]))
+        f.write(struct.pack("f", 0.0)) # rotation point relative - must be set programatically
+        f.write(struct.pack("f", 0.0))
         f.write(struct.pack("I", 1 if self.b_keep_in_quad else 0))
     def serialize(self, f, o):
         f.write(struct.pack("I", self.get_type_fn(o)))

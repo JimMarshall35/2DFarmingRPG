@@ -55,6 +55,7 @@ struct Transform2D
 {
 	vec2 position;
 	vec2 scale;
+	vec2 rotationPointRelative; /* relative to position */
 	float rotation;
 	bool bMirrored;
 };

@@ -454,6 +454,8 @@ void Et2D_DeserializeCommon(struct BinarySerializer* bs, struct Entity2D* pOutEn
         BS_DeSerializeFloat(&pOutEnt->transform.scale[0], bs);
         BS_DeSerializeFloat(&pOutEnt->transform.scale[1], bs);
         BS_DeSerializeFloat(&pOutEnt->transform.rotation, bs);
+        BS_DeSerializeFloat(&pOutEnt->transform.rotationPointRelative[0], bs);
+        BS_DeSerializeFloat(&pOutEnt->transform.rotationPointRelative[1], bs);
         BS_DeSerializeU32(&version, bs);
         pOutEnt->bKeepInQuadtree = version != 0;
         if(bs->ctx == SCTX_ToNetwork)
@@ -481,6 +483,8 @@ void Et2D_SerializeCommon(struct BinarySerializer* bs, struct Entity2D* pInEnt)
     BS_SerializeFloat(pInEnt->transform.scale[0], bs);
     BS_SerializeFloat(pInEnt->transform.scale[1], bs);
     BS_SerializeFloat(pInEnt->transform.rotation, bs);
+    BS_SerializeFloat(pInEnt->transform.rotationPointRelative[0], bs);
+    BS_SerializeFloat(pInEnt->transform.rotationPointRelative[1], bs);
     version = (u32)pInEnt->bKeepInQuadtree;
     BS_SerializeU32(version, bs);
 

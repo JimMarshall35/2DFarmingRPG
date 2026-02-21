@@ -137,5 +137,5 @@ void AnimatedSprite_Draw(struct AnimatedSprite* pSpriteComp, struct Entity2D* pE
     SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
     struct GameLayer2DData* pLayerData = pLayer->userData;
     AtlasSprite* pSprite = At_GetSprite(pSpriteComp->pSprites[pSpriteComp->onSprite], pLayerData->hAtlas);
-    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br);
+    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br, &pEnt->transform);
 }

@@ -50,6 +50,9 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pEnt->transform.scale[0] = 1.0f;
     pEnt->transform.scale[1] = 1.0f;
     pEnt->transform.rotation = 0.0f;
+    pEnt->transform.rotationPointRelative[0] = 0.0f;
+    pEnt->transform.rotationPointRelative[1] = 0.0f;
+    
     pEnt->bKeepInQuadtree = true;
     pEnt->bKeepInDynamicList = false;
     pEnt->type = WfEntityType_Tree;

@@ -1,0 +1,8 @@
+#ifndef STARDEW_MATHS
+#define STARDEW_MATHS
+
+#define M_PI 3.14159265358979323846
+
+#define DEGREES_TO_RADIANS(d) (d * (M_PI / 180.0f))
+
+#endif

@@ -7,13 +7,16 @@ struct _AtlasSprite;
 typedef struct _AtlasSprite AtlasSprite;
 #include "DrawContext.h"
 
+struct Transform2D; 
+
 void OutputSpriteVerticesBase(
 	AtlasSprite* pSprite,
 	VECTOR(Worldspace2DVert)* pOutVert,
 	VECTOR(VertIndexT)* pOutInd,
 	VertIndexT* pNextIndex,
 	vec2 tlPos,
-	vec2 brPos
+	vec2 brPos,
+	struct Transform2D* transform
 );
 
 #endif

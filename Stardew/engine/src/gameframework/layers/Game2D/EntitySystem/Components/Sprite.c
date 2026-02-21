@@ -58,7 +58,7 @@ void SpriteComp_Draw(
     SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
     struct GameLayer2DData* pLayerData = pLayer->userData;
     AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);
-    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br);
+    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br, &pEnt->transform);
 }
 
 void SpriteComp_Input(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, InputContext* context)

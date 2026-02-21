@@ -391,9 +391,15 @@ static void GetMovementVector(u8 movementBits, vec2 movementVec)
     }
     glm_vec2_normalize(movementVec);
 }
+#include "Maths.h"
 
 static void OnUpdatePlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
+    // static float rot = 0.0f;
+    // #define RPM_TEST 100.0f
+    // #define RPS_TEST (RPM_TEST / 60.0f)
+    // pEnt->transform.rotation += RPS_TEST * deltaT;
+    
     struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[pEnt->user.hData];
     vec2 scaledMovement, mov;
     GetMovementVector(pPlayerEntData->movementBits, mov);
@@ -576,6 +582,7 @@ static void WfPrintPlayerInfo(struct Entity2D* pEnt)
         pEntData->networkPlayerNum
     );
 }
+#include "Maths.h"
 
 static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos, bool bNetworkControlled, int networkPlayerNum)
 {
@@ -659,6 +666,9 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     glm_vec2_add(spawnAtGroundPos, gPlayerEntDataPool[pEnt->user.hData].groundColliderCenter2EntTransform, pEnt->transform.position);
     pEnt->transform.scale[0] = 1.0;
     pEnt->transform.scale[1] = 1.0;
+    pEnt->transform.rotationPointRelative[0] = 0.0f;
+    pEnt->transform.rotationPointRelative[1] = 0.0f;
+    pEnt->transform.rotation = 0.0f;
 
     /* Animated sprite overlay layers */
     for(int i=0; i<WfNumAnimationLayers; i++)

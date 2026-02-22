@@ -7,11 +7,15 @@
 #include "Atlas.h"
 #include "WfGameLayerData.h"
 #include "WfEntities.h"
+#include "WfEntityMessages.h"
+#include "Log.h"
+#include "AssertLib.h"
 
 struct WfTreeEntityData
 {
     struct WfTreeDef def;
     vec2 groundContactPoint;
+    float health;
 };
 
 static OBJECT_POOL(struct WfTreeEntityData) gTreeDataObjectPool;
@@ -31,6 +35,34 @@ static float TreeGetPreDrawSortValue(struct Entity2D* pEnt)
 {
     struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
     return pData->groundContactPoint[1];
+}
+
+static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
+{
+    struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
+    switch(pMsg->type)
+    {
+    case E2EM_Damage:
+        {
+            struct WfDamageMsg* pDamageMessage = WfGetDamageMessage(pMsg);//pMsg->pMsgData;
+            switch (pDamageMessage->type)
+            {
+            case WfAxeDamage:
+                pData->health -= pDamageMessage->damage;
+                if(pData->health < 0)
+                {
+                    pData->health = 0;
+                }
+                Log_Info("Tree with ID %i took %.2f %s damage from entity %i, %.2f health remaining", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity, pData->health);
+                break;
+            
+            default:
+                EASSERT(pDamageMessage->type < sizeof(WfDamageTypeNameLUT) / sizeof(char*) && pDamageMessage->type >= 0);
+                Log_Info("Tree with ID %i resisted %.2f %s damage from entity %i, immune", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity);
+                break;
+            }
+        }
+    }
 }
 
 static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y, struct WfTreeDef* def, struct GameLayer2DData* pGameLayerData)
@@ -115,10 +147,12 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     gTreeDataObjectPool[hTreeData].def = *def;
     gTreeDataObjectPool[hTreeData].groundContactPoint[0] = x;
     gTreeDataObjectPool[hTreeData].groundContactPoint[1] = y;
+    gTreeDataObjectPool[hTreeData].health = 100.0f;
     pEnt->user.hData = hTreeData;
     Et2D_PopulateCommonHandlers(pEnt);
     pEnt->onDestroy = &TreeOnDestroy;
     pEnt->getSortPos = &TreeGetPreDrawSortValue;
+    pEnt->handleEntityMsg = &TreeHandleEntityMsg;
     pEnt->bSerializeToDisk = true;
     pEnt->bSerializeToNetwork = true;
 }
@@ -165,5 +199,13 @@ HEntity2D WfAddTreeBasedAt(float x, float y, struct WfTreeDef* def, struct GameL
     struct Entity2D ent;
     WfMakeEntityIntoTreeBasedAt(&ent, x, y, def, pGameLayerData);
     return Et2D_AddEntity(&pGameLayerData->entities, &ent);
+}
+
+void WfTreeGetGroundContactPoint(struct Entity2D* pTreeEnt, vec2 outPos)
+{
+    EASSERT(pTreeEnt->type == WfEntityType_Tree);
+    struct WfTreeEntityData* pTreeData = &gTreeDataObjectPool[pTreeEnt->user.hData];
+    outPos[0] = pTreeData->groundContactPoint[0];
+    outPos[1] = pTreeData->groundContactPoint[1];
 }
 

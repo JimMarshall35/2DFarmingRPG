@@ -36,10 +36,23 @@ enum EngineEntity2EntityMessageType
     E2EM_EngineLastType
 };
 
+
+struct EntityToEntityMessage;
+
+typedef void(*FreeEntityToEntityMsgFn)(struct EntityToEntityMessage*);
+
 struct EntityToEntityMessage
 {
     int type;
-    void* pMsgData;
+    
+    union
+    {
+        HGeneric hMsgData;
+        void* pMsgData;
+    }data;
+
+    FreeEntityToEntityMsgFn freer;
+
     HEntity2D sender;
     HEntity2D recipient;
 };

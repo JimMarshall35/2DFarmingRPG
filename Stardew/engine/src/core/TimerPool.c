@@ -83,10 +83,11 @@ void TP_DoTimers(struct SDTimerPool* pPool, double deltaT)
                 bRemove = pTimerOut->fnCallback(pTimerOut);
             }
         }
-        head = pTimerOut->HNext;
         if(bRemove)
         {
             TP_FreeTimer(pPool, head);
         }
+        head = pTimerOut->HNext;
+        
     }
 }

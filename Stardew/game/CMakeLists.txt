@@ -10,6 +10,7 @@ add_executable( WarFarmer
     src/WfGameLayer.c
     src/WfScriptFunctions.c
     src/WfNetwork.c
+    src/entities/WfEntityMessages.c
     src/entities/WfDebrisField.c
     src/entities/WfExit.c
     src/entities/WfLog.c
@@ -20,6 +21,7 @@ add_executable( WarFarmer
     src/entities/WfWoodedArea.c
     src/nonEntityGameData/WfPersistantGameData.c
     src/nonEntityGameData/WfItem.c
+    src/items/WfItemHelpers.c
     src/items/WfBasicAxe.c
     src/items/WfBasicBow.c
     src/items/WfBasicFishingRod.c

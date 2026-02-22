@@ -263,6 +263,17 @@ void Game2DLayer_OnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
 /// @param pBS 
 void G2D_SaveLevelDataInternal(struct GameLayer2DData* pData, struct BinarySerializer* pBS);
 
+
+/// @brief Query which dynamic entities are in a given region (their bounding boxes intersect with the region)
+/// @param pLayer 
+/// @param pCollection 
+/// @param regionTL 
+/// @param regionBR 
+/// @param pOutEntities 
+/// @return 
+VECTOR(HEntity2D) Et2D_QueryDynEntities(struct GameFrameworkLayer* pLayer, struct Entity2DCollection* pCollection, vec2 regionTL, vec2 regionBR, VECTOR(HEntity2D) pOutEntities);
+
+
 #ifdef __cplusplus
 }
 #endif

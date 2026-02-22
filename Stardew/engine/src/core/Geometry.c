@@ -1,4 +1,5 @@
 #include "Geometry.h"
+#include <math.h>
 
 bool Ge_PointInAABB(float pointX, float pointY, GeomRect rect)
 {
@@ -18,4 +19,21 @@ bool Ge_AABBIntersect(vec2 tl1, vec2 br1, vec2 tl2, vec2 br2)
 
     // Collision occurs only if both axes overlap
     return xOverlap && yOverlap;
+}
+
+
+float Ge_AngleBetweenVec2s(vec2 a, vec2 b)
+{
+    float d = glm_vec2_dot(a, b);
+    float ma = glm_vec2_norm(a);
+    float mb = glm_vec2_norm(b);
+    d = d / (ma * mb);
+    return (float)acos(d);
+}
+
+float Ge_DistanceBetweenPoints(vec2 a, vec2 b)
+{
+    vec2 c;
+    glm_vec2_sub(a, b, c);
+    return fabs(glm_vec2_norm(c));
 }

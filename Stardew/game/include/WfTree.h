@@ -3,6 +3,8 @@
 
 #include "HandleDefs.h"
 #include "WfEnums.h"
+#include <cglm/cglm.h>
+
 struct BinarySerializer;
 struct Entity2D;
 struct GameLayer2DData;
@@ -29,5 +31,7 @@ void WfSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt,
 HEntity2D WfAddTreeBasedAt(float x, float y, struct WfTreeDef* def, struct GameLayer2DData* pGameLayerData);
 
 void WfTreeInit();
+
+void WfTreeGetGroundContactPoint(struct Entity2D* pTreeEnt, vec2 outPos);
 
 #endif

@@ -564,7 +564,12 @@ void Et2D_DoEntityMessagesQueue(struct Entity2DCollection* pCollection, struct G
                 pLayer
             );
         }
+        if(pMsg->freer)
+        {
+            pMsg->freer(pMsg);
+        }
     }
+    
     pCollection->messageQueue = VectorClear(pCollection->messageQueue);
 }
 

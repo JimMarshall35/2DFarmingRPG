@@ -6,6 +6,7 @@
 #include "WfExit.h"
 #include "WfItem.h"
 #include "WfPersistantGameData.h"
+#include "WfEntityMessages.h"
 
 void WfInit()
 {
@@ -16,5 +17,6 @@ void WfInit()
     WfInitExit();
     WfInitItems();
     WfPersistantDataInit();
+    WfInitEntityMessages();
 }
 

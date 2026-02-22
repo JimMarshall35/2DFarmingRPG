@@ -492,7 +492,7 @@ static int EntityDrawOrderCompare(const void* a, const void* b)
 	return 1;      /* place second argument before first */
 }
 
-static VECTOR(HEntity2D) QueryVisibleDynEntities(struct GameFrameworkLayer* pLayer, struct Entity2DCollection* pCollection, vec2 viewportTL, vec2 viewportBR, VECTOR(HEntity2D) pOutEntities)
+VECTOR(HEntity2D) Et2D_QueryDynEntities(struct GameFrameworkLayer* pLayer, struct Entity2DCollection* pCollection, vec2 regionTL, vec2 regionBR, VECTOR(HEntity2D) pOutEntities)
 {
 	struct DynamicEnt2DList* pList = &pCollection->dynamicEntities;
 	HDynamicEntityListItem hOn = NULL_HANDLE;
@@ -503,7 +503,7 @@ static VECTOR(HEntity2D) QueryVisibleDynEntities(struct GameFrameworkLayer* pLay
 		struct Entity2D* pEnt = Et2D_GetEntity(pCollection, pItem->hEnt);
 		vec2 entTL, entBR;
 		pEnt->getBB(pEnt, pLayer, entTL, entBR);
-		if(Ge_AABBIntersect(viewportTL, viewportBR, entTL, entBR))
+		if(Ge_AABBIntersect(regionTL, regionBR, entTL, entBR))
 		{
 			pOutEntities = VectorPush(pOutEntities, &pItem->hEnt);
 		}
@@ -536,7 +536,7 @@ static void OutputVertices(
 	/* query the quadtree for entities here */
 	sFoundEnts = Entity2DQuadTree_Query(pLayerData->hEntitiesQuadTree, tl, br, sFoundEnts, &pLayerData->entities, pLayer);
 	/* query dynamic entities */
-	sFoundEnts = QueryVisibleDynEntities(pLayer, &pLayerData->entities, tl, br, sFoundEnts);
+	sFoundEnts = Et2D_QueryDynEntities(pLayer, &pLayerData->entities, tl, br, sFoundEnts);
 	/* sort the entities */
 	gEntityCollectionCurrent = &pLayerData->entities;
 	foundEnts = VectorSize(sFoundEnts);

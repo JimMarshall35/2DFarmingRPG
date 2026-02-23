@@ -173,7 +173,7 @@ void WfDeSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pOutE
             BS_DeSerializeI32((i32*)&entData.def.subtype, bs);
             BS_DeSerializeFloat(&entData.groundContactPoint[0], bs);
             BS_DeSerializeFloat(&entData.groundContactPoint[1], bs);
-            
+            BS_DeSerializeFloat(&entData.health, bs);
             WfMakeEntityIntoTreeBasedAt(pOutEnt, entData.groundContactPoint[0], entData.groundContactPoint[1], &entData.def, pData);
         }
         break;
@@ -192,6 +192,7 @@ void WfSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt,
     BS_SerializeI32((i32)pEntData->def.subtype, bs);
     BS_SerializeFloat(pEntData->groundContactPoint[0], bs);
     BS_SerializeFloat(pEntData->groundContactPoint[1], bs);
+    BS_SerializeFloat(pEntData->health, bs);
 }
 
 HEntity2D WfAddTreeBasedAt(float x, float y, struct WfTreeDef* def, struct GameLayer2DData* pGameLayerData)

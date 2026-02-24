@@ -11,11 +11,19 @@
 #include "Log.h"
 #include "AssertLib.h"
 
+enum WfTreeState
+{
+    WfStanding,
+    WfFalling,
+    WfFallen,
+};
+
 struct WfTreeEntityData
 {
     struct WfTreeDef def;
     vec2 groundContactPoint;
     float health;
+    enum WfTreeState state;
 };
 
 static OBJECT_POOL(struct WfTreeEntityData) gTreeDataObjectPool;
@@ -62,6 +70,22 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
                 break;
             }
         }
+    }
+}
+
+void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
+{
+    #define TREE_FALL_RPM 15.0f
+    struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
+    switch (pData->state)
+    {
+    case WfStanding:
+        break;
+    case WfFalling:
+        //pEnt->tr
+        break;
+    default:
+        break;
     }
 }
 
@@ -153,6 +177,7 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pEnt->onDestroy = &TreeOnDestroy;
     pEnt->getSortPos = &TreeGetPreDrawSortValue;
     pEnt->handleEntityMsg = &TreeHandleEntityMsg;
+    pEnt->update = &TreeUpdate;
     pEnt->bSerializeToDisk = true;
     pEnt->bSerializeToNetwork = true;
 }
@@ -165,7 +190,6 @@ void WfDeSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pOutE
     switch (version)
     {
     case 1:
-        /* code */
         {
             struct WfTreeEntityData entData;
             BS_DeSerializeI32((i32*)&entData.def.season, bs);

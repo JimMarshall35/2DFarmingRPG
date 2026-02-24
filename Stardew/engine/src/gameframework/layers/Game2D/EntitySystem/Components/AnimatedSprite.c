@@ -5,6 +5,7 @@
 #include "DynArray.h"
 #include "Atlas.h"
 #include "AssertLib.h"
+#include "Game2DVertexOutputHelpers.h"
 
 void AnimatedSprite_OnInit(struct AnimatedSprite* pAnimatedSprite, struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
@@ -133,9 +134,14 @@ static void SpriteComp_GetBoundingBoxInternal(struct Entity2D* pEnt, struct Anim
 
 void AnimatedSprite_Draw(struct AnimatedSprite* pSpriteComp, struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(Worldspace2DVert)* outVerts, VECTOR(VertIndexT)* outIndices, VertIndexT* pNextIndex)
 {
-    vec2 tl, br;
+    vec2 tl, tr, bl, br;
     SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
+    tr[0] = br[0];
+    tr[1] = tl[1];
+
+    bl[0] = tl[0];
+    bl[1] = br[1];
     struct GameLayer2DData* pLayerData = pLayer->userData;
     AtlasSprite* pSprite = At_GetSprite(pSpriteComp->pSprites[pSpriteComp->onSprite], pLayerData->hAtlas);
-    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br, &pEnt->transform);
+    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, tr, bl, br, &pEnt->transform);
 }

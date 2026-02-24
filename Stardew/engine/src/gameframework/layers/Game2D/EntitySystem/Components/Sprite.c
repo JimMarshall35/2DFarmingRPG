@@ -54,11 +54,17 @@ void SpriteComp_Draw(
     VertIndexT* pNextIndex
 )
 {
-    vec2 tl, br;
+    vec2 tl, tr, bl, br;
     SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
     struct GameLayer2DData* pLayerData = pLayer->userData;
-    AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);
-    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, br, &pEnt->transform);
+    AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);    
+    tr[0] = br[0];
+    tr[1] = tl[1];
+
+    bl[0] = tl[0];
+    bl[1] = br[1];
+
+    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, tr, bl, br, &pEnt->transform);
 }
 
 void SpriteComp_Input(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, InputContext* context)

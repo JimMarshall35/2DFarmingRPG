@@ -14,6 +14,10 @@ struct WfTreeSprites
     hSprite deciduousTop2;
     hSprite trunk1;
     hSprite trunk2;
+
+    hSprite stump1;
+    hSprite stump22;
+
 };
 
 struct WfSprites

@@ -15,8 +15,12 @@ void OutputSpriteVerticesBase(
 	VECTOR(VertIndexT)* pOutInd,
 	VertIndexT* pNextIndex,
 	vec2 tlPos,
+	vec2 trPos,
+	vec2 blPos,
 	vec2 brPos,
 	struct Transform2D* transform
 );
+
+void RotatePointAroundPoint(float x, float y, vec2 pivot, float rotation, vec2 outRotatedPoint);
 
 #endif

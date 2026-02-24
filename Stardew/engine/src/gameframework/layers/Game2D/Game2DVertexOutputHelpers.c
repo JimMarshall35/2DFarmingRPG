@@ -9,7 +9,7 @@
 
 //#define USE_SIMD_ROTATION
 
-static void RotatePointAroundPoint(float x, float y, vec2 pivot, float rotation, vec2 outRotatedPoint)
+void RotatePointAroundPoint(float x, float y, vec2 pivot, float rotation, vec2 outRotatedPoint)
 {
 	float xTemp = x - pivot[0];
 	float yTemp = y - pivot[1];
@@ -105,6 +105,8 @@ void OutputSpriteVerticesBase(
 	VECTOR(VertIndexT)* pOutInd,
 	VertIndexT* pNextIndex,
 	vec2 tlPos,
+	vec2 trPos,
+	vec2 blPos,
 	vec2 brPos,
 	struct Transform2D* transform
 )
@@ -114,14 +116,6 @@ void OutputSpriteVerticesBase(
 
 	VertIndexT base = *pNextIndex;
 	*pNextIndex += 4;
-	ivec2 dims = {
-		brPos[0] - tlPos[0],
-		brPos[1] - tlPos[1]
-	};
-
-	vec2 trPos = {brPos[0], tlPos[1]};
-	vec2 blPos = {tlPos[0], brPos[1]};
-
 	Worldspace2DVert vert = {
 		tlPos[0], tlPos[1],
 		pSprite->topLeftUV_U, pSprite->topLeftUV_V
@@ -158,27 +152,27 @@ void OutputSpriteVerticesBase(
 	VertIndexT br = base + 3;
 	outVert = VectorPush(outVert, &vert);
 
-	vec2 pivotPos;
-	glm_vec2_add(transform->position, transform->rotationPointRelative, pivotPos);
+// 	vec2 pivotPos;
+// 	glm_vec2_add(transform->position, transform->rotationPointRelative, pivotPos);
 
-#ifdef USE_SIMD_ROTATION
-	RotateQuadAVX(
-		&outVert[tl].x, &outVert[tl].y,
-		&outVert[tr].x, &outVert[tr].y,
-		&outVert[bl].x, &outVert[bl].y,
-		&outVert[br].x, &outVert[br].y,
-		pivotPos, transform->rotation);
-#else
-	vec2 pt;
-	RotatePointAroundPoint(outVert[tl].x, outVert[tl].y, pivotPos, transform->rotation, pt);
-	outVert[tl].x = pt[0]; outVert[tl].y = pt[1];
-	RotatePointAroundPoint(outVert[tr].x, outVert[tr].y, pivotPos, transform->rotation, pt);
-	outVert[tr].x = pt[0]; outVert[tr].y = pt[1];
-	RotatePointAroundPoint(outVert[bl].x, outVert[bl].y, pivotPos, transform->rotation, pt);
-	outVert[bl].x = pt[0]; outVert[bl].y = pt[1];
-	RotatePointAroundPoint(outVert[br].x, outVert[br].y, pivotPos, transform->rotation, pt);
-	outVert[br].x = pt[0]; outVert[br].y = pt[1];
-#endif
+// #ifdef USE_SIMD_ROTATION
+// 	RotateQuadAVX(
+// 		&outVert[tl].x, &outVert[tl].y,
+// 		&outVert[tr].x, &outVert[tr].y,
+// 		&outVert[bl].x, &outVert[bl].y,
+// 		&outVert[br].x, &outVert[br].y,
+// 		pivotPos, transform->rotation);
+// #else
+// 	vec2 pt;
+// 	RotatePointAroundPoint(outVert[tl].x, outVert[tl].y, pivotPos, transform->rotation, pt);
+// 	outVert[tl].x = pt[0]; outVert[tl].y = pt[1];
+// 	RotatePointAroundPoint(outVert[tr].x, outVert[tr].y, pivotPos, transform->rotation, pt);
+// 	outVert[tr].x = pt[0]; outVert[tr].y = pt[1];
+// 	RotatePointAroundPoint(outVert[bl].x, outVert[bl].y, pivotPos, transform->rotation, pt);
+// 	outVert[bl].x = pt[0]; outVert[bl].y = pt[1];
+// 	RotatePointAroundPoint(outVert[br].x, outVert[br].y, pivotPos, transform->rotation, pt);
+// 	outVert[br].x = pt[0]; outVert[br].y = pt[1];
+// #endif
 
 	outInd = VectorPush(outInd, &tl);
 	outInd = VectorPush(outInd, &tr);

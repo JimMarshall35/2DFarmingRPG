@@ -21,7 +21,7 @@
 
 #define AXE_FAN_WIDTH DEGREES_TO_RADIANS(45.0f)
 
-#define AXE_FAN_LENGTH (32.0F)
+#define AXE_FAN_LENGTH (64.0F)
 
 #define AXE_DAMAGE 10.0f
 

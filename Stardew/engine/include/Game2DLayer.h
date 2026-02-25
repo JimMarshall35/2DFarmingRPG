@@ -273,6 +273,10 @@ void G2D_SaveLevelDataInternal(struct GameLayer2DData* pData, struct BinarySeria
 /// @return 
 VECTOR(HEntity2D) Et2D_QueryDynEntities(struct GameFrameworkLayer* pLayer, struct Entity2DCollection* pCollection, vec2 regionTL, vec2 regionBR, VECTOR(HEntity2D) pOutEntities);
 
+/// @brief convert a transform2D to a matrix
+/// @param pTrans input transform
+/// @param out output matrix
+void Et2D_Transform2DToMat3(struct Transform2D* pTrans, mat3 out);
 
 #ifdef __cplusplus
 }

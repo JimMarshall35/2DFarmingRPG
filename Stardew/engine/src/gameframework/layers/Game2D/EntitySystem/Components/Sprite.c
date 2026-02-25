@@ -26,15 +26,14 @@ static void SpriteComp_GetBoundingBoxInternal(struct Entity2D* pEnt, struct Spri
     if(!pSpriteComp->bDraw) return;
     struct GameLayer2DData* pLayerData = pLayer->userData;
     AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);
-    vec2 tl = {pEnt->transform.position[0], pEnt->transform.position[1]};
+    vec2 tl = {0,0};
     vec2 offset = {pSprite->xOffsetToActual, pSprite->yOffsetToActual};
-    glm_vec2_add(tl, pSpriteComp->transform.position, tl);
     glm_vec2_add(tl, offset, tl);
 
     vec2 br;
     vec2 size = {
-        pSprite->actualWidthPX  * pEnt->transform.scale[0] * pSpriteComp->transform.scale[0],
-        pSprite->actualHeightPX * pEnt->transform.scale[1] * pSpriteComp->transform.scale[1]
+        pSprite->actualWidthPX,
+        pSprite->actualHeightPX
     };
     glm_vec2_add(tl, size, br);
 
@@ -54,15 +53,32 @@ void SpriteComp_Draw(
     VertIndexT* pNextIndex
 )
 {
-    vec2 tl, tr, bl, br;
+    vec3 tl, tr, bl, br;
+    tl[2] = 1.0f;
+    tr[2] = 1.0f;
+    bl[2] = 1.0f;
+    br[2] = 1.0f;
+
     SpriteComp_GetBoundingBoxInternal(pEnt, pSpriteComp, pLayer, tl, br);
-    struct GameLayer2DData* pLayerData = pLayer->userData;
-    AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);    
     tr[0] = br[0];
     tr[1] = tl[1];
 
     bl[0] = tl[0];
     bl[1] = br[1];
+
+    struct GameLayer2DData* pLayerData = pLayer->userData;
+    AtlasSprite* pSprite = At_GetSprite(pSpriteComp->sprite, pLayerData->hAtlas);    
+    
+
+    mat3 t, sprite, ent;
+    Et2D_Transform2DToMat3(&pSpriteComp->transform, sprite);
+    Et2D_Transform2DToMat3(&pEnt->transform, ent);
+    glm_mat3_mul(sprite, ent, t);
+    
+    glm_mat3_mulv(t, tl, tl);
+    glm_mat3_mulv(t, tr, tr);
+    glm_mat3_mulv(t, bl, bl);
+    glm_mat3_mulv(t, br, br);
 
     OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, tr, bl, br, &pEnt->transform);
 }

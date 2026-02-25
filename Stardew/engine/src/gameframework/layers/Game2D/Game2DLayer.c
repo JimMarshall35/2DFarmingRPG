@@ -800,3 +800,33 @@ void Game2DLayer_SaveLevelFile(struct GameLayer2DData* pData, const char* output
 	G2D_SaveLevelDataInternal(pData, &bs);
 	BS_Finish(&bs);
 }
+
+
+void Et2D_Transform2DToMat3(struct Transform2D* pTrans, mat3 out)
+{
+    mat3 scale = 
+    {
+        {pTrans->scale[0],                0, 0},
+        {               0, pTrans->scale[1], 0},
+        {               0,                0, 1}
+
+    };
+    mat3 trans = 
+    {
+        {                  1,                   0, 0},
+        {                  0,                   1, 0},
+        {pTrans->position[0], pTrans->position[1], 1}
+    };
+	float sinT = sin(pTrans->rotation);
+    float cosT = cos(pTrans->rotation);
+    vec2 c;
+    glm_vec2_add(pTrans->position, pTrans->rotationPointRelative, c);
+    mat3 rot = 
+    {
+        {                           cosT,                            sinT, 0},
+        {                          -sinT,                            cosT, 0},
+        {c[0] * (1 - cosT) + c[1] * sinT, c[1] * (1 - cosT) - c[0] * sinT, 1}
+    };
+    glm_mat3_mul(scale, rot, out);
+    glm_mat3_mul(trans, out, out);
+}

@@ -3,8 +3,8 @@
 #include "DynArray.h"
 #include "DrawContext.h"
 #include "Entities.h"
-
-#include <immintrin.h>
+#include "Game2DLayer.h"
+#include "GameFramework.h"
 #include <string.h>
 
 
@@ -71,3 +71,64 @@ void OutputSpriteVerticesBase(
 	*pOutVert = outVert;
 	*pOutInd = outInd;
 }
+
+static void SpriteComp_GetBoundingBoxInternalBase(struct Entity2D* pEnt, hSprite sprite, struct GameFrameworkLayer* pLayer, vec2 outTL, vec2 outBR)
+{
+    struct GameLayer2DData* pLayerData = pLayer->userData;
+    AtlasSprite* pSprite = At_GetSprite(sprite, pLayerData->hAtlas);
+    vec2 tl = {0,0};
+    vec2 offset = {pSprite->xOffsetToActual, pSprite->yOffsetToActual};
+    glm_vec2_add(tl, offset, tl);
+
+    vec2 br;
+    vec2 size = {
+        pSprite->actualWidthPX,
+        pSprite->actualHeightPX
+    };
+    glm_vec2_add(tl, size, br);
+
+	outTL[0] = tl[0];
+	outTL[1] = tl[1];
+	outBR[0] = br[0];
+	outBR[1] = br[1];
+}
+
+void HSprite_DrawBase(
+    hSprite spriteHandle,
+    struct Transform2D* pSpriteTrans,
+    struct Entity2D* pEnt, 
+    struct GameFrameworkLayer* pLayer, 
+    VECTOR(Worldspace2DVert)* outVerts, 
+    VECTOR(VertIndexT)* outIndices, 
+    VertIndexT* pNextIndex)
+{
+    vec3 tl, tr, bl, br;
+    tl[2] = 1.0f;
+    tr[2] = 1.0f;
+    bl[2] = 1.0f;
+    br[2] = 1.0f;
+
+    SpriteComp_GetBoundingBoxInternalBase(pEnt, spriteHandle, pLayer, tl, br);
+    tr[0] = br[0];
+    tr[1] = tl[1];
+
+    bl[0] = tl[0];
+    bl[1] = br[1];
+
+    struct GameLayer2DData* pLayerData = pLayer->userData;
+    AtlasSprite* pSprite = At_GetSprite(spriteHandle, pLayerData->hAtlas);    
+    
+
+    mat3 t, sprite, ent;
+    Et2D_Transform2DToMat3(pSpriteTrans, sprite);
+    Et2D_Transform2DToMat3(&pEnt->transform, ent);
+    glm_mat3_mul(sprite, ent, t);
+    
+    glm_mat3_mulv(t, tl, tl);
+    glm_mat3_mulv(t, tr, tr);
+    glm_mat3_mulv(t, bl, bl);
+    glm_mat3_mulv(t, br, br);
+
+    OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, tr, bl, br, &pEnt->transform);
+}
+

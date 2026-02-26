@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.25)
 project(StardewEngine)
 
 find_package(glfw3 REQUIRED)
+
 if(WIN32)
   find_package(Lua 5.4 REQUIRED)
 else()
@@ -13,6 +14,9 @@ endif()
 find_package(Freetype REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(OpenAL REQUIRED)
+
+message("lua version: ${Lua_VERSION}")
+find_package(Lua 5.4 REQUIRED)
 
 add_subdirectory(lib/box2d-3.1.1)
 

@@ -3,15 +3,16 @@ cmake_minimum_required(VERSION 3.25)
 project(StardewEngine)
 
 find_package(glfw3 REQUIRED)
+if(WIN32)
+  find_package(Lua 5.4 REQUIRED)
+else()
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(LUA REQUIRED IMPORTED_TARGET lua5.4)
+endif()
+
 find_package(Freetype REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(OpenAL REQUIRED)
-
-
-if(FlatPakHack)
-	set(LUA_INCLUDE_DIR "/usr/include/lua5.4")
-endif()
-find_package(Lua 5.4 REQUIRED)
 
 add_subdirectory(lib/box2d-3.1.1)
 
@@ -53,6 +54,7 @@ if(WIN32)
   target_link_libraries(StardewEngine PUBLIC LibXml2::LibXml2 Freetype::Freetype lua::lua glfw)
 else()
   target_link_libraries(StardewEngine PUBLIC ${FREETYPE_LIBRARIES})
-  target_link_libraries(StardewEngine PUBLIC ${LUA_LIBRARIES})
+  target_link_libraries(StardewEngine PUBLIC m)
+  target_link_libraries(StardewEngine PUBLIC PkgConfig::LUA)
   target_link_libraries(StardewEngine PUBLIC ${LIBXML2_LIBRARIES})
 endif()

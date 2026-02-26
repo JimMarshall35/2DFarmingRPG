@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.25)
 project(WarFarmer)
 
 option(NoGTest "NoGTest" OFF)
+option(FlatPakHack "FlatPakHack" OFF)
+
 add_subdirectory(netcode)
 
 

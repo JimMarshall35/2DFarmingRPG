@@ -6,6 +6,11 @@ find_package(glfw3 REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(LibXml2 REQUIRED)
 find_package(OpenAL REQUIRED)
+
+
+if(FlatPakHack)
+	set(LUA_INCLUDE_DIR "/usr/include/lua5.4")
+endif()
 find_package(Lua 5.4 REQUIRED)
 
 add_subdirectory(lib/box2d-3.1.1)

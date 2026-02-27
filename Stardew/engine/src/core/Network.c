@@ -767,7 +767,7 @@ game_found:
 
 static void MatchmakeClientServerUpdate(struct netcode_client_t * client)
 {
-    netcode_client_send_packet(client, &gMatchmakingInfo, sizeof(struct MatchMakingMessage));
+    netcode_client_send_packet(client, (uint8_t*)&gMatchmakingInfo, sizeof(struct MatchMakingMessage));
     while ( 1 )     
     {
         int packet_bytes;

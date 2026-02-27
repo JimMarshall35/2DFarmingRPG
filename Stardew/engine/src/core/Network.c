@@ -739,7 +739,7 @@ static char* MatchmakeClient()
             if(packet)
             {
                 EASSERT(packet_bytes == sizeof(struct MatchMakingMessage));
-                struct MatchMakingMessage* pMsg = packet_bytes;
+                struct MatchMakingMessage* pMsg = packet;
                 switch(pMsg->type)
                 {
                 case MM_ServerSeekClient:

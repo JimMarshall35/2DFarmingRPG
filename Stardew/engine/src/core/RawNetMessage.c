@@ -25,12 +25,12 @@ void NetMsg_Parse(u8* data, enum NetRawMessageType* pOutType, u8** outBody)
 
 struct NetReliableMessageHeader* NetMsg_GetReliableHeader(u8* data)
 {
-    return data + sizeof(u32);
+    return (struct NetFragmentMessageHeader*)(data + sizeof(u32));
 }
 
 struct NetFragmentMessageHeader* NetMsg_GetFragmentHeader(u8* data)
 {
-    return data + sizeof(u32) + sizeof(struct NetReliableMessageHeader);
+    return (struct NetFragmentMessageHeader*)(data + sizeof(u32) + sizeof(struct NetReliableMessageHeader));
 }
 
 u32 NetMsg_GetReliableMessageIdentifier()

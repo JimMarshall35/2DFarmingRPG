@@ -274,7 +274,7 @@ void G2D_SaveLevelDataInternal(struct GameLayer2DData* pData, struct BinarySeria
 			BS_SerializeU32(2, pBS); // no compression
 
 			// serialize the layer tiles
-			BS_SerializeBytesNoLen(pLayer->Tiles, pLayer->widthTiles * pLayer->heightTiles * sizeof(TileIndex), pBS);
+			BS_SerializeBytesNoLen((const char*)pLayer->Tiles, pLayer->widthTiles * pLayer->heightTiles * sizeof(TileIndex), pBS);
 			break;
 		case 2: // object layer
 			BS_SerializeU32(pLayer->drawOrder, pBS);

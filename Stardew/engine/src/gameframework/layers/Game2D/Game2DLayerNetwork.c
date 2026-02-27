@@ -372,7 +372,7 @@ void G2D_SendRPC(int client, enum Game2DRPCType type, void* pRPCData)
             struct CreateEntity_RPC* pData = pRPCData;
             BS_SerializeU32(1, &bs); /* version */
             BS_SerializeI32(pData->pEnt->inDrawLayer, &bs);
-            Et2D_SerializeEntityV1Base(pData->pEnt, &bs, pData);
+            Et2D_SerializeEntityV1Base(pData->pEnt, &bs, pData->pData);
         }
         break;
     case G2DRPC_AdjustNetworkID:

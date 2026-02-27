@@ -268,7 +268,7 @@ DECLARE_THREAD_PROC(AudioThread, arg)
     if(!device)
     {
         Log_Error("Could not open an OpenAL device!");
-        return 1;
+        return (void*)1;
     }
 
     alcGetIntegerv(device, ALC_FREQUENCY, 1, &gDevRate);
@@ -281,7 +281,7 @@ DECLARE_THREAD_PROC(AudioThread, arg)
             alcDestroyContext(ctx);
         alcCloseDevice(device);
         Log_Error("Could not set an OpenAL context!");
-        return 1;
+        return (void*)1;
     }
 
     name = NULL;

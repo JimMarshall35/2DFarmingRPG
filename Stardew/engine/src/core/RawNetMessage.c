@@ -25,7 +25,7 @@ void NetMsg_Parse(u8* data, enum NetRawMessageType* pOutType, u8** outBody)
 
 struct NetReliableMessageHeader* NetMsg_GetReliableHeader(u8* data)
 {
-    return (struct NetFragmentMessageHeader*)(data + sizeof(u32));
+    return (struct NetReliableMessageHeader*)(data + sizeof(u32));
 }
 
 struct NetFragmentMessageHeader* NetMsg_GetFragmentHeader(u8* data)
@@ -115,7 +115,7 @@ int NetMsg_WriteReliableFragmentDataPacket(u8* dataOut, u8* dataIn, int dataSize
 int NetMsg_WriteReliableDataAckPacket(u8* dataOut, u32 messageIdentifier)
 {
     int totalBytes2Write = sizeof(u32) * 2;
-    u32* p = dataOut;
+    u32* p = (u32*)dataOut;
     *p++ = ReliableDataMessageAck;
     *p = messageIdentifier;
     return totalBytes2Write;

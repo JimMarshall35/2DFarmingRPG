@@ -1,5 +1,6 @@
 #include "WfSprites.h"
 #include "Game2DLayer.h"
+#include "Atlas.h"
 
 void WfGetTreeSprites(struct WfTreeSprites* spritesPerSeason, hAtlas atlas)
 {

@@ -58,4 +58,6 @@ struct WfPersistantData* WfGetLocalPlayerPersistantGameData();
 
 struct WfPersistantData* WfGetNetworkPlayerPersistantGameData(int playerNum);
 
+void WfPersistantDataInit();
+
 #endif

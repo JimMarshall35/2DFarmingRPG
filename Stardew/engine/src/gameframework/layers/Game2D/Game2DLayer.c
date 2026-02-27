@@ -668,7 +668,7 @@ static void OnDebugLayerPushed(void* pUserData, void* pEventData)
 	pData->bDebugLayerAttatched = true;
 }
  
-static void NetworkUpdateWorldstateCallback(struct SDTimer* pTimer)
+static bool NetworkUpdateWorldstateCallback(struct SDTimer* pTimer)
 {
 	switch(NW_GetRole())
 	{
@@ -689,6 +689,7 @@ static void NetworkUpdateWorldstateCallback(struct SDTimer* pTimer)
 		}
 		break;
 	}
+	return false;
 }
 
 void GameLayer2D_OnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)

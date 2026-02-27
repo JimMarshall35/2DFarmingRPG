@@ -554,7 +554,7 @@ bool Sc_FunctionPresentInTable(int regIndex, const char* funcName)
 	{
 		Log_Error("Sc_FunctionPresentInTable. Reg table entry %i is not a table, but %s", regIndex, GetTypeOnTopOfStack());
 		lua_settop(gL, 0);
-		return;
+		return false;
 	}
 	Sc_TableGet(funcName);
 	bool bPresent = !Sc_IsNil();

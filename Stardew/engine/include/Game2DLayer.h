@@ -22,7 +22,7 @@ struct GameFrameworkEventListener;
 
 struct GameLayer2DData;
 struct BinarySerializer;
-
+struct Vert2DTexture;
 typedef void (*PreFirstInitFn)(struct GameLayer2DData* pGameLayerData);
 typedef void (*PreLoadLevelFn)(struct GameLayer2DData* pGameLayerData);
 
@@ -131,7 +131,7 @@ struct GameLayer2DData
 	/** @brief
 		buffers of vertices and indices populated each frame
 	*/
-	VECTOR(struct Worldspace2DVert) pWorldspaceVertices;
+	VECTOR(struct Vert2DTexture) pWorldspaceVertices;
 	VECTOR(VertIndexT) pWorldspaceIndices;
 	H2DWorldspaceVertexBuffer vertexBuffer;
 

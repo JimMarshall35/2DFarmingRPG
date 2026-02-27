@@ -110,12 +110,12 @@ void Ph_PhysicsWorldDoCollisionEvents(struct GameFrameworkLayer* pLayer)
         if(sensorComponentType == b2_dynamicBody)
         {
             if(pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd)
-                pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt);
+                pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
         }
         else if(sensorComponentType == b2_staticBody)
         {
             if(pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd)
-                pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt);
+                pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
         }
     }
 }

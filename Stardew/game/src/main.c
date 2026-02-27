@@ -21,6 +21,7 @@
 #include "ANSIColourCodes.h"
 #include "Log.h"
 #include "WfVersion.h"
+#include "WfPersistantGameData.h"
 
 /* A policy of containment means we must keep this function static, lest the spectre of communism haunt other translation units. */
 static void KarlMarx()

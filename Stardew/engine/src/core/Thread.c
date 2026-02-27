@@ -97,9 +97,11 @@ void UnlockMutex(CrossPlatformMutex* pMtx)
     pthread_mutex_unlock(pMtx);
 }
 
+#include <sys/syscall.h>
+
 CrossPlatformThreadID GetThisThreadsID()
 {
-    CrossPlatformThreadID id = gettid();
+    CrossPlatformThreadID id = syscall(SYS_gettid);
     return id; 
 }
 

@@ -18,20 +18,7 @@ typedef DWORD CrossPlatformThreadID;
 
 #include <pthread.h>
 #define _GNU_SOURCE
-#if __GLIBC_PREREQ(2,30)
 #include <unistd.h>
-
-#else
-
-#include <sys/syscall.h>
-
-pid_t
-gettid(void)
-{
-
-    return syscall(SYS_gettid);
-}
-#endif
 #include <sys/types.h>
 
 /// @brief Thread functions have return values as required by the OS thread libs but

@@ -13,7 +13,6 @@
 struct GameFrameworkLayer;
 struct BinarySerializer;
 struct GameLayer2DData;
-struct Game2DLayerData;
 struct Entity2D;
 struct Entity2DCollection;
 
@@ -125,7 +124,7 @@ struct AdjustNetID_RPC
 struct CreateEntity_RPC
 {
     struct Entity2D* pEnt;
-    struct Game2DLayerData* pData;
+    struct GameLayer2DData* pData;
 };
 
 struct DeleteEntity_RPC

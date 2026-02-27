@@ -150,7 +150,7 @@ struct WfInventory* WfGetInventory()
 struct WfInventory* WfGetNetworkPlayersInventory(int player)
 {
     EASSERT(player <= 2 && player >= 0);
-    return &gNetworkPlayersPersistantData[player];
+    return &gNetworkPlayersPersistantData[player].inventory;
 }
 
 struct WfPlayerPreferences* WfGetPreferences()

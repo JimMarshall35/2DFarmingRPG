@@ -12,7 +12,7 @@
 #include "WfBasicPickaxe.h"
 #include "WfBasicScythe.h"
 #include "WfBasicSword.h"
-
+#include "Log.h"
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 

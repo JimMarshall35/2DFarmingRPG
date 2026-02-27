@@ -578,9 +578,9 @@ struct AtlasRect* MergeFreeSpace(struct AtlasRect* pFreeSpace, struct Bitfield2D
 	
 	VECTOR(struct FreeSpaceRun) runs[2];
 	runs[0] = NEW_VECTOR(struct FreeSpaceRun);
-	runs[0] = VectorResize(runs[0], pFreeSpace);
+	runs[0] = VectorResize(runs[0], VectorSize(pFreeSpace));
 	runs[1] = NEW_VECTOR(struct FreeSpaceRun);
-	runs[1] = VectorResize(runs[1], pFreeSpace);
+	runs[1] = VectorResize(runs[1], VectorSize(pFreeSpace));
 
 	runs[0] = VectorClear(runs[0]);
 	runs[1] = VectorClear(runs[1]);

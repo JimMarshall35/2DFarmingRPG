@@ -8,6 +8,7 @@
 #include "GameFramework.h"
 #include "EntityQuadTree.h"
 #include "AnimatedSprite.h"
+#include "Sprite.h"
 #include "ObjectPool.h"
 #include "Network.h"
 #include "Log.h"

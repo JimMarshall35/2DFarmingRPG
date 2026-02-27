@@ -370,7 +370,7 @@ void DrawWorldspaceVertexBuffer(H2DWorldspaceVertexBuffer hBuf, size_t indexCoun
 	glBindVertexArray(vertexBuffer->vao);
 	unsigned int projectionViewUniform = glGetUniformLocation(gWorldspace2DShader.program, "vp");
 	mat4 m;
-	glm_mat4_mul(gScreenspaceOrtho[0], view[0], m[0]);
+	glm_mat4_mul(&gScreenspaceOrtho[0], &view[0], &m[0]);
 	glUniformMatrix4fv(projectionViewUniform, 1, false, &m[0][0]);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
 }

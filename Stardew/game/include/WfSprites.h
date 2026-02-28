@@ -16,7 +16,7 @@ struct WfTreeSprites
     hSprite trunk2;
 
     hSprite stump1;
-    hSprite stump22;
+    hSprite stump2;
 
 };
 

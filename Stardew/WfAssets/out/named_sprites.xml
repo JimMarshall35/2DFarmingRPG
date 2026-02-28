@@ -1,6 +1,10 @@
 <atlas>
-    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="448" left="0" width="96" height="96" name="tree_trunk_sum_1" bMinimizeSpace="true"/>
-    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="448" left="96" width="96" height="96" name="tree_trunk_sum_2" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="0" width="96" height="96" name="tree_stump_sum_1" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="96" width="96" height="96" name="tree_stump_sum_2" bMinimizeSpace="true"/>
+
+
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_trunks_only.png" top="448" left="0" width="96" height="96" name="tree_trunk_sum_1" bMinimizeSpace="true"/>
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_trunks_only.png" top="448" left="96" width="96" height="96" name="tree_trunk_sum_2" bMinimizeSpace="true"/>
 
     <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="0" left="192" width="96" height="96" name="decid_tree_sum_top_1" bMinimizeSpace="true"/>
     <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="0" left="288" width="96" height="96" name="decid_tree_sum_top_2" bMinimizeSpace="true"/>

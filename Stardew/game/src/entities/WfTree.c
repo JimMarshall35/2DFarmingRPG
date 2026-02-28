@@ -116,55 +116,69 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     struct Component2D* pComponent1 = &pEnt->components[pEnt->numComponents++];
     struct Component2D* pComponent2 = &pEnt->components[pEnt->numComponents++];
     struct Component2D* pComponent3 = &pEnt->components[pEnt->numComponents++];
+    struct Component2D* pComponent4 = &pEnt->components[pEnt->numComponents++];
 
     struct WfTreeSprites* pFoundSeason = &pSprites->treeSpritesPerSeason[def->season];
     hSprite topSprite = NULL_HANDLE;
     hSprite trunkSprite = NULL_HANDLE;
+    hSprite stumpSprite = NULL_HANDLE;
+
     switch (def->type)
     {
     case Coniferous:
         topSprite = def->subtype == 0 ? pFoundSeason->coniferousTop1 : pFoundSeason->coniferousTop2;
         trunkSprite = pFoundSeason->trunk2;
+        stumpSprite = pFoundSeason->stump2;
         break;
     case Deciduous:
         topSprite = def->subtype == 0 ? pFoundSeason->deciduousTop1 : pFoundSeason->deciduousTop2;
         trunkSprite = pFoundSeason->trunk1;
+        stumpSprite = pFoundSeason->stump1;
         break;
     default:
         break;
     }
 
     /* order is important as we want the tree trunk to be drawn first and the top on top of that */
-    pComponent2->type = ETE_Sprite;
-    pComponent2->data.sprite.sprite = topSprite;
-    memset(&pComponent2->data.sprite.transform, 0, sizeof(struct Transform2D));
-    pComponent2->data.sprite.transform.scale[0] = 1.0f;
-    pComponent2->data.sprite.transform.scale[1] = 1.0f;
-    pComponent2->data.sprite.bDraw = true;
 
     pComponent1->type = ETE_Sprite;
-    pComponent1->data.sprite.sprite = trunkSprite;
+    pComponent1->data.sprite.sprite = stumpSprite;
     memset(&pComponent1->data.sprite.transform, 0, sizeof(struct Transform2D));
     pComponent1->data.sprite.transform.position[1] = trunkOffsetPx;
     pComponent1->data.sprite.transform.scale[0] = 1.0f;
     pComponent1->data.sprite.transform.scale[1] = 1.0f;
     pComponent1->data.sprite.bDraw = true;
 
+    pComponent3->type = ETE_Sprite;
+    pComponent3->data.sprite.sprite = topSprite;
+    memset(&pComponent3->data.sprite.transform, 0, sizeof(struct Transform2D));
+    pComponent3->data.sprite.transform.scale[0] = 1.0f;
+    pComponent3->data.sprite.transform.scale[1] = 1.0f;
+    pComponent3->data.sprite.bDraw = true;
+
+    pComponent2->type = ETE_Sprite;
+    pComponent2->data.sprite.sprite = trunkSprite;
+    memset(&pComponent2->data.sprite.transform, 0, sizeof(struct Transform2D));
+    pComponent2->data.sprite.transform.position[1] = trunkOffsetPx;
+    pComponent2->data.sprite.transform.scale[0] = 1.0f;
+    pComponent2->data.sprite.transform.scale[1] = 1.0f;
+    pComponent2->data.sprite.bDraw = true;
+
     vec2 transform2Ground = {
         combinedSpriteWidth / 2.0f,
         (combinedTreeSpriteHeight - bottomOfTrunkSpriteToBase)
     };
 
-    pComponent3->type = ETE_StaticCollider;
-    pComponent3->data.staticCollider.shape.type = PBT_Circle;
-    pComponent3->data.staticCollider.shape.data.circle.center[0] = x;//transform2Ground[0];
-    pComponent3->data.staticCollider.shape.data.circle.center[1] = y;//transform2Ground[1];
-    pComponent3->data.staticCollider.shape.data.circle.radius = 6;
-    pComponent3->data.staticCollider.bIsSensor = false;
-    pComponent3->data.staticCollider.onSensorOverlapBegin = NULL;
-    pComponent3->data.staticCollider.onSensorOverlapEnd = NULL;
-    pComponent3->data.staticCollider.bGenerateSensorEvents = false;
-    pComponent3->data.sprite.bDraw = true;
+    pComponent4->type = ETE_StaticCollider;
+    pComponent4->data.staticCollider.shape.type = PBT_Circle;
+    pComponent4->data.staticCollider.shape.data.circle.center[0] = x;//transform2Ground[0];
+    pComponent4->data.staticCollider.shape.data.circle.center[1] = y;//transform2Ground[1];
+    pComponent4->data.staticCollider.shape.data.circle.radius = 6;
+    pComponent4->data.staticCollider.bIsSensor = false;
+    pComponent4->data.staticCollider.onSensorOverlapBegin = NULL;
+    pComponent4->data.staticCollider.onSensorOverlapEnd = NULL;
+    pComponent4->data.staticCollider.bGenerateSensorEvents = false;
+    pComponent4->data.sprite.bDraw = true;
 
     HGeneric hTreeData = NULL_HANDLE;
     gTreeDataObjectPool = GetObjectPoolIndex(gTreeDataObjectPool, &hTreeData);

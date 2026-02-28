@@ -1,6 +1,5 @@
 add_executable( WarFarmer
     src/main.c
-    src/cwalk.c
     src/WfEntities.c
     src/WfInit.c
     src/WfGame.c

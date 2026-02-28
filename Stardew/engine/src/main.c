@@ -16,6 +16,7 @@
 #include "Network.h"
 #include "AssertLib.h"
 #include "Audio.h"
+#include "cwalk.h"
 
 #define SCR_WIDTH 640
 #define SCR_HEIGHT 480
@@ -118,6 +119,9 @@ void Engine_ParseCmdArgs(int argc, char** argv, ArgHandlerFn handlerFn)
     gCmdArgs.logfilePath = NULL;
     gCmdArgs.networkSimulatorConfigPath = NULL;
     gCmdArgs.bLogToConsole = true;
+    gCmdArgs.assetsDir = "./WfAssets";
+    gCmdArgs.configDir = "./WfAssets";
+
     if(argc > 1)
     {
         for(int i=1; i <argc; i++)
@@ -218,9 +222,23 @@ void Engine_ParseCmdArgs(int argc, char** argv, ArgHandlerFn handlerFn)
                 Log_Info("Cmd arg %i: %s", i, argv[i]);
                 gCmdArgs.networkSimulatorConfigPath = argv[i];
             }
+            else if(strcmp(argv[i], "--assetsDir") == 0)
+            {
+                EASSERT(i + 1 < argc);
+                i++;
+                Log_Info("Cmd arg %i: %s", i, argv[i]);
+                gCmdArgs.assetsDir = argv[i];
+            }
+            else if(strcmp(argv[i], "--configDir") == 0)
+            {
+                EASSERT(i + 1 < argc);
+                i++;
+                Log_Info("Cmd arg %i: %s", i, argv[i]);
+                gCmdArgs.configDir = argv[i];
+            }
             else if(handlerFn)
             {
-                handlerFn(argc, argv, i);
+                handlerFn(argc, argv, &i);
             }
         }
     }
@@ -236,9 +254,9 @@ static void DoNetworkQueues()
     }
 }
 
-int EngineStart(int argc, char** argv, GameInitFn init)
+int EngineStart(int argc, char** argv, GameInitFn init, ArgHandlerFn argHandler)
 {
-    Engine_ParseCmdArgs(argc, argv, NULL);
+    Engine_ParseCmdArgs(argc, argv, argHandler);
     Log_Init();
     NW_Init();
     int audioSystemInitCode = Au_Init();
@@ -417,7 +435,9 @@ void GameInit(InputContext* pIC, DrawContext* pDC)
     memset(&testLayer, 0, sizeof(struct GameFrameworkLayer));
     struct XMLUIGameLayerOptions options;
     options.bLoadImmediately = true;
-    options.xmlPath = "./WfAssets/test.xml";
+    char buf[256];
+    cwk_path_join(buf, "test.xml", buf, 256);
+    options.xmlPath = buf;
     options.pDc = pDC;
     Log_Verbose("making xml ui layer");
     XMLUIGameLayer_Get(&testLayer, &options);

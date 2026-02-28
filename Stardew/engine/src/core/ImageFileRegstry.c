@@ -4,7 +4,9 @@
 #include <string.h>
 #include "cJSON.h"
 #include "FileHelpers.h"
+#include "main.h"
 #include "Log.h"
+#include "cwalk.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb/stb_image.h"
@@ -13,18 +15,18 @@ static VECTOR(struct ImageFile) gImageFiles;
 
 HImage IR_RegisterImagePath(const char* path)
 {
-    const char* assetsFolderPath = "./WfAssets/";
+    
     HImage i = NULL_HIMAGE;
     struct ImageFile imagef;
     memset(&imagef, 0, sizeof(struct ImageFile));
-    imagef.path = malloc(strlen(path) + 1 + strlen(assetsFolderPath));
+    int bufsize = strlen(path) + 2 + strlen(gCmdArgs.assetsDir);
+    imagef.path = malloc(bufsize);
     if (!imagef.path)
     {
         Log_Error("IR_RegisterImagePath malloc failed");
         return i;
     }
-    //strcpy(imagef.path, path);
-    sprintf(imagef.path, "%s%s", assetsFolderPath, path);
+    cwk_path_join(gCmdArgs.assetsDir, path, imagef.path, bufsize); 
     gImageFiles = VectorPush(gImageFiles, &imagef);
     i = VectorSize(gImageFiles) - 1;
     return i;

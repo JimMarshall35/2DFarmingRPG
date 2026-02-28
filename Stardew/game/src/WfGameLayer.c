@@ -16,6 +16,8 @@
 #include "WfPersistantGameData.h"
 #include "Network.h"
 #include "WfNetwork.h"
+#include "main.h"
+#include "cwalk.h"
 
 static void WfPublishInventoryChangedEvent()
 {
@@ -108,7 +110,9 @@ void WfPushGameLayer(DrawContext* pDC, const char* lvlFilePath)
     memset(&testLayer, 0, sizeof(struct GameFrameworkLayer));
     struct Game2DLayerOptions options;
     memset(&options, 0, sizeof(struct Game2DLayerOptions));
-    options.atlasFilePath = "./WfAssets/out/main.atlas";
+    char buf[256];
+    cwk_path_join(gCmdArgs.assetsDir, "out/main.atlas", buf, 256);
+    options.atlasFilePath = buf;
     options.levelFilePath = lvlFilePath;
     Game2DLayer_Get(&testLayer, &options, pDC);
     testLayer.onPush = &WfGameLayerOnPush;

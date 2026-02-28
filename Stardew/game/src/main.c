@@ -22,6 +22,26 @@
 #include "Log.h"
 #include "WfVersion.h"
 #include "WfPersistantGameData.h"
+#include "WfCmdArgs.h"
+
+enum WfExeMode
+{
+    NormalGame,
+    CreatePersistantDataFile
+};
+
+/// @brief parsed before the engine is initialized
+struct PreEngineCmdLineArgs
+{
+    enum WfExeMode mode;
+    const char* outPersistantDataFilePath;
+};
+
+
+struct WfGameCmdArgs gGameArgs = 
+{
+    .savesDir = "./WfAssets/Saves"
+};
 
 /* A policy of containment means we must keep this function static, lest the spectre of communism haunt other translation units. */
 static void KarlMarx()
@@ -96,21 +116,10 @@ void GameInit(InputContext* pIC, DrawContext* pDC)
     WfPushHUD(pDC);
 }
 
-enum WfExeMode
+/// @brief parse args outside of the game engine mechanism, before the engine is initialized
+static struct PreEngineCmdLineArgs ParsePreCmdLineArgs(int argc, char** argv)
 {
-    NormalGame,
-    CreatePersistantDataFile
-};
-
-struct CmdLineArgs
-{
-    enum WfExeMode mode;
-    const char* outPersistantDataFilePath;
-};
-
-struct CmdLineArgs ParseCmdLineArgs(int argc, char** argv)
-{
-    struct CmdLineArgs args;
+    struct PreEngineCmdLineArgs args;
     args.mode = NormalGame;
     if(argc == 3)
     {
@@ -122,14 +131,27 @@ struct CmdLineArgs ParseCmdLineArgs(int argc, char** argv)
     }
     return args;
 }
+void ParseGameCmdLineArgs(int argc, char** argv, int* onArg)
+{
+    if(strcmp(argv[*onArg], "--savesDir") == 0)
+    {
+        *onArg++;
+        gGameArgs.savesDir = argv[*onArg];
+    }
+    if(strcmp(argv[*onArg], "--assetsDir") == 0)
+    {
+        *onArg++;
+        gGameArgs.assetsDir = argv[*onArg];
+    }
+}
 
 int main(int argc, char** argv)
 {
-    struct CmdLineArgs args = ParseCmdLineArgs(argc, argv);
+    struct PreEngineCmdLineArgs args = ParsePreCmdLineArgs(argc, argv);
     switch (args.mode)
     {
     case NormalGame:
-        EngineStart(argc, argv, &GameInit);
+        EngineStart(argc, argv, &GameInit, &ParseGameCmdLineArgs);
         break;
     case CreatePersistantDataFile:
         {

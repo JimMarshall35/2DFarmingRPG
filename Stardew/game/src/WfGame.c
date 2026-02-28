@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "WfPersistantGameData.h"
+#include "WfCmdArgs.h"
 
 static VECTOR(struct WfGameSave) gSaves = NULL;
 
@@ -14,24 +15,28 @@ static void PopulateSavesList()
 {
     FILE * fp;
     char line[256];
+    char line2[256];
+
     size_t len = 0;
     size_t read;
+    cwk_path_join(gGameArgs.savesDir, "saves.txt", line, 256);
 
-    fp = fopen("./WfAssets/Saves/saves.txt", "r");
+    fp = fopen(line, "r");
     if (fp == NULL)
         exit(EXIT_FAILURE);
 
     memset(line, 0, sizeof(line));
     while (fgets(line, sizeof(line), fp))
     {
-        int lenLine = strlen(line);
-        if(line[lenLine - 1] == '\n')
-            line[lenLine - 1] = '\0';
+        cwk_path_join(gGameArgs.savesDir, line, line2, 256);
+        int lenLine = strlen(line2);
+        if(line2[lenLine - 1] == '\n')
+            line2[lenLine - 1] = '\0';
         struct  WfGameSave save = 
         {
             .folderPath = malloc(lenLine + 1)
         };
-        strcpy(save.folderPath, line);
+        strcpy(save.folderPath, line2);
         size_t basenameLen = 0;
         cwk_path_get_basename(save.folderPath, &save.saveName, &basenameLen);
         gSaves = VectorPush(gSaves, &save);

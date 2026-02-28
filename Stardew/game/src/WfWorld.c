@@ -29,8 +29,6 @@ void WfWorld_LoadLocation(const char* locationName, DrawContext* pDC)
     struct WfLocation* pLocation = HashmapSearch(&gWorld.locationsHashMap, locationName);
     if(pLocation)
     {
-        // GF_PopGameFrameworkLayer();
-        // GF_PopGameFrameworkLayer(); // pop the old game layer
         WfPushGameLayer(pDC, pLocation->levelFilePath);
     }
 }

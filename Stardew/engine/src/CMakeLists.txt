@@ -59,6 +59,7 @@ gameframework/layers/Game2D/EntitySystem/Components/TextSprite.c
 gameframework/layers/Game2D/Physics2D.c
 vendor/glad.c
 vendor/cJSON.c
+vendor/cwalk.c
 rendering/DrawContext.c
 scripting/Scripting.c
 input/InputContext.c

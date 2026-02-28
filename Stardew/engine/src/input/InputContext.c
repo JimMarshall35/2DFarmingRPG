@@ -9,6 +9,8 @@
 #include "AssertLib.h"
 #include "Log.h"
 #include "StringKeyHashMap.h"
+#include "cwalk.h"
+#include "main.h"
 
 static int gJoystick = -1;
 
@@ -941,8 +943,11 @@ InputContext In_InitInputContext()
 	InputContext ctx;
 	memset(&ctx, 0, sizeof(InputContext));
 
+	char buf[256];
+	cwk_path_join(gCmdArgs.configDir, "Keymap.json", buf, 256);
+
 	int size = 0;
-	char* data = LoadFile("./WfAssets/Keymap.json", &size);
+	char* data = LoadFile(buf, &size);
 	ERROR(data, "can't load data");
 	cJSON* json = cJSON_ParseWithLength(data, size);
 	ERROR(json, "can't parse json");

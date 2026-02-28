@@ -10,9 +10,9 @@ int Mn_GetScreenWidth();
 int Mn_GetScreenHeight();
 
 typedef void(*GameInitFn)(InputContext*,DrawContext*);
-typedef void(*ArgHandlerFn)(int argc, char** argv, int onArg);
+typedef void(*ArgHandlerFn)(int argc, char** argv, int* onArg);
 
-int EngineStart(int argc, char** argv, GameInitFn init);
+int EngineStart(int argc, char** argv, GameInitFn init, ArgHandlerFn argHandler);
 
 
 /*
@@ -37,6 +37,8 @@ struct CommandLineArgs
     bool bLogToConsole;
     const char* logfilePath;
     const char* networkSimulatorConfigPath;
+    const char* assetsDir;
+    const char* configDir;
 };
 
 extern struct CommandLineArgs gCmdArgs;

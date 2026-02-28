@@ -1,8 +1,8 @@
 
 <UIroot>
-	<atlas binary="./WfAssets/ui_atlas.atlas">
+	<atlas binary="./ui_atlas.atlas">
 	</atlas>
-	<screen viewmodelFile="./WfAssets/test.lua" viewmodelFunction="GetTestViewModel">
+	<screen viewmodelFile="./test.lua" viewmodelFunction="GetTestViewModel">
 		<stackpanel dockPoint="centre" orientation = "horizontal">
 			<backgroundbox sprite="fantasy_9Panel" scaleX="3.0" scaleY="3.0">
 				<canvas width="0.5%" height="1.0%">

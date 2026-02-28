@@ -1,7 +1,7 @@
 <UIroot>
-	<atlas binary="./WfAssets/ui_atlas.atlas">
+	<atlas binary="./ui_atlas.atlas">
 	</atlas>
-    <screen viewmodelFile="./WfAssets/settings.lua" viewmodelFunction="GetSettingsViewModel">
+    <screen viewmodelFile="./settings.lua" viewmodelFunction="GetSettingsViewModel">
         <stackpanel dockPoint="centre" orientation = "vertical">
             <text font="default" fontSize="32pts" paddingTop="20" paddingBottom="20" paddingLeft="20" paddingRight="20" colour="0,0,0,255">
 Test

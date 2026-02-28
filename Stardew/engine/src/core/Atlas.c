@@ -20,6 +20,8 @@
 #include "StringKeyHashMap.h"
 #include "Log.h"
 #include "StardewString.h"
+#include "cwalk.h"
+#include "main.h"
 
 FT_Library  gFTLib;
 static int gSpriteId = 1;
@@ -1384,9 +1386,11 @@ hAtlas At_LoadAtlasEx(xmlNode* child0, DrawContext* pDC, struct EndAtlasOptions*
 	xmlChar* attribute = NULL;
 	if (attribute = xmlGetProp(child0, "binary"))
 	{
-		Log_Verbose("binary: %s", attribute);
+		char buf[256];
+		cwk_path_join(gCmdArgs.assetsDir, attribute, buf, 256);
+		Log_Verbose("binary: %s", buf);
 		struct BinarySerializer serializer;
-		BS_CreateForLoad(attribute, &serializer);
+		BS_CreateForLoad(buf, &serializer);
 		hAtlas newAtlas = -1;
 		At_SerializeAtlas(&serializer, &newAtlas, pDC);
 		BS_Finish(&serializer);

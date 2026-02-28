@@ -33,6 +33,8 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include "Log.h"
+#include "cwalk.h"
+#include "main.h"
 
 static struct HashMap gNodeNameMap;
 static bool gInitialisedNodeNameMap = false;
@@ -574,9 +576,11 @@ static bool TryLoadViewModel(XMLUIData* pUIData, xmlNode* pScreenNode)
 
 	if (bVMFileSet && bVMFunctionSet)
 	{
-		Log_Verbose("opening viewmodel file %s", pFilePath);
+		char buf[256];
+		cwk_path_join(gCmdArgs.assetsDir, pFilePath, buf, 256);
+		Log_Verbose("opening viewmodel file %s", buf);
 		// instantiate viewmodel lua object and store in registry
-		Sc_OpenFile(pFilePath);
+		Sc_OpenFile(buf);
 		Log_Verbose("done");
 		pUIData->hViewModel = Sc_CallGlobalFuncReturningTableAndStoreResultInReg(pFnName, NULL, 0);
 

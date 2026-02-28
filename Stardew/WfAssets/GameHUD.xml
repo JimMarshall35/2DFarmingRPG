@@ -1,8 +1,8 @@
 
 <UIroot>
-	<atlas binary="./WfAssets/ui_atlas.atlas">
+	<atlas binary="./ui_atlas.atlas">
 	</atlas>
-    <screen viewmodelFile="./WfAssets/GameHUD.lua" viewmodelFunction="GetGameHUDViewModel">
+    <screen viewmodelFile="./GameHUD.lua" viewmodelFunction="GetGameHUDViewModel">
         <stackpanel orientation="horizontal" childrenBinding="InventoryChildren" paddingBottom="32" dockPoint="bottomMiddle">
 
         </stackpanel>

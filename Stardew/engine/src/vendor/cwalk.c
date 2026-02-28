@@ -451,7 +451,8 @@ cwk_path_segment_will_be_removed(const struct cwk_segment_joined *sj,
   // First we check whether this is a CWK_CURRENT or CWK_BACK segment, since
   // those will always be dropped.
   type = cwk_path_get_segment_type(&sj->segment);
-  if ((sj->path_index != 0 && type == CWK_CURRENT) || (type == CWK_BACK && absolute)) {
+  if ((sj->path_index != 0 && type == CWK_CURRENT) || (type == CWK_BACK && absolute)) { // Jim patched this line: original below. Change: if the "." is the first segment of the path, don't remove it
+  //if (type == CWK_CURRENT || (type == CWK_BACK && absolute)) {
     return true;
   } else if (type == CWK_BACK) {
     return cwk_path_segment_back_will_be_removed(&sjc);

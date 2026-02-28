@@ -364,7 +364,10 @@ int EngineStart(int argc, char** argv, GameInitFn init, ArgHandlerFn argHandler)
     GF_InitGameFramework();
     Log_Verbose("done");
     Log_Verbose("initialising image registry");
-    IR_InitImageRegistry(NULL);
+
+    char pathBuf[256];
+    cwk_path_join(gCmdArgs.assetsDir, "ImageFiles.json", pathBuf, 256);
+    IR_InitImageRegistry(pathBuf);
     Log_Verbose("done");
     Log_Verbose("initialising atlas");
     At_Init();

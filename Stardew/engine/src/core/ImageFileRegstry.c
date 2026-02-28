@@ -121,6 +121,7 @@ bool IR_LoadImageSync(HImage hImage, VECTOR(struct ImageLoadError) outErrors)
 
 void IR_InitImageRegistry(const char* jsonPath)
 {
+    Log_Verbose("IR_InitImageRegistry path: %i");
     gImageFiles = NEW_VECTOR(struct ImageFile);
     int size = 0;
     char* data = jsonPath;

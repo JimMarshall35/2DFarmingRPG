@@ -135,8 +135,10 @@ void ParseGameCmdLineArgs(int argc, char** argv, int* onArg)
 {
     if(strcmp(argv[*onArg], "--savesDir") == 0)
     {
-        *onArg++;
-        gGameArgs.savesDir = argv[*onArg];
+        int arg = *onArg;
+        arg++;
+        gGameArgs.savesDir = argv[arg];
+        *onArg = arg;
     }
 }
 

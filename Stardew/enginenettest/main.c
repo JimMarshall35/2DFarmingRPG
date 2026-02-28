@@ -44,9 +44,10 @@ static struct  NetTestCmdArgs gTestArgs = {
     .timeoutSeconds = -1.0 /* < 0 means no timeout */
 };
 
-void HandleNetTestArgs(int argc, char** argv, int* onArg)
+void HandleNetTestArgs(int argc, char** argv, int* pOnArg)
 {
-    char* arg = argv[*onArg];
+    int onArg = *pOnArg;
+    char* arg = argv[onArg];
     
     if(strcmp(arg, "--input_file_path") == 0)
     {
@@ -56,8 +57,8 @@ void HandleNetTestArgs(int argc, char** argv, int* onArg)
             server:
             no effect for server 
         */
-        *onArg++;
-        char* file = argv[*onArg];
+        onArg++;
+        char* file = argv[onArg];
         gTestArgs.inputFilePath = file;
     }
     else if(strcmp(arg, "--output_file_path") == 0)
@@ -68,8 +69,8 @@ void HandleNetTestArgs(int argc, char** argv, int* onArg)
             server:
             file path to dump recieved packet to, will be appended with client index
         */
-        *onArg++;
-        char* file = argv[*onArg];
+        onArg++;
+        char* file = argv[onArg];
         gTestArgs.outputFilePath = file;
     }
     else if(strcmp(arg, "--server_timeout") == 0)
@@ -80,9 +81,10 @@ void HandleNetTestArgs(int argc, char** argv, int* onArg)
             server:
             process will terminate after this many seconds
         */
-        *onArg++;
-        gTestArgs.timeoutSeconds = atof(argv[*onArg]);
+        onArg++;
+        gTestArgs.timeoutSeconds = atof(argv[onArg]);
     }
+    *pOnArg = onArg;
 }
 
 static char* GetFileOutputPath(int clientID)

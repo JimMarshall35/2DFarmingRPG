@@ -1,0 +1,4 @@
+[1;92m[Info][0m    [4;37m13:47:58[0m  [1;95mTID: 0x00073d04[0m [server]
+[1;92m[Info][0m    [4;37m13:47:58[0m  [1;95mTID: 0x00073d04[0m [1;94m[Netcode][0m error: failed to bind socket (ipv4)
+[1;92m[Info][0m    [4;37m13:47:58[0m  [1;95mTID: 0x00073d04[0m error: failed to create server
+[1;92m[Info][0m    [4;37m13:48:00[0m  [1;95mTID: 0x00073d01[0m [0;106m[Server][0m Timing out after 1.50 seconds

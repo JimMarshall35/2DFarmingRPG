@@ -4,7 +4,6 @@
 struct WfGameCmdArgs
 {
     const char* savesDir;
-    const char* assetsDir;
 };
 
 extern struct WfGameCmdArgs gGameArgs;

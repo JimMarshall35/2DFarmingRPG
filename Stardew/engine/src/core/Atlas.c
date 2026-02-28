@@ -1384,6 +1384,7 @@ hAtlas At_LoadAtlasEx(xmlNode* child0, DrawContext* pDC, struct EndAtlasOptions*
 	xmlChar* attribute = NULL;
 	if (attribute = xmlGetProp(child0, "binary"))
 	{
+		Log_Verbose("binary: %s", attribute);
 		struct BinarySerializer serializer;
 		BS_CreateForLoad(attribute, &serializer);
 		hAtlas newAtlas = -1;

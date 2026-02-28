@@ -451,7 +451,8 @@ cwk_path_segment_will_be_removed(const struct cwk_segment_joined *sj,
   // First we check whether this is a CWK_CURRENT or CWK_BACK segment, since
   // those will always be dropped.
   type = cwk_path_get_segment_type(&sj->segment);
-  if (type == CWK_CURRENT || (type == CWK_BACK && absolute)) {
+  // if (type == CWK_CURRENT || (type == CWK_BACK && absolute)) { // old line
+  if ((type == CWK_BACK && absolute)) {                           // Jim's patched LINE, avoids extraneous "."'s being removed from paths. TO BE REVERTED ONCE SPRITE PATHS HANDLED BETTER
     return true;
   } else if (type == CWK_BACK) {
     return cwk_path_segment_back_will_be_removed(&sjc);

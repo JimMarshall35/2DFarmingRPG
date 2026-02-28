@@ -1626,6 +1626,7 @@ static hAtlas DeserializeAtlasV1(struct BinarySerializer* pSerializer, struct Dr
 	BS_BytesRead(pSerializer, size, pAtlas->atlasBytes);
 
 	pAtlas->texture = pDC->UploadTexture(pAtlas->atlasBytes, 4, pAtlas->atlasWidth, pAtlas->atlasHeight);
+	Log_Verbose("Done deserializing atlas");
 	return gCurrentAtlasIndex;
 
 }
@@ -1636,6 +1637,7 @@ void At_SerializeAtlas(struct BinarySerializer* pSerializer, hAtlas* atlas, stru
 	
 	if (pSerializer->bSaving)
 	{
+		Log_Verbose("Serializing atlas...");
 		ATLAS_HANDLE_BOUNDS_CHECK_NO_RETURN(*atlas);
 		Atlas* pAtlas = &gAtlases[*atlas];
 		// File version: 1
@@ -1670,11 +1672,13 @@ void At_SerializeAtlas(struct BinarySerializer* pSerializer, hAtlas* atlas, stru
 	}
 	else
 	{
+		Log_Verbose("Deerializing atlas...");
 		u32 version = 0;
 		BS_DeSerializeU32(&version, pSerializer);
 		switch (version)
 		{
 		case 1:
+			Log_Verbose("Deerializing atlas v1...");
 			*atlas = DeserializeAtlasV1(pSerializer, pDC);
 			break;
 		default:

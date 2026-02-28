@@ -149,13 +149,6 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pComponent1->data.sprite.transform.scale[1] = 1.0f;
     pComponent1->data.sprite.bDraw = true;
 
-    pComponent3->type = ETE_Sprite;
-    pComponent3->data.sprite.sprite = topSprite;
-    memset(&pComponent3->data.sprite.transform, 0, sizeof(struct Transform2D));
-    pComponent3->data.sprite.transform.scale[0] = 1.0f;
-    pComponent3->data.sprite.transform.scale[1] = 1.0f;
-    pComponent3->data.sprite.bDraw = true;
-
     pComponent2->type = ETE_Sprite;
     pComponent2->data.sprite.sprite = trunkSprite;
     memset(&pComponent2->data.sprite.transform, 0, sizeof(struct Transform2D));
@@ -164,10 +157,12 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pComponent2->data.sprite.transform.scale[1] = 1.0f;
     pComponent2->data.sprite.bDraw = true;
 
-    vec2 transform2Ground = {
-        combinedSpriteWidth / 2.0f,
-        (combinedTreeSpriteHeight - bottomOfTrunkSpriteToBase)
-    };
+    pComponent3->type = ETE_Sprite;
+    pComponent3->data.sprite.sprite = topSprite;
+    memset(&pComponent3->data.sprite.transform, 0, sizeof(struct Transform2D));
+    pComponent3->data.sprite.transform.scale[0] = 1.0f;
+    pComponent3->data.sprite.transform.scale[1] = 1.0f;
+    pComponent3->data.sprite.bDraw = true;
 
     pComponent4->type = ETE_StaticCollider;
     pComponent4->data.staticCollider.shape.type = PBT_Circle;

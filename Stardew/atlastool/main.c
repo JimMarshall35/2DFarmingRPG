@@ -7,6 +7,7 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include "Log.h"
+#include "main.h"
 
 struct Args
 {
@@ -88,6 +89,7 @@ static hTexture UploadTextureMock(void* src, int channels, int pxWidth, int pxHe
 int main(int argc, char** argv)
 {
 	Log_Init();
+	gCmdArgs.assetsDir = "./WfAssets";
 	int r = ParseArgs(argc, argv);
 	Log_Info("input file: %s", args.xmlPath);
 	Log_Info("output file: %s", args.outPath);

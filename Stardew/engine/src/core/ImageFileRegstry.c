@@ -124,10 +124,14 @@ void IR_InitImageRegistry(const char* jsonPath)
     Log_Verbose("IR_InitImageRegistry path: %s", jsonPath);
     gImageFiles = NEW_VECTOR(struct ImageFile);
     int size = 0;
-    char* data = jsonPath;
+    char* data = NULL;
     if (jsonPath == NULL)
     {
         data = LoadFile("./WfAssets/ImageFiles.json", &size);
+    }
+    else
+    {
+        data = LoadFile(jsonPath, &size);
     }
     
     if (!data)

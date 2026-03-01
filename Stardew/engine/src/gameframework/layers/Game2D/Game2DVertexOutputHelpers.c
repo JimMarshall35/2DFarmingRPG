@@ -129,6 +129,22 @@ void HSprite_DrawBase(
     glm_mat3_mulv(t, bl, bl);
     glm_mat3_mulv(t, br, br);
 
+	float sinT = sin(pSpriteTrans->rotation);
+    float cosT = cos(pSpriteTrans->rotation);
+    vec2 c;
+	glm_vec2_add(pEnt->transform.position, pSpriteTrans->position, c);
+    glm_vec2_add(c, pSpriteTrans->rotationPointRelative, c);
+    mat3 rot = 
+    {
+        {                           cosT,                            sinT, 0},
+        {                          -sinT,                            cosT, 0},
+        {c[0] * (1 - cosT) + c[1] * sinT, c[1] * (1 - cosT) - c[0] * sinT, 1}
+    };
+    glm_mat3_mulv(rot, tl, tl);
+    glm_mat3_mulv(rot, tr, tr);
+    glm_mat3_mulv(rot, bl, bl);
+    glm_mat3_mulv(rot, br, br);
+
     OutputSpriteVerticesBase(pSprite, outVerts, outIndices, pNextIndex, tl, tr, bl, br, &pEnt->transform);
 }
 

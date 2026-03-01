@@ -818,16 +818,16 @@ void Et2D_Transform2DToMat3(struct Transform2D* pTrans, mat3 out)
         {                  0,                   1, 0},
         {pTrans->position[0], pTrans->position[1], 1}
     };
-	float sinT = sin(pTrans->rotation);
-    float cosT = cos(pTrans->rotation);
-    vec2 c;
-    glm_vec2_add(pTrans->position, pTrans->rotationPointRelative, c);
-    mat3 rot = 
-    {
-        {                           cosT,                            sinT, 0},
-        {                          -sinT,                            cosT, 0},
-        {c[0] * (1 - cosT) + c[1] * sinT, c[1] * (1 - cosT) - c[0] * sinT, 1}
-    };
-    glm_mat3_mul(scale, rot, out);
-    glm_mat3_mul(trans, out, out);
+	// float sinT = sin(pTrans->rotation);
+    // float cosT = cos(pTrans->rotation);
+    // vec2 c;
+    // glm_vec2_add(pTrans->position, pTrans->rotationPointRelative, c);
+    // mat3 rot = 
+    // {
+    //     {                           cosT,                            sinT, 0},
+    //     {                          -sinT,                            cosT, 0},
+    //     {c[0] * (1 - cosT) + c[1] * sinT, c[1] * (1 - cosT) - c[0] * sinT, 1}
+    // };
+    //glm_mat3_mul(scale, rot, out);
+    glm_mat3_mul(trans, scale, out);
 }

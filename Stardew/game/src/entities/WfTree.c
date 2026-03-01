@@ -10,12 +10,30 @@
 #include "WfEntityMessages.h"
 #include "Log.h"
 #include "AssertLib.h"
+#include "GameFramework.h"
+#include "Maths.h"
+#include "ZzFX.h"
+
+#define STUMP_SPITE_INDEX  0
+#define TRUNK_SPRITE_INDEX 1
+#define TOP_SPRITE_INDEX   2
+
+#define TREE_FALL_SPEED 30.0f
+
+// increase speed by this many rpm every second
+#define TREE_FALL_CHANGE_SPEED_PER_SECOND 60.0f
+
+#define STUMP_HEIGHT (50.0f) // the height of just the stump part of the tree sprite to the bottom of the sprite
+
+struct ZZFXSound gTreeHitSFX = {1.0,0.05,63.14,0.049,0.086,0.203,2,1.0,3.678,-4.693,0.0,0.0,0.261,0.185,0.0,0.699,0.0,0.388,0.108,0.087,0.0};
+struct ZZFXSound gTreeFallSFX = {1.0,0.05,590.6,0.005,0.28,0.257,1,1.0,0.0,0.0,-196.86,0.159,0.165,0.12,15.624050000000004,0.168,0.0,0.635,0.227,0.421,0.0};
 
 enum WfTreeState
 {
     WfStanding,
     WfFalling,
     WfFallen,
+    WfStump,
 };
 
 struct WfTreeEntityData
@@ -24,6 +42,8 @@ struct WfTreeEntityData
     vec2 groundContactPoint;
     float health;
     enum WfTreeState state;
+    float treeFallDirection;
+    float treeFallRate;
 };
 
 static OBJECT_POOL(struct WfTreeEntityData) gTreeDataObjectPool;
@@ -56,10 +76,35 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
             switch (pDamageMessage->type)
             {
             case WfAxeDamage:
+                Au_PlayZzFX(&gTreeHitSFX);
                 pData->health -= pDamageMessage->damage;
-                if(pData->health < 0)
+                if(pData->health <= 0)
                 {
+                    if(pSender->type == WfEntityType_Player)
+                    {
+                        vec2 playerGroundPos, treeGroundContactPoint;
+                        WfPlayerGetGroundContactPoint(pSender, playerGroundPos);
+                        WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
+                        if(playerGroundPos[0] > treeGroundContactPoint[0])
+                        {
+                            // player to the right of the tree
+                            pData->treeFallDirection = -1.0f;
+                        }
+                        else
+                        {
+                            pData->treeFallDirection = 1.0f;
+                        }
+                    }
+                    else
+                    {
+                        pData->treeFallDirection = 1.0f;
+                    }
                     pData->health = 0;
+                    if(pData->state == WfStanding)
+                    {
+                        Au_PlayZzFX(&gTreeFallSFX);
+                        pData->state = WfFalling;
+                    }
                 }
                 Log_Info("Tree with ID %i took %.2f %s damage from entity %i, %.2f health remaining", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity, pData->health);
                 break;
@@ -75,14 +120,36 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
 
 void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
-    #define TREE_FALL_RPM 15.0f
+    struct GameLayer2DData* pGameLayerData = pLayer->userData;
     struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
     switch (pData->state)
     {
     case WfStanding:
         break;
     case WfFalling:
-        //pEnt->tr
+        {
+            float treeFallRPS = pData->treeFallRate / 60.0f;
+            pEnt->components[TOP_SPRITE_INDEX].data.sprite.transform.rotation += (treeFallRPS * deltaT) * pData->treeFallDirection;
+            pEnt->components[TRUNK_SPRITE_INDEX].data.sprite.transform.rotation += (treeFallRPS * deltaT) * pData->treeFallDirection;
+            bool bFinished = false;
+            if(pData->treeFallDirection <= 0.0f)
+            {
+                bFinished = pEnt->components[TOP_SPRITE_INDEX].data.sprite.transform.rotation < -DEGREES_TO_RADIANS(90.0f);
+            }
+            else
+            {
+                bFinished = pEnt->components[TOP_SPRITE_INDEX].data.sprite.transform.rotation > DEGREES_TO_RADIANS(90.0f);
+            }
+            if(bFinished)
+            {
+                pEnt->components[TOP_SPRITE_INDEX].data.sprite.bDraw = false;
+                pEnt->components[TRUNK_SPRITE_INDEX].data.sprite.bDraw = false;
+                pData->state = WfStump;
+            }
+            pData->treeFallRate += TREE_FALL_CHANGE_SPEED_PER_SECOND * deltaT;
+        }
+        break;
+    case WfStump:
         break;
     default:
         break;
@@ -155,6 +222,8 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pComponent2->data.sprite.transform.position[1] = trunkOffsetPx;
     pComponent2->data.sprite.transform.scale[0] = 1.0f;
     pComponent2->data.sprite.transform.scale[1] = 1.0f;
+    pComponent2->data.sprite.transform.rotationPointRelative[0] = (float)At_GetSprite(trunkSprite, pGameLayerData->hAtlas)->widthPx / 2.0f;
+    pComponent2->data.sprite.transform.rotationPointRelative[1] = (float)At_GetSprite(trunkSprite, pGameLayerData->hAtlas)->heightPx - 46.0f;
     pComponent2->data.sprite.bDraw = true;
 
     pComponent3->type = ETE_Sprite;
@@ -162,6 +231,8 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     memset(&pComponent3->data.sprite.transform, 0, sizeof(struct Transform2D));
     pComponent3->data.sprite.transform.scale[0] = 1.0f;
     pComponent3->data.sprite.transform.scale[1] = 1.0f;
+    pComponent3->data.sprite.transform.rotationPointRelative[0] = (float)At_GetSprite(topSprite, pGameLayerData->hAtlas)->widthPx / 2.0f;
+    pComponent3->data.sprite.transform.rotationPointRelative[1] = (float)At_GetSprite(topSprite, pGameLayerData->hAtlas)->heightPx + (trunkOffsetPx - 46.0f);
     pComponent3->data.sprite.bDraw = true;
 
     pComponent4->type = ETE_StaticCollider;
@@ -177,10 +248,14 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
 
     HGeneric hTreeData = NULL_HANDLE;
     gTreeDataObjectPool = GetObjectPoolIndex(gTreeDataObjectPool, &hTreeData);
-    gTreeDataObjectPool[hTreeData].def = *def;
-    gTreeDataObjectPool[hTreeData].groundContactPoint[0] = x;
-    gTreeDataObjectPool[hTreeData].groundContactPoint[1] = y;
-    gTreeDataObjectPool[hTreeData].health = 100.0f;
+    struct WfTreeEntityData* pTreeData = &gTreeDataObjectPool[hTreeData];
+    pTreeData->def = *def;
+    pTreeData->groundContactPoint[0] = x;
+    pTreeData->groundContactPoint[1] = y;
+    pTreeData->health = 100.0f;
+    pTreeData->state = WfStanding;
+    pTreeData->treeFallRate = TREE_FALL_SPEED;
+
     pEnt->user.hData = hTreeData;
     Et2D_PopulateCommonHandlers(pEnt);
     pEnt->onDestroy = &TreeOnDestroy;

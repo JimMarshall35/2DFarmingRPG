@@ -19,7 +19,7 @@
 #include "main.h"
 #include "cwalk.h"
 
-static void WfPublishInventoryChangedEvent()
+void WfPublishInventoryChangedEvent()
 {
     
     struct WfInventory* pInv = WfGetInventory();

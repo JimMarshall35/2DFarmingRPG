@@ -5,5 +5,6 @@ struct DrawContext;
 typedef struct DrawContext DrawContext;
 
 void WfPushGameLayer(DrawContext* pDC, const char* lvlFilePath);
+void WfPublishInventoryChangedEvent();
 
 #endif

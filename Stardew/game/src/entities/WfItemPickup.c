@@ -10,6 +10,7 @@
 #include "Log.h"
 #include "WfPlayer.h"
 #include "WfPersistantGameData.h"
+#include "WfGameLayer.h"
 
 struct WfItemPickupEntData
 {
@@ -47,6 +48,10 @@ void WfOnPickupSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D h
         struct WfInventory* pInv = WfGetPlayerInventory(pPlayerEntData);
         WfAddToInventory(pInv, pEntData->def.itemID, pEntData->def.itemQuantity);
         Et2D_DestroyEntity(pLayer, &pLayerData->entities, thisSensorEntity);
+        if(!pPlayerEntData->bNetworkControlled)
+        {
+            WfPublishInventoryChangedEvent();
+        }
     }
 }
 

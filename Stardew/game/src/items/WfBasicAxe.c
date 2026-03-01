@@ -166,7 +166,8 @@ static struct WfItemDef gDef =
     .onUseItem = &OnUseItem,
     .onTryEquip = &TryEquip,
     .onUseAnimation = WfSlashAnim,
-    .bCanUseItem = true
+    .bCanUseItem = true,
+    .pickupSpriteName = "basic-axe",
 };
 
 void WfAddBasicAxeDef()

@@ -4,6 +4,9 @@
 #include "BinarySerializer.h"
 #include "AssertLib.h"
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 
 static struct WfPersistantData gPersistantData;
 
@@ -156,4 +159,51 @@ struct WfInventory* WfGetNetworkPlayersInventory(int player)
 struct WfPlayerPreferences* WfGetPreferences()
 {
     return &gPersistantData.preferences;
+}
+
+/// @brief search for existing stacks of the item
+/// @param pInv 
+/// @param item 
+/// @return the indices in the inventory of stacks or empty it none
+static VECTOR(int) SearchForItemStackIndices(struct WfInventory* pInv, int item, VECTOR(int) inIndices)
+{
+    inIndices = VectorClear(inIndices);
+    for(int i=0; i<VectorSize(pInv->pItems); i++)
+    {
+        if(pInv->pItems[i].itemIndex == item)
+        {
+            inIndices = VectorPush(inIndices, &i);
+        }
+    }
+    return inIndices;
+}
+
+bool WfAddToInventory(struct WfInventory* pInv, int item, int quantity)
+{
+    static VECTOR(int) sStackIndices = NULL;
+    if(sStackIndices == NULL)
+    {
+        sStackIndices = NEW_VECTOR(int);
+        sStackIndices = VectorResize(sStackIndices, 8);
+    }
+    sStackIndices = SearchForItemStackIndices(pInv, item, sStackIndices);
+    if(VectorSize(sStackIndices) > 0)
+    {
+        /* if there's an existing stack add to that */
+        pInv->pItems[sStackIndices[0]].quantity += quantity;
+    }
+    else
+    {
+        /* else add to an empty space;*/
+        for(int i=0; i<VectorSize(pInv->pItems); i++)
+        {
+            if(pInv->pItems[i].itemIndex == -1)
+            {
+                pInv->pItems[i].itemIndex = item;
+                pInv->pItems[i].quantity = quantity;
+                return true;
+            }
+        }
+    }
+    return false;
 }

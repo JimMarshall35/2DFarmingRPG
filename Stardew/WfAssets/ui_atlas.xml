@@ -25,4 +25,5 @@
 	<sprite source="./WfAssets/Image/LPC Submissions/Extensions/items1.png" top="256" left="128" width="32" height="32" name="basic-hoe"/>
 	<sprite source="./WfAssets/Image/LPC Submissions/Extensions/items1.png" top="224" left="384" width="32" height="32" name="basic-fishing-rod"/>
 	<sprite source="./WfAssets/Image/LPC Submissions/Extensions/items1.png" top="32"  left="128" width="32" height="32" name="basic-bow"/>
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png"   top="479" left="543" width="32" height="32" name="wood"/>
 </atlas>

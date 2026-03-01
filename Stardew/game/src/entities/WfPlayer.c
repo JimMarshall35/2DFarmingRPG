@@ -426,7 +426,7 @@ static void OnUpdatePlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLa
 }
 
 
-static struct WfInventory* WfGetPlayerInventory(struct WfPlayerEntData* pEntData)
+struct WfInventory* WfGetPlayerInventory(struct WfPlayerEntData* pEntData)
 {
     if(pEntData->bNetworkControlled)
     {

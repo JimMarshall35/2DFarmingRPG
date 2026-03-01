@@ -68,7 +68,8 @@ static struct WfItemDef gDef =
     .onUseItem = &OnUseItem,
     .onTryEquip = &TryEquip,
     .onUseAnimation = WfThrustAnim,
-    .bCanUseItem = true
+    .bCanUseItem = true,
+    .pickupSpriteName = "basic-hoe",
 };
 
 void WfAddBasicHoeDef()

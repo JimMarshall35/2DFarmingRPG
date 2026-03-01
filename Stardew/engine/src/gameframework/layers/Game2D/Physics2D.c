@@ -97,27 +97,28 @@ void Ph_PhysicsWorldDoCollisionEvents(struct GameFrameworkLayer* pLayer)
                 pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapBegin(pLayer, hVisitor, pSensorEnt->thisEntity);
         }
     }
-    for(int i=0; i < sensorEvents.endCount; i++)
-    {
-        b2SensorEndTouchEvent* beginTouch = sensorEvents.endEvents + i;
-        HEntity2D hVisitor, hSensor;
-        u16 visitorComponentIndex, sensorComponentIndex;
-        u16 visitorComponentType, sensorComponentType;
-        Ph_UnpackShapeUserData(b2Shape_GetUserData(beginTouch->visitorShapeId), &hVisitor, &visitorComponentIndex, &visitorComponentType);
-        Ph_UnpackShapeUserData(b2Shape_GetUserData(beginTouch->sensorShapeId), &hSensor, &sensorComponentIndex, &sensorComponentType);
-        struct Entity2D* pSensorEnt = Et2D_GetEntity(pEntCollection, hSensor);
+    // COMMENTED OUT UNTIL ACTUALLY NEEDED: THIS BREAKS WHEN AN ENTITY IS DELETED IN THE BEGIN EVENT
+    // for(int i=0; i < sensorEvents.endCount; i++)
+    // {
+    //     b2SensorEndTouchEvent* beginTouch = sensorEvents.endEvents + i;
+    //     HEntity2D hVisitor, hSensor;
+    //     u16 visitorComponentIndex, sensorComponentIndex;
+    //     u16 visitorComponentType, sensorComponentType;
+    //     Ph_UnpackShapeUserData(b2Shape_GetUserData(beginTouch->visitorShapeId), &hVisitor, &visitorComponentIndex, &visitorComponentType);
+    //     Ph_UnpackShapeUserData(b2Shape_GetUserData(beginTouch->sensorShapeId), &hSensor, &sensorComponentIndex, &sensorComponentType);
+    //     struct Entity2D* pSensorEnt = Et2D_GetEntity(pEntCollection, hSensor);
         
-        if(sensorComponentType == b2_dynamicBody)
-        {
-            if(pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd)
-                pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
-        }
-        else if(sensorComponentType == b2_staticBody)
-        {
-            if(pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd)
-                pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
-        }
-    }
+    //     if(sensorComponentType == b2_dynamicBody)
+    //     {
+    //         if(pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd)
+    //             pSensorEnt->components[sensorComponentIndex].data.dynamicCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
+    //     }
+    //     else if(sensorComponentType == b2_staticBody)
+    //     {
+    //         if(pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd)
+    //             pSensorEnt->components[sensorComponentIndex].data.staticCollider.onSensorOverlapEnd(pLayer, hVisitor, pSensorEnt->thisEntity);
+    //     }
+    // }
 }
 
 float Ph_GetPixelsPerMeter(HPhysicsWorld world)

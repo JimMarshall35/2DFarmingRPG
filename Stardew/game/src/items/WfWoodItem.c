@@ -1,7 +1,6 @@
-#include "WfBasicFishingRod.h"
+#include "WfWoodItem.h"
 #include "WfItem.h"
 #include <stdlib.h>
-
 
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
@@ -11,6 +10,11 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
 static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
+}
+
+static bool ProcessAxeUsage(struct SDTimer* pTimer)
+{
+    return true; /* remove timer */
 }
 
 static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
@@ -23,19 +27,20 @@ static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer
     return false;
 }
 
-
 static struct WfItemDef gDef = 
 {
-    .UISpriteName = "basic-fishing-rod",
+    .UISpriteName = "wood",
     .pUserData = NULL,
     .onMakeCurrent = &OnMakeCurrentItem,
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
     .onTryEquip = &TryEquip,
-    .pickupSpriteName = "basic-fishing-rod",
+    .onUseAnimation = WfNoActionAnim,
+    .bCanUseItem = true,
+    .pickupSpriteName = "wood"
 };
 
-void WfAddBasicFishingRodDef()
+void WfAddWoodItemDef()
 {
     WfAddItemDef(&gDef);
 }

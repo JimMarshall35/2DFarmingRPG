@@ -42,9 +42,6 @@ static void AddTreeAtRandomPos(float xMin, float xMax, float yMin, float yMax, s
 void WfWoodedAreaEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx)
 {
     struct GameLayer2DData* pLayerData = pLayer->userData;
-    //struct WfTreeSprites spritesPerSeason[NumSeasons];
-    //WfGetTreeSprites(spritesPerSeason, pLayerData->hAtlas);
-
 
     /* spawn trees here */
     float pixelsPerMeter = Ph_GetPixelsPerMeter(pLayerData->hPhysicsWorld);

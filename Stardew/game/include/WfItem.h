@@ -18,6 +18,7 @@ enum WfItemIndices
     WfBasicFishingRod,
     WfBasicHoe,
     WfBasicBow,
+    WfWoodItem,
     WfNumBuiltinItems
 };
 
@@ -48,6 +49,7 @@ struct WfItemDef
     TryEquipFn onTryEquip;
     enum WfActionAnimation onUseAnimation;
     bool bCanUseItem;
+    const char* pickupSpriteName;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

@@ -47,7 +47,8 @@ static struct WfItemDef gDef =
     .onMakeCurrent = &OnMakeCurrentItem,
     .onStopBeingCurrent = &OnStopBeingCurrentItem,
     .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip
+    .onTryEquip = &TryEquip,
+    .pickupSpriteName = "basic-sword",
 };
 
 void WfAddBasicSwordDef()

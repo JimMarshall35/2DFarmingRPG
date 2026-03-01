@@ -13,6 +13,8 @@
 #include "GameFramework.h"
 #include "Maths.h"
 #include "ZzFX.h"
+#include "WfItemPickup.h"
+#include "WfItem.h"
 
 #define STUMP_SPITE_INDEX  0
 #define TRUNK_SPRITE_INDEX 1
@@ -108,8 +110,8 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
                             }
                             pData->health = 0;
                     
-                                Au_PlayZzFX(&gTreeFallSFX);
-                                pData->state = WfFalling;
+                            Au_PlayZzFX(&gTreeFallSFX);
+                            pData->state = WfFalling;
                         }
                         break;
                     case WfStump:
@@ -160,6 +162,25 @@ void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float 
                 pEnt->components[TRUNK_SPRITE_INDEX].data.sprite.bDraw = false;
                 pData->state = WfStump;
                 pData->health = STUMP_HEALTH;
+
+                /* spawn wood pickups */
+                struct WfItemPickupDef def = 
+                {
+                    .itemID = WfWoodItem,
+                    .itemQuantity = 1
+                };
+                vec2 base;
+                WfTreeGetGroundContactPoint(pEnt, base);
+                vec2 addition = {
+                    pData->treeFallDirection * 40.0f,
+                    0
+                };
+                glm_vec2_add(base, addition, base);
+                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
+                glm_vec2_add(base, addition, base);
+                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
+                glm_vec2_add(base, addition, base);
+                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
             }
             pData->treeFallRate += TREE_FALL_CHANGE_SPEED_PER_SECOND * deltaT;
         }

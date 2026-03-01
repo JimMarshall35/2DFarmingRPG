@@ -18,6 +18,7 @@ add_executable( WarFarmer
     src/entities/WfRock.c
     src/entities/WfTree.c
     src/entities/WfWoodedArea.c
+    src/entities/WfItemPickup.c
     src/nonEntityGameData/WfPersistantGameData.c
     src/nonEntityGameData/WfItem.c
     src/items/WfItemHelpers.c
@@ -28,6 +29,7 @@ add_executable( WarFarmer
     src/items/WfBasicPickaxe.c
     src/items/WfBasicScythe.c
     src/items/WfBasicSword.c
+    src/items/WfWoodItem.c
     src/ui/WfUI.c
     src/WfVersion.c
 )

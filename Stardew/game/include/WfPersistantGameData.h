@@ -6,6 +6,7 @@
 #define WF_INVENTORY_ROW_SIZE 12
 #define WF_INVENTORY_SIZE_INITIAL WF_INVENTORY_ROW_SIZE
 
+#include <stdbool.h>
 
 struct BinarySerializer;
 struct WfPersistantData;
@@ -59,5 +60,7 @@ struct WfPersistantData* WfGetLocalPlayerPersistantGameData();
 struct WfPersistantData* WfGetNetworkPlayerPersistantGameData(int playerNum);
 
 void WfPersistantDataInit();
+
+bool WfAddToInventory(struct WfInventory* pInv, int item, int quantity);
 
 #endif

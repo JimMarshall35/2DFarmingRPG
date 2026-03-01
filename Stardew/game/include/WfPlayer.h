@@ -11,6 +11,7 @@ struct Entity2D;
 struct Component2D;
 struct GameLayer2DData;
 struct GameFrameworkLayer;
+struct WfInventory;
 
 #define NUM_ANIMATIONS NumDirections
 
@@ -147,5 +148,7 @@ struct Component2D* WfGetPlayerAnimationLayerComponent(struct Entity2D* pPlayer,
 void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt);
 
 void WfPlayerGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPos);
+
+struct WfInventory* WfGetPlayerInventory(struct WfPlayerEntData* pEntData);
 
 #endif

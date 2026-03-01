@@ -36,6 +36,7 @@ void WfAddBuiltinItems()
     WfAddBasicFishingRodDef();
     WfAddBasicHoeDef();
     WfAddBasicBowDef();
+    WfAddWoodItemDef();
 }
 
 int l_GetItemUISpriteName(lua_State* L)

@@ -7,6 +7,7 @@
 #include "WfItem.h"
 #include "WfPersistantGameData.h"
 #include "WfEntityMessages.h"
+#include "WfItemPickup.h"
 
 void WfInit()
 {
@@ -18,5 +19,6 @@ void WfInit()
     WfInitItems();
     WfPersistantDataInit();
     WfInitEntityMessages();
+    WfInitItemPickup();
 }
 

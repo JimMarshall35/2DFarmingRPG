@@ -82,4 +82,6 @@ void Ph_UnpackShapeUserData(void* pUserData, HEntity2D* pOutEnt, u16* pOutCompIn
 
 u64 Ph_PackShapeUserData(HEntity2D hEnt, u16 componentIndex, u16 bodyType);
 
+void Ph_DestroyBody(H2DBody body);
+
 #endif

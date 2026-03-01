@@ -184,7 +184,6 @@ static H2DBody GetBody(HPhysicsWorld world, struct PhysicsShape2D* pShape, struc
             bodyDef.type = type;
             bodyDef.position = (b2Vec2){physicsPos[0], physicsPos[1]};
             b2BodyId id = b2CreateBody(gWorldDefPool[world].id, &bodyDef);
-
             g2DPhysBodyPool[hStatic].bodyID = id;
             g2DPhysBodyPool[hStatic].shapedef = b2DefaultShapeDef();
             u64 ud = Ph_PackShapeUserData(entity, entityComponentIndex, (u16)type);
@@ -289,4 +288,10 @@ void Ph_SetDynamicBodyPosition(H2DBody hBody, vec2 inPos)
         .y = inPos[1]
     };
     b2Body_SetTransform(g2DPhysBodyPool[hBody].bodyID, b2Vec2, rot);
+}
+
+void Ph_DestroyBody(H2DBody body)
+{
+    b2DestroyBody(g2DPhysBodyPool[body].bodyID);
+    FreeObjectPoolIndex(g2DPhysBodyPool, body);
 }

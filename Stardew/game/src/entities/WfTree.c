@@ -18,10 +18,12 @@
 #define TRUNK_SPRITE_INDEX 1
 #define TOP_SPRITE_INDEX   2
 
-#define TREE_FALL_SPEED 30.0f
+#define TREE_FALL_SPEED 60.0f
 
 // increase speed by this many rpm every second
-#define TREE_FALL_CHANGE_SPEED_PER_SECOND 60.0f
+#define TREE_FALL_CHANGE_SPEED_PER_SECOND 90.0f
+
+#define STUMP_HEALTH 30.0f;
 
 #define STUMP_HEIGHT (50.0f) // the height of just the stump part of the tree sprite to the bottom of the sprite
 
@@ -67,6 +69,7 @@ static float TreeGetPreDrawSortValue(struct Entity2D* pEnt)
 
 static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
 {
+    struct GameLayer2DData* pGameLayerData = pLayer->userData;
     struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
     switch(pMsg->type)
     {
@@ -80,31 +83,42 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
                 pData->health -= pDamageMessage->damage;
                 if(pData->health <= 0)
                 {
-                    if(pSender->type == WfEntityType_Player)
+                    switch(pData->state)
                     {
-                        vec2 playerGroundPos, treeGroundContactPoint;
-                        WfPlayerGetGroundContactPoint(pSender, playerGroundPos);
-                        WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
-                        if(playerGroundPos[0] > treeGroundContactPoint[0])
+                    case WfStanding:
                         {
-                            // player to the right of the tree
-                            pData->treeFallDirection = -1.0f;
+                            if(pSender->type == WfEntityType_Player)
+                            {
+                                vec2 playerGroundPos, treeGroundContactPoint;
+                                WfPlayerGetGroundContactPoint(pSender, playerGroundPos);
+                                WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
+                                if(playerGroundPos[0] > treeGroundContactPoint[0])
+                                {
+                                    // player to the right of the tree
+                                    pData->treeFallDirection = -1.0f;
+                                }
+                                else
+                                {
+                                    pData->treeFallDirection = 1.0f;
+                                }
+                            }
+                            else
+                            {
+                                pData->treeFallDirection = 1.0f;
+                            }
+                            pData->health = 0;
+                    
+                                Au_PlayZzFX(&gTreeFallSFX);
+                                pData->state = WfFalling;
                         }
-                        else
+                        break;
+                    case WfStump:
                         {
-                            pData->treeFallDirection = 1.0f;
+                            Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
                         }
+                        break;
                     }
-                    else
-                    {
-                        pData->treeFallDirection = 1.0f;
-                    }
-                    pData->health = 0;
-                    if(pData->state == WfStanding)
-                    {
-                        Au_PlayZzFX(&gTreeFallSFX);
-                        pData->state = WfFalling;
-                    }
+                    
                 }
                 Log_Info("Tree with ID %i took %.2f %s damage from entity %i, %.2f health remaining", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity, pData->health);
                 break;
@@ -145,6 +159,7 @@ void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float 
                 pEnt->components[TOP_SPRITE_INDEX].data.sprite.bDraw = false;
                 pEnt->components[TRUNK_SPRITE_INDEX].data.sprite.bDraw = false;
                 pData->state = WfStump;
+                pData->health = STUMP_HEALTH;
             }
             pData->treeFallRate += TREE_FALL_CHANGE_SPEED_PER_SECOND * deltaT;
         }

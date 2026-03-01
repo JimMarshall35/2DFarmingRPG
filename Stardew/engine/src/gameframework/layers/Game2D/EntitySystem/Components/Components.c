@@ -108,8 +108,10 @@ void Co_DestroyComponents(struct Entity2D* entity)
         case ETE_Sprite:
             break;
         case ETE_StaticCollider:
+            Ph_DestroyBody(entity->components[i].data.staticCollider.id);
             break;
         case ETE_DynamicCollider:
+            Ph_DestroyBody(entity->components[i].data.dynamicCollider.id);
             break;
         case ETE_TextSprite:
             break;

@@ -193,7 +193,9 @@ HEntity2DQuadtreeEntityRef Entity2DQuadTree_Insert(struct Entity2DCollection* pC
 void Entity2DQuadTree_Remove(HEntity2DQuadtreeNode quadTree, HEntity2DQuadtreeEntityRef ent)
 {
     struct Entity2DQuadtreeNode* pNode = &gNodePool[gEntityRefPool[ent].hParentNode];
-
+    struct Entity2DQuadTreeEntityRef* pEntRef = &gEntityRefPool[ent];
+    pEntRef->hEntity = NULL_HANDLE;
+    return; // hack
     pNode->numEntities--;
 
     if(pNode->entityListHead == ent)
@@ -203,19 +205,18 @@ void Entity2DQuadTree_Remove(HEntity2DQuadtreeNode quadTree, HEntity2DQuadtreeEn
 
     if(pNode->entityListTail == ent)
     {
-        pNode->entityListTail = gEntityRefPool[ent].hPrevSibling;
+        pNode->entityListTail = pEntRef->hPrevSibling;
+    }
+    if(pEntRef->hPrevSibling != NULL_HANDLE)
+    {
+        struct Entity2DQuadTreeEntityRef* pPrev = &gEntityRefPool[pEntRef->hPrevSibling];
+        pPrev->hNextSibling = pEntRef->hNextSibling;
     }
 
-    if(gEntityRefPool[ent].hPrevSibling != NULL_HANDLE)
+    if(pEntRef->hNextSibling)
     {
-        struct Entity2DQuadTreeEntityRef* pPrev = &gEntityRefPool[gEntityRefPool[ent].hPrevSibling];
-        pPrev->hNextSibling = gEntityRefPool[ent].hNextSibling;
-    }
-
-    if(gEntityRefPool[ent].hNextSibling)
-    {
-        struct Entity2DQuadTreeEntityRef* pNext = &gEntityRefPool[gEntityRefPool[ent].hNextSibling];
-        pNext->hPrevSibling = gEntityRefPool[ent].hPrevSibling;
+        struct Entity2DQuadTreeEntityRef* pNext = &gEntityRefPool[pEntRef->hNextSibling];
+        pNext->hPrevSibling = pEntRef->hPrevSibling;
     }
 
     FreeObjectPoolIndex(gEntityRefPool, ent);
@@ -235,6 +236,11 @@ VECTOR(HEntity2D) Entity2DQuadTree_Query(HEntity2DQuadtreeNode quadTree, vec2 re
         while(ref != NULL_HANDLE)
         {
             struct Entity2DQuadTreeEntityRef* pRef = &gEntityRefPool[ref];
+            if(pRef->hEntity == NULL_HANDLE)
+            {
+                ref = pRef->hNextSibling;
+                continue;
+            }
             struct Entity2D* pEnt = Et2D_GetEntity(pCollection, pRef->hEntity);
             vec2 etl, ebr;
             pEnt->getBB(pEnt, pLayer, etl, ebr);

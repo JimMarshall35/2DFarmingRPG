@@ -92,6 +92,10 @@ void Entity2DOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer)
     {
         DynL_RemoveItem(&pData->entities.dynamicEntities, pEnt->hDynamicListRef);
     }
+    if(pEnt->bKeepInQuadtree)
+    {
+        Entity2DQuadTree_Remove(pData->hEntitiesQuadTree, pEnt->hQuadTreeRef);
+    }
 }
 
 

@@ -11,6 +11,7 @@
 #include "WfPlayer.h"
 #include "WfPersistantGameData.h"
 #include "WfGameLayer.h"
+#include "Audio.h"
 
 struct WfItemPickupEntData
 {
@@ -47,11 +48,16 @@ void WfOnPickupSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D h
         struct WfPlayerEntData* pPlayerEntData = WfGetPlayerEntData(pOverlappingEnt);
         struct WfInventory* pInv = WfGetPlayerInventory(pPlayerEntData);
         WfAddToInventory(pInv, pEntData->def.itemID, pEntData->def.itemQuantity);
-        Et2D_DestroyEntity(pLayer, &pLayerData->entities, thisSensorEntity);
         if(!pPlayerEntData->bNetworkControlled)
         {
             WfPublishInventoryChangedEvent();
         }
+        const struct WfItemDef* pDef = WfGetItemDef(pEntData->def.itemID);
+        if(pDef->bSoundEffectOnPickup)
+        {
+            Au_PlayZzFX(&pDef->zzfxPickup);
+        }
+        Et2D_DestroyEntity(pLayer, &pLayerData->entities, thisSensorEntity);
     }
 }
 

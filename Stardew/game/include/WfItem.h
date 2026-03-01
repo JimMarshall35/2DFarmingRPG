@@ -3,6 +3,7 @@
 #include "HandleDefs.h"
 #include <stdbool.h>
 #include "WfEnums.h"
+#include "ZzFX.h"
 
 #define UI_SPRITE_DIMS_PXLS 32
 struct Entity2D;
@@ -50,6 +51,8 @@ struct WfItemDef
     enum WfActionAnimation onUseAnimation;
     bool bCanUseItem;
     const char* pickupSpriteName;
+    bool bSoundEffectOnPickup;
+    struct ZZFXSound zzfxPickup;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

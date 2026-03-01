@@ -69,6 +69,17 @@ static float TreeGetPreDrawSortValue(struct Entity2D* pEnt)
     return pData->groundContactPoint[1];
 }
 
+static void WfSpawnWoodAt(vec2 pos, int quant, struct GameLayer2DData* pGameLayerData)
+{
+    /* spawn wood pickups */
+    struct WfItemPickupDef def = 
+    {
+        .itemID = WfWoodItem,
+        .itemQuantity = 1
+    };
+    WfAddPickupBasedAt(pos[0], pos[1], &def, pGameLayerData);
+}
+
 static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
 {
     struct GameLayer2DData* pGameLayerData = pLayer->userData;
@@ -116,6 +127,11 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
                         break;
                     case WfStump:
                         {
+                            vec2 treeGroundContactPoint;
+                            vec2 addition = {pData->treeFallDirection * 5.0f};
+                            WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
+                            glm_vec2_add(addition, treeGroundContactPoint, treeGroundContactPoint);
+                            WfSpawnWoodAt(treeGroundContactPoint, 2, pGameLayerData);
                             Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
                         }
                         break;
@@ -163,24 +179,19 @@ void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float 
                 pData->state = WfStump;
                 pData->health = STUMP_HEALTH;
 
-                /* spawn wood pickups */
-                struct WfItemPickupDef def = 
-                {
-                    .itemID = WfWoodItem,
-                    .itemQuantity = 1
-                };
+                
                 vec2 base;
                 WfTreeGetGroundContactPoint(pEnt, base);
                 vec2 addition = {
                     pData->treeFallDirection * 40.0f,
-                    0
+                    0 /*TODO: add +/- a random amount to y */
                 };
                 glm_vec2_add(base, addition, base);
-                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
+                WfSpawnWoodAt(base, 1, pGameLayerData);
                 glm_vec2_add(base, addition, base);
-                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
+                WfSpawnWoodAt(base, 1, pGameLayerData);
                 glm_vec2_add(base, addition, base);
-                WfAddPickupBasedAt(base[0], base[1], &def, pGameLayerData);
+                WfSpawnWoodAt(base, 1, pGameLayerData);
             }
             pData->treeFallRate += TREE_FALL_CHANGE_SPEED_PER_SECOND * deltaT;
         }

@@ -24,6 +24,7 @@ System supplied:
 - lua/5.4.7
 - glfw/3.4
 - gtest/1.16.0 (for unit test project only)
+- openal/1.22.2
 
 Future work will be to make the linux build use conan for consistency, I don't mind having the vendored libraries
 

@@ -23,7 +23,7 @@ System supplied:
 - freetype/2.13.3
 - lua/5.4.7
 - glfw/3.4
-- gtest/1.16.0 (for unit test project only)
+- gtest/1.16.0 (optional for unit test project only, you can pass -DNoGTest=ON to cmake to remove this dependency and not build the test project)
 - openal/1.22.2
 
 Future work will be to make the linux build use conan for consistency, I don't mind having the vendored libraries

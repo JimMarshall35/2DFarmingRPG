@@ -40,6 +40,7 @@ nav:
     - "Testing": Testing.md
     - "UI": UI.md
     - "Build": Build.md
+    - "Audio": Audio.md
   - API:
       - Engine:
           - 'Links': 'StardewEngine/links.md'

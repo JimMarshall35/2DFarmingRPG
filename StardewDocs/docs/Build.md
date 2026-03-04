@@ -21,11 +21,18 @@ Vendored:
 - cJSON
 - glad
 - CGLM
-- netcode
+- netcode (with vendored sodium library)
 - stb image
 - cwalk
+- Zzfx-c (my project)
 
-You can find these in the the repo at `engine/lib`, and for smaller libraries, `engine/src/vendor`. netcode is used by both the engine and matchmaking server (which uses no other part of the engine) so is in a separate directory and not the `engine/lib`. Vendored libraries may have one or two small tweaks, cwalk and netcode do. In the case of cwalk a stock version of the library would break the linux flatpak build.
+You can find these in the the repo at `engine/lib`, and for smaller libraries, `engine/src/vendor`. netcode is used by both the engine and matchmaking server (which uses no other part of the engine) so is in a separate directory and not the `engine/lib`. Vendored libraries may have one or two small tweaks, cwalk and netcode do. In the case of cwalk a stock version of the library would break the linux flatpak build. 
+
+ZzFX-C is included as a git submodule, so remember to do:
+
+`git submodules update --init`
+
+before a local build.
 
 ## Assets
 

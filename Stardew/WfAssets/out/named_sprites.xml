@@ -1,6 +1,10 @@
 <atlas>
     <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png"   top="479" left="543" width="32" height="32" name="wood"/>
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png"   top="480" left="417" width="32" height="32" name="big-wood-pile"/>
     
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png"   top="544" left="960" width="32" height="32" name="rock-1"/>
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png"   top="576" left="960" width="32" height="32" name="rock-2"/>
+
     <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="0" width="96" height="96" name="tree_stump_sum_1" bMinimizeSpace="true"/>
     <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="96" width="96" height="96" name="tree_stump_sum_2" bMinimizeSpace="true"/>
 

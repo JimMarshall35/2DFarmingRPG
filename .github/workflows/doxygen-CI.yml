@@ -19,24 +19,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate .dox files
-        id: gen_dox
-        run: |
-          cd ./Stardew/engine/scripts
-          python3 CreateDoxFiles.py
-
       - name: Build static files
         id: build
         run: |
-          sudo apt-get install graphviz
-          sudo apt-get install doxygen
-          doxygen
+          python3 -m venv ./venv
+          source ./venv/bin activate
+          pip install mkdocs
+          pip install mkdoxy
+          cd StardewDocs
+          mkdocs build
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          path: ./html
+          path: ./StardewDocs/site
 
   # Deployment job
   deploy:

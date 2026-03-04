@@ -36,7 +36,9 @@ static void AddTreeAtRandomPos(float xMin, float xMax, float yMin, float yMax, s
 {
     float xPos = Ra_FloatBetween(xMin, xMax);
     float yPos = Ra_FloatBetween(yMin, yMax);
-    WfAddTreeBasedAt(xPos, yPos, def, pLayerData);
+    xPos = floor(xPos / 32.0f) * 32.0f;
+    yPos = floor(yPos / 32.0f) * 32.0f;
+    WfAddTreeBasedAt(xPos + 16, yPos + 16, def, pLayerData);
 }
 
 void WfWoodedAreaEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx)

@@ -1,0 +1,64 @@
+site_name: Stardew Docs
+
+theme:
+  name: readthedocs
+
+plugins:
+  - search
+  - mkdoxy:
+      projects:
+        StardewEngine: # name of project must be alphanumeric + numbers (without spaces)
+          src-dirs: ../Stardew/engine/src ../Stardew/engine/include # path to source code (support multiple paths separated by space) => INPUT
+          full-doc: True # if you want to generate full documentation
+          doxy-cfg: # standard doxygen configuration (key: value)
+            FILE_PATTERNS: "*.c *.h*" # specify file patterns to filter out
+            RECURSIVE: True # recursive search in source directories
+            OPTIMIZE_OUTPUT_FOR_C: True
+            OPTIMIZE_OUTPUT_JAVA: False
+        StardewGame: # name of project must be alphanumeric + numbers (without spaces)
+          src-dirs: ../Stardew/game # path to source code (support multiple paths separated by space) => INPUT
+          full-doc: True # if you want to generate full documentation
+          doxy-cfg: # standard doxygen configuration (key: value)
+            FILE_PATTERNS: "*.c *.h*" # specify file patterns to filter out
+            RECURSIVE: True # recursive search in source directories
+            OPTIMIZE_OUTPUT_FOR_C: True
+            OPTIMIZE_OUTPUT_JAVA: False
+
+nav:
+  - Home: 'index.md'
+  - Docs:
+    - "Game": Game.md
+    - "Asset Tools": AssetTools.md
+    - "Command Line Args": CommandLineArgs.md
+    - "Coding Style": CodingStyle.md
+    - "Engine Core": EngineCore.md
+    - "Entities": Entities.md
+    - "GameFramework": GameFramework.md
+    - "Input": Input.md
+    - "Networking": Networking.md
+    - "Rendering": Rendering.md
+    - "Testing": Testing.md
+    - "UI": UI.md
+  - API:
+      - Engine:
+          - 'Links': 'StardewEngine/links.md'
+          - 'Structs':
+              - 'Structs List': 'StardewEngine/annotated.md'
+              - 'Structs Index': 'StardewEngine/classes.md'
+              - 'Structs Variables': 'StardewEngine/class_member_variables.md'
+          - 'Functions': 'StardewEngine/functions.md'
+          - 'Variables': 'StardewEngine/variables.md'
+          - 'Macros': 'StardewEngine/macros.md'
+          - 'Files': 'StardewEngine/files.md'
+      - Game:
+          - 'Links': 'StardewGame/links.md'
+          - 'Structs':
+              - 'Structs List': 'StardewGame/annotated.md'
+              - 'Structs Index': 'StardewGame/classes.md'
+              - 'Structs Variables': 'StardewGame/class_member_variables.md'
+          - 'Functions': 'StardewGame/functions.md'
+          - 'Variables': 'StardewGame/variables.md'
+          - 'Macros': 'StardewGame/macros.md'
+          - 'Files': 'StardewGame/files.md'
+
+use_directory_urls: true # (optional) for better links without .html extension

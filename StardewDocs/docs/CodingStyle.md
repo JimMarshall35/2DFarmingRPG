@@ -1,5 +1,3 @@
-# Contributing
-
 ## Coding Style Aesthetics
 
 - opening curly brackets go on a new line

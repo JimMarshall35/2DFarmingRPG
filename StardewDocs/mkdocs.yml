@@ -39,6 +39,7 @@ nav:
     - "Rendering": Rendering.md
     - "Testing": Testing.md
     - "UI": UI.md
+    - "Build": Build.md
   - API:
       - Engine:
           - 'Links': 'StardewEngine/links.md'

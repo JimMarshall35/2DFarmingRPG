@@ -22,6 +22,7 @@ jobs:
       - name: Build static files
         id: build
         run: |
+          sudo apt-get install doxygen
           python3 -m venv ./venv
           source ./venv/bin/activate
           pip install mkdocs

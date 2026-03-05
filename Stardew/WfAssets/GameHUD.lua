@@ -40,8 +40,8 @@ function GetGameHUDViewModel()
                             paddingTop = "0.0",
                             colour = "255,255,255,255",
                             dockPoint = "bottomRight",
-                            paddingBottom = 3,
-                            paddingRight = 3,
+                            paddingBottom = 5,
+                            paddingRight = 5,
                             children = {}
                         }
                     }

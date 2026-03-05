@@ -31,6 +31,7 @@ HWidget UI_NewBlankWidget()
 	pWidget->hPrev = NULL_HWIDGET;
 	pWidget->hParent = NULL_HWIDGET;
 	pWidget->numBindings = 0;
+	pWidget->hThis = widget;
 	pWidget->width.type = WD_Auto;
 	pWidget->height.type = WD_Auto;
 	MakeBlankScriptingCallbacks(&pWidget->scriptCallbacks);
@@ -342,7 +343,8 @@ float UI_ResolveWidthDimPxls(struct UIWidget* pWidget, const struct WidgetDim* d
 	{
 		if(pWidget->hFirstChild != NULL_HANDLE)
 		{
-			struct UIWidget* pChild = UI_GetWidget(pWidget->hFirstChild);
+			// TODO: This should really return the size of pWidget not its first child...
+			struct UIWidget* pChild = UI_GetWidget(pWidget->hThis); // REMEMBER: This used to pass pWidget->hFirstChild to UI_GetWidget!!
 			return pChild->fnGetWidth(pChild, pWidget);
 		}
 	}
@@ -386,7 +388,7 @@ float UI_ResolveHeightDimPxls(struct UIWidget* pWidget, const struct WidgetDim* 
 	{
 		if(pWidget->hFirstChild != NULL_HANDLE)
 		{
-			struct UIWidget* pChild = UI_GetWidget(pWidget->hFirstChild);
+			struct UIWidget* pChild = UI_GetWidget(pWidget->hThis); // REMEMBER: This used to pass pWidget->hFirstChild to UI_GetWidget!!
 			return pChild->fnGetHeight(pChild, pWidget);
 		}
 	}

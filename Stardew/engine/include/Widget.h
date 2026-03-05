@@ -208,6 +208,7 @@ struct UIWidget
 	HWidget hPrev;
 	HWidget hParent;
 	HWidget hFirstChild;
+	HWidget hThis;
 	void* pImplementationData;
 	GetUIWidgetDimensionFn fnGetWidth;
 	GetUIWidgetDimensionFn fnGetHeight;

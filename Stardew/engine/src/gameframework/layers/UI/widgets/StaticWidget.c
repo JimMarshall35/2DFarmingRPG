@@ -7,6 +7,7 @@
 #include "AssertLib.h"
 #include "WidgetVertexOutputHelpers.h"
 #include "DataNode.h"
+#include "RootWidget.h"
 
 
 float StaticWidget_GetWidth(struct StaticWidgetData* pStaticData, struct WidgetPadding* pPadding)
@@ -16,7 +17,7 @@ float StaticWidget_GetWidth(struct StaticWidgetData* pStaticData, struct WidgetP
 	{
 		return 0;
 	}
-	return pAtlasSprite->widthPx * pStaticData->scale.scaleX + pPadding->paddingLeft + pPadding->paddingRight;
+	return pStaticData->scale.scaleX * (pAtlasSprite->widthPx + pPadding->paddingLeft + pPadding->paddingRight);
 }
 
 float StaticWidget_GetHeight(struct StaticWidgetData* pStaticData, struct WidgetPadding* pPadding)
@@ -27,7 +28,7 @@ float StaticWidget_GetHeight(struct StaticWidgetData* pStaticData, struct Widget
 		return 0;
 	}
 
-	return pAtlasSprite->heightPx * pStaticData->scale.scaleY + pPadding->paddingTop + pPadding->paddingBottom;
+	return  pStaticData->scale.scaleY * (pAtlasSprite->heightPx + pPadding->paddingTop + pPadding->paddingBottom);
 }
 
 void StaticWidget_Destroy(struct StaticWidgetData* pStaticData)
@@ -99,8 +100,7 @@ static float GetHeight(struct UIWidget* pWidget, struct UIWidget* pParent)
 
 static void LayoutChildren(struct UIWidget* pWidget, struct UIWidget* pParent)
 {
-	// shouldnt really have children
-	assert(pWidget->hFirstChild == NULL_HWIDGET);
+	RootWidget_LayoutChildren(pWidget, pParent, 0, 0);
 }
 
 static void OnDestroy(struct UIWidget* pWidget)
@@ -137,6 +137,10 @@ static void MakeWidgetIntoStatic(HWidget hWidget, struct DataNode* pXMLNode, str
 	pWidgetData->scale.scaleX = 1.0f;
 	pWidgetData->scale.scaleY = 1.0f;
 	StaticWidget_MakeFromXML(pWidgetData, pXMLNode, pUILayerData);
+
+	// TODO: this is a bit of a hack, it should be WD_Auto and WD_Auto should return the size of THAT widget not its child
+	pWidget->width.type = WD_Auto;
+	pWidget->height.type = WD_Auto;
 }
 
 HWidget StaticWidgetNew(HWidget hParent, struct DataNode* pXMLNode, struct XMLUIData* pUILayerData)

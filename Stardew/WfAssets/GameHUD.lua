@@ -29,6 +29,23 @@ function GetGameHUDViewModel()
                 if self._selectedItemIndex == index then
                     backgroundBoxSpriteName = "fantasy_9Panel_selected"
                 end
+                local itemQuantity = {}
+                if item.quantity > 1 then
+                    itemQuantity = 
+                    {
+                        {
+                            type = "text",
+                            content = tostring(item.quantity),
+                            paddingLeft = "0.0",
+                            paddingTop = "0.0",
+                            colour = "255,255,255,255",
+                            dockPoint = "bottomRight",
+                            paddingBottom = 3,
+                            paddingRight = 3,
+                            children = {}
+                        }
+                    }
+                end
                 table.insert(self.widgetChildren, 
                 {
                     type = "backgroundbox",
@@ -36,20 +53,20 @@ function GetGameHUDViewModel()
                     scaleX="1.2,",
                     scaleY="1.2",
                     paddingBottom="32",
-                    paddingLeft="5",
-                    paddingRight="5",
+                    paddingLeft = "5",
+                    paddingRight = "5",
                     children = {
                         {
                             type = "static",
                             content = content,
                             paddingLeft = 5.0,
-                            paddingTop = 10.0,
+                            paddingTop = 5.0,
                             paddingRight = 5.0,
-                            paddingBottom = 10.0,
+                            paddingBottom = 5.0,
                             scaleX="1.2",
                             scaleY="1.2",
                             sprite = spriteName,
-                            children = {}
+                            children = itemQuantity
                         }
                     }
                 }

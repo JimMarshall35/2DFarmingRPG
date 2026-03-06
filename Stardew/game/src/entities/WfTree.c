@@ -15,6 +15,8 @@
 #include "ZzFX.h"
 #include "WfItemPickup.h"
 #include "WfItem.h"
+#include "WfPlayer.h"
+#include "Audio.h"
 
 #define STUMP_SPITE_INDEX  0
 #define TRUNK_SPRITE_INDEX 1

@@ -13,6 +13,7 @@
 #include "WfBasicScythe.h"
 #include "WfBasicSword.h"
 #include "Log.h"
+#include "WfWoodItem.h"
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 

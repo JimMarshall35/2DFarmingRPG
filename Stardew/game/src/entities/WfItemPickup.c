@@ -12,6 +12,7 @@
 #include "WfPersistantGameData.h"
 #include "WfGameLayer.h"
 #include "Audio.h"
+#include <string.h>
 
 struct WfItemPickupEntData
 {

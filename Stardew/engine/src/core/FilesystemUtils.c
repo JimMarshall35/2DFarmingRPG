@@ -36,7 +36,7 @@ void FS_GetTempDir(char* outBuf, int size)
     if (_mkdir(name) != 0)
         return -1;
 
-    strncpy(out, name, size);
+    strncpy(outBuf, name, size);
     return 0;
     #else
     const char *tmp = getenv("TMPDIR");

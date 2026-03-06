@@ -29,7 +29,8 @@ struct WfGameSave
 
 VECTOR(struct WfGameSave) WfGameGetSaves();
 void WfSetCurrentSaveGame(struct WfGameSave* pSave);
-
+void WfSetupTempFolder();
+void WfTeardownTempFolder();
 void WfGameInit();
 
 #endif

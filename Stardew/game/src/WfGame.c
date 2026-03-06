@@ -7,9 +7,11 @@
 #include <string.h>
 #include "WfPersistantGameData.h"
 #include "WfCmdArgs.h"
+#include "FilesystemUtils.h"
 
 static VECTOR(struct WfGameSave) gSaves = NULL;
 
+char gTempFolderPath[512];
 
 static void PopulateSavesList()
 {
@@ -59,27 +61,59 @@ VECTOR(struct WfGameSave) WfGameGetSaves()
     return gSaves;
 }
 
+void WfCopySaveToTempFolder(struct WfGameSave* pSave)
+{
+    char bufSrc[512];
+    char bufDst[512];
+    cwk_path_join(pSave->folderPath, "Farm.tilemap", bufSrc, 512);
+    cwk_path_join(gTempFolderPath, "Farm.tilemap", bufDst, 512);
+    FS_CopyFile(bufSrc, bufDst);
+
+    cwk_path_join(pSave->folderPath, "House.tilemap", bufSrc, 512);
+    cwk_path_join(gTempFolderPath, "House.tilemap", bufDst, 512);
+    FS_CopyFile(bufSrc, bufDst);
+
+    cwk_path_join(pSave->folderPath, "RoadToTown.tilemap", bufSrc, 512);
+    cwk_path_join(gTempFolderPath, "RoadToTown.tilemap", bufDst, 512);
+    FS_CopyFile(bufSrc, bufDst);
+
+    cwk_path_join(pSave->folderPath, "Persistant.game", bufSrc, 512);
+    cwk_path_join(gTempFolderPath, "Persistant.game", bufDst, 512);
+    FS_CopyFile(bufSrc, bufDst);
+}
+
 void WfSetCurrentSaveGame(struct WfGameSave* pSave)
 {
+    WfCopySaveToTempFolder(pSave);
+
     WfWorld_ClearLocations();
-    struct WfLocation locaton;
+    struct WfLocation location;
 
-    cwk_path_join(pSave->folderPath, "Farm.tilemap", locaton.levelFilePath, 256);
-    locaton.bIsInterior = false;
-    WfWorld_AddLocation(&locaton, "Farm");
+    cwk_path_join(gTempFolderPath, "Farm.tilemap", location.levelFilePath, 256);
+    location.bIsInterior = false;
+    WfWorld_AddLocation(&location, "Farm");
 
-    cwk_path_join(pSave->folderPath, "House.tilemap", locaton.levelFilePath, 256);
-    locaton.bIsInterior = false;
-    WfWorld_AddLocation(&locaton, "House");
+    cwk_path_join(gTempFolderPath, "House.tilemap", location.levelFilePath, 256);
+    location.bIsInterior = false;
+    WfWorld_AddLocation(&location, "House");
 
-    cwk_path_join(pSave->folderPath, "RoadToTown.tilemap", locaton.levelFilePath, 256);
-    locaton.bIsInterior = false;
-    WfWorld_AddLocation(&locaton, "RoadToTown");
+    cwk_path_join(gTempFolderPath, "RoadToTown.tilemap", location.levelFilePath, 256);
+    location.bIsInterior = false;
+    WfWorld_AddLocation(&location, "RoadToTown");
 
     char buf[256];
-    cwk_path_join(pSave->folderPath, "Persistant.game", buf, 256);
+    cwk_path_join(gTempFolderPath, "Persistant.game", buf, 256);
     WfLoadPersistantDataFile(buf);
 
     WfWorld_SetCurrentLocationName("Bed");
 }
 
+void WfSetupTempFolder()
+{
+    FS_GetTempDir(gTempFolderPath, 512);
+}
+
+void WfTeardownTempFolder()
+{
+    FS_DeleteDirRecursive(gTempFolderPath);
+}

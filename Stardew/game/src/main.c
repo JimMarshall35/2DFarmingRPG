@@ -145,6 +145,7 @@ void ParseGameCmdLineArgs(int argc, char** argv, int* onArg)
 int main(int argc, char** argv)
 {
     struct PreEngineCmdLineArgs args = ParsePreCmdLineArgs(argc, argv);
+    WfSetupTempFolder();
     switch (args.mode)
     {
     case NormalGame:
@@ -160,5 +161,5 @@ int main(int argc, char** argv)
     default:
         break;
     }
-    
+    WfTeardownTempFolder();
 }

@@ -17,7 +17,7 @@
 #include "Log.h"
 
 
-void FS_GetTempDir(char* outBuf, int size)
+int FS_GetTempDir(char* outBuf, int size)
 {
     #ifdef WIN32
     char base[MAX_PATH];
@@ -126,7 +126,7 @@ int FS_DeleteDirRecursive(char* path)
 #endif
 }
 
-void FS_CopyFile(char* src, char* dst)
+int FS_CopyFile(char* src, char* dst)
 {
     FILE* psrc = fopen(src, "rb");
     if (!psrc) 

@@ -72,11 +72,11 @@ Add widgets as children of the screen element:
         - ```paddingLeft```
         - ```paddingRight```
 
-- canvas element can have its size set in various ways,
+- canvas element, and other widgets, can have their size set in various ways,
     - fixed size ie ```height="128px"``` - same as the screen element
     - stretch ie ```height="*"``` - fill all available space in parent
     - stretch fractoin ie ```height="2*"``` - all the parents children have this type of dimension, and each one is a fraction of the total "*" - so if there were two children A and B with width(A) = 1* and  width(B) = 2*, B would have 2/3rds the with of the parent and A would have 1/3rd
-    - there is also "auto", where the width and height take up the minimum size that contains their children, but I'm pretty sure this doesn't work properly
+    - auto - calls a per-widget-type defined implementation, for example the "static" widget will be the the actual size of its image file in pixels * the scale set by the xml
 
 - The screen and canvas type widget mentioned above are widgets that arrange their children, in addition to this there is the stack panel widget:
     - Lays its children out next to one another in either a horizontal or vertical stack
@@ -91,6 +91,8 @@ Add widgets as children of the screen element:
             - ```bottom```
     - padding is applied
     - width and height of the element is the width and height of the laid out children ie ```auto```
+
+- Other types of widget should behave like a "canvas" widget. This allows images to be overlayed to create custom UI's. So far only the static widget does this (the main use case), but in time I will make all other ones do this
 
 In terms of widgets that actually implement an UI element there are (the names below are the exact names the xml nodes must have):
 - ```backgroundbox```
@@ -109,7 +111,7 @@ In terms of widgets that actually implement an UI element there are (the names b
 - ```text```
     - some text
 
-For an exhaustive list of attributes of each widget type, read the source code.
+For an exhaustive list of attributes of each widget type, read the source code, under [Stardew/enginge/src/gameframework/layers/UI](https://github.com/JimMarshall35/2DFarmingRPG/tree/master/Stardew/engine/src/gameframework/layers/UI).
 
 Widgets are composable, that means widgets data objects and functions can be reused to implement more complex widgets. For example the Text Button widget reuses code and structs from the background box and Text widgets.
 
@@ -181,9 +183,28 @@ the lua side looks like this:
             if item.item >= 0 then
                 spriteName = WfGetItemSpriteName(item.item)
             end
+            -- choose a background that shows the item is selected, or don't
             local backgroundBoxSpriteName = "fantasy_9Panel"
             if self._selectedItemIndex == index then
                 backgroundBoxSpriteName = "fantasy_9Panel_selected"
+            end
+            -- display the quantity of the item in the bottom right if there is > 1 item
+            local itemQuantity = {}
+            if item.quantity > 1 then
+                itemQuantity = 
+                {
+                    {
+                        type = "text",
+                        content = tostring(item.quantity),
+                        paddingLeft = "0.0",
+                        paddingTop = "0.0",
+                        colour = "255,255,255,255",
+                        dockPoint = "bottomRight",
+                        paddingBottom = 5,
+                        paddingRight = 5,
+                        children = {}
+                    }
+                }
             end
             table.insert(self.widgetChildren, 
             {
@@ -192,48 +213,30 @@ the lua side looks like this:
                 scaleX="1.2,",
                 scaleY="1.2",
                 paddingBottom="32",
-                paddingLeft="5",
-                paddingRight="5",
+                paddingLeft = "6",
+                paddingRight = "6",
                 children = {
                     {
                         type = "static",
                         content = content,
-                        paddingLeft = 5.0,
-                        paddingTop = 10.0,
-                        paddingRight = 5.0,
-                        paddingBottom = 10.0,
+                        paddingLeft = 7.0,
+                        paddingTop = 7.0,
+                        paddingRight = 7.0,
+                        paddingBottom = 7.0,
                         scaleX="1.2",
                         scaleY="1.2",
                         sprite = spriteName,
-                        children = {}
+                        children = itemQuantity
                     }
                 }
             }
             )
         end
-    - draws a background box around its child, scales with 9 panel scaling to have bordered windows
-- ```radioGroup``` / ```radioButton```
-    - use these two widgets to implement a radio button group
-- ```slider```
-    - slide it with the mouse
-- ```static``` 
-    - an image
-    - (name from MFC class CStatic)
-- ```textButton```
-    - a clickable button with text in it
-- ```textInput```
-    - a text entry field
-- ```text```
-    - some text
-
-For an exhaustive list of attributes of each widget type, read the source code.
-
-Widgets are composable, that means widgets data objects and functions can be reused to implement more complex widgets. For example the Text Button widget reuses code and structs from the background box and Text widgets.
         return self.widgetChildren
     end,
 ```
 
-In addition to the xml syntax for creating trees of widgets, they can be created from lua tables. The name of the element becomes a field called "type" in the table and a field called "children" lists the widgets children. Text content is set to the lua table field "content". DataNode.c/.h provide a wrapper that can either wrap a parsed xml tree or a lua table like this and widgets construct themselves from a DataNode.
+In addition to the xml syntax for creating trees of widgets, they can be created from lua tables as shown in the example above. The name of the element becomes a field called "type" in the table and a field called "children" lists the widgets children. Text content is set to the lua table field "content". DataNode.c/.h provide a wrapper that can either wrap a parsed xml tree or a lua table like this and widgets construct themselves from a DataNode.
 
 When a bound property of any type has changed on the viewmodel side and it needs to inform the view, the lua function ```lua OnPropertyChanged(self, "PropertyName")``` needs to be called.
 
@@ -272,7 +275,7 @@ they're used like so:
 </backgroundbox>
 ```
 
-These attributes all refer to to methods on the viewmodel object:
+These attributes all refer to to methods on the viewmodel object, which can be optionally implemented (example use case showing the partial implementation of a button):
 
 ```lua
 -- viewmodel...
@@ -306,7 +309,7 @@ Some widget types also have specific events they can handle:
 
 ## Lua exposed functions
 
-see engine/src/scripting/Scripting.c:
+see engine/src/scripting/Scripting.c. More will be added on an ongoing basis to form the lua API for the engine:
 
 ```c
 	Sc_RegisterCFunction("OnPropertyChanged", &L_OnPropertyChanged);
@@ -321,9 +324,16 @@ see engine/src/scripting/Scripting.c:
 	Sc_RegisterCFunction("SetGameLayerZoom", &L_SetGamelayerZoom);
 	Sc_RegisterCFunction("CenterCameraAt", &L_CenterCameraAt);
 ```
+Your game implementation can register its own functions in the same way, functions need to use the signature:
+
+```c
+int foo(lua_State* L)
+```
+
+And you implement them as a raw lua C function [see lua documentation](https://www.lua.org/manual/5.4/).
 
 ## Text rendering
 
 Freetype is used for text rendering, font sizes are rendered ahead of time at the time of atlas creation. Rendered fonts form part of the atlas, the same as sprites.
 
-This is only half done... better documentation needed
+This isn't great. Something to explore is generating character sprites as and when needed and maintaining an atlas.

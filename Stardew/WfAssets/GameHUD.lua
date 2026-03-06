@@ -29,6 +29,7 @@ function GetGameHUDViewModel()
                 if self._selectedItemIndex == index then
                     backgroundBoxSpriteName = "fantasy_9Panel_selected"
                 end
+                -- display the quantity of the item in the bottom right 
                 local itemQuantity = {}
                 if item.quantity > 1 then
                     itemQuantity = 
@@ -53,16 +54,16 @@ function GetGameHUDViewModel()
                     scaleX="1.2,",
                     scaleY="1.2",
                     paddingBottom="32",
-                    paddingLeft = "5",
-                    paddingRight = "5",
+                    paddingLeft = "6",
+                    paddingRight = "6",
                     children = {
                         {
                             type = "static",
                             content = content,
-                            paddingLeft = 5.0,
-                            paddingTop = 5.0,
-                            paddingRight = 5.0,
-                            paddingBottom = 5.0,
+                            paddingLeft = 7.0,
+                            paddingTop = 7.0,
+                            paddingRight = 7.0,
+                            paddingBottom = 7.0,
                             scaleX="1.2",
                             scaleY="1.2",
                             sprite = spriteName,

@@ -138,7 +138,6 @@ static void MakeWidgetIntoStatic(HWidget hWidget, struct DataNode* pXMLNode, str
 	pWidgetData->scale.scaleY = 1.0f;
 	StaticWidget_MakeFromXML(pWidgetData, pXMLNode, pUILayerData);
 
-	// TODO: this is a bit of a hack, it should be WD_Auto and WD_Auto should return the size of THAT widget not its child
 	pWidget->width.type = WD_Auto;
 	pWidget->height.type = WD_Auto;
 }

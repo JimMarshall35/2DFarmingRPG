@@ -14,10 +14,8 @@ from ConvertTiled import main, register_entity_serializer, get_tiled_object_cust
 ########################################### helpers
 
 def serialize_string(file, string):
-    print(f"SERIALIZING STRING {string}")
     file.write(struct.pack("I", len(string)))
     for c in string:
-        print(c.encode())
         file.write(struct.pack("c", c.encode()))
 
 ########################################### wooded area

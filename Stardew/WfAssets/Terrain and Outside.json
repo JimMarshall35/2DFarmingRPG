@@ -6,9 +6,46 @@
  "name":"Terrain and Outside",
  "spacing":0,
  "tilecount":1024,
- "tiledversion":"1.5.0",
+ "tiledversion":"1.11.1-99-gec89c545",
  "tileheight":32,
+ "tiles":[
+        {
+         "id":836,
+         "type":"Tilled_TL"
+        }, 
+        {
+         "id":837,
+         "type":"Tilled_TM"
+        }, 
+        {
+         "id":838,
+         "type":"Tilled_TR"
+        }, 
+        {
+         "id":868,
+         "type":"Tilled_ML"
+        }, 
+        {
+         "id":869,
+         "type":"Tilled_M"
+        }, 
+        {
+         "id":870,
+         "type":"Tilled_MR"
+        }, 
+        {
+         "id":900,
+         "type":"Tilled_BL"
+        }, 
+        {
+         "id":901,
+         "type":"Tilled_BM"
+        }, 
+        {
+         "id":902,
+         "type":"Tilled_BR"
+        }],
  "tilewidth":32,
  "type":"tileset",
- "version":1.5
+ "version":"1.11"
 }

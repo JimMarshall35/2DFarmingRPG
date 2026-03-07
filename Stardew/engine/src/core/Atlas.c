@@ -55,6 +55,7 @@ typedef struct
 	int tilesetIndexBegin;  // inclusive
 	int tilesetIndexEnd;    // exclusive
 	struct HashMap animations; /* holds struct AtlasAnimation objects  */
+	struct HashMap namedTiles; /* maps names to tile indexes */
 }Atlas;
 
 static VECTOR(Atlas) gAtlases = NULL;
@@ -118,6 +119,7 @@ void At_BeginAtlas()
 	atlas->fonts = NEW_VECTOR(struct AtlasFont);
 	atlas->texture = NULL_HANDLE;
 	HashmapInit(&atlas->animations, 64, sizeof(struct AtlasAnimation));
+	HashmapInit(&atlas->namedTiles, 64, sizeof(int));
 	atlas->tilesetIndexBegin = -1;
 	atlas->tilesetIndexEnd = -1;
 }
@@ -1115,6 +1117,8 @@ void At_DestroyAtlas(hAtlas atlas, struct DrawContext* pDC)
 
 	HashmapDeInit(&gAtlases[atlas].animations);
 
+	HashmapDeInit(&gAtlases[atlas].namedTiles);
+
 	free(gAtlases[atlas].atlasBytes);
 }
 
@@ -1267,6 +1271,42 @@ static hSprite LoadAtlasSprite(xmlNode* pChild, int onChild)
 		Log_Verbose("done");
 	}
 	return rVal;
+}
+
+static void LoadNamedTiles(xmlNode* child0, int* pOnChild)
+{
+	Atlas* pAtlas = GetCurrentAtlas();
+	
+	for (xmlNode* pChild = child0->children; pChild; pChild = pChild->next)
+	{
+		if (strcmp(pChild->name, "mapping") == 0)
+		{
+			xmlChar* attribute = NULL;
+			char* name = NULL;
+			int index = 0;
+			bool bNameSet = false;
+			bool bIndexSet = false;
+			if(attribute = xmlGetProp(pChild, "name"))
+			{
+				bNameSet = true;
+				name = attribute;
+			}
+			if(attribute = xmlGetProp(pChild, "index"))
+			{
+				// TODO: add proper checking that it's an integer
+				index = atoi(attribute);
+				bIndexSet = true;
+			}
+			if(bNameSet && bIndexSet)
+			{
+				HashmapInsert(&pAtlas->namedTiles, name, &index);
+			}
+			else
+			{
+				Log_Error("Named tile entry lacks name or index attribute or both");
+			}
+		}
+	}
 }
 
 static void LoadAnimationFrames(xmlNode* child0, int* pOnChild)
@@ -1433,6 +1473,10 @@ hAtlas At_LoadAtlasEx(xmlNode* child0, DrawContext* pDC, struct EndAtlasOptions*
 		{
 			LoadAnimationFrames(pChild, &onChild);
 		}
+		else if(strcmp(pChild->name, "named-tiles") == 0)
+		{
+			LoadNamedTiles(pChild, &onChild);
+		}
 	}
 	return At_EndAtlasEx(pDC, pOptions);
 }
@@ -1590,6 +1634,7 @@ static hAtlas DeserializeAtlasV1(struct BinarySerializer* pSerializer, struct Dr
 	pAtlas->texture = NULL_HANDLE;
 	pAtlas->bActive = true;
 	HashmapInit(&pAtlas->animations, 64, sizeof(struct AtlasAnimation));
+	HashmapInit(&pAtlas->namedTiles, 64, sizeof(int));
 
 	// width and height
 	BS_DeSerializeI32(&pAtlas->atlasHeight, pSerializer);
@@ -1622,6 +1667,19 @@ static hAtlas DeserializeAtlasV1(struct BinarySerializer* pSerializer, struct Dr
 	}
 
 	DeserializeAnimationsV1(pAtlas, pSerializer);
+
+	// named sprites
+	u32 numNamed = 0;
+	BS_DeSerializeU32(&numNamed, pSerializer);
+	for(int i=0; i<numNamed; i++)
+	{
+		char buf[256];
+		i32 val = 0;
+		BS_DeSerializeStringInto(buf, pSerializer);
+		BS_DeSerializeI32(&val, pSerializer);
+		HashmapInsert(&pAtlas->namedTiles, buf, &val);
+	}
+
 
 	u32 size = 0;
 	BS_DeSerializeU32(&size, pSerializer);
@@ -1671,6 +1729,18 @@ void At_SerializeAtlas(struct BinarySerializer* pSerializer, hAtlas* atlas, stru
 
 		// animations
 		SerializeAnimations(pAtlas, pSerializer);
+
+		// named tiles
+		BS_SerializeU32(pAtlas->namedTiles.size, pSerializer);
+		struct HashmapKeyIterator itr = GetKeyIterator(&pAtlas->namedTiles);
+		char* key = NULL;
+		while(key = NextHashmapKey(&itr))
+		{
+			int* pV = HashmapSearch(&pAtlas->namedTiles, key);
+			EASSERT(pV);
+			BS_SerializeString(key, pSerializer);
+			BS_SerializeI32(*pV, pSerializer);
+		}
 
 		BS_SerializeBytes(pAtlas->atlasBytes, pAtlas->atlasWidth * pAtlas->atlasHeight * 4, pSerializer);
 	}

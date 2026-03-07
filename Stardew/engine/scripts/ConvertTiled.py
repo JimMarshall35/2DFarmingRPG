@@ -39,9 +39,26 @@ def find_tileset(index: int, tilesets: object) -> object:
     for t in tilesets:
         if index >= t["firstgid"]:
             return t
+        
+def parse_tileset_file(path):
+    with open(path, "r") as f:
+        ts = json.load(f)
+        return ts
 
 def get_normalized_index(index: int, tileset: object) -> int:
     return (index - tileset["firstgid"]) + 1
+
+def get_named_tiles(parsed_tile_maps) -> dict[str, (int,str)]:
+    d = dict()
+    for p in parsed_tile_maps:
+        map_dir = os.path.dirname(os.path.abspath(p["srcPath"]))
+        for t in p["tilesets"]:
+            ts_path = os.path.join(map_dir, t["source"])
+            ts = parse_tileset_file(ts_path)
+            if "tiles" in ts:
+                for tile in ts["tiles"]:
+                    d[tile["type"]] = (tile["id"] + 1, t["source"]) 
+    return d
 
 def get_tiles_used_per_tileset(parsed_tile_maps) -> dict[str, set[int]]:
     used_tiles = dict()
@@ -99,6 +116,16 @@ class Atlas:
         for s in self.sprites:
             ET.SubElement(top, "sprite", s.get_attributes(counter))
             counter += 1
+        if len(self.named_tiles) > 0:
+            nt = ET.SubElement(top, "named-tiles")
+            print("named tiles:")
+            for t in self.named_tiles:
+                print(f"name {t} index {self.get_atlas_index(self.named_tiles[t][0], self.named_tiles[t][1])}")
+                attr = {
+                    "name": t,
+                    "index": str(self.get_atlas_index(self.named_tiles[t][0], self.named_tiles[t][1]))
+                }
+                m = ET.SubElement(nt, "mapping", attr)
         top.set("tilesetEnd",f"{counter}")
         print(f"tilesetEnd: {counter}")
         print(f"Num Sprites: {len(self.sprites)}")
@@ -125,11 +152,12 @@ class Atlas:
                         self.lut[key] = dict()
                     self.lut[key][index] = len(self.sprites) + 1
                     self.sprites.append(AtlasSprite(image, t, l, tileWidth, tileHeight, name))
-    def __init__(self, originalNormalizedIndexes : dict[str, set[int]], args):
+    def __init__(self, originalNormalizedIndexes : dict[str, set[int]], namedTiles : dict[str,int], args):
         self.originalNormalizedIndexes = originalNormalizedIndexes
         self.sprites = []
         self.lut = dict()
         self.args = args
+        self.named_tiles = namedTiles
         self.make_sprites()
 
 def run_atlas_tool(path, xmlPath, args):
@@ -314,17 +342,23 @@ def register_entity_serializer(name : str, serialize, get_type, b_keep_in_quad):
 
 def count_serializable_ents(entities):
     i = 0
+    types = {}
     for e in entities:
-        print(e["type"])
+        if not e["type"] in types:
+            types[e["type"]] = 1
+        else:
+            types[e["type"]] += 1
+
         if e["type"] in  entity_binary_serializers:
             i += 1
+    print(f"types present: {", ".join([f"{x[0]}({x[1]})" for x in types.items()])}")
     return i
 def build_tilemap_binaries(args, parsed_tile_maps, atlas):
-    print("outputting tilemap binary files...")
+    print("outputting tilemap binary files...\n")
     for p in parsed_tile_maps:
         newFileName = p["srcPath"].replace(".json", ".tilemap")
         newFileName = os.path.basename(newFileName)
-        print(f"NEW FILE NAME '{newFileName}'")
+        print(f"Doing file: '{newFileName}'")
         binaryPath = os.path.join(os.path.abspath(args.outputDir), newFileName)
         tilesets = p["tilesets"]
         tilesets = sorted(tilesets, key=lambda tileset: tileset["firstgid"])   # sort by age
@@ -347,7 +381,7 @@ def build_tilemap_binaries(args, parsed_tile_maps, atlas):
                     f.write(struct.pack("I", 1))
                     data = layer["data"]
                     tw, th = get_tile_layer_tile_dims(data, atlas, tilesets)
-                    print(f"LAYER {str(layerNum)} TILE WIDTH: {tw} TILE HEIGHT: {th} WIDTH: {layer["width"]} TILES, HEIGHT {layer["height"]} TILES.")
+                    print(f"Layer {str(layerNum)} Tile width: {tw} Tile height: {th} Width: {layer["width"]} tiles, Height: {layer["height"]} tiles.")
                     layerNum += 1
                     # INT FIELDS FOR LAYER
                     f.write(struct.pack("I", layer["width"]))
@@ -370,7 +404,7 @@ def build_tilemap_binaries(args, parsed_tile_maps, atlas):
                     write_draw_order_enum(layer["draworder"], f)
                     f.write(struct.pack("I", 1))
                     num_ents = count_serializable_ents(layer["objects"])
-                    print(f"NUM ENTS: {num_ents}")
+                    print(f"Number of entities: {num_ents}")
                     f.write(struct.pack("I", num_ents))
                     for o in layer["objects"]:
                         if o["type"] in entity_binary_serializers.keys():
@@ -380,7 +414,8 @@ def build_tilemap_binaries(args, parsed_tile_maps, atlas):
                             print(f"Warning: No serializer for entity type {o["type"]}")
                         pass
 
-    print("\n\n")
+        print("\n")
+    print("\n")
 
 def convert_tile_maps(args):
     "convert tile map files to a set of three files, an atlas xml file, an game objects xml file, and a tilemap binary file"
@@ -390,9 +425,9 @@ def convert_tile_maps(args):
             tm = json.load(f)
             tm["srcPath"] = p
             parsed_tile_maps.append(tm)
-
+    named = get_named_tiles(parsed_tile_maps)
     used : dict[str, set[int]] = get_tiles_used_per_tileset(parsed_tile_maps)
-    atlas = Atlas(used, args)
+    atlas = Atlas(used, named, args)
     atlasXMLPath = os.path.join(os.path.abspath(args.outputDir), "atlas.xml")
     atlas.output_atlas_xml_file(atlasXMLPath)
     if args.atlas_tool != None:

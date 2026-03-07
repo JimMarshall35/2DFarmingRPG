@@ -269,11 +269,11 @@
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 0.4585,
-            "selectedLayer": 3,
+            "scale": 0.5815,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1553.9803707742637,
-                "y": 770.9923664122139
+                "x": 2693.8950988822007,
+                "y": 532.244196044712
             }
         },
         "Farm.tmj": {
@@ -291,7 +291,7 @@
             "scale": 1.183,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 163.9898562975486,
+                "x": 191.46238377007606,
                 "y": 192.3076923076923
             }
         },
@@ -313,7 +313,7 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 800,
+                "x": 800.5,
                 "y": 479.5
             }
         },

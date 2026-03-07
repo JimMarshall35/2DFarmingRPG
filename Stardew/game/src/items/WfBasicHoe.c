@@ -1,15 +1,47 @@
 #include "WfBasicHoe.h"
-#include "WfItem.h"
 #include <stdlib.h>
+#include "WfItem.h"
 #include "WfItem.h"
 #include "WfPlayer.h"
 #include "Entities.h"
 #include "EngineUtils.h"
-
-#include <stdlib.h>
 #include "Audio.h"
+#include "ObjectPool.h"
+#include "GameFramework.h"
+#include "WfItemHelpers.h"
+#include "Atlas.h"
+
+
+#define HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER 32
 
 struct ZZFXSound gThrustSnd = {1.0,0.05,64.799,0.023,0.129,0.395,0,1.0,0.0,-6.535,0.0,0.0,0.161,1.945,16.886331,0.464,0.229,0.461,0.156,0.0,-3441.073};
+
+struct HoeUseContext
+{
+    struct GameFrameworkLayer* pLayer;
+    struct GameLayer2DData* pData;
+    HEntity2D hEntPlayer;
+};
+
+static OBJECT_POOL(struct HoeUseContext) gHoeUseContextPool;
+
+static bool ProcessHoeUsage(struct SDTimer* pTimer)
+{
+    struct HoeUseContext* pCtx = &gHoeUseContextPool[(HGeneric)pTimer->pUserData];
+
+    struct Entity2D* pPlayerEnt = Et2D_GetEntity(&pCtx->pData->entities, pCtx->hEntPlayer);
+    struct WfPlayerEntData* pPlayerData = WfGetPlayerEntData(pPlayerEnt);
+
+    TileIndex* pIndex = WfGetTileInFrontOfPlayer(pCtx->pData, pPlayerData, HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER, pCtx->hEntPlayer, 0);
+    if(pIndex)
+    {
+        TileIndex t = At_LookupNamedTile(pCtx->pData->hAtlas, "Tilled_M");
+        *pIndex = t;
+    }
+
+    FreeObjectPoolIndex(gHoeUseContextPool, (HGeneric)pTimer->pUserData);
+    return true; /* remove timer */
+}
 
 static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
@@ -50,6 +82,20 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
 static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     Au_PlayZzFX(&gThrustSnd);
+    struct GameLayer2DData* pData = pLayer->userData;
+
+    HGeneric hCtx = NULL_HANDLE;
+    gHoeUseContextPool = GetObjectPoolIndex(gHoeUseContextPool, &hCtx);
+    
+    struct HoeUseContext ctx = {
+        .hEntPlayer = pPlayer->thisEntity,
+        .pData = pData,
+        .pLayer = pLayer
+    };
+    gHoeUseContextPool[hCtx] = ctx;
+    struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
+    char* animName = pEntData->animationSet.layers[WfToolAnimationLayer].thrustAnimations[pEntData->directionFacing];
+    HTimer t = WfScheduleCallbackOnAnimation(pPlayer, pLayer, &ProcessHoeUsage, 0.3, animName, (void*)hCtx);
     return true;
 }
 
@@ -74,5 +120,6 @@ static struct WfItemDef gDef =
 
 void WfAddBasicHoeDef()
 {
+    gHoeUseContextPool = NEW_OBJECT_POOL(struct HoeUseContext, 4);
     WfAddItemDef(&gDef);
 }

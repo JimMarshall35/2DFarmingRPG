@@ -1,0 +1,14 @@
+{ "columns":13,
+ "image":"Image\/LPC Submissions\/Jims_Ground_Tiles.png",
+ "imageheight":192,
+ "imagewidth":416,
+ "margin":0,
+ "name":"Jims_Ground_Tiles",
+ "spacing":0,
+ "tilecount":78,
+ "tiledversion":"1.11.1-99-gec89c545",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.11"
+}

@@ -266,11 +266,11 @@
             "scaleInEditor": 1
         },
         "Farm.json": {
-            "scale": 0.3167,
+            "scale": 0.8426,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1548.7843384906853,
-                "y": 1867.6981370382066
+                "x": 2638.262520769048,
+                "y": 641.4668882031806
             }
         },
         "Farm.tmj": {
@@ -288,7 +288,7 @@
             "scale": 1.183,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 191.46238377007606,
+                "x": 191.88503803888418,
                 "y": 192.3076923076923
             }
         },
@@ -298,6 +298,10 @@
         },
         "Interior.json": {
             "scaleInDock": 1
+        },
+        "Jims_Ground_Tiles.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Outside Objects.json": {
             "scaleInDock": 1,
@@ -310,8 +314,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 1128.5,
-                "y": 476.5
+                "x": 800,
+                "y": 479.5
             }
         },
         "Soil.json": {
@@ -320,7 +324,7 @@
         },
         "Terrain and Outside.json": {
             "scaleInDock": 2,
-            "scaleInEditor": 3
+            "scaleInEditor": 2.2787
         },
         "TestTileset.json": {
             "scaleInDock": 1,
@@ -348,7 +352,7 @@
     },
     "last.exportedFilePath": "C:/Users/User1/source/repos/ReacherRPG/ReacherRPG/json",
     "last.externalTilesetPath": "C:/Users/User1/source/repos/TileMapRendererExperiments/Engine/WfAssets/",
-    "last.imagePath": "/home/jimmarshall/Jim/TileMapRendererExperiments/Stardew/WfAssets/Image",
+    "last.imagePath": "/home/jimmarshall/Jim/TileMapRendererExperiments/Stardew/WfAssets/Image/LPC Submissions",
     "map.fixedSize": true,
     "map.height": 12,
     "map.lastUsedExportFilter": "JSON map files (*.json)",
@@ -358,27 +362,28 @@
     "map.tileWidth": 32,
     "map.width": 12,
     "openFiles": [
-        "Farm.json",
         "House.json",
         "RoadToTown.json",
         "Outside Objects.json",
-        "pickaxe.tsj"
+        "pickaxe.tsj",
+        "Farm.json",
+        "Jims_Ground_Tiles.json"
     ],
     "project": "Engine.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "pickaxe.tsj",
-        "Outside Objects.json",
-        "RoadToTown.json",
         "House.json",
+        "RoadToTown.json",
+        "Outside Objects.json",
+        "pickaxe.tsj",
+        "Jims_Ground_Tiles.json",
         "Farm.json",
+        "Terrain and Outside.json",
         "Farm.tmj",
         "Interior 2.json",
         "Exterior Tiles.json",
-        "Terrain and Outside.json",
         "tilemaptest.json",
-        "Soil.json",
-        "soil.json"
+        "Soil.json"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFilter": "JSON tileset files (*.json)",
@@ -386,8 +391,8 @@
     "tileset.margin": 0,
     "tileset.spacing": 0,
     "tileset.tileSize": {
-        "height": 64,
-        "width": 64
+        "height": 32,
+        "width": 32
     },
     "tileset.transparentColor": "#000000",
     "tileset.type": 0,

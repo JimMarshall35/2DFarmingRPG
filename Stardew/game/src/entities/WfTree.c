@@ -135,6 +135,7 @@ static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender,
                             glm_vec2_add(addition, treeGroundContactPoint, treeGroundContactPoint);
                             WfSpawnWoodAt(treeGroundContactPoint, 2, pGameLayerData);
                             Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+                            pGameLayerData->bCurrentLocationIsDirty = true;
                         }
                         break;
                     }

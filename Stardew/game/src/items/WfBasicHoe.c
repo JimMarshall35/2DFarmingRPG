@@ -96,6 +96,7 @@ static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLaye
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     char* animName = pEntData->animationSet.layers[WfToolAnimationLayer].thrustAnimations[pEntData->directionFacing];
     HTimer t = WfScheduleCallbackOnAnimation(pPlayer, pLayer, &ProcessHoeUsage, 0.3, animName, (void*)hCtx);
+    pData->bCurrentLocationIsDirty = true;
     return true;
 }
 

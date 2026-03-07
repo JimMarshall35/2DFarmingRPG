@@ -1964,3 +1964,9 @@ struct AtlasAnimation* At_FindAnim(hAtlas atlas, const char* name)
 	return (struct AtlasAnimation*)HashmapSearch(&gAtlases[atlas].animations, name);
 }
 
+int At_LookupNamedTile(hAtlas atlas, const char* name)
+{
+	Atlas* pAtlas = &gAtlases[atlas];
+	int* v = HashmapSearch(&pAtlas->namedTiles, name);
+	return v ? *v : -1;
+}

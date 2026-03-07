@@ -64,9 +64,6 @@ HTimer WfScheduleCallbackOnAnimation(struct Entity2D* pPlayer, struct GameFramew
     return timer;
 }
 
-
-
-
 VECTOR(struct Entity2D*) WfFindEntitiesWithinFan(
     struct WfSearchFan* pFan, 
     struct GameFrameworkLayer* pLayer, 

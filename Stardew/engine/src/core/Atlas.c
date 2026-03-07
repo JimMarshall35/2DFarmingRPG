@@ -119,7 +119,7 @@ void At_BeginAtlas()
 	atlas->fonts = NEW_VECTOR(struct AtlasFont);
 	atlas->texture = NULL_HANDLE;
 	HashmapInit(&atlas->animations, 64, sizeof(struct AtlasAnimation));
-	HashmapInit(&atlas->namedTiles, 64, sizeof(int));
+	HashmapInit(&atlas->namedTiles, 64, sizeof(TileIndex));
 	atlas->tilesetIndexBegin = -1;
 	atlas->tilesetIndexEnd = -1;
 }
@@ -1283,7 +1283,7 @@ static void LoadNamedTiles(xmlNode* child0, int* pOnChild)
 		{
 			xmlChar* attribute = NULL;
 			char* name = NULL;
-			int index = 0;
+			TileIndex index = 0;
 			bool bNameSet = false;
 			bool bIndexSet = false;
 			if(attribute = xmlGetProp(pChild, "name"))
@@ -1294,7 +1294,7 @@ static void LoadNamedTiles(xmlNode* child0, int* pOnChild)
 			if(attribute = xmlGetProp(pChild, "index"))
 			{
 				// TODO: add proper checking that it's an integer
-				index = atoi(attribute);
+				index = (TileIndex)atoi(attribute);
 				bIndexSet = true;
 			}
 			if(bNameSet && bIndexSet)
@@ -1674,9 +1674,9 @@ static hAtlas DeserializeAtlasV1(struct BinarySerializer* pSerializer, struct Dr
 	for(int i=0; i<numNamed; i++)
 	{
 		char buf[256];
-		i32 val = 0;
+		TileIndex val = 0;
 		BS_DeSerializeStringInto(buf, pSerializer);
-		BS_DeSerializeI32(&val, pSerializer);
+		BS_DeSerializeU16(&val, pSerializer);
 		HashmapInsert(&pAtlas->namedTiles, buf, &val);
 	}
 
@@ -1736,10 +1736,10 @@ void At_SerializeAtlas(struct BinarySerializer* pSerializer, hAtlas* atlas, stru
 		char* key = NULL;
 		while(key = NextHashmapKey(&itr))
 		{
-			int* pV = HashmapSearch(&pAtlas->namedTiles, key);
+			TileIndex* pV = HashmapSearch(&pAtlas->namedTiles, key);
 			EASSERT(pV);
 			BS_SerializeString(key, pSerializer);
-			BS_SerializeI32(*pV, pSerializer);
+			BS_SerializeU16(*pV, pSerializer);
 		}
 
 		BS_SerializeBytes(pAtlas->atlasBytes, pAtlas->atlasWidth * pAtlas->atlasHeight * 4, pSerializer);
@@ -1964,7 +1964,7 @@ struct AtlasAnimation* At_FindAnim(hAtlas atlas, const char* name)
 	return (struct AtlasAnimation*)HashmapSearch(&gAtlases[atlas].animations, name);
 }
 
-int At_LookupNamedTile(hAtlas atlas, const char* name)
+TileIndex At_LookupNamedTile(hAtlas atlas, const char* name)
 {
 	Atlas* pAtlas = &gAtlases[atlas];
 	int* v = HashmapSearch(&pAtlas->namedTiles, name);

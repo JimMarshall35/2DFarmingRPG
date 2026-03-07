@@ -142,6 +142,12 @@ void At_SetCurrent(hAtlas atlas, DrawContext* pDC);
 
 struct AtlasAnimation* At_FindAnim(hAtlas atlas, const char* name);
 
+/// @brief Look up the atlas's tileset index for a given name - this is different from sprite handle,
+/// it's the index you need to write to the tile layer array, convertable to a sprite with At_TilemapIndexToSprite
+/// @param name 
+/// @return 
+int At_LookupNamedTile(const char* name);
+
 HFont Fo_FindFont(hAtlas hAtlas, const char* fontName, float sizePts);
 float Fo_CharWidth(hAtlas hAtlas, HFont hFont, char c);
 float Fo_CharHeight(hAtlas hAtlas, HFont hFont, char c);

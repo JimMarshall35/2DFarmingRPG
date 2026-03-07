@@ -1,0 +1,611 @@
+<atlas tilesetStart="0" tilesetEnd="120">
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="0" width="32" height="32" name="Exterior Tiles_0" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="32" width="32" height="32" name="Exterior Tiles_1" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="0" left="64" width="32" height="32" name="Exterior Tiles_2" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="64" width="32" height="32" name="Exterior Tiles_3" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="256" left="0" width="32" height="32" name="Exterior Tiles_4" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="0" left="352" width="32" height="32" name="Exterior Tiles_5" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="0" left="384" width="32" height="32" name="Exterior Tiles_6" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="32" left="0" width="32" height="32" name="Exterior Tiles_7" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="160" left="0" width="32" height="32" name="Exterior Tiles_8" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="32" left="64" width="32" height="32" name="Exterior Tiles_9" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="160" left="32" width="32" height="32" name="Exterior Tiles_10" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="160" left="64" width="32" height="32" name="Exterior Tiles_11" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="160" left="256" width="32" height="32" name="Exterior Tiles_12" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="32" left="352" width="32" height="32" name="Exterior Tiles_13" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="288" left="384" width="32" height="32" name="Exterior Tiles_14" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="32" left="384" width="32" height="32" name="Exterior Tiles_15" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="192" left="0" width="32" height="32" name="Exterior Tiles_16" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="0" width="32" height="32" name="Exterior Tiles_17" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="192" left="64" width="32" height="32" name="Exterior Tiles_18" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="32" width="32" height="32" name="Exterior Tiles_19" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="64" width="32" height="32" name="Exterior Tiles_20" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="160" width="32" height="32" name="Exterior Tiles_21" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="192" width="32" height="32" name="Exterior Tiles_22" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="192" left="32" width="32" height="32" name="Exterior Tiles_23" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="192" left="256" width="32" height="32" name="Exterior Tiles_24" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="64" left="352" width="32" height="32" name="Exterior Tiles_25" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="320" left="384" width="32" height="32" name="Exterior Tiles_26" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="224" left="0" width="32" height="32" name="Exterior Tiles_27" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="96" left="32" width="32" height="32" name="Exterior Tiles_28" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="224" left="64" width="32" height="32" name="Exterior Tiles_29" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="96" left="0" width="32" height="32" name="Exterior Tiles_30" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="96" left="64" width="32" height="32" name="Exterior Tiles_31" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="224" left="32" width="32" height="32" name="Exterior Tiles_32" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="96" left="992" width="32" height="32" name="Terrain and Outside_33" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="0" left="0" width="32" height="32" name="Terrain and Outside_34" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="128" width="32" height="32" name="Terrain and Outside_35" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="160" width="32" height="32" name="Terrain and Outside_36" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="192" width="32" height="32" name="Terrain and Outside_37" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="192" width="32" height="32" name="Terrain and Outside_38" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="160" width="32" height="32" name="Terrain and Outside_39" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="160" width="32" height="32" name="Terrain and Outside_40" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="768" width="32" height="32" name="Terrain and Outside_41" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="800" width="32" height="32" name="Terrain and Outside_42" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="832" width="32" height="32" name="Terrain and Outside_43" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="864" width="32" height="32" name="Terrain and Outside_44" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="896" width="32" height="32" name="Terrain and Outside_45" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="256" left="832" width="32" height="32" name="Terrain and Outside_46" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="928" width="32" height="32" name="Terrain and Outside_47" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="128" left="992" width="32" height="32" name="Terrain and Outside_48" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="160" width="32" height="32" name="Terrain and Outside_49" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="192" width="32" height="32" name="Terrain and Outside_50" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="768" width="32" height="32" name="Terrain and Outside_51" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="800" width="32" height="32" name="Terrain and Outside_52" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="832" width="32" height="32" name="Terrain and Outside_53" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="864" width="32" height="32" name="Terrain and Outside_54" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="896" width="32" height="32" name="Terrain and Outside_55" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="800" width="32" height="32" name="Terrain and Outside_56" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="832" width="32" height="32" name="Terrain and Outside_57" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="928" width="32" height="32" name="Terrain and Outside_58" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="32" left="992" width="32" height="32" name="Terrain and Outside_59" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="992" width="32" height="32" name="Terrain and Outside_60" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="128" width="32" height="32" name="Terrain and Outside_61" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="160" width="32" height="32" name="Terrain and Outside_62" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="192" width="32" height="32" name="Terrain and Outside_63" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="768" width="32" height="32" name="Terrain and Outside_64" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="800" width="32" height="32" name="Terrain and Outside_65" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="832" width="32" height="32" name="Terrain and Outside_66" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="800" width="32" height="32" name="Terrain and Outside_67" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="832" width="32" height="32" name="Terrain and Outside_68" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="896" width="32" height="32" name="Terrain and Outside_69" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="864" width="32" height="32" name="Terrain and Outside_70" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="864" width="32" height="32" name="Terrain and Outside_71" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="896" width="32" height="32" name="Terrain and Outside_72" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="928" width="32" height="32" name="Terrain and Outside_73" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="928" width="32" height="32" name="Terrain and Outside_74" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="64" left="992" width="32" height="32" name="Terrain and Outside_75" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="128" width="32" height="32" name="Terrain and Outside_76" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="160" width="32" height="32" name="Terrain and Outside_77" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="192" width="32" height="32" name="Terrain and Outside_78" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="0" width="32" height="32" name="Terrain and Outside_79" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="32" width="32" height="32" name="Terrain and Outside_80" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="64" width="32" height="32" name="Terrain and Outside_81" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="96" width="32" height="32" name="Terrain and Outside_82" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="128" width="32" height="32" name="Terrain and Outside_83" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="384" width="32" height="32" name="Terrain and Outside_84" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="416" width="32" height="32" name="Terrain and Outside_85" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="448" width="32" height="32" name="Terrain and Outside_86" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="864" width="32" height="32" name="Terrain and Outside_87" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="896" width="32" height="32" name="Terrain and Outside_88" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="928" width="32" height="32" name="Terrain and Outside_89" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="896" left="576" width="32" height="32" name="Interior_90" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="608" width="32" height="32" name="Interior_91" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="640" width="32" height="32" name="Interior_92" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="256" left="800" width="32" height="32" name="Interior_93" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="64" width="32" height="32" name="Interior_94" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="320" width="32" height="32" name="Interior_95" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="352" width="32" height="32" name="Interior_96" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="384" width="32" height="32" name="Interior_97" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="608" width="32" height="32" name="Interior_98" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="640" width="32" height="32" name="Interior_99" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="640" width="32" height="32" name="Interior_100" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="800" width="32" height="32" name="Interior_101" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="864" width="32" height="32" name="Interior_102" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="64" width="32" height="32" name="Interior_103" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="320" width="32" height="32" name="Interior_104" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="352" width="32" height="32" name="Interior_105" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="384" width="32" height="32" name="Interior_106" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="576" width="32" height="32" name="Interior_107" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="608" width="32" height="32" name="Interior_108" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="640" width="32" height="32" name="Interior_109" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="608" width="32" height="32" name="Interior_110" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="640" width="32" height="32" name="Interior_111" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="640" width="32" height="32" name="Interior_112" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="672" width="32" height="32" name="Interior_113" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="992" left="352" width="32" height="32" name="Interior_114" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="576" width="32" height="32" name="Interior_115" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="608" width="32" height="32" name="Interior_116" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="640" width="32" height="32" name="Interior_117" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_118" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_119" />
+    <named-tiles>
+     <mapping name="Tilled_Corner_BR" index="37" />
+     <mapping name="Tilled_Corner_BL" index="38" />
+     <mapping name="Tilled_Corner_TR" index="50" />
+     <mapping name="Tilled_Corner_TL" index="51" />
+     <mapping name="Tilled_TL" index="62" />
+     <mapping name="Tilled_TM" index="63" />
+     <mapping name="Tilled_TR" index="64" />
+     <mapping name="Tilled_ML" index="77" />
+     <mapping name="Tilled_M" index="78" />
+     <mapping name="Tilled_MR" index="79" />
+     <mapping name="Tilled_BL" index="36" />
+     <mapping name="Tilled_BM" index="40" />
+     <mapping name="Tilled_BR" index="39" />
+    </named-tiles>
+   <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="479" left="543" width="32" height="32" name="wood" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="480" left="417" width="32" height="32" name="big-wood-pile" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="544" left="960" width="32" height="32" name="rock-1" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="576" left="960" width="32" height="32" name="rock-2" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="0" width="96" height="96" name="tree_stump_sum_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_treestumps.png" top="448" left="96" width="96" height="96" name="tree_stump_sum_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_trunks_only.png" top="448" left="0" width="96" height="96" name="tree_trunk_sum_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects_trunks_only.png" top="448" left="96" width="96" height="96" name="tree_trunk_sum_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="0" left="192" width="96" height="96" name="decid_tree_sum_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="0" left="288" width="96" height="96" name="decid_tree_sum_top_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="96" left="192" width="96" height="96" name="conif_tree_sum_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="96" left="288" width="96" height="128" name="conif_tree_sum_top_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="224" left="0" width="96" height="96" name="decid_tree_wint_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="224" left="96" width="96" height="96" name="decid_tree_wint_top_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="320" left="0" width="96" height="96" name="conif_tree_wint_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="320" left="96" width="96" height="128" name="conif_tree_wint_top_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="224" left="192" width="96" height="96" name="decid_tree_aut_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="224" left="288" width="96" height="96" name="decid_tree_aut_top_2" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="320" left="192" width="96" height="96" name="conif_tree_aut_top_1" bMinimizeSpace="true" />
+	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="320" left="288" width="96" height="128" name="conif_tree_aut_top_2" bMinimizeSpace="true" />
+	<animation-frames name="walk-base-male-up" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up0" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up1" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up2" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up3" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up4" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up5" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up6" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up7" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up8" />
+	</animation-frames>
+	<animation-frames name="walk-base-male-down" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down0" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down1" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down2" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down3" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down4" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down5" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down6" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down7" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="128" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-down8" />
+	</animation-frames>
+	<animation-frames name="walk-base-male-left" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left0" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left1" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left2" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left3" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left4" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left5" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left6" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left7" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="64" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-left8" />
+	</animation-frames>
+	<animation-frames name="walk-base-male-right" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right0" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right1" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right2" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right3" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right4" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right5" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right6" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right7" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-right8" />
+	</animation-frames>
+	<animation-frames name="slash-base-male-up" fps="10.0">
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up0" />
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up1" />
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up2" />
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up3" />
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up4" />
+		<sprite source="./WfAssets/Image/slash.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-up5" />
+	</animation-frames>
+	<animation-frames name="slash-base-male-left" fps="10.0">
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left0" />
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left1" />
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left2" />
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left3" />
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left4" />
+		<sprite source="./WfAssets/Image/slash.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-left5" />
+	</animation-frames>
+	<animation-frames name="slash-base-male-down" fps="10.0">
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down0" />
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down1" />
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down2" />
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down3" />
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down4" />
+		<sprite source="./WfAssets/Image/slash.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-down5" />
+	</animation-frames>
+	<animation-frames name="slash-base-male-right" fps="10.0">
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right0" />
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right1" />
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right2" />
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right3" />
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right4" />
+		<sprite source="./WfAssets/Image/slash.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-base-male-right5" />
+	</animation-frames>
+	<animation-frames name="thrust-base-male-up" fps="10.0">
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up0" />
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up1" />
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up2" />
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up3" />
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up4" />
+		<sprite source="./WfAssets/Image/thrust.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-up5" />
+	</animation-frames>
+	<animation-frames name="thrust-base-male-left" fps="10.0">
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left0" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left1" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left2" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left3" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left4" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-left7" />
+	</animation-frames>
+	<animation-frames name="thrust-base-male-down" fps="10.0">
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down0" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down1" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down2" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down3" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down4" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-down7" />
+	</animation-frames>
+	<animation-frames name="thrust-base-male-right" fps="10.0">
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right0" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right1" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right2" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right3" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right4" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right5" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right6" />
+		<sprite source="./WfAssets/Image/thrust.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-base-male-right7" />
+	</animation-frames>
+	<animation-frames name="walk-pickaxe-male-up" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up0" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up1" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up2" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up3" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up4" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up5" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up6" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up7" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-up8" />
+	</animation-frames>
+	<animation-frames name="walk-pickaxe-male-left" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left0" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left1" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left2" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left3" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left4" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left5" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left6" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left7" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="64" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-left8" />
+	</animation-frames>
+	<animation-frames name="walk-pickaxe-male-down" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down0" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down1" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down2" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down3" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down4" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down5" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down6" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down7" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="128" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-down8" />
+	</animation-frames>
+	<animation-frames name="walk-pickaxe-male-right" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right0" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right1" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right2" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right3" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right4" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right5" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right6" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right7" />
+		<sprite source="./WfAssets/Image/pickaxe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-pickaxe-male-right8" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-up-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-left-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-down-bg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_fg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-fg5" />
+	</animation-frames>
+	<animation-frames name="pickaxe-slash-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg0" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg1" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg2" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg3" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg4" />
+		<sprite source="./WfAssets/Image/pickaxe_slash_bg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="pickaxe-slash-male-right-bg5" />
+	</animation-frames>
+	<animation-frames name="walk-axe-male-up" fps="10">
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up0" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up1" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up2" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up3" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up4" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up5" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up6" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up7" />
+		<sprite source="./WfAssets/Image/axe.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-up8" />
+	</animation-frames>
+	<animation-frames name="walk-axe-male-left" fps="10">
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left0" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left1" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left2" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left3" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left4" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left5" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left6" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left7" />
+		<sprite source="./WfAssets/Image/axe.png" top="64" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-left8" />
+	</animation-frames>
+	<animation-frames name="walk-axe-male-down" fps="10">
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down0" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down1" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down2" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down3" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down4" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down5" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down6" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down7" />
+		<sprite source="./WfAssets/Image/axe.png" top="128" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-down8" />
+	</animation-frames>
+	<animation-frames name="walk-axe-male-right" fps="10">
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right0" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right1" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right2" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right3" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right4" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right5" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right6" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right7" />
+		<sprite source="./WfAssets/Image/axe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-axe-male-right8" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="32" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-up-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="160" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-left-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="288" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-down-bg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg0" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg1" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg2" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg3" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg4" />
+		<sprite source="./WfAssets/Image/axe_slash_fg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-fg5" />
+	</animation-frames>
+	<animation-frames name="axe-slash-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="32" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg0" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="160" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg1" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="288" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg2" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="416" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg3" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="544" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg4" />
+		<sprite source="./WfAssets/Image/axe_slash_bg.png" top="416" left="672" width="64" height="64" bMinimizeSpace="true" name="axe-slash-male-right-bg5" />
+	</animation-frames>
+	<animation-frames name="walk-hoe-male-up" fps="10">
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up0" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up1" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up2" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up3" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up4" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up5" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up6" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up7" />
+		<sprite source="./WfAssets/Image/hoe.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-up8" />
+	</animation-frames>
+	<animation-frames name="walk-hoe-male-left" fps="10">
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left0" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left1" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left2" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left3" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left4" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left5" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left6" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left7" />
+		<sprite source="./WfAssets/Image/hoe.png" top="64" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-left8" />
+	</animation-frames>
+	<animation-frames name="walk-hoe-male-down" fps="10">
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down0" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down1" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down2" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down3" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down4" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down5" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down6" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down7" />
+		<sprite source="./WfAssets/Image/hoe.png" top="128" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-down8" />
+	</animation-frames>
+	<animation-frames name="walk-hoe-male-right" fps="10">
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right0" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right1" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right2" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right3" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right4" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right5" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right6" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right7" />
+		<sprite source="./WfAssets/Image/hoe.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-hoe-male-right8" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-up-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-left-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-down-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-right-fg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_fg.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-fg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-up-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-up-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-left-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-left-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-down-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-down-bg7" />
+	</animation-frames>
+	<animation-frames name="hoe-thrust-male-right-bg" fps="10">
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg0" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg1" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg2" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg3" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg4" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg5" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg6" />
+		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg7" />
+	</animation-frames>
+</atlas>

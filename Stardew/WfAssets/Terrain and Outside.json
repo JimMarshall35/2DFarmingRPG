@@ -10,6 +10,22 @@
  "tileheight":32,
  "tiles":[
         {
+         "id":773,
+         "type":"Tilled_Corner_BR"
+        }, 
+        {
+         "id":774,
+         "type":"Tilled_Corner_BL"
+        }, 
+        {
+         "id":805,
+         "type":"Tilled_Corner_TR"
+        }, 
+        {
+         "id":806,
+         "type":"Tilled_Corner_TL"
+        }, 
+        {
          "id":836,
          "type":"Tilled_TL"
         }, 

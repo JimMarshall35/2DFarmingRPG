@@ -12,7 +12,11 @@ For specific command line usage pass -h to them.
 
 ## ConvertTiled.py
 
-Create level files for your game using the program [Tiled](https://www.mapeditor.org/). Into the object layers you can add entities that are defined however you like defined as points, lines, polygons, boxes etc. Define the entities you want this way and give them custom properties that they will need to have. Be consistant with the class names. 
+Create level files for your game using the program [Tiled](https://www.mapeditor.org/). Into the object layers you can add entities that are defined however you like defined as points, lines, polygons, boxes etc. Define the entities you want this way and give them any custom properties that they will need to have. 
+
+Your game will implement python code that converts these into a binary file, as you will see.
+
+The engine provides the implementation of (at the moment) exactly one entity type, the static collider. If you open the tiled project in ./WfAssets/engine.tiled-project you can see how these are defined.
 
 Next we run a python script to convert the tiled .json file into a binary file the engine will load. To add your own type of entities to the file, extend the script the engine provides, ConvertTiled.py, like so:
 
@@ -50,14 +54,13 @@ main()
 
 ```
 
-The ConvertTiled.py script takes a list of tiled json files as input
-
-as output it will produce:
+The ConvertTiled.py script takes a list of tiled json files as input, as output it will produces:
 - for each input:
     - a .tilemap binary file
         - this contains the tilemaps and entities for the level
 - an atlas.xml file
     - this contains the file paths of all tiles used within the all for all level files passed in and their coordinates within the file, as well as their width and height
+    - it contains mappings of string names to certain tile indexes, which are settable in tiled by setting the "class" property for that specific tool in the tileset. In tiled it is called "class", but we're using it as "name" - the values should be unique, with no two tiles sharing a "class" 
     - the game can load an atlas from this directly or you can precompile it (recommended), see section below
 
 ## MergeAtlases.py
@@ -80,7 +83,58 @@ The tool does a passable but not great job of minimizing the overall size of the
 
 The good thing about this is one openGL texture can be used to draw the whole game layer, and it also means that only the tiles actually used, out of a potential source image of many more, need to be in the final loaded file.
 
-In order to eliminate bleeding of texels from adjacent sprites the sprites in the atlas have a 1 pixel border that mimics GL_CLAMP_TO_EDGE texture clamping
+In order to eliminate bleeding of texels from adjacent sprites the sprites in the atlas have a 1 pixel border that mimics GL_CLAMP_TO_EDGE texture clamping.
+
+Here is an example xml input showing everything that is supported:
+
+```xml
+<!-- 
+    Top level element specifies a range of sprites that are "the tileset". These are rendered in a tilemap, an array filled with their Indexes, generated from
+    a json produced by tiled. The tilesetStart and tilesetEnd indices refer to sprites in the map, in the order they are written. Animations add their animations in order and contribute to the index as do fonts, so i recommend putting the tilemap sprites first, then named sprites of differing size, then everything else, if writing one of these files by hand and not using ConvertTiled.py, and in the hand written portion that you merge with the ConvertTiled.py output
+    
+ -->
+<atlas tilesetStart="0" tilesetEnd="4">
+    <!-- 
+        The sprites in the tileset must all be the same size. The name here is added by the script, but it doesn't really matter as it will be refered to by index
+        as its in the tile map. The game can also use the name to get a sprite handle and use for rendering outside the tilemap though. 
+    -->
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="0" width="32" height="32" name="Exterior Tiles_0" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="32" width="32" height="32" name="Exterior Tiles_1" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="0" left="64" width="32" height="32" name="Exterior Tiles_2" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="128" left="64" width="32" height="32" name="Exterior Tiles_3" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="256" left="0" width="32" height="32" name="Exterior Tiles_4" />
+    
+    <!-- sprites that come after (hand named ones) can be any size, obviously -->
+    <sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png" top="320" left="288" width="96" height="128" name="conif_tree_aut_top_2" bMinimizeSpace="true" />
+
+    <!-- 
+        gameplay code that needs to alter the tilemap can call At_LookupNamedTile to lookup tiles by name, so they can be added to in any order.
+        ConvertTiled.py generates these from the "class" property in tiled tileset jsons, which you can set from the tiled gui
+     
+    -->
+    <named-tiles>
+     <mapping name="myTileNameA" index="37" />
+     <mapping name="myTileNameB" index="38" />
+    </named-tiles>
+
+    <!-- 
+        Sprites grouped together as animations with suggested FPS. 
+        A convenience script exists to generate these with less boilerplate, ExpandAnimations.py, but the syntax that that code accepts isn't directly supported
+        by the atlas code, so that script is used as a post processing step to generate an element that looks like this (or you could write this directly):
+    -->
+    <animation-frames name="walk-base-male-up" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up0" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up1" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up2" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up3" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up4" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up5" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up6" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up7" />
+		<sprite source="./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-base-male-up8" />
+	</animation-frames>
+</atlas>
+```
 
 ### Minimize Space
 

@@ -3,6 +3,8 @@
 
 #include "TimerPool.h"
 #include <cglm/cglm.h>
+#include "IntTypes.h"
+#include "HandleDefs.h"
 
 #define VECTOR(a) a*
 
@@ -10,6 +12,7 @@ struct Entity2D;
 struct GameFrameworkLayer;
 struct GameLayer2DData;
 enum WfDirection;
+struct WfPlayerEntData;
 
 struct WfSearchFan
 {
@@ -44,5 +47,7 @@ VECTOR(struct Entity2D*) WfFindEntitiesWithinFan(
 void WfGetDirectionVector(enum WfDirection dir, vec2 outVec);
 
 struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D*) pEnt);
+
+TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlayerEntData* pPlayerData, float distanceInFront, HEntity2D hEntPlayer, int tileLayer);
 
 #endif

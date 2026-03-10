@@ -16,6 +16,13 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+
+        play = pkgs.writeShellScriptBin "play" ''
+          cd "$(git rev-parse --show-toplevel)/Stardew"
+          bash BuildDebug.sh && \
+          bash compile_assets.sh && \
+          ./build/game/WarFarmer
+        '';
       in
       {
         devShells.default = pkgs.mkShell {
@@ -41,9 +48,11 @@
             gdb
             valgrind
             doxygen
+
+            # Dev scripts
+            play
           ];
 
-          # Make pkg-config and headers discoverable
           nativeBuildInputs = with pkgs; [
             pkg-config
           ];
@@ -52,9 +61,8 @@
             echo ""
             echo "🌾 2D Farming RPG dev environment"
             echo ""
-            echo "  Build commands:"
-            echo "    bash BuildDebug.sh     - debug build"
-            echo "    bash GetDependencies.sh is NOT needed — nix provides all deps"
+            echo "  Commands:"
+            echo "    play   - build, copy assets, and run the game"
             echo ""
           '';
         };

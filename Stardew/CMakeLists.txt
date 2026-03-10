@@ -4,6 +4,7 @@ project(WarFarmer)
 
 option(NoGTest "NoGTest" OFF)
 option(FlatPakHack "FlatPakHack" OFF)
+add_compile_options(-Wno-format-security)
 
 add_subdirectory(netcode)
 

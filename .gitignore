@@ -2,3 +2,9 @@ Stardew/build/
 .vscode/
 venv/
 StardewDocs/site
+.direnv
+**/__pycache__
+Stardew/UIAtlas.bmp
+Stardew/Atlas.bmp
+Stardew/WfAssets/ui_atlas.atlas
+Stardew/WfAssets/out/main.atlas

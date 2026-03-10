@@ -3,6 +3,12 @@ WORK IN PROGRESS
 
 A 2D Game engine and farming RPG for windows and Linux.
 
+
+## Try It Out
+```bash
+nix run github:JimMarshall35/2DFarmingRPG
+```
+
 # Engine Docs
 
 engine/docs folder:
@@ -57,3 +63,35 @@ To Build:
   - Run GetDependencies.sh
   - Run BuildDebug.sh
   - Run compile_assets.sh
+
+
+
+# Nix
+
+## Prerequisites
+
+[Nix](https://nixos.org/download/) with flakes enabled. Add to `~/.config/nix/nix.conf`:
+
+```
+experimental-features = nix-flakes nix-command
+```
+
+## Dev shell
+
+```bash
+nix develop
+```
+
+Then use `play` to build and run the game.
+
+## Build and run directly
+
+```bash
+nix run github:JimMarshall35/2DFarmingRPG
+```
+
+Or from a local clone:
+
+```bash
+nix run .
+```

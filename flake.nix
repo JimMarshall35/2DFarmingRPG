@@ -25,6 +25,11 @@
         '';
       in
       {
+        apps.default = {
+          type = "app";
+          program = "${play}/bin/play";
+        };
+
         devShells.default = pkgs.mkShell {
           name = "farming-rpg-dev";
 

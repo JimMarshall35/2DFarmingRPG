@@ -510,7 +510,6 @@ void Sc_CallFuncInRegTableEntryTable(int regIndex, const char* funcName, struct 
 	{
 		Log_Error("object at key '%s' not a function but type %s ", funcName, GetTypeOnTopOfStack());
 	}
-	//lua_settop(gL, 0);
 }
 
 void Sc_CallFuncInRegTableEntry(int regIndex, struct ScriptCallArgument* pArgs, int numArgs, int numReturnVals, int selfRegIndex)

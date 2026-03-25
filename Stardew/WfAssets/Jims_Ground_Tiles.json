@@ -6,7 +6,7 @@
  "name":"Jims_Ground_Tiles",
  "spacing":0,
  "tilecount":78,
- "tiledversion":"1.11.1-99-gec89c545",
+ "tiledversion":"1.12.1-8-g449813058",
  "tileheight":32,
  "tiles":[
         {
@@ -111,7 +111,7 @@
         }, 
         {
          "id":26,
-         "type":"DryGround_TR"
+         "type":"DryGround_TR_Bend"
         }, 
         {
          "id":27,

@@ -239,10 +239,11 @@
      <mapping name="WetGround_CornerTuft_TL_BL" index="24" />
      <mapping name="WetGround_CornerTuft_TL" index="25" />
      <mapping name="WetGround_CornerTuft_TL_TR_BR" index="26" />
-     <mapping name="DryGround_TR" index="31" />
+     <mapping name="DryGround_TR_Bend" index="27" />
      <mapping name="DryGround_TL_Bend" index="28" />
      <mapping name="DryGround_BL_Bend" index="29" />
      <mapping name="DryGround_T" index="30" />
+     <mapping name="DryGround_TR" index="31" />
      <mapping name="DryGround_TLR" index="32" />
      <mapping name="DryGround_TL" index="33" />
      <mapping name="DryGround_CornerTuft_BL_BR" index="34" />

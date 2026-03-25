@@ -198,6 +198,9 @@
     <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_196" />
     <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_197" />
     <named-tiles>
+     <mapping name="grass_1" index="163" />
+     <mapping name="grass_2" index="164" />
+     <mapping name="grass_3" index="165" />
      <mapping name="Tilled_Corner_BR" index="115" />
      <mapping name="Tilled_Corner_BL" index="116" />
      <mapping name="Tilled_Corner_TR" index="128" />

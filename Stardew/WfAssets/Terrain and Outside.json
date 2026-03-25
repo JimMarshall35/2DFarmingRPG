@@ -6,9 +6,21 @@
  "name":"Terrain and Outside",
  "spacing":0,
  "tilecount":1024,
- "tiledversion":"1.11.1-99-gec89c545",
+ "tiledversion":"1.12.1-8-g449813058",
  "tileheight":32,
  "tiles":[
+        {
+         "id":364,
+         "type":"grass_1"
+        }, 
+        {
+         "id":365,
+         "type":"grass_2"
+        }, 
+        {
+         "id":366,
+         "type":"grass_3"
+        }, 
         {
          "id":773,
          "type":"Tilled_Corner_BR"

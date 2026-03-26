@@ -48,6 +48,14 @@ void WfGetDirectionVector(enum WfDirection dir, vec2 outVec);
 
 struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D*) pEnt);
 
-TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlayerEntData* pPlayerData, float distanceInFront, HEntity2D hEntPlayer, int tileLayer);
+TileIndex* WfGetTileInFrontOfPlayer(
+    struct GameLayer2DData* pData, 
+    struct WfPlayerEntData* pPlayerData, 
+    float distanceInFront, 
+    HEntity2D hEntPlayer, 
+    int tileLayer,
+    int* pXOut,
+    int* pYOut
+);
 
 #endif

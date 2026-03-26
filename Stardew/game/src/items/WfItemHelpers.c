@@ -157,16 +157,18 @@ struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D
     return pRet;
 }
 
-TileIndex* WfGetTileAtPoint(vec2 pt, struct GameLayer2DData* pData, int tileLayer)
+TileIndex* WfGetTileAtPoint(vec2 pt, struct GameLayer2DData* pData, int tileLayer, int* pXOut, int* pYOut)
 {
     int iX = ((int)pt[0] / (int)pData->tilemap.layers[tileLayer].tileWidthPx);
     int iY = ((int)pt[1] / (int)pData->tilemap.layers[tileLayer].tileHeightPx);
     struct TileMapLayer* pLayer = &pData->tilemap.layers[tileLayer];
     TileIndex* pIndex = pLayer->Tiles + (iY * pLayer->widthTiles + iX);
+    *pXOut = iX;
+    *pYOut = iY;
     return pIndex;
 }
 
-TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlayerEntData* pPlayerData, float distanceInFront, HEntity2D hEntPlayer, int tileLayer)
+TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlayerEntData* pPlayerData, float distanceInFront, HEntity2D hEntPlayer, int tileLayer, int* pXOut, int* pYOut)
 {
     vec2 facingVec, pt;
     WfGetDirectionVector(pPlayerData->directionFacing, facingVec);
@@ -176,6 +178,6 @@ TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlay
     glm_vec2_scale(facingVec, distanceInFront, facingVec);
     glm_vec2_add(playerGroundPos, facingVec, pt);
 
-    return WfGetTileAtPoint(pt, pData, tileLayer);
+    return WfGetTileAtPoint(pt, pData, tileLayer, pXOut, pYOut);
 }
 

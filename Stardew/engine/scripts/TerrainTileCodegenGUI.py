@@ -1,13 +1,98 @@
 import tkinter as tk
 from tkinter import ttk
 import argparse
+import xml.etree.ElementTree as ET
+from itertools import product
+import json
 
-check_vars = []
+#
+#
+# class Tile:
+#   LUT_indices : list[int] = []
+#   check_vars : list[str] = ["tristate","tristate","tristate","tristate","tristate","tristate","tristate","tristate"]
+#
+# something strange about python, the version above makes every instance of Tile
+# point to a single array of values. The one below gives each their own copy
+#
+class Tile:
+    LUT_indices : list[int] = []
+    check_vars : list[str] = []
+    def generate_indices(self) -> list[int]:
+        return generate_permutations(self.check_vars)
+    def is_set(self) -> bool:
+        return not all(x == "tristate" for x in self.check_vars)
+    def __init__(self):
+        self.check_vars = ["tristate","tristate","tristate","tristate","tristate","tristate","tristate","tristate"]
+
+check_vars : list[tk.StringVar]  = []
+
+default_tile_text_var : tk.StringVar = None
+
+tileset_name_var : tk.StringVar = None
+
+tiles : dict[str, Tile] = {}
+
+selected_tile : str = None
+
+def generate_permutations(values) -> list[int]:
+    # Find indices of tristate values
+    tri_indices = [i for i, v in enumerate(values) if v == "tristate"]
+    
+    results = []
+    
+    # Generate all combinations for tristates
+    for combo in product([0, 1], repeat=len(tri_indices)):
+        temp = values[:]
+        
+        # Replace tristates with current combination
+        for idx, bit in zip(tri_indices, combo):
+            temp[idx] = bit
+        
+        # Convert to 0/1 list
+        bits = [
+            1 if v == "on" else
+            0 if v == "off" else
+            v  # already 0 or 1 from combo
+            for v in temp
+        ]
+        
+        # Convert to integer
+        number = int("".join(map(str, bits)), 2)
+        results.append(number)
+    
+    return results
+
 
 def add_left_pane(frame: tk.Frame):
+    entries = tuple(list(tiles.keys()))
+    list_variable = tk.Variable(value=entries)
+    listbox = tk.Listbox(
+        frame,
+        listvariable=list_variable,
+        height=6,
+        width=50,
+        selectmode="single",
+    )
+    listbox.grid(column=0, row=0)
+    def handle_item_select(event):
+        global selected_tile
+        selected_indices = listbox.curselection()
+        #assert len(selected_indices) == 1
+        print("HERE")
+        
+        s = listbox.get(selected_indices[0])
+        print(s)
+        print(tiles[s].check_vars)
+        for i in range(len(tiles[s].check_vars)):
+            check_vars[i].set(tiles[s].check_vars[i])
+
+        selected_tile = s
+        
+
+    listbox.bind('<<ListboxSelect>>', handle_item_select)
     pass
 
-def toggle_checkbutton(event):
+def toggle_checkbutton(event, userInt):
     checkbutton = event.widget
     varname = checkbutton.cget("variable")
     current_value = checkbutton.getvar(varname)
@@ -18,6 +103,11 @@ def toggle_checkbutton(event):
     else:
         new_value = "on"
     checkbutton.setvar(varname, new_value)
+
+    if selected_tile != None:
+        print(f"selected tile: '{selected_tile}', userInt: {userInt} newVal: {new_value}")
+        tiles[selected_tile].check_vars[userInt] = new_value
+
     return "break"
 
 def add_right_pane(frame: tk.Frame):
@@ -38,22 +128,83 @@ def add_right_pane(frame: tk.Frame):
     check_7 = tk.Checkbutton(frame, variable=check_vars[7], onvalue="on", offvalue="off", tristatevalue="tristate")
     check_7.grid(column=2, row=2)
 
-    check_0.bind("<1>", toggle_checkbutton)
-    check_1.bind("<1>", toggle_checkbutton)
-    check_2.bind("<1>", toggle_checkbutton)
-    check_3.bind("<1>", toggle_checkbutton)
-    check_4.bind("<1>", toggle_checkbutton)
-    check_5.bind("<1>", toggle_checkbutton)
-    check_6.bind("<1>", toggle_checkbutton)
-    check_7.bind("<1>", toggle_checkbutton)
+    check_0.bind("<1>", lambda event : toggle_checkbutton(event, 0))
+    check_1.bind("<1>", lambda event : toggle_checkbutton(event, 1))
+    check_2.bind("<1>", lambda event : toggle_checkbutton(event, 2))
+    check_3.bind("<1>", lambda event : toggle_checkbutton(event, 3))
+    check_4.bind("<1>", lambda event : toggle_checkbutton(event, 4))
+    check_5.bind("<1>", lambda event : toggle_checkbutton(event, 5))
+    check_6.bind("<1>", lambda event : toggle_checkbutton(event, 6))
+    check_7.bind("<1>", lambda event : toggle_checkbutton(event, 7))
 
-    pass
+def gather_json_object() -> dict:
+    set_tiles = [(k, tiles[k]) for k in tiles.keys() if tiles[k].is_set()]
+    out = {}
+    for k, v in set_tiles:
+        out[k] = v.generate_indices()
+    return out
+
+def output_json():
+    obj = gather_json_object()
+    out = {
+        "name" : tileset_name_var.get(),
+        "default_tile" : default_tile_text_var.get(),
+        "indices" : obj
+    }
+    with open(f"{tileset_name_var.get()}.json", "w") as fp:
+        json.dump(out, fp, indent=2)
+
+def longest_index_array(obj):
+    longest = 0
+    for k in obj.keys():
+        print(obj[k])
+        if len(obj[k]) > longest:
+            longest = len(obj[k])
+    return longest
+
+def find_tile_for_index(obj, index):
+    for k in obj.keys():
+        v = obj[k]
+        for i in v:
+            if i == index:
+                return k
+    return None
+
+def output_c_lookup_table():
+    obj = gather_json_object()
+    longest = longest_index_array(obj)
+    print(f"Longest: {longest}")
+    out = "// Generated by TerrainTileCodegenGUI.py\n\n"
+    out += f"const char* g{tileset_name_var.get()}[256] = " + "{\n"
+    for i in range(256):
+        tileName = find_tile_for_index(obj, i)
+        if tileName:
+            out += f'\t"{tileName}",\n'
+        else:
+            out += f'\t"{default_tile_text_var.get()}",\n'
+    out += "};\n"
+    with open(f"{tileset_name_var.get()}.c", "w") as f:
+        f.write(out)
 
 def add_bottom_pane(frame: tk.Frame):
-    pass
+    c_btn = tk.Button(frame, text="C LUT", command=output_c_lookup_table)
+    json_btn = tk.Button(frame, text="JSON", command=output_json)
+    label_default_tile = tk.Label(frame, text="Default Tile")
+    default_tile_name = tk.Entry(frame, width=30, textvariable=default_tile_text_var)
+    label_tileset_name = tk.Label(frame, text="Tileset Name")
+    tileset_name = tk.Entry(frame, width=30, textvariable=tileset_name_var)
+
+    c_btn.grid(column=0, row=0)
+    json_btn.grid(column=1, row=0)
+    default_tile_name.grid(column=1, row=1)
+    label_default_tile.grid(column=0, row=1)
+
+    tileset_name.grid(column=1, row=2)
+    label_tileset_name.grid(column=0, row=2)
+
 
 def init_vars():
-    global check_vars
+    global check_vars, default_tile_text_var, tileset_name_var
     check_vars = [
         tk.StringVar(),
         tk.StringVar(),
@@ -64,14 +215,32 @@ def init_vars():
         tk.StringVar(),
         tk.StringVar(),
     ]
+    default_tile_text_var = tk.StringVar()
+    tileset_name_var = tk.StringVar()
 
 def parse_args():
     parser = argparse.ArgumentParser(prog='Terrain Tile Code generator')
-    parser.add_argument("atlas_xml", required=True)
+    parser.add_argument("--atlas_xml", help="atlas_xml produced by compile_assets.sh")
+    parser.add_argument("--json", help="json file output by this tool")
     return parser.parse_args()
+
+def parse_xml_named_tiles(args):
+    global tiles
+    tree = ET.parse(args.atlas_xml)
+    root = tree.getroot()
+    named_tiles = root.find("named-tiles")
+    for child in named_tiles:
+        tiles[child.attrib["name"]] = Tile()
+
+def load_json():
+    pass
 
 def main():
     args = parse_args()
+    if args.atlas_xml:
+        parse_xml_named_tiles(args)
+
+
     root = tk.Tk()
     root.title = "Terrain Set Generator"
 

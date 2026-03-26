@@ -5,6 +5,26 @@ import xml.etree.ElementTree as ET
 from itertools import product
 import json
 
+desc_text = """
+    ------> X
+    |
+    |      ________
+    V     |_0|_1|_2|
+    Y     |_3|_A|_4|
+          |_5|_6|_7|
+
+
+    A GUI to produce a C lookup table for "terrain" sets.
+    
+    The tile A in the middle is determined by the surrounding tiles.
+    The bits of an 8 bit index are set according tiles 1-7 according to the diagram above.
+
+    Use this gui to set whether each position 0-7 contains a tile from the set, doesn't or can contain one or not.
+
+    It generates a C lookup table and json file containing the permutations for the "wildcard" tiles.
+
+"""
+
 #
 #
 # class Tile:
@@ -26,6 +46,8 @@ check_vars : list[tk.StringVar]  = []
 default_tile_text_var : tk.StringVar = None
 
 tileset_name_var : tk.StringVar = None
+
+new_tile_var : tk.StringVar = None
 
 tiles : dict[str, Tile] = {}
 
@@ -199,6 +221,9 @@ def add_bottom_pane(frame: tk.Frame):
     label_tileset_name = tk.Label(frame, text="Tileset Name")
     tileset_name = tk.Entry(frame, width=30, textvariable=tileset_name_var)
 
+    label_tileset_name = tk.Label(frame, text="NewTileName")
+    tileset_name = tk.Entry(frame, width=30, textvariable=new_tile_var)
+
     c_btn.grid(column=0, row=0)
     json_btn.grid(column=1, row=0)
     default_tile_name.grid(column=1, row=1)
@@ -209,7 +234,7 @@ def add_bottom_pane(frame: tk.Frame):
 
 
 def init_vars():
-    global check_vars, default_tile_text_var, tileset_name_var
+    global check_vars, default_tile_text_var, tileset_name_var, new_tile_var
     check_vars = [
         tk.StringVar(),
         tk.StringVar(),
@@ -222,9 +247,11 @@ def init_vars():
     ]
     default_tile_text_var = tk.StringVar()
     tileset_name_var = tk.StringVar()
+    new_tile_var = tk.StringVar()
 
 def parse_args():
-    parser = argparse.ArgumentParser(prog='Terrain Tile Code generator')
+    
+    parser = argparse.ArgumentParser(prog='Terrain Tile Code generator', description=desc_text, formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("--atlas_xml", help="atlas_xml produced by compile_assets.sh")
     parser.add_argument("--json", help="json file output by this tool")
     return parser.parse_args()

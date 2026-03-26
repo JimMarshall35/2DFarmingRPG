@@ -8,21 +8,18 @@ import json
 #
 #
 # class Tile:
-#   LUT_indices : list[int] = []
 #   check_vars : list[str] = ["tristate","tristate","tristate","tristate","tristate","tristate","tristate","tristate"]
 #
 # something strange about python, the version above makes every instance of Tile
 # point to a single array of values. The one below gives each their own copy
 #
 class Tile:
-    LUT_indices : list[int] = []
-    check_vars : list[str] = []
+    def __init__(self, check_vars):
+        self.check_vars = check_vars
     def generate_indices(self) -> list[int]:
         return generate_permutations(self.check_vars)
     def is_set(self) -> bool:
         return not all(x == "tristate" for x in self.check_vars)
-    def __init__(self):
-        self.check_vars = ["tristate","tristate","tristate","tristate","tristate","tristate","tristate","tristate"]
 
 check_vars : list[tk.StringVar]  = []
 
@@ -144,12 +141,20 @@ def gather_json_object() -> dict:
         out[k] = v.generate_indices()
     return out
 
+def serialize_raw():
+    set_tiles = [(k, tiles[k]) for k in tiles.keys() if tiles[k].is_set()]
+    out = {}
+    for k, v in set_tiles:
+        out[k] = v.check_vars
+    return out
+
 def output_json():
     obj = gather_json_object()
     out = {
         "name" : tileset_name_var.get(),
         "default_tile" : default_tile_text_var.get(),
-        "indices" : obj
+        "indices" : obj,
+        "raw" : serialize_raw()
     }
     with open(f"{tileset_name_var.get()}.json", "w") as fp:
         json.dump(out, fp, indent=2)
@@ -224,22 +229,31 @@ def parse_args():
     parser.add_argument("--json", help="json file output by this tool")
     return parser.parse_args()
 
-def parse_xml_named_tiles(args):
+def parse_xml_named_tiles(path):
     global tiles
-    tree = ET.parse(args.atlas_xml)
+    tree = ET.parse(path)
     root = tree.getroot()
     named_tiles = root.find("named-tiles")
     for child in named_tiles:
-        tiles[child.attrib["name"]] = Tile()
+        tiles[child.attrib["name"]] = Tile([])
 
-def load_json():
+def load_json(path):
+    data = {}
+    with open(path, 'r') as f:
+        # Parsing the JSON file into a Python dictionary
+        data = json.load(f)
+    for k in data["raw"].keys():
+        print(k)
+        tiles[k] = Tile(data["raw"][k])
     pass
 
 def main():
     args = parse_args()
     if args.atlas_xml:
-        parse_xml_named_tiles(args)
+        parse_xml_named_tiles(args.atlas_xml)
 
+    if args.json:
+        load_json(args.json)
 
     root = tk.Tk()
     root.title = "Terrain Set Generator"

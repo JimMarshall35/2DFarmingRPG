@@ -13,6 +13,7 @@ struct GameFrameworkLayer;
 struct GameLayer2DData;
 enum WfDirection;
 struct WfPlayerEntData;
+struct TileMap;
 
 struct WfSearchFan
 {
@@ -57,5 +58,15 @@ TileIndex* WfGetTileInFrontOfPlayer(
     int* pXOut,
     int* pYOut
 );
+
+/// @brief 
+/// @param tileX 
+/// @param tileY 
+/// @param tilemap 
+/// @param layer 
+/// @param indices An array of indicies that count as an occupied tile
+/// @param numIndices 
+/// @return 
+u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer, TileIndex* indices, int numIndices);
 
 #endif

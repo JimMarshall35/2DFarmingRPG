@@ -12,6 +12,24 @@
       170,
       174
     ],
+    "DryGround_Center": [
+      0,
+      1,
+      4,
+      5,
+      32,
+      33,
+      36,
+      37,
+      128,
+      129,
+      132,
+      133,
+      160,
+      161,
+      164,
+      165
+    ],
     "DryGround_B": [
       2,
       3,
@@ -61,12 +79,36 @@
     "DryGround_BL": [
       22,
       23,
+      30,
+      31,
       54,
       55,
+      62,
+      63,
+      86,
+      87,
+      94,
+      95,
+      118,
+      119,
+      126,
+      127,
       150,
       151,
+      158,
+      159,
       182,
-      183
+      183,
+      190,
+      191,
+      214,
+      215,
+      222,
+      223,
+      246,
+      247,
+      254,
+      255
     ],
     "DryGround_CornerTuft_TL_TR": [
       95
@@ -150,17 +192,29 @@
       231
     ],
     "DryGround_BRT": [
-      107,
-      111,
-      235,
-      239
+      74,
+      78,
+      202,
+      206
     ],
     "DryGround_BLRT": [
       255
     ],
     "DryGround_BLT": [
+      82,
+      83,
+      86,
+      87,
+      114,
+      115,
+      118,
+      119,
+      210,
+      211,
       214,
       215,
+      242,
+      243,
       246,
       247
     ],
@@ -232,6 +286,18 @@
       237
     ],
     "DryGround_TLR": [
+      88,
+      89,
+      92,
+      93,
+      120,
+      121,
+      124,
+      125,
+      216,
+      217,
+      220,
+      221,
       248,
       249,
       252,
@@ -255,6 +321,298 @@
     ],
     "DryGround_CornerTuft_TL_TR_BL": [
       91
+    ]
+  },
+  "raw": {
+    "DryGround_BR_Bend": [
+      "tristate",
+      "off",
+      "tristate",
+      "off",
+      "on",
+      "tristate",
+      "on",
+      "off"
+    ],
+    "DryGround_Center": [
+      "tristate",
+      "off",
+      "tristate",
+      "off",
+      "off",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_B": [
+      "tristate",
+      "off",
+      "tristate",
+      "off",
+      "off",
+      "tristate",
+      "on",
+      "tristate"
+    ],
+    "DryGround_BR": [
+      "tristate",
+      "off",
+      "tristate",
+      "off",
+      "on",
+      "tristate",
+      "on",
+      "on"
+    ],
+    "DryGround_BLR": [
+      "tristate",
+      "off",
+      "tristate",
+      "on",
+      "on",
+      "tristate",
+      "on",
+      "tristate"
+    ],
+    "DryGround_BL": [
+      "tristate",
+      "tristate",
+      "tristate",
+      "on",
+      "tristate",
+      "on",
+      "on",
+      "tristate"
+    ],
+    "DryGround_CornerTuft_TL_TR": [
+      "off",
+      "on",
+      "off",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on"
+    ],
+    "DryGround_CornerTuft_TR": [
+      "on",
+      "on",
+      "off",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on"
+    ],
+    "DryGround_CornerTuft_TR_BR_BL": [
+      "on",
+      "on",
+      "off",
+      "on",
+      "on",
+      "off",
+      "on",
+      "off"
+    ],
+    "DryGround_R": [
+      "tristate",
+      "off",
+      "tristate",
+      "off",
+      "on",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_LR": [
+      "tristate",
+      "off",
+      "tristate",
+      "on",
+      "on",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_L": [
+      "tristate",
+      "off",
+      "tristate",
+      "on",
+      "off",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_TB": [
+      "tristate",
+      "on",
+      "tristate",
+      "off",
+      "off",
+      "tristate",
+      "on",
+      "tristate"
+    ],
+    "DryGround_BRT": [
+      "tristate",
+      "on",
+      "off",
+      "off",
+      "on",
+      "tristate",
+      "on",
+      "off"
+    ],
+    "DryGround_BLRT": [
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on"
+    ],
+    "DryGround_BLT": [
+      "tristate",
+      "on",
+      "tristate",
+      "on",
+      "off",
+      "tristate",
+      "on",
+      "tristate"
+    ],
+    "DryGround_CornerTuft_TL_BL": [
+      "off",
+      "on",
+      "on",
+      "on",
+      "on",
+      "off",
+      "on",
+      "on"
+    ],
+    "DryGround_CornerTuft_TL": [
+      "off",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "on"
+    ],
+    "DryGround_CornerTuft_TL_TR_BR": [
+      "off",
+      "on",
+      "off",
+      "on",
+      "on",
+      "on",
+      "on",
+      "off"
+    ],
+    "DryGround_TR_Bend": [
+      "tristate",
+      "on",
+      "off",
+      "off",
+      "on",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_TL_Bend": [
+      "off",
+      "on",
+      "tristate",
+      "on",
+      "off",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_BL_Bend": [
+      "tristate",
+      "off",
+      "tristate",
+      "on",
+      "off",
+      "off",
+      "on",
+      "tristate"
+    ],
+    "DryGround_T": [
+      "tristate",
+      "on",
+      "tristate",
+      "off",
+      "off",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_TR": [
+      "tristate",
+      "on",
+      "on",
+      "off",
+      "on",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_TLR": [
+      "tristate",
+      "on",
+      "tristate",
+      "on",
+      "on",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_TL": [
+      "on",
+      "on",
+      "tristate",
+      "on",
+      "off",
+      "tristate",
+      "off",
+      "tristate"
+    ],
+    "DryGround_CornerTuft_BL_BR": [
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "off",
+      "on",
+      "off"
+    ],
+    "DryGround_CornerTuft_BL": [
+      "on",
+      "on",
+      "on",
+      "on",
+      "on",
+      "off",
+      "on",
+      "on"
+    ],
+    "DryGround_CornerTuft_TL_TR_BL": [
+      "off",
+      "on",
+      "off",
+      "on",
+      "on",
+      "off",
+      "on",
+      "on"
     ]
   }
 }

@@ -157,12 +157,17 @@ struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D
     return pRet;
 }
 
+TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y)
+{
+    return pLayer->Tiles + (x * pLayer->widthTiles + y);
+}
+
 TileIndex* WfGetTileAtPoint(vec2 pt, struct GameLayer2DData* pData, int tileLayer, int* pXOut, int* pYOut)
 {
     int iX = ((int)pt[0] / (int)pData->tilemap.layers[tileLayer].tileWidthPx);
     int iY = ((int)pt[1] / (int)pData->tilemap.layers[tileLayer].tileHeightPx);
     struct TileMapLayer* pLayer = &pData->tilemap.layers[tileLayer];
-    TileIndex* pIndex = pLayer->Tiles + (iY * pLayer->widthTiles + iX);
+    TileIndex* pIndex = WfGetTileAtXY(pLayer, iX, iY);
     *pXOut = iX;
     *pYOut = iY;
     return pIndex;
@@ -181,3 +186,41 @@ TileIndex* WfGetTileInFrontOfPlayer(struct GameLayer2DData* pData, struct WfPlay
     return WfGetTileAtPoint(pt, pData, tileLayer, pXOut, pYOut);
 }
 
+static bool IsIndexInSet(TileIndex index, TileIndex* indices, int numIndices)
+{
+    for(int i=0; i<numIndices; i++)
+    {
+        if(indices[i] == index)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer, TileIndex* indices, int numIndices)
+{
+    u8 r = 0;
+    struct TileMapLayer* pLayer = &tilemap->layers[layer];
+    TileIndex indices[8] = {
+        *(WfGetTileAtXY(pLayer, tileX-1, tileY-1)),
+        *(WfGetTileAtXY(pLayer, tileX,   tileY-1)),
+        *(WfGetTileAtXY(pLayer, tileX+1, tileY-1)),
+
+        *(WfGetTileAtXY(pLayer, tileX-1, tileY)),
+        *(WfGetTileAtXY(pLayer, tileX,   tileY)),
+        *(WfGetTileAtXY(pLayer, tileX+1, tileY)),
+
+        *(WfGetTileAtXY(pLayer, tileX-1, tileY+1)),
+        *(WfGetTileAtXY(pLayer, tileX,   tileY+1)),
+        *(WfGetTileAtXY(pLayer, tileX+1, tileY+1)),
+    };
+    for(int i=0; i<8; i++)
+    {
+        if(IsIndexInSet(indices[i], indices, numIndices))
+        {
+            r |= (1 << i);
+        }
+    }
+    return r;
+}

@@ -159,7 +159,7 @@ struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D
 
 TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y)
 {
-    return pLayer->Tiles + (x * pLayer->widthTiles + y);
+    return pLayer->Tiles + (y * pLayer->widthTiles + x);
 }
 
 TileIndex* WfGetTileAtPoint(vec2 pt, struct GameLayer2DData* pData, int tileLayer, int* pXOut, int* pYOut)
@@ -202,7 +202,7 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
 {
     u8 r = 0;
     struct TileMapLayer* pLayer = &tilemap->layers[layer];
-    TileIndex indices[8] = {
+    TileIndex indices_surrounding[8] = {
         *(WfGetTileAtXY(pLayer, tileX-1, tileY-1)),
         *(WfGetTileAtXY(pLayer, tileX,   tileY-1)),
         *(WfGetTileAtXY(pLayer, tileX+1, tileY-1)),
@@ -217,7 +217,7 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
     };
     for(int i=0; i<8; i++)
     {
-        if(IsIndexInSet(indices[i], indices, numIndices))
+        if(IsIndexInSet(indices_surrounding[i], indices, numIndices))
         {
             r |= (1 << i);
         }

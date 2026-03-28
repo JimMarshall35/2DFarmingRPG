@@ -241,12 +241,14 @@ options:
                         atlas_xml produced by compile_assets.sh
   --json JSON           json file output by this tool
 ```
-![Image title](images/LUT_Tool.png){ align=left }
+![Image title](images/LUT_Tool.png)
 
 It can load the names of tiles from the named tile section of an atlas xml file, and can output a json file (which can be reloaded by the tool) or a C file and header file lookup table.
 
 Set the locations of surrounding tiles which if they occur should result in the selected tile being chosen.
 The grid of check boxes on the right signify symbolize tiles to the tile chosen in the listbox.
+
+
 - A solid check mark indicates there's a tile there, 
 - an unchecked check mark indicates no tile, 
 - a greyed out one indicates there can be a tile or not.
@@ -331,7 +333,7 @@ The tile name specified under defaul tile is put into all slots in the table tha
 
 You can use it to fit the correct tiles together in your game for things like this:
 
-![Image title](images/Hoe.png){ align=left }
+![Image title](images/Hoe.png)
 
 Calculate an 8 bit index into the array where a bit should be set if the tile is any in gDryGroundLUT_Names and unset for anything else.
 

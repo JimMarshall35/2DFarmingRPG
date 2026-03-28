@@ -18,6 +18,7 @@
 #include "WfNetwork.h"
 #include "main.h"
 #include "cwalk.h"
+#include "WfItem.h"
 
 void WfPublishInventoryChangedEvent()
 {
@@ -85,6 +86,16 @@ void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
     struct WfGameLayerData* pWfData = pEngineLayer->pUserData;
     pWfData->HUDPushedEventListener = Ev_SubscribeEvent("onHUDLayerPushed", &WfOnHUDLayerPushed, pLayer);
     pWfData->SettingsPushedEventListener = Ev_SubscribeEvent("onSettingsMenuPushed", &WfOnSettingsLayerPushed, pLayer);
+
+    int num = 0;
+    struct WfItemDef* pDefs = WfGetItemDefs(&num);
+    for(int i=0; i<num; i++)
+    {
+        if(pDefs[i].onGameLayerPush)
+        {
+            pDefs[i].onGameLayerPush(pDefs + i, pLayer, drawContext, inputContext);
+        }
+    }
 }
 
 void WfPreLoadLevel(struct GameLayer2DData* pEngineLayer)
@@ -101,6 +112,16 @@ void WfGameLayerOnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawContex
     Ev_UnsubscribeEvent(pWFUserData->HUDPushedEventListener);
     Ev_UnsubscribeEvent(pWFUserData->SettingsPushedEventListener);
     free(pEngineLayer->pUserData);
+
+    int num = 0;
+    struct WfItemDef* pDefs = WfGetItemDefs(&num);
+    for(int i=0; i<num; i++)
+    {
+        if(pDefs[i].onGameLayerPop)
+        {
+            pDefs[i].onGameLayerPop(pDefs + i, pLayer, drawContext, inputContext);
+        }
+    }
     
 }
 

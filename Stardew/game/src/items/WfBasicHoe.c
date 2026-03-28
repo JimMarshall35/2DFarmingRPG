@@ -12,6 +12,7 @@
 #include "Atlas.h"
 #include "IntTypes.h"
 #include "Log.h"
+#include "WfDryGroundLUT.h"
 
 #define HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER 32
 
@@ -26,6 +27,99 @@ struct HoeUseContext
 
 static OBJECT_POOL(struct HoeUseContext) gHoeUseContextPool;
 
+static VECTOR(TileIndex) gTilledTileIndices;
+
+static bool TileVectorContains(TileIndex t)
+{
+    for(int i=0; i<VectorSize(gTilledTileIndices); i++)
+    {
+        if(gTilledTileIndices[i] == t)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+static void SetTileTilled(int x, int y, TileIndex* pIndex, struct TileMap* pTM, hAtlas atlas)
+{
+    u8 index = WfGetTerrainLUTIndex(x, y, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+    TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+    *pIndex = t;
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x - 1, y -1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x - 1, y - 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x, y -1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x, y - 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x + 1, y - 1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x + 1, y - 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x - 1, y);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x - 1, y, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x + 1, y);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x + 1, y, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x - 1, y + 1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x - 1, y + 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x, y + 1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x, y + 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+
+    pIndex = WfGetTileAtXY(&pTM->layers[0], x + 1, y + 1);
+    t = *pIndex;
+    if(TileVectorContains(t))
+    {
+        u8 index = WfGetTerrainLUTIndex(x + 1, y + 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+        TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
+        *pIndex = t;
+    }
+}
+
 static bool ProcessHoeUsage(struct SDTimer* pTimer)
 {
     struct HoeUseContext* pCtx = &gHoeUseContextPool[(HGeneric)pTimer->pUserData];
@@ -39,8 +133,7 @@ static bool ProcessHoeUsage(struct SDTimer* pTimer)
 
     if(pIndex)
     {
-        TileIndex t = At_LookupNamedTile(pCtx->pData->hAtlas, "DryGround_Center");
-        *pIndex = t;
+        SetTileTilled(x, y, pIndex, &pCtx->pData->tilemap, pCtx->pData->hAtlas);
     }
 
     FreeObjectPoolIndex(gHoeUseContextPool, (HGeneric)pTimer->pUserData);
@@ -73,6 +166,22 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfToolAnimationLayer);
     WfSetPlayerOverlayAnimations(pEntData->directionFacing, pLayer, pEntData, pPlayer);
     pComp->data.spriteAnimator.onSprite = 0;
+}
+
+static void OnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+{
+    struct GameLayer2DData* pEngineLayer = pLayer->userData;
+    gTilledTileIndices = VectorClear(gTilledTileIndices);
+    for(int i=0; i<DryGroundLUT_NamesLen; i++)
+    {
+        TileIndex t = At_LookupNamedTile(pEngineLayer->hAtlas, gDryGroundLUT_Names[i]);
+        gTilledTileIndices = VectorPush(gTilledTileIndices, &t);
+    }
+}
+
+static void OnGameLayerPop(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+{
+
 }
 
 static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
@@ -121,10 +230,13 @@ static struct WfItemDef gDef =
     .onUseAnimation = WfThrustAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "basic-hoe",
+    .onGameLayerPush = &OnGameLayerPush
 };
 
 void WfAddBasicHoeDef()
 {
     gHoeUseContextPool = NEW_OBJECT_POOL(struct HoeUseContext, 4);
+    gTilledTileIndices = NEW_VECTOR(TileIndex);
+    gTilledTileIndices = VectorResize(gTilledTileIndices, DryGroundLUT_NamesLen);
     WfAddItemDef(&gDef);
 }

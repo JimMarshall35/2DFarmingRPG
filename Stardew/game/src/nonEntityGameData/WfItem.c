@@ -76,3 +76,10 @@ const struct WfItemDef* WfGetItemDef(int itemIndex)
     }
     return &gItemDefs[itemIndex];
 }
+
+struct WfItemDef* WfGetItemDefs(int* numDefs)
+{
+    *numDefs = VectorSize(gItemDefs);
+    return gItemDefs;
+}
+

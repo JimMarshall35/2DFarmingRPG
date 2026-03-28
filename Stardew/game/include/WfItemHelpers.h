@@ -14,6 +14,7 @@ struct GameLayer2DData;
 enum WfDirection;
 struct WfPlayerEntData;
 struct TileMap;
+struct TileMapLayer;
 
 struct WfSearchFan
 {
@@ -68,5 +69,8 @@ TileIndex* WfGetTileInFrontOfPlayer(
 /// @param numIndices 
 /// @return 
 u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer, TileIndex* indices, int numIndices);
+
+
+TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y);
 
 #endif

@@ -29,6 +29,11 @@ static OBJECT_POOL(struct HoeUseContext) gHoeUseContextPool;
 
 static VECTOR(TileIndex) gTilledTileIndices;
 
+#define NUM_GRASS_TILES 3
+TileIndex gGrassTileIndices[NUM_GRASS_TILES] = {
+    0,0,0
+};
+
 static bool TileVectorContains(TileIndex t)
 {
     for(int i=0; i<VectorSize(gTilledTileIndices); i++)
@@ -142,6 +147,20 @@ static bool ProcessHoeUsage(struct SDTimer* pTimer)
     TileIndex* pIndex = WfGetTileInFrontOfPlayer(
         pCtx->pData, pPlayerData, HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER, pCtx->hEntPlayer, 0, &x, &y);
 
+    bool bIsGrassTile = false;
+    for(int i=0; i<NUM_GRASS_TILES; i++)
+    {
+        if(gGrassTileIndices[i] == *pIndex)
+        {
+            bIsGrassTile = true;
+            break;
+        }
+    }
+    if(!bIsGrassTile)
+    {
+        return true;
+    }
+
     if(pIndex)
     {
         SetTileTilled(x, y, pIndex, &pCtx->pData->tilemap, pCtx->pData->hAtlas);
@@ -188,6 +207,9 @@ static void OnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* p
         TileIndex t = At_LookupNamedTile(pEngineLayer->hAtlas, gDryGroundLUT_Names[i]);
         gTilledTileIndices = VectorPush(gTilledTileIndices, &t);
     }
+    gGrassTileIndices[0] = At_LookupNamedTile(pEngineLayer->hAtlas, "grass_1");
+    gGrassTileIndices[1] = At_LookupNamedTile(pEngineLayer->hAtlas, "grass_2");
+    gGrassTileIndices[2] = At_LookupNamedTile(pEngineLayer->hAtlas, "grass_3");
 }
 
 static void OnGameLayerPop(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)

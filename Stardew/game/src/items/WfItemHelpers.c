@@ -208,7 +208,6 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
         *(WfGetTileAtXY(pLayer, tileX+1, tileY-1)),
 
         *(WfGetTileAtXY(pLayer, tileX-1, tileY)),
-        *(WfGetTileAtXY(pLayer, tileX,   tileY)),
         *(WfGetTileAtXY(pLayer, tileX+1, tileY)),
 
         *(WfGetTileAtXY(pLayer, tileX-1, tileY+1)),

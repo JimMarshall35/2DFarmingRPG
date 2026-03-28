@@ -44,6 +44,16 @@ static bool TileVectorContains(TileIndex t)
 static void SetTileTilled(int x, int y, TileIndex* pIndex, struct TileMap* pTM, hAtlas atlas)
 {
     u8 index = WfGetTerrainLUTIndex(x, y, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+    Log_Info("\n%i%i%i\n%i_%i\n%i%i%i\n",
+        (index & (1 << 0)) == 0 ? 0 : 1,
+        (index & (1 << 1)) == 0 ? 0 : 1,
+        (index & (1 << 2)) == 0 ? 0 : 1,
+        (index & (1 << 3)) == 0 ? 0 : 1,
+        (index & (1 << 4)) == 0 ? 0 : 1,
+        (index & (1 << 5)) == 0 ? 0 : 1,
+        (index & (1 << 6)) == 0 ? 0 : 1,
+        (index & (1 << 7)) == 0 ? 0 : 1
+    );
     TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
     *pIndex = t;
 
@@ -52,6 +62,7 @@ static void SetTileTilled(int x, int y, TileIndex* pIndex, struct TileMap* pTM, 
     if(TileVectorContains(t))
     {
         u8 index = WfGetTerrainLUTIndex(x - 1, y - 1, pTM, 0, gTilledTileIndices, VectorSize(gTilledTileIndices));
+
         TileIndex t = At_LookupNamedTile(atlas, gDryGroundLUT[index]);
         *pIndex = t;
     }

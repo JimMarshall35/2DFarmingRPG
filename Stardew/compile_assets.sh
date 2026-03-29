@@ -4,7 +4,7 @@
 #
 
 # convert jsons from the Tiled editor to binary files containing tilemaps and entities + an atlas.xml file of the tiles used
-python3 game/game_convert_tiled.py ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json 
+python3 -m game.game_convert_tiled ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json 
 
 # expand animation nodes
 python3 ./engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites.xml

@@ -1,5 +1,5 @@
 
-python engine/scripts/ConvertTiled.py ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json -a engine/scripts/AtlasTool.exe -bmp Atlas.bmp -iw 128 -ih 128
+python -m game.game_convert_tiled ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json -a engine/scripts/AtlasTool.exe -bmp Atlas.bmp -iw 128 -ih 128
 
 python ./engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites.xml
 

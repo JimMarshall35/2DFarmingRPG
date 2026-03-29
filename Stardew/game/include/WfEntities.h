@@ -10,7 +10,6 @@ enum WfEntityTypes
     WfEntityType_DebrisField,
     WfEntityType_Tree,
     WfEntityType_Rock,
-    WfEntityType_Log,
     WfEntityType_Player,
     WfEntityType_ItemPickup,
 };

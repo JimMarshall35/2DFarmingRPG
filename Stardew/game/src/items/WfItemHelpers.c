@@ -29,9 +29,6 @@ bool WfGetEntityGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
     case WfEntityType_Rock:
         EASSERT("Not implemented yet but will need to be so assert(false) as a reminder" && false);
         return false;
-    case WfEntityType_Log:
-        EASSERT("Not implemented yet but will need to be so assert(false) as a reminder" && false);
-        return false;
     case WfEntityType_Player:
         WfPlayerGetGroundContactPoint(pEnt, outPoint);
         return true;

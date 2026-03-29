@@ -15,11 +15,8 @@
 /* Tree */
 #include "WfTree.h"
 
-/* Rock */
-#include "WfRock.h"
-
-/* Log */
-#include "WfLog.h"
+/* Debris */
+#include "WfDebris.h"
 
 /* Player */
 #include "WfPlayer.h"
@@ -33,8 +30,7 @@ static struct EntitySerializerPair gWoodedAreaSerializer  = { .serialize = &WfSe
 static struct EntitySerializerPair gDebrisFieldSerializer = { .serialize = &WfSerializeDebrisFieldEntity, .deserialize = &WfDeSerializeDebrisFieldEntity };
 
 static struct EntitySerializerPair gTreeSerializer        = { .serialize = &WfSerializeTreeEntity,         .deserialize = &WfDeSerializeTreeEntity };
-static struct EntitySerializerPair gRockSerializer        = { .serialize = &WfSerializeLogEntity,          .deserialize = &WfDeSerializeRockEntity }; 
-static struct EntitySerializerPair gLogSerializer         = { .serialize = &WfSerializeLogEntity,          .deserialize = &WfDeSerializeLogEntity };
+static struct EntitySerializerPair gRockSerializer        = { .serialize = &WfSerializeDebrisEntity,         .deserialize = &WfDeSerializeDebrisEntity }; 
 static struct EntitySerializerPair gPlayerSerializer      = { .serialize = &WfSerializePlayerEntity,       .deserialize = &WfDeSerializePlayerEntity };
 static struct EntitySerializerPair gPickupSerializer      = { .serialize = &WfDeSerializeItemPickupEntity, .deserialize = &WfDeSerializeItemPickupEntity };
 
@@ -46,7 +42,6 @@ void WfRegisterEntityTypes()
     Et2D_RegisterEntityType(WfEntityType_DebrisField, &gDebrisFieldSerializer);
     Et2D_RegisterEntityType(WfEntityType_Tree, &gTreeSerializer);
     Et2D_RegisterEntityType(WfEntityType_Rock, &gRockSerializer);
-    Et2D_RegisterEntityType(WfEntityType_Log, &gLogSerializer);
     Et2D_RegisterEntityType(WfEntityType_Player, &gPlayerSerializer);
     Et2D_RegisterEntityType(WfEntityType_ItemPickup, &gPickupSerializer);
 }

@@ -556,18 +556,23 @@
                  "properties":[
                         {
                          "name":"BigRocksPercentage",
-                         "type":"string",
-                         "value":"0.1"
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
                         }, 
                         {
                          "name":"LogsPercentage",
-                         "type":"string",
-                         "value":"0.4"
+                         "type":"float",
+                         "value":0.4
                         }, 
                         {
                          "name":"RocksPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }],
                  "rotation":0,
                  "type":"DebrisField",
@@ -584,18 +589,23 @@
                  "properties":[
                         {
                          "name":"BigRocksPercentage",
-                         "type":"string",
-                         "value":"0.1"
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
                         }, 
                         {
                          "name":"LogsPercentage",
-                         "type":"string",
-                         "value":"0.4"
+                         "type":"float",
+                         "value":0.4
                         }, 
                         {
                          "name":"RocksPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }],
                  "rotation":0,
                  "type":"DebrisField",
@@ -612,18 +622,23 @@
                  "properties":[
                         {
                          "name":"BigRocksPercentage",
-                         "type":"string",
-                         "value":"0.0"
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
                         }, 
                         {
                          "name":"LogsPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }, 
                         {
                          "name":"RocksPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }],
                  "rotation":0,
                  "type":"DebrisField",
@@ -640,18 +655,23 @@
                  "properties":[
                         {
                          "name":"BigRocksPercentage",
-                         "type":"string",
-                         "value":"0.0"
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
                         }, 
                         {
                          "name":"LogsPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }, 
                         {
                          "name":"RocksPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }],
                  "rotation":0,
                  "type":"DebrisField",
@@ -668,18 +688,23 @@
                  "properties":[
                         {
                          "name":"BigRocksPercentage",
-                         "type":"string",
-                         "value":"0.0"
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
                         }, 
                         {
                          "name":"LogsPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }, 
                         {
                          "name":"RocksPercentage",
-                         "type":"string",
-                         "value":"0.5"
+                         "type":"float",
+                         "value":0.5
                         }],
                  "rotation":0,
                  "type":"DebrisField",

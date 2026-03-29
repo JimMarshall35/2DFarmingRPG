@@ -44,21 +44,21 @@ void WfGetTreeSprites(struct WfTreeSprites* spritesPerSeason, hAtlas atlas)
 
 static void GetDebrisSprites(struct WfDebrisSprites* debrisSpritesPerSeason, hAtlas atlas)
 {
-    debrisSpritesPerSeason[Spring].debrisWood = At_LookupNamedTile("environment_stump", atlas);
-    debrisSpritesPerSeason[Spring].rock1      = At_LookupNamedTile("rock1", atlas);
-    debrisSpritesPerSeason[Spring].rock2      = At_LookupNamedTile("rock2", atlas);
+    debrisSpritesPerSeason[Spring].debrisWood = At_LookupNamedTile(atlas, "environment_stump");
+    debrisSpritesPerSeason[Spring].rock1      = At_LookupNamedTile(atlas, "rock1");
+    debrisSpritesPerSeason[Spring].rock2      = At_LookupNamedTile(atlas, "rock2");
 
-    debrisSpritesPerSeason[Summer].debrisWood = At_LookupNamedTile("environment_stump", atlas);
-    debrisSpritesPerSeason[Summer].rock1      = At_LookupNamedTile("rock1", atlas);
-    debrisSpritesPerSeason[Summer].rock2      = At_LookupNamedTile("rock2", atlas);
+    debrisSpritesPerSeason[Summer].debrisWood = At_LookupNamedTile(atlas, "environment_stump");
+    debrisSpritesPerSeason[Summer].rock1      = At_LookupNamedTile(atlas, "rock1");
+    debrisSpritesPerSeason[Summer].rock2      = At_LookupNamedTile(atlas, "rock2");
 
-    debrisSpritesPerSeason[Autumn].debrisWood = At_LookupNamedTile("environment_stump", atlas);
-    debrisSpritesPerSeason[Autumn].rock1      = At_LookupNamedTile("rock1", atlas);
-    debrisSpritesPerSeason[Autumn].rock2      = At_LookupNamedTile("rock2", atlas);
+    debrisSpritesPerSeason[Autumn].debrisWood = At_LookupNamedTile(atlas, "environment_stump");
+    debrisSpritesPerSeason[Autumn].rock1      = At_LookupNamedTile(atlas, "rock1");
+    debrisSpritesPerSeason[Autumn].rock2      = At_LookupNamedTile(atlas, "rock2");
 
-    debrisSpritesPerSeason[Winter].debrisWood = At_LookupNamedTile("environment_stump", atlas);
-    debrisSpritesPerSeason[Winter].rock1      = At_LookupNamedTile("rock1", atlas);
-    debrisSpritesPerSeason[Winter].rock2      = At_LookupNamedTile("rock2", atlas);
+    debrisSpritesPerSeason[Winter].debrisWood = At_LookupNamedTile(atlas, "environment_stump");
+    debrisSpritesPerSeason[Winter].rock1      = At_LookupNamedTile(atlas, "rock1");
+    debrisSpritesPerSeason[Winter].rock2      = At_LookupNamedTile(atlas, "rock2");
 }
 
 

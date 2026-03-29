@@ -8,6 +8,7 @@
 #include "WfPersistantGameData.h"
 #include "WfEntityMessages.h"
 #include "WfItemPickup.h"
+#include "WfDebrisField.h"
 
 void WfInit()
 {
@@ -20,5 +21,6 @@ void WfInit()
     WfPersistantDataInit();
     WfInitEntityMessages();
     WfInitItemPickup();
+    WfDebrisFieldInit();
 }
 

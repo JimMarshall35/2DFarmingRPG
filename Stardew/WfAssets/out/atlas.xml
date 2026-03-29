@@ -1,4 +1,4 @@
-<atlas tilesetStart="0" tilesetEnd="198">
+<atlas tilesetStart="0" tilesetEnd="201">
     <sprite source="./WfAssets/Image/LPC Submissions/Jims_Ground_Tiles.png" top="0" left="0" width="32" height="32" name="Jims_Ground_Tiles_0" />
     <sprite source="./WfAssets/Image/LPC Submissions/Jims_Ground_Tiles.png" top="0" left="32" width="32" height="32" name="Jims_Ground_Tiles_1" />
     <sprite source="./WfAssets/Image/LPC Submissions/Jims_Ground_Tiles.png" top="0" left="64" width="32" height="32" name="Jims_Ground_Tiles_2" />
@@ -112,107 +112,113 @@
     <sprite source="./WfAssets/Image/LPC Submissions/Exterior Tiles.png" top="224" left="32" width="32" height="32" name="Exterior Tiles_110" />
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="96" left="992" width="32" height="32" name="Terrain and Outside_111" />
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="0" left="0" width="32" height="32" name="Terrain and Outside_112" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="128" width="32" height="32" name="Terrain and Outside_113" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="160" width="32" height="32" name="Terrain and Outside_114" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="192" width="32" height="32" name="Terrain and Outside_115" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="96" width="32" height="32" name="Terrain and Outside_113" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="128" width="32" height="32" name="Terrain and Outside_114" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="160" width="32" height="32" name="Terrain and Outside_115" />
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="192" width="32" height="32" name="Terrain and Outside_116" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="160" width="32" height="32" name="Terrain and Outside_117" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="160" width="32" height="32" name="Terrain and Outside_118" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="768" width="32" height="32" name="Terrain and Outside_119" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="800" width="32" height="32" name="Terrain and Outside_120" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="832" width="32" height="32" name="Terrain and Outside_121" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="864" width="32" height="32" name="Terrain and Outside_122" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="896" width="32" height="32" name="Terrain and Outside_123" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="256" left="832" width="32" height="32" name="Terrain and Outside_124" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="928" width="32" height="32" name="Terrain and Outside_125" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="128" left="992" width="32" height="32" name="Terrain and Outside_126" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="160" width="32" height="32" name="Terrain and Outside_127" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="192" width="32" height="32" name="Terrain and Outside_128" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="768" width="32" height="32" name="Terrain and Outside_129" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="800" width="32" height="32" name="Terrain and Outside_130" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="832" width="32" height="32" name="Terrain and Outside_131" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="864" width="32" height="32" name="Terrain and Outside_132" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="896" width="32" height="32" name="Terrain and Outside_133" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="800" width="32" height="32" name="Terrain and Outside_134" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="832" width="32" height="32" name="Terrain and Outside_135" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="928" width="32" height="32" name="Terrain and Outside_136" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="32" left="992" width="32" height="32" name="Terrain and Outside_137" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="992" width="32" height="32" name="Terrain and Outside_138" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="128" width="32" height="32" name="Terrain and Outside_139" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="160" width="32" height="32" name="Terrain and Outside_140" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="192" width="32" height="32" name="Terrain and Outside_141" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="768" width="32" height="32" name="Terrain and Outside_142" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="800" width="32" height="32" name="Terrain and Outside_143" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="832" width="32" height="32" name="Terrain and Outside_144" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="800" width="32" height="32" name="Terrain and Outside_145" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="832" width="32" height="32" name="Terrain and Outside_146" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="896" width="32" height="32" name="Terrain and Outside_147" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="864" width="32" height="32" name="Terrain and Outside_148" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="864" width="32" height="32" name="Terrain and Outside_149" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="896" width="32" height="32" name="Terrain and Outside_150" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="928" width="32" height="32" name="Terrain and Outside_151" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="928" width="32" height="32" name="Terrain and Outside_152" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="64" left="992" width="32" height="32" name="Terrain and Outside_153" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="128" width="32" height="32" name="Terrain and Outside_154" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="160" width="32" height="32" name="Terrain and Outside_155" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="192" width="32" height="32" name="Terrain and Outside_156" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="0" width="32" height="32" name="Terrain and Outside_157" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="32" width="32" height="32" name="Terrain and Outside_158" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="64" width="32" height="32" name="Terrain and Outside_159" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="96" width="32" height="32" name="Terrain and Outside_160" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="128" width="32" height="32" name="Terrain and Outside_161" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="384" width="32" height="32" name="Terrain and Outside_162" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="416" width="32" height="32" name="Terrain and Outside_163" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="448" width="32" height="32" name="Terrain and Outside_164" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="864" width="32" height="32" name="Terrain and Outside_165" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="896" width="32" height="32" name="Terrain and Outside_166" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="928" width="32" height="32" name="Terrain and Outside_167" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="896" left="576" width="32" height="32" name="Interior_168" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="608" width="32" height="32" name="Interior_169" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="640" width="32" height="32" name="Interior_170" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="256" left="800" width="32" height="32" name="Interior_171" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="64" width="32" height="32" name="Interior_172" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="320" width="32" height="32" name="Interior_173" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="352" width="32" height="32" name="Interior_174" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="384" width="32" height="32" name="Interior_175" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="608" width="32" height="32" name="Interior_176" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="640" width="32" height="32" name="Interior_177" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="640" width="32" height="32" name="Interior_178" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="800" width="32" height="32" name="Interior_179" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="864" width="32" height="32" name="Interior_180" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="64" width="32" height="32" name="Interior_181" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="320" width="32" height="32" name="Interior_182" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="352" width="32" height="32" name="Interior_183" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="384" width="32" height="32" name="Interior_184" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="576" width="32" height="32" name="Interior_185" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="608" width="32" height="32" name="Interior_186" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="640" width="32" height="32" name="Interior_187" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="608" width="32" height="32" name="Interior_188" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="640" width="32" height="32" name="Interior_189" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="640" width="32" height="32" name="Interior_190" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="672" width="32" height="32" name="Interior_191" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="992" left="352" width="32" height="32" name="Interior_192" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="576" width="32" height="32" name="Interior_193" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="608" width="32" height="32" name="Interior_194" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="640" width="32" height="32" name="Interior_195" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_196" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_197" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="192" width="32" height="32" name="Terrain and Outside_117" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="896" left="160" width="32" height="32" name="Terrain and Outside_118" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="128" width="32" height="32" name="Terrain and Outside_119" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="160" width="32" height="32" name="Terrain and Outside_120" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="768" width="32" height="32" name="Terrain and Outside_121" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="800" width="32" height="32" name="Terrain and Outside_122" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="768" left="832" width="32" height="32" name="Terrain and Outside_123" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="864" width="32" height="32" name="Terrain and Outside_124" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="896" width="32" height="32" name="Terrain and Outside_125" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="256" left="832" width="32" height="32" name="Terrain and Outside_126" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="384" left="928" width="32" height="32" name="Terrain and Outside_127" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="128" left="992" width="32" height="32" name="Terrain and Outside_128" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="160" width="32" height="32" name="Terrain and Outside_129" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="192" width="32" height="32" name="Terrain and Outside_130" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="768" width="32" height="32" name="Terrain and Outside_131" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="800" width="32" height="32" name="Terrain and Outside_132" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="800" left="832" width="32" height="32" name="Terrain and Outside_133" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="864" width="32" height="32" name="Terrain and Outside_134" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="896" width="32" height="32" name="Terrain and Outside_135" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="800" width="32" height="32" name="Terrain and Outside_136" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="544" left="960" width="32" height="32" name="Terrain and Outside_137" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="832" width="32" height="32" name="Terrain and Outside_138" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="416" left="928" width="32" height="32" name="Terrain and Outside_139" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="32" left="992" width="32" height="32" name="Terrain and Outside_140" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="288" left="992" width="32" height="32" name="Terrain and Outside_141" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="128" width="32" height="32" name="Terrain and Outside_142" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="160" width="32" height="32" name="Terrain and Outside_143" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="192" width="32" height="32" name="Terrain and Outside_144" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="768" width="32" height="32" name="Terrain and Outside_145" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="800" width="32" height="32" name="Terrain and Outside_146" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="192" left="832" width="32" height="32" name="Terrain and Outside_147" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="800" width="32" height="32" name="Terrain and Outside_148" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="832" left="832" width="32" height="32" name="Terrain and Outside_149" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="896" width="32" height="32" name="Terrain and Outside_150" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="576" left="960" width="32" height="32" name="Terrain and Outside_151" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="704" left="992" width="32" height="32" name="Terrain and Outside_152" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="864" width="32" height="32" name="Terrain and Outside_153" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="864" width="32" height="32" name="Terrain and Outside_154" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="896" width="32" height="32" name="Terrain and Outside_155" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="448" left="928" width="32" height="32" name="Terrain and Outside_156" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="128" width="32" height="32" name="Terrain and Outside_157" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="160" width="32" height="32" name="Terrain and Outside_158" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="864" left="192" width="32" height="32" name="Terrain and Outside_159" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="320" left="928" width="32" height="32" name="Terrain and Outside_160" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="64" left="992" width="32" height="32" name="Terrain and Outside_161" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="0" width="32" height="32" name="Terrain and Outside_162" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="32" width="32" height="32" name="Terrain and Outside_163" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="64" width="32" height="32" name="Terrain and Outside_164" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="384" width="32" height="32" name="Terrain and Outside_165" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="416" width="32" height="32" name="Terrain and Outside_166" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="448" width="32" height="32" name="Terrain and Outside_167" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="864" width="32" height="32" name="Terrain and Outside_168" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="896" width="32" height="32" name="Terrain and Outside_169" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="928" width="32" height="32" name="Terrain and Outside_170" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="896" left="576" width="32" height="32" name="Interior_171" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="608" width="32" height="32" name="Interior_172" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="640" width="32" height="32" name="Interior_173" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="256" left="800" width="32" height="32" name="Interior_174" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="64" width="32" height="32" name="Interior_175" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="320" width="32" height="32" name="Interior_176" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="352" width="32" height="32" name="Interior_177" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="384" width="32" height="32" name="Interior_178" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="608" width="32" height="32" name="Interior_179" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="640" width="32" height="32" name="Interior_180" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="640" width="32" height="32" name="Interior_181" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="800" width="32" height="32" name="Interior_182" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="864" width="32" height="32" name="Interior_183" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="64" width="32" height="32" name="Interior_184" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="320" width="32" height="32" name="Interior_185" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="352" width="32" height="32" name="Interior_186" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="384" width="32" height="32" name="Interior_187" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="576" width="32" height="32" name="Interior_188" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="608" width="32" height="32" name="Interior_189" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="640" width="32" height="32" name="Interior_190" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="608" width="32" height="32" name="Interior_191" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="640" width="32" height="32" name="Interior_192" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="640" width="32" height="32" name="Interior_193" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="672" width="32" height="32" name="Interior_194" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="992" left="352" width="32" height="32" name="Interior_195" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="576" width="32" height="32" name="Interior_196" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="608" width="32" height="32" name="Interior_197" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="640" width="32" height="32" name="Interior_198" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_199" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_200" />
     <named-tiles>
-     <mapping name="grass_1" index="163" />
-     <mapping name="grass_2" index="164" />
-     <mapping name="grass_3" index="165" />
-     <mapping name="Tilled_Corner_BR" index="115" />
-     <mapping name="Tilled_Corner_BL" index="116" />
-     <mapping name="Tilled_Corner_TR" index="128" />
-     <mapping name="Tilled_Corner_TL" index="129" />
-     <mapping name="Tilled_TL" index="140" />
-     <mapping name="Tilled_TM" index="141" />
-     <mapping name="Tilled_TR" index="142" />
-     <mapping name="Tilled_ML" index="155" />
-     <mapping name="Tilled_M" index="156" />
-     <mapping name="Tilled_MR" index="157" />
-     <mapping name="Tilled_BL" index="114" />
-     <mapping name="Tilled_BM" index="118" />
+     <mapping name="grass_1" index="166" />
+     <mapping name="grass_2" index="167" />
+     <mapping name="grass_3" index="168" />
+     <mapping name="rock1" index="138" />
+     <mapping name="rock2" index="152" />
+     <mapping name="environment_stump" index="153" />
+     <mapping name="Tilled_Corner_BR" index="116" />
+     <mapping name="Tilled_Corner_BL" index="118" />
+     <mapping name="Tilled_Corner_TR" index="130" />
+     <mapping name="Tilled_Corner_TL" index="131" />
+     <mapping name="Tilled_TL" index="143" />
+     <mapping name="Tilled_TM" index="144" />
+     <mapping name="Tilled_TR" index="145" />
+     <mapping name="Tilled_ML" index="158" />
+     <mapping name="Tilled_M" index="159" />
+     <mapping name="Tilled_MR" index="160" />
+     <mapping name="Tilled_BL" index="115" />
+     <mapping name="Tilled_BM" index="119" />
      <mapping name="Tilled_BR" index="117" />
      <mapping name="DryGround_BR_Bend" index="2" />
      <mapping name="DryGround_Center" index="3" />

@@ -22,6 +22,18 @@
          "type":"grass_3"
         }, 
         {
+         "id":574,
+         "type":"rock1"
+        }, 
+        {
+         "id":606,
+         "type":"rock2"
+        }, 
+        {
+         "id":735,
+         "type":"environment_stump"
+        }, 
+        {
          "id":773,
          "type":"Tilled_Corner_BR"
         }, 

@@ -57,6 +57,7 @@ enum ComponentType
     ETE_DynamicCollider,
     ETE_TextSprite,
     ETE_SpriteAnimator,
+    ETE_Tiles, /* represents a collection of tiles in the tilemap */
     ETE_Last
 };
 
@@ -114,6 +115,17 @@ struct AnimatedSprite
     struct Transform2D transform;
 };
 
+#define TilesComponentMaxTiles 32
+struct TilesComponent
+{
+    struct EntityTile
+    {
+        int x, y, layer;
+        TileIndex tile;
+    }tiles[TilesComponentMaxTiles];
+    int numTiles;
+};
+
 /// @brief An entity component tagged union - there are a fixed number built into the engine
 struct Component2D
 {
@@ -129,6 +141,8 @@ struct Component2D
         struct TextSprite textSprite;
         
         struct AnimatedSprite spriteAnimator;
+
+        struct TilesComponent tiles;
     }data;
     
 };

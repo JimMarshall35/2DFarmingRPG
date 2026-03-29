@@ -86,7 +86,7 @@ void Entity2DInput(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, Inp
 
 void Entity2DOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer)
 {
-    Co_DestroyComponents(pEnt);
+    Co_DestroyComponents(pEnt, pLayer);
     struct GameLayer2DData* pData = pLayer->userData;
     if(pEnt->bKeepInDynamicList)
     {

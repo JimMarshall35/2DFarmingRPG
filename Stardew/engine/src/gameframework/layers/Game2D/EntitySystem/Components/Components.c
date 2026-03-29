@@ -10,7 +10,7 @@
 void Co_InitComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLayer)
 {
     struct GameLayer2DData* pGameLayerData = pLayer->userData;
-    for(int i=0; i<entity->numComponents; i++)
+    for(int i = 0; i < entity->numComponents; i++)
     {
         switch(entity->components[i].type)
         {
@@ -44,6 +44,19 @@ void Co_InitComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLaye
         case ETE_SpriteAnimator:
             AnimatedSprite_OnInit(&entity->components[i].data.spriteAnimator, entity, pLayer, 0.0f);
             break;
+        case ETE_Tiles:
+            {
+                struct TilesComponent* pTilesC = &entity->components[i].data.tiles;
+                struct GameLayer2DData* pData = pLayer->userData;
+
+                for(int i = 0; i < pTilesC->numTiles; i++)
+                {
+                    struct EntityTile* pTile = &pTilesC->tiles[i];
+                    struct TileMapLayer* pTMLayer = &pData->tilemap.layers[pTile->layer];
+                    pTMLayer->Tiles[pTile->y * pTMLayer->widthTiles + pTile->x] = pTile->tile;
+                }
+            }
+            break;
         default:
             EASSERT(false);
         }
@@ -65,6 +78,8 @@ void Co_UpdateComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLa
         case ETE_TextSprite:
             break;
         case ETE_SpriteAnimator: AnimatedSprite_OnUpdate(&entity->components[i].data.spriteAnimator, entity, pLayer, deltaT);
+            break;
+        case ETE_Tiles:
             break;
         default:
             EASSERT(false);
@@ -93,13 +108,15 @@ void Co_InputComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLay
             break;
         case ETE_SpriteAnimator:
             break;
+        case ETE_Tiles:
+            break;
         default:
             EASSERT(false);
         }
     }
 }
 
-void Co_DestroyComponents(struct Entity2D* entity)
+void Co_DestroyComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLayer)
 {
     for(int i=0; i<entity->numComponents; i++)
     {
@@ -116,6 +133,17 @@ void Co_DestroyComponents(struct Entity2D* entity)
         case ETE_TextSprite:
             break;
         case ETE_SpriteAnimator:
+            break;
+        case ETE_Tiles:
+            struct TilesComponent* pTilesC = &entity->components[i].data.tiles;
+            struct GameLayer2DData* pData = pLayer->userData;
+
+            for(int i = 0; i < pTilesC->numTiles; i++)
+            {
+                struct EntityTile* pTile = &pTilesC->tiles[i];
+                struct TileMapLayer* pTMLayer = &pData->tilemap.layers[pTile->layer];
+                pTMLayer->Tiles[pTile->y * pTMLayer->widthTiles + pTile->x] = 0;
+            }
             break;
         default:
             EASSERT(false);
@@ -165,6 +193,8 @@ void Co_DrawComponents(
                     pNextIndex
                 );
                 break;
+        case ETE_Tiles:
+            break;
         default:
             EASSERT(false);
         }

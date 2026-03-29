@@ -17,12 +17,19 @@ struct WfTreeSprites
 
     hSprite stump1;
     hSprite stump2;
+};
 
+struct WfDebrisSprites
+{
+    TileIndex rock1;
+    TileIndex rock2;
+    TileIndex debrisWood;
 };
 
 struct WfSprites
 {
     struct WfTreeSprites treeSpritesPerSeason[NumSeasons];
+    struct WfDebrisSprites debrisSpritesPerSeason[NumSeasons];
 };
 
 /* Populate the WfSprites struct with the sprites from the GameLayer2DData's atlas */

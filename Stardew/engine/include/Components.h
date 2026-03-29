@@ -15,7 +15,7 @@ void Co_UpdateComponents(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
 void Co_Entity2DUpdatePostPhysicsFn(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT);
 
 void Co_InputComponents(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, InputContext* context);
-void Co_DestroyComponents(struct Entity2D* entity);
+void Co_DestroyComponents(struct Entity2D* entity, struct GameFrameworkLayer* pLayer);
 void Co_DrawComponents(
     struct Entity2D* entity, 
     struct GameFrameworkLayer* pLayer,

@@ -13,6 +13,7 @@
 #include "IntTypes.h"
 #include "Log.h"
 #include "WfDryGroundLUT.h"
+#include "WfTileLayers.h"
 
 #define HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER 32
 
@@ -145,18 +146,28 @@ static bool ProcessHoeUsage(struct SDTimer* pTimer)
 
     int x, y;
     TileIndex* pIndex = WfGetTileInFrontOfPlayer(
-        pCtx->pData, pPlayerData, HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER, pCtx->hEntPlayer, 0, &x, &y);
+        pCtx->pData, pPlayerData, HOE_TILE_DISTANCE_IN_FRONT_OF_PLAYER, pCtx->hEntPlayer, WFLAYER_GROUND, &x, &y);
 
-    bool bIsGrassTile = false;
+    bool bIsTileAllowed = false;
     for(int i=0; i<NUM_GRASS_TILES; i++)
     {
+        /* don't allow to be used on any ground layer tile other than ones that form gGrassTileIndices */
         if(gGrassTileIndices[i] == *pIndex)
         {
-            bIsGrassTile = true;
+            bIsTileAllowed = true;
             break;
         }
     }
-    if(!bIsGrassTile)
+    if(bIsTileAllowed)
+    {
+        /* don't allow to be used if there is debris on top of the ground layer */
+        TileIndex* pIndex = WfGetTileAtXY(&pCtx->pData->tilemap.layers[WFLAYER_GROUND2], x, y);
+        if(*pIndex)
+        {
+            bIsTileAllowed = false;
+        }
+    }
+    if(!bIsTileAllowed)
     {
         return true;
     }

@@ -11,9 +11,14 @@
 #include "WfEntityMessages.h"
 #include "ZzFX.h"
 #include "Audio.h"
+#include "WfTileLayers.h"
 
-struct ZZFXSound gPickaxeHitRockSFX = {1.0,0.05,60.562,0.072,0.028,0.207,1,1.0,0.0,0.0,0.0,0.0,0.238,0.223,0.0,0.264,0.001,0.482,0.177,0.223,-3087.834};
-struct ZZFXSound gDestroyRockSFX = {1.0,0.05,80.562,0.038,0.257,0.308,5,1.0,-4.614,0.0,0.0,0.0,0.237,1.446,0.0,0.926,0.0,0.461,0.057,0.0,0.0};
+struct ZZFXSound gWrongDamageTypeSFX = {1.0,0.05,55.748,0.066,0.252,0.447,0,1.0,0.0,0.0,0.0,0.0,0.062,1.633,0.0,0.333,0.433,0.309,0.171,0.057,0.0};
+struct ZZFXSound gPickaxeHitRockSFX = {1.0,0.05,62.25,0.011,0.133,0.298,3,1.0,1.503,0.0,0.0,0.0,0.29,1.191,0.0,0.619,0.0,0.485,0.2,0.0,-2357.049};
+struct ZZFXSound gDestroyRockSFX = {1.0,0.05,88.199,0.028,0.125,0.42,5,1.0,0.0,4.522,0.0,0.0,0.0,0.359,6.641019,0.816,0.0,0.423,0.166,0.0,0.0};
+
+struct ZZFXSound gLogHitSFX = {1.0,0.05,63.14,0.049,0.086,0.203,2,1.0,3.678,-4.693,0.0,0.0,0.261,0.185,0.0,0.699,0.0,0.388,0.108,0.087,0.0};
+struct ZZFXSound gLogDestroySFX = {1.0,0.05,590.6,0.005,0.28,0.257,1,1.0,0.0,0.0,-196.86,0.159,0.165,0.12,15.624050000000004,0.168,0.0,0.635,0.227,0.421,0.0};
 
 struct WfDebrisData
 {
@@ -51,11 +56,21 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
             case WfPickaxeDamage:
                 if(pData->def.type == WfRockType1 || pData->def.type == WfRockType2)
                 {
+
                     pData->def.health -= pDamageMessage->damage;
                     if(pData->def.health <= 0)
                     {
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+                        Au_PlayZzFX(&gDestroyRockSFX);
                     }
+                    else
+                    {
+                        Au_PlayZzFX(&gPickaxeHitRockSFX);
+                    }
+                }
+                else
+                {
+                    Au_PlayZzFX(&gWrongDamageTypeSFX);
                 }
                 break;
             case WfAxeDamage:
@@ -65,7 +80,16 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
                     if(pData->def.health <= 0)
                     {
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+                        Au_PlayZzFX(&gLogDestroySFX);
                     }
+                    else
+                    {
+                        Au_PlayZzFX(&gLogHitSFX);
+                    }
+                }
+                else
+                {
+                    Au_PlayZzFX(&gWrongDamageTypeSFX);
                 }
                 break;
             }
@@ -104,7 +128,7 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
 
     pComponent1->type = ETE_Tiles;
     pComponent1->data.tiles.numTiles = 1;
-    pComponent1->data.tiles.tiles[0].layer = 1;
+    pComponent1->data.tiles.tiles[0].layer = WFLAYER_GROUND2;
     pComponent1->data.tiles.tiles[0].x = xTile;
     pComponent1->data.tiles.tiles[0].y = yTile;
     pComponent1->data.tiles.tiles[0].tile = sprites[def->type];

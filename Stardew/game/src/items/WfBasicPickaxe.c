@@ -6,6 +6,13 @@
 #include <stdlib.h>
 #include "EngineUtils.h"
 #include "Audio.h"
+#include "WfItemHelpers.h"
+#include "Maths.h"
+
+#define PICKAXE_FAN_LENGTH (64.0F)
+#define PICKAXE_FAN_WIDTH DEGREES_TO_RADIANS(45.0f)
+
+#define PICKAXE_DAMAGE 10.0f
 
 static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2.662,2.312,0.0,0.0,0.178,1.778,0.0,0.106,0.0,0.431,0.174,0.076,0.0};
 
@@ -46,17 +53,12 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
     pComp->data.spriteAnimator.bDraw = false;
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
-{
-    Au_PlayZzFX(&gSwingSound);
-    return true;
-}
-
 static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
 
+static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 
 static struct WfItemDef gDef = 
 {
@@ -70,6 +72,21 @@ static struct WfItemDef gDef =
     .bCanUseItem = true,
     .pickupSpriteName = "basic-pickaxe",
 };
+
+static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+{
+    Au_PlayZzFX(&gSwingSound);
+    struct WfDamagingWeaponDef def = {
+        .animation = WfSlashAnim,
+        .damageCalculationType = DCT_Constant,
+        .damageCalcData.damageConst = 10.0f,
+        .damageType = WfPickaxeDamage,
+        .fanLength = PICKAXE_FAN_LENGTH,
+        .fanWidth = PICKAXE_FAN_WIDTH,
+        .pItemDef = &gDef
+    };
+    return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
+}
 
 void WfAddBasicPickaxeDef()
 {

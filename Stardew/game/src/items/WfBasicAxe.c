@@ -63,25 +63,13 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
     pComp->data.spriteAnimator.bDraw = false;
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
-{
-    Au_PlayZzFX(&gSwingSound);
-    struct WfDamagingWeaponDef def = {
-        .animation = WfSlashAnim,
-        .damageCalculationType = DCT_Constant,
-        .damageCalcData.damageConst = AXE_DAMAGE,
-        .damageType = WfAxeDamage,
-        .fanLength = AXE_FAN_LENGTH,
-        .fanWidth = AXE_FAN_WIDTH
-    };
-    return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
-}
 
 static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
 
+static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 
 static struct WfItemDef gDef = 
 {
@@ -95,6 +83,21 @@ static struct WfItemDef gDef =
     .bCanUseItem = true,
     .pickupSpriteName = "basic-axe",
 };
+
+static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+{
+    Au_PlayZzFX(&gSwingSound);
+    struct WfDamagingWeaponDef def = {
+        .animation = WfSlashAnim,
+        .damageCalculationType = DCT_Constant,
+        .damageCalcData.damageConst = AXE_DAMAGE,
+        .damageType = WfAxeDamage,
+        .fanLength = AXE_FAN_LENGTH,
+        .fanWidth = AXE_FAN_WIDTH,
+        .pItemDef = &gDef
+    };
+    return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
+}
 
 void WfAddBasicAxeDef()
 {

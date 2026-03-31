@@ -11,6 +11,23 @@
 #include "Geometry.h"
 #include "EntityQuadTree.h"
 #include "WfDebris.h"
+#include "WfEntityMessages.h"
+#include "Log.h"
+
+struct DamagingItemContext
+{
+    struct GameFrameworkLayer* pLayer;
+    struct GameLayer2DData* pData;
+    HEntity2D hEntPlayer;
+    struct WfDamagingWeaponDef def;
+};
+
+static OBJECT_POOL(struct DamagingItemContext) gDamagingItemContextPool;
+
+void WfInitItemHelpers()
+{
+    gDamagingItemContextPool = NEW_OBJECT_POOL(struct DamagingItemContext, 16);
+}
 
 bool WfGetEntityGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
 {
@@ -221,3 +238,92 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
     }
     return r;
 }
+
+static bool ProcessDamagingWeaponUsage(struct SDTimer* pTimer)
+{
+    struct DamagingItemContext* pCtx = &gDamagingItemContextPool[(HGeneric)pTimer->pUserData];
+
+    struct Entity2D* pPlayerEnt = Et2D_GetEntity(&pCtx->pData->entities, pCtx->hEntPlayer);
+    struct WfPlayerEntData* pPlayerData = WfGetPlayerEntData(pPlayerEnt);
+    vec2 playerGroundPos;
+    WfPlayerGetGroundContactPoint(pPlayerEnt, playerGroundPos);
+
+    vec2 dir;
+    WfGetDirectionVector(pPlayerData->directionFacing, dir);
+    struct WfSearchFan fan = 
+    {
+        .base[0] = playerGroundPos[0],
+        .base[1] = playerGroundPos[1],
+        .direction[0] = dir[0],
+        .direction[1] = dir[1], 
+        .length = pCtx->def.fanLength,
+        .widthRadians = pCtx->def.fanWidth,
+    };
+    static VECTOR(struct Entity2D*) sFoundEnts = NULL;
+	if(!sFoundEnts)
+	{
+		sFoundEnts = NEW_VECTOR(struct Entity2D*);
+	}
+
+    sFoundEnts = VectorClear(sFoundEnts);
+    
+    sFoundEnts = WfFindEntitiesWithinFan(&fan, pCtx->pLayer, pCtx->pData, WfDynamicEntities | WfStaticEntities, sFoundEnts);
+    
+    Log_Info("Entities in fan %i", VectorSize(sFoundEnts));
+
+    struct Entity2D* pHit = VectorSize(sFoundEnts) > 0 ? sFoundEnts[0] : NULL;//WfFindClosestEntity(fan.base, sFoundEnts);
+
+    if(pHit)
+    {
+        struct WfDamageMsg* pDamageMsg = NULL;
+
+        struct EntityToEntityMessage msg = 
+        {
+            .type = E2EM_Damage,
+            .data.hMsgData = WfAllocateDamageMessageData(&pDamageMsg),
+            .freer = &WfDamageMsgFreer,
+            .sender = pPlayerEnt->thisEntity,
+            .recipient = pHit->thisEntity
+        };
+        float damage = 0.0f;
+        switch (pCtx->def.damageCalculationType)
+        {
+        case DCT_Callback:
+            damage = pCtx->def.damageCalcData.damageCallback(pPlayerEnt, pHit, pCtx->def.pItemDef);
+            break;
+        case DCT_Constant:
+            damage = pCtx->def.damageCalcData.damageConst;
+            break;
+        default:
+            Log_Error("Unknown damage calculation type: %i", pCtx->def.damageCalculationType);
+            EASSERT(false);
+        }
+        pDamageMsg->damage = damage;
+        pDamageMsg->type = pCtx->def.damageType;
+        Et2D_SendEntity2EntityMsg(&pCtx->pData->entities, &msg);
+    }
+
+    FreeObjectPoolIndex(gDamagingItemContextPool, (HGeneric)pTimer->pUserData);
+    return true; /* remove timer */
+}
+
+bool WfOnUseDamagingWeaponItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, struct WfDamagingWeaponDef* pDef)
+{
+    struct GameLayer2DData* pData = pLayer->userData;
+
+    HGeneric hCtx = NULL_HANDLE;
+    gDamagingItemContextPool = GetObjectPoolIndex(gDamagingItemContextPool, &hCtx);
+    
+    struct DamagingItemContext ctx = {
+        .hEntPlayer = pPlayer->thisEntity,
+        .pData = pData,
+        .pLayer = pLayer,
+        .def = *pDef
+    };
+    gDamagingItemContextPool[hCtx] = ctx;
+    struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
+    char* anim_name = pEntData->animationSet.layers[WfToolAnimationLayer].slashAnimations[pEntData->directionFacing];
+    HTimer t = WfScheduleCallbackOnAnimation(pPlayer, pLayer, &ProcessDamagingWeaponUsage, 0.3, anim_name, (void*)hCtx);
+    return true;
+}
+

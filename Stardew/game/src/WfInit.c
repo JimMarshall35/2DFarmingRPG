@@ -9,6 +9,7 @@
 #include "WfEntityMessages.h"
 #include "WfItemPickup.h"
 #include "WfDebrisField.h"
+#include "WfItemHelpers.h"
 
 void WfInit()
 {
@@ -22,5 +23,6 @@ void WfInit()
     WfInitEntityMessages();
     WfInitItemPickup();
     WfDebrisFieldInit();
+    WfInitItemHelpers();
 }
 

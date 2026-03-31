@@ -5,6 +5,7 @@
 #include <cglm/cglm.h>
 #include "IntTypes.h"
 #include "HandleDefs.h"
+#include "WfEntityMessages.h"
 
 #define VECTOR(a) a*
 
@@ -15,6 +16,8 @@ enum WfDirection;
 struct WfPlayerEntData;
 struct TileMap;
 struct TileMapLayer;
+struct WfItemDef;
+enum WfActionAnimation;
 
 struct WfSearchFan
 {
@@ -30,6 +33,7 @@ enum WfEntitySearchType
     WfStaticEntities = 2
 };
 
+void WfInitItemHelpers();
 
 HTimer WfScheduleCallbackOnAnimation(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, 
     TimerCallbackFn callback,
@@ -72,5 +76,47 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
 
 
 TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y);
+
+/// @brief how to calculate damage
+enum WfDamageCalculationType
+{
+    /// @brief always a constant amount of damage dealt
+    DCT_Constant,
+
+    /// @brief call a callback to determine damage dealt
+    DCT_Callback
+};
+
+/// @brief callback to calculate damage
+typedef float(*WfCalculateDamageFn)(struct Entity2D* dealer, struct Entity2D* recipient, struct WfItemDef* itemDef);
+
+struct WfDamagingWeaponDef
+{
+    /// @brief The length of the fan that captures entities to damage
+    float fanLength;
+
+    /// @brief The width of the fan that captures entities to damage in radians
+    float fanWidth;
+
+    /// @brief pointer to the item defintion (optional, needed for callback damage type)
+    struct WfItemDef* pItemDef;
+
+    /// @brief 
+    enum WfDamageType damageType;
+
+    /// @brief What animation does the damaging weapon use
+    enum WfActionAnimation animation;
+    
+    /// @brief how is the damage calculated;
+    enum WfDamageCalculationType damageCalculationType;
+
+    union 
+    {
+        float damageConst;
+        WfCalculateDamageFn damageCallback;
+    } damageCalcData;
+};
+
+bool WfOnUseDamagingWeaponItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, struct WfDamagingWeaponDef* pDef);
 
 #endif

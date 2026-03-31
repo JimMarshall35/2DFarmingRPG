@@ -88,6 +88,7 @@ void Entity2DOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer)
 {
     Co_DestroyComponents(pEnt, pLayer);
     struct GameLayer2DData* pData = pLayer->userData;
+    
     if(pEnt->bKeepInDynamicList)
     {
         DynL_RemoveItem(&pData->entities.dynamicEntities, pEnt->hDynamicListRef);
@@ -98,6 +99,42 @@ void Entity2DOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer)
     }
 }
 
+void TilesComponentGetBoundingBox(struct TilesComponent* tiles, struct TileMap* pTilemap, vec2 tl, vec2 br)
+{
+    tl[0] = INFINITY;
+    tl[1] = INFINITY;
+    br[0] = -INFINITY;
+    br[1] = -INFINITY;
+    for(int i=0; i<tiles->numTiles; i++)
+    {
+        struct EntityTile t = tiles->tiles[i];
+        struct TileMapLayer* pLayer = &pTilemap->layers[t.layer];
+        vec2 tileTL = {
+            t.x * pLayer->tileWidthPx,
+            t.y * pLayer->tileHeightPx
+        };
+        vec2 tileBR = {
+            tileTL[0] + pLayer->tileWidthPx,
+            tileTL[1] + pLayer->tileHeightPx
+        };
+        if(tileTL[0] < tl[0])
+        {
+            tl[0] = tileTL[0];
+        }
+        if(tileTL[1] < tl[1])
+        {
+            tl[1] = tileTL[1];
+        }
+        if(tileBR[0] > br[0])
+        {
+            br[0] = tileBR[0];
+        }
+        if(tileBR[1] > br[1])
+        {
+            br[1] = tileBR[1];
+        }
+    }
+}
 
 void Entity2DGetBoundingBox(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 outTL, vec2 outBR)
 {
@@ -117,6 +154,12 @@ void Entity2DGetBoundingBox(struct Entity2D* pEnt, struct GameFrameworkLayer* pL
         {
             bSet = true;
             AnimatedSprite_GetBoundingBox(pEnt,&pComponent->data.spriteAnimator, pLayer, tl, br);
+        }
+        else if(pComponent->type == ETE_Tiles)
+        {
+            bSet = true;
+            struct GameLayer2DData* pData = pLayer->userData;
+            TilesComponentGetBoundingBox(&pComponent->data.tiles, &pData->tilemap, tl, br);
         }
         if(tl[0] < bbtl[0])
         {

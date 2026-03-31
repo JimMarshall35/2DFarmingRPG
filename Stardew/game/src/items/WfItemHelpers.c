@@ -10,6 +10,7 @@
 #include "WfPlayer.h"
 #include "Geometry.h"
 #include "EntityQuadTree.h"
+#include "WfDebris.h"
 
 bool WfGetEntityGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
 {
@@ -27,8 +28,8 @@ bool WfGetEntityGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
         WfTreeGetGroundContactPoint(pEnt, outPoint);
         return true;
     case WfEntityType_Rock:
-        EASSERT("Not implemented yet but will need to be so assert(false) as a reminder" && false);
-        return false;
+        WfDebrisGetGroundContactPoint(pEnt, outPoint);
+        return true;
     case WfEntityType_Player:
         WfPlayerGetGroundContactPoint(pEnt, outPoint);
         return true;

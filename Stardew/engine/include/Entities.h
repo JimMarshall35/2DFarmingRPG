@@ -115,7 +115,7 @@ struct AnimatedSprite
     struct Transform2D transform;
 };
 
-#define TilesComponentMaxTiles 32
+#define TilesComponentMaxTiles 4
 struct TilesComponent
 {
     struct EntityTile

@@ -1,6 +1,7 @@
 #ifndef WFROCK_H
 #define WFROCK_H
 
+#include <cglm/cglm.h>
 
 struct BinarySerializer;
 struct Entity2D;
@@ -25,5 +26,7 @@ void WfDeSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pOu
 void WfSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt, struct GameLayer2DData* pData);
 
 void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, struct WfDebrisDef* def, struct GameLayer2DData* pGameLayerData);
+
+void WfDebrisGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint);
 
 #endif

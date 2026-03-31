@@ -9,12 +9,17 @@
 #include "WfEntities.h"
 #include "GameFramework.h"
 #include "WfEntityMessages.h"
+#include "ZzFX.h"
+#include "Audio.h"
 
+struct ZZFXSound gPickaxeHitRockSFX = {1.0,0.05,60.562,0.072,0.028,0.207,1,1.0,0.0,0.0,0.0,0.0,0.238,0.223,0.0,0.264,0.001,0.482,0.177,0.223,-3087.834};
+struct ZZFXSound gDestroyRockSFX = {1.0,0.05,80.562,0.038,0.257,0.308,5,1.0,-4.614,0.0,0.0,0.0,0.237,1.446,0.0,0.926,0.0,0.461,0.057,0.0,0.0};
 
 struct WfDebrisData
 {
     int xTile, yTile;
     struct WfDebrisDef def;
+    vec2 groundContactPoint;
 };
 
 static OBJECT_POOL(struct WfDebrisData) gDebrisDataPool = NULL;
@@ -23,6 +28,13 @@ static void RockOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pDat
 {
     FreeObjectPoolIndex(gDebrisDataPool, pEnt->user.hData);
     Entity2DOnDestroy(pEnt, pData);
+}
+
+void WfDebrisGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
+{
+    struct WfDebrisData* pData = &gDebrisDataPool[pEnt->user.hData];
+    outPoint[0] = pData->groundContactPoint[0];
+    outPoint[1] = pData->groundContactPoint[1];
 }
 
 static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
@@ -115,12 +127,29 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
     pRockData->xTile = xTile;
     pRockData->yTile = yTile;
 
+    pRockData->groundContactPoint[0] = pEnt->transform.position[0];
+    pRockData->groundContactPoint[1] = pEnt->transform.position[1];
+    struct WfDebrisData* pData = &gDebrisDataPool[pEnt->user.hData];
+
+    struct TileMap* pTM = &pGameLayerData->tilemap;
+    
+    vec2 addition = {
+        pTM->layers[pEnt->components[0].data.tiles.tiles[0].layer].tileWidthPx,
+        pTM->layers[pEnt->components[0].data.tiles.tiles[0].layer].tileHeightPx
+    };
+    glm_vec2_add(pRockData->groundContactPoint, addition, pRockData->groundContactPoint);
+
     pEnt->user.hData = hRockData;
     Et2D_PopulateCommonHandlers(pEnt);
     pEnt->onDestroy = &RockOnDestroy;
     pEnt->handleEntityMsg = &DebrisHandleEntityMsg;
     pEnt->bSerializeToDisk = true;
-    pEnt->bSerializeToNetwork = true;
+    pEnt->bSerializeToNetwork = true; 
+
+    // TODO: Put in the quad tree instead - the quad tree is fucked though.
+    // re-write the quad tree as a BSP tree as detailed in "Game design patterns"
+    pEnt->bKeepInQuadtree = false;
+    pEnt->bKeepInDynamicList = true;
 
 }
 

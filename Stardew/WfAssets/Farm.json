@@ -595,7 +595,7 @@
                         {
                          "name":"Density",
                          "type":"float",
-                         "value":0.1
+                         "value":0.2
                         }, 
                         {
                          "name":"LogsPercentage",
@@ -724,6 +724,72 @@
                  "width":138.137446759526,
                  "x":2765.05122596984,
                  "y":970.415563485668
+                }, 
+                {
+                 "height":278.986555576595,
+                 "id":44,
+                 "name":"",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"BigRocksPercentage",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"LogsPercentage",
+                         "type":"float",
+                         "value":0.4
+                        }, 
+                        {
+                         "name":"RocksPercentage",
+                         "type":"float",
+                         "value":0.5
+                        }],
+                 "rotation":0,
+                 "type":"DebrisField",
+                 "visible":true,
+                 "width":762.554061730733,
+                 "x":2373.88297670896,
+                 "y":127.501609543647
+                }, 
+                {
+                 "height":405.856911001704,
+                 "id":45,
+                 "name":"",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"BigRocksPercentage",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"LogsPercentage",
+                         "type":"float",
+                         "value":0.4
+                        }, 
+                        {
+                         "name":"RocksPercentage",
+                         "type":"float",
+                         "value":0.5
+                        }],
+                 "rotation":0,
+                 "type":"DebrisField",
+                 "visible":true,
+                 "width":361.114878621474,
+                 "x":2779.10929047529,
+                 "y":411.538501514865
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1065,7 +1131,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":44,
+ "nextobjectid":46,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.1-8-g449813058",

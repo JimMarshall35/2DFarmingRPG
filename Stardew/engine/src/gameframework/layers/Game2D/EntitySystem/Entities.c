@@ -15,6 +15,7 @@
 #include "NetworkID.h"
 #include "Game2DLayerNetwork.h"
 #include "DynArray.h"
+#include "EngineUtils.h"
 
 static VECTOR(struct EntitySerializerPair) pSerializers = NULL;
 
@@ -263,6 +264,7 @@ static HEntity2D Et2D_AddEntityBase(struct Entity2DCollection* pCollection, stru
     pCollection->pEntityPool = GetObjectPoolIndex(pCollection->pEntityPool, &hEnt);
     EASSERT(hEnt != NULL_HANDLE);
     memcpy(&pCollection->pEntityPool[hEnt], pEnt, sizeof(struct Entity2D));
+    pEnt = &pCollection->pEntityPool[hEnt];
     pEnt->nextSibling = NULL_HANDLE;
     pEnt->previousSibling = NULL_HANDLE;
 

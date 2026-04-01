@@ -61,6 +61,7 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
                     if(pData->def.health <= 0)
                     {
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+                        pGameLayerData->bCurrentLocationIsDirty = true;
                         Au_PlayZzFX(&gDestroyRockSFX);
                     }
                     else
@@ -80,6 +81,7 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
                     if(pData->def.health <= 0)
                     {
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+                        pGameLayerData->bCurrentLocationIsDirty = true;
                         Au_PlayZzFX(&gLogDestroySFX);
                     }
                     else

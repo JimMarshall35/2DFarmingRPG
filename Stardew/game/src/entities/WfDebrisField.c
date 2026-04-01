@@ -39,9 +39,13 @@ static bool IsDebrisAt(int x, int y, struct TileMap* pMap, struct WfSprites* pSp
 {
     bool b = false;
     TileIndex pIndex = *WfGetTileAtXY(&pMap->layers[1], x, y);
-    b = pIndex == pSprites->debrisSpritesPerSeason[Spring].rock1 ||
-        pIndex == pSprites->debrisSpritesPerSeason[Spring].rock2 ||
-        pIndex == pSprites->debrisSpritesPerSeason[Spring].debrisWood;
+    
+    // b = pIndex == pSprites->debrisSpritesPerSeason[Spring].rock1 ||
+    //     pIndex == pSprites->debrisSpritesPerSeason[Spring].rock2 ||
+    //     pIndex == pSprites->debrisSpritesPerSeason[Spring].debrisWood;
+    // Log_Info("IsDebrisAt: %i", b);
+
+    b = pIndex != 0;
     return b;
 }
 
@@ -90,6 +94,11 @@ void WfDebrisFieldEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer*
         {
             RandomTilePlacement(tileTLX, tileTLY, pData->widthPx / 32, pData->heightPx / 32, &x, &y);
         } while (IsDebrisAt(x, y, &pLayerData->tilemap, pSprites));
+
+        // hack - store a non zero value here to make sure we don't add two on the same tile
+        struct TileMapLayer* pTML = &pLayerData->tilemap.layers[1];
+        *(pTML->Tiles + ((y * pTML->widthTiles) + x)) = 0xffff;
+        
         
         struct Entity2D ent;
         struct WfDebrisDef def = {

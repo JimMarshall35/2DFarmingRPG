@@ -20,6 +20,9 @@
         <on-try-equip>
             <c-function name="WfBasicAxeOnTryEquip"/>
         </on-try-equip>
+        <on-gamelayer-push>
+            <c-function name="WfBasicAxeOnGameLayerPush"/>
+        </on-gamelayer-push>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="false"/>
         <pickup-sprite-name str="basic-axe"/>
@@ -41,9 +44,9 @@
                     </config>
                 </Array>
             -->
-            <Float name="DAMAGE" value="10"/>
-            <Float name="FAN_LENGTH" value="64"/>
-            <Float name="FAN_WIDTH_RADIANS" value="0.7854"/>
+            <Float name="AXE_DAMAGE" value="10"/>
+            <Float name="AXE_FAN_LENGTH" value="64"/>
+            <Float name="AXE_FAN_WIDTH" value="0.7854"/>
         </config-data>
     </item>
 
@@ -84,10 +87,16 @@
         <on-try-equip>
             <c-function name="WfBasicPickaxeTryEquip"/>
         </on-try-equip>
+        <on-gamelayer-push>
+            <c-function name="WfBasicPickAxeOnGameLayerPush"/>
+        </on-gamelayer-push>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-pickaxe"/>
         <config-data>
+            <Float name="PICKAXE_DAMAGE" value="10"/>
+            <Float name="PICKAXE_FAN_LENGTH" value="64"/>
+            <Float name="PICKAXE_FAN_WIDTH" value="0.7854"/>
         </config-data>
     </item>
 

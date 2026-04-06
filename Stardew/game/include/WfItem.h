@@ -146,7 +146,6 @@ const struct WfItemDef* WfGetItemDef(int itemIndex);
 
 struct WfItemDef* WfGetItemDefs(int* numDefs);
 
-
-
+struct WfItemConfigProperty* WfGetItemConfigProperty(struct WfItemConfigPropertyBag* pBag, const char* propertyName);
 
 #endif

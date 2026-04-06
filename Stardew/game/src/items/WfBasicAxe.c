@@ -19,11 +19,9 @@
 #include "WfEntityMessages.h"
 #include "Log.h"
 
-#define AXE_FAN_WIDTH DEGREES_TO_RADIANS(45.0f)
-
-#define AXE_FAN_LENGTH (64.0F)
-
-#define AXE_DAMAGE 10.0f
+static float gAxeFanWidth = 0;
+static float gAxeFanLength = 0;
+static float gAxeDamage = 0;
 
 static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2.662,2.312,0.0,0.0,0.178,1.778,0.0,0.106,0.0,0.431,0.174,0.076,0.0};
 
@@ -71,6 +69,13 @@ bool WfBasicAxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLa
 
 bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 
+void WfBasicAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+{
+    gAxeDamage = WfGetItemConfigProperty(&pDef->config, "AXE_DAMAGE")->val.floatVal;
+    gAxeFanLength = WfGetItemConfigProperty(&pDef->config, "AXE_FAN_LENGTH")->val.floatVal;
+    gAxeFanWidth = WfGetItemConfigProperty(&pDef->config, "AXE_FAN_WIDTH")->val.floatVal;
+}
+
 static struct WfItemDef gDef = 
 {
     .itemName = "basic-axe",
@@ -83,6 +88,7 @@ static struct WfItemDef gDef =
     .onUseAnimation = WfSlashAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "basic-axe",
+    .onGameLayerPush = &WfBasicAxeOnGameLayerPush
 };
 
 bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
@@ -91,10 +97,10 @@ bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
     struct WfDamagingWeaponDef def = {
         .animation = WfSlashAnim,
         .damageCalculationType = DCT_Constant,
-        .damageCalcData.damageConst = AXE_DAMAGE,
+        .damageCalcData.damageConst = gAxeDamage,
         .damageType = WfAxeDamage,
-        .fanLength = AXE_FAN_LENGTH,
-        .fanWidth = AXE_FAN_WIDTH,
+        .fanLength = gAxeFanLength,
+        .fanWidth = gAxeFanWidth,
         .pItemDef = &gDef
     };
     return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);

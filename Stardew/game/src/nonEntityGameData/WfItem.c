@@ -349,3 +349,12 @@ struct WfItemDef* WfGetItemDefs(int* numDefs)
     return gItemDefs;
 }
 
+struct WfItemConfigProperty* WfGetItemConfigProperty(struct WfItemConfigPropertyBag* pBag, const char* propertyName)
+{
+    if(!pBag->bSet)
+    {
+        Log_Warning("Warning, item has no config properties set!");
+        return NULL;
+    }
+    return HashmapSearch(&pBag->properties, propertyName);
+}

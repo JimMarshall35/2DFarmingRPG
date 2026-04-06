@@ -9,10 +9,10 @@
 #include "WfItemHelpers.h"
 #include "Maths.h"
 
-#define PICKAXE_FAN_LENGTH (64.0F)
-#define PICKAXE_FAN_WIDTH DEGREES_TO_RADIANS(45.0f)
+static float gPickaxeFanLength = 0.0f;
+static float gPickaxeFanWidth = 0.0f;
+static float gPickaxeDamage = 0.0f;
 
-#define PICKAXE_DAMAGE 10.0f
 
 static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2.662,2.312,0.0,0.0,0.178,1.778,0.0,0.106,0.0,0.431,0.174,0.076,0.0};
 
@@ -59,6 +59,12 @@ bool WfBasicPickaxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer*
     return false;
 }
 
+void WfBasicPickAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+{
+    gPickaxeDamage = WfGetItemConfigProperty(&pDef->config, "PICKAXE_DAMAGE")->val.floatVal;
+    gPickaxeFanLength = WfGetItemConfigProperty(&pDef->config, "PICKAXE_FAN_LENGTH")->val.floatVal;
+    gPickaxeFanWidth = WfGetItemConfigProperty(&pDef->config, "PICKAXE_FAN_WIDTH")->val.floatVal;
+}
 
 static struct WfItemDef gDef = 
 {
@@ -69,6 +75,7 @@ static struct WfItemDef gDef =
     .onStopBeingCurrent = &WfBasicPickaxeOnStopBeingCurrentItem,
     .onUseItem = &WfBasicPickaxeOnUseItem,
     .onTryEquip = &WfBasicPickaxeTryEquip,
+    .onGameLayerPush = &WfBasicPickAxeOnGameLayerPush,
     .onUseAnimation = WfSlashAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "basic-pickaxe",
@@ -82,8 +89,8 @@ bool WfBasicPickaxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer
         .damageCalculationType = DCT_Constant,
         .damageCalcData.damageConst = 10.0f,
         .damageType = WfPickaxeDamage,
-        .fanLength = PICKAXE_FAN_LENGTH,
-        .fanWidth = PICKAXE_FAN_WIDTH,
+        .fanLength = gPickaxeFanLength,
+        .fanWidth = gPickaxeFanWidth,
         .pItemDef = &gDef
     };
     return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);

@@ -19,6 +19,7 @@
 
 struct ZZFXSound gThrustSnd = {1.0,0.05,64.799,0.023,0.129,0.395,0,1.0,0.0,-6.535,0.0,0.0,0.161,1.945,16.886331,0.464,0.229,0.461,0.156,0.0,-3441.073};
 
+
 struct HoeUseContext
 {
     struct GameFrameworkLayer* pLayer;
@@ -26,9 +27,9 @@ struct HoeUseContext
     HEntity2D hEntPlayer;
 };
 
-static OBJECT_POOL(struct HoeUseContext) gHoeUseContextPool;
+static OBJECT_POOL(struct HoeUseContext) gHoeUseContextPool = NULL;
 
-static VECTOR(TileIndex) gTilledTileIndices;
+static VECTOR(TileIndex) gTilledTileIndices = NULL;
 
 #define NUM_GRASS_TILES 3
 TileIndex gGrassTileIndices[NUM_GRASS_TILES] = {
@@ -181,7 +182,7 @@ static bool ProcessHoeUsage(struct SDTimer* pTimer)
     return true; /* remove timer */
 }
 
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicHoeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
@@ -209,8 +210,17 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     pComp->data.spriteAnimator.onSprite = 0;
 }
 
-static void OnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+void WfBasicHoeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {
+    if(gHoeUseContextPool == NULL)
+    {
+        gHoeUseContextPool = NEW_OBJECT_POOL(struct HoeUseContext, 4);
+    }
+    if(gTilledTileIndices == NULL)
+    {
+        gTilledTileIndices = NEW_VECTOR(TileIndex);
+        gTilledTileIndices = VectorResize(gTilledTileIndices, DryGroundLUT_NamesLen);
+    }
     struct GameLayer2DData* pEngineLayer = pLayer->userData;
     gTilledTileIndices = VectorClear(gTilledTileIndices);
     for(int i=0; i<DryGroundLUT_NamesLen; i++)
@@ -223,12 +233,12 @@ static void OnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* p
     gGrassTileIndices[2] = At_LookupNamedTile(pEngineLayer->hAtlas, "grass_3");
 }
 
-static void OnGameLayerPop(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
+void WfBasicHoeOnGameLayerPop(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {
 
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicHoeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask &= ~(1 << WfToolAnimationLayer);
@@ -236,7 +246,7 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
     pComp->data.spriteAnimator.bDraw = false;
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfBasicHoeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     Au_PlayZzFX(&gThrustSnd);
     struct GameLayer2DData* pData = pLayer->userData;
@@ -257,7 +267,7 @@ static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLaye
     return true;
 }
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfBasicHoeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
@@ -267,20 +277,18 @@ static struct WfItemDef gDef =
 {
     .UISpriteName = "basic-hoe",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfBasicHoeOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBasicHoeOnStopBeingCurrentItem,
+    .onUseItem = &WfBasicHoeOnUseItem,
+    .onTryEquip = &WfBasicHoeTryEquip,
     .onUseAnimation = WfThrustAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "basic-hoe",
-    .onGameLayerPush = &OnGameLayerPush
+    .onGameLayerPush = &WfBasicHoeOnGameLayerPush
 };
 
 void WfAddBasicHoeDef()
 {
-    gHoeUseContextPool = NEW_OBJECT_POOL(struct HoeUseContext, 4);
-    gTilledTileIndices = NEW_VECTOR(TileIndex);
-    gTilledTileIndices = VectorResize(gTilledTileIndices, DryGroundLUT_NamesLen);
+    
     WfAddItemDef(&gDef);
 }

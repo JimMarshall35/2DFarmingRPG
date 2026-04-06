@@ -27,7 +27,7 @@
 
 static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2.662,2.312,0.0,0.0,0.178,1.778,0.0,0.106,0.0,0.431,0.174,0.076,0.0};
 
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicAxeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
@@ -55,7 +55,7 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     pComp->data.spriteAnimator.onSprite = 0;
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicAxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask &= ~(1 << WfToolAnimationLayer);
@@ -64,27 +64,27 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
 }
 
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfBasicAxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
+bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 
 static struct WfItemDef gDef = 
 {
     .UISpriteName = "basic-axe",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfBasicAxeOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBasicAxeOnStopBeingCurrentItem,
+    .onUseItem = &WfBasicAxeOnUseItem,
+    .onTryEquip = &WfBasicAxeTryEquip,
     .onUseAnimation = WfSlashAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "basic-axe",
 };
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     Au_PlayZzFX(&gSwingSound);
     struct WfDamagingWeaponDef def = {

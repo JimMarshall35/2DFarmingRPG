@@ -3,22 +3,22 @@
 #include <stdlib.h>
 
 
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicScytheOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicScytheOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfBasicScytheOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     return true;
 }
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfBasicScytheTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
@@ -28,10 +28,10 @@ static struct WfItemDef gDef =
 {
     .UISpriteName = "basic-scythe",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfBasicScytheOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBasicScytheOnStopBeingCurrentItem,
+    .onUseItem = &WfBasicScytheOnUseItem,
+    .onTryEquip = &WfBasicScytheTryEquip,
     .pickupSpriteName = "basic-scythe",
 };
 

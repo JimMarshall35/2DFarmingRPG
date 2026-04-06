@@ -1,6 +1,8 @@
 #ifndef TEMPDIR_H
 #define TEMPDIR_H
 
+#include <stdbool.h>
+
 /**
     @file FileSystemUtils.h
     @brief
@@ -18,5 +20,7 @@ int FS_GetTempDir(char* outBuf, int size);
 int FS_CopyFile(char* srcPath, char* destPath);
 
 int FS_DeleteDirRecursive(char* dirPath);
+
+bool FS_DoesFileExist(char* filePath);
 
 #endif

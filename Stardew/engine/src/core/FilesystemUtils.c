@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <stdio.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <stdlib.h>
 #include <stdio.h>
@@ -201,4 +202,14 @@ int FS_CopyFile(char* src, char* dst)
     fclose(pdst);
 
     return 0;  // success
+}
+
+
+bool FS_DoesFileExist(char* filePath)
+{
+#ifdef _WIN32
+    return _access(filePath, 0) == 0;
+#else
+    return access(filePath, F_OK) == 0;
+#endif
 }

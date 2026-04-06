@@ -35,6 +35,7 @@
 #include "Log.h"
 #include "cwalk.h"
 #include "main.h"
+#include "XMLHelpers.h"
 
 static struct HashMap gNodeNameMap;
 static bool gInitialisedNodeNameMap = false;
@@ -618,27 +619,6 @@ static void InitializeWidgets(HWidget root)
 		struct UIWidget* pWidget = UI_GetWidget(child);
 		child = pWidget->hNext;
 	}
-}
-
-xmlNode* GetNthChild(xmlNode* node, unsigned int index)
-{
-	int onChild = 0;
-	assert(xmlChildElementCount(node) > index);
-	xmlNode* pChild = xmlFirstElementChild(node);
-	while (pChild)
-	{
-		if (pChild->type != XML_ELEMENT_NODE)
-		{
-			pChild = pChild->next;
-			continue;
-		}
-		if (onChild++ == index)
-		{
-			return pChild;
-		}
-		pChild = pChild->next;
-	}
-	return NULL;
 }
 
 static void LoadUIData(XMLUIData* pUIData, DrawContext* pDC)

@@ -2,27 +2,23 @@
 #include "WfItem.h"
 #include <stdlib.h>
 
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+
+void WfWoodItemOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfWoodItemOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static bool ProcessAxeUsage(struct SDTimer* pTimer)
-{
-    return true; /* remove timer */
-}
-
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfWoodItemOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     return true;
 }
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfWoodItemTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
@@ -31,10 +27,10 @@ static struct WfItemDef gDef =
 {
     .UISpriteName = "wood",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfWoodItemOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfWoodItemOnStopBeingCurrentItem,
+    .onUseItem = &WfWoodItemOnUseItem,
+    .onTryEquip = &WfWoodItemTryEquip,
     .onUseAnimation = WfNoActionAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "wood",

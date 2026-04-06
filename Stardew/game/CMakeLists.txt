@@ -35,3 +35,8 @@ add_executable( WarFarmer
 )
 
 target_include_directories(WarFarmer PRIVATE include)
+
+if(WIN32)
+else()
+    target_link_options(WarFarmer PRIVATE -rdynamic)
+endif()

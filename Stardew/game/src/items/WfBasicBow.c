@@ -2,23 +2,22 @@
 #include "WfItem.h"
 #include <stdlib.h>
 
-
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicBowOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicBowOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
 
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfBasicBowOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     return true;
 }
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfBasicBowTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
@@ -28,10 +27,10 @@ static struct WfItemDef gDef =
 {
     .UISpriteName = "basic-bow",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfBasicBowOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBasicBowOnStopBeingCurrentItem,
+    .onUseItem = &WfBasicBowOnUseItem,
+    .onTryEquip = &WfBasicBowTryEquip,
     .pickupSpriteName = "basic-bow",
 };
 

@@ -1,0 +1,202 @@
+<items version="1">
+    <!-- Basic Axe -->
+    <item name="basic-axe">
+        <ui-sprite-name str="basic-axe"/>
+        <on-make-current>
+            <!-- 
+              c-function has the optional attribute "dll"
+              which specifies the path to a .so on linux or dll on windows (don't specify file extension).
+              If none is specified it will load from all loaded symbols 
+              Will also support a "lua-function" element with "file" and "function" attributes
+            -->
+            <c-function name="WfBasicAxeOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicAxeOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicAxeOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicAxeOnTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfSlashAnim"/>
+        <can-use-item bool="false"/>
+        <pickup-sprite-name str="basic-axe"/>
+        <config-data>
+            <!--
+                This is a bag of config data the item can use at runtime.
+                Permissible elements (with dummy values) are:
+                <Float value="0.4"/>
+                <Int value="2"/>
+                <Bool value="true"/>
+                <String value="Sphinx of black quartz, judge my vow."/>
+                <Array>
+                    array must contain values of the same type, but can contain any of the other types
+                    <Float value="2"/>
+                    <Float value="1.3"/>
+                    <Float value="2.53"/>
+                </Array>
+            -->
+        </config-data>
+    </item>
+
+    <!-- Basic Sword -->
+    <item name="basic-sword">
+        <ui-sprite-name str="basic-sword"/>
+        <on-make-current>
+            <c-function name="WfBasicSwordOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicSwordOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicSwordOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicSwordTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfSlashAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-sword"/>
+        <config-data>
+        </config-data>
+    </item>
+
+    <!-- Basic Pickaxe -->
+    <item name="basic-pickaxe">
+        <ui-sprite-name str="basic-pickaxe"/>
+        <on-make-current>
+            <c-function name="WfBasicPickaxeOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicPickaxeOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicPickaxeOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicPickaxeTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfSlashAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-pickaxe"/>
+        <config-data>
+        </config-data>
+    </item>
+
+    <!-- Basic Scythe -->
+    <item name="basic-scythe">
+        <ui-sprite-name str="basic-scythe"/>
+        <on-make-current>
+            <c-function name="WfBasicScytheOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicScytheOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicScytheOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicScytheTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfSlashAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-scythe"/>
+        <config-data>
+        </config-data>
+    </item>
+
+    <!-- Basic Fishing Rod -->
+    <item name="basic-fishing-rod">
+        <ui-sprite-name str="basic-fishing-rod"/>
+        <on-make-current>
+            <c-function name="WfBasicFishingRodOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicFishingRodOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicFishingRodOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicFishingRodTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfSlashAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-fishing-rod"/>
+        <config-data>
+        </config-data>
+    </item>
+
+    <!-- Basic Hoe -->
+    <item name="basic-hoe">
+        <ui-sprite-name str="basic-hoe"/>
+        <on-make-current>
+            <c-function name="WfBasicHoeOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicHoeOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicHoeOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicHoeTryEquip"/>
+        </on-try-equip>
+        <on-gamelayer-push>
+            <c-function name="WfBasicHoeOnGameLayerPush"/>
+        </on-gamelayer-push>
+        <on-use-animation str="WfThrustAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-hoe"/>
+        <config-data>
+        </config-data>
+    </item>
+    
+    <!-- Basic Bow -->
+    <item name="basic-bow">
+        <ui-sprite-name str="basic-bow"/>
+        <on-make-current>
+            <c-function name="WfBasicBowOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfBasicBowOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfBasicBowOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBasicBowTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfThrustAnim"/>
+        <can-use-item bool="true"/>
+        <pickup-sprite-name str="basic-bow"/>
+        <config-data>
+        </config-data>
+    </item>
+
+    <!-- Wood -->
+    <item name="wood">
+        <ui-sprite-name str="wood"/>
+        <on-make-current>
+            <c-function name="WfWoodItemOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfWoodItemOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfWoodItemOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfWoodItemTryEquip"/>
+        </on-try-equip>
+        <on-use-animation str="WfNoActionAnim"/>
+        <can-use-item bool="false"/>
+        <pickup-sprite-name str="wood"/>
+        <b-sound-effect-on-pickup bool="true"/>
+        <zzfx-sound-on-pickup str="{1.0,0.05,175.182,0.053,0.191,0.308,1,1.0,-14.38646272,167.4035968,-80.836,0.134,0.095,0.0,0.0,0.0,0.0,0.504,0.176,0.058,0.0}"/>
+        <config-data>
+        </config-data>
+    </item>
+</items>

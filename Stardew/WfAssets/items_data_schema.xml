@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- ========================= -->
+  <!-- Root -->
+  <!-- ========================= -->
+  <xs:element name="items">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="item" type="ItemType" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:integer" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- ========================= -->
+  <!-- Item -->
+  <!-- ========================= -->
+  <xs:complexType name="ItemType">
+    <xs:sequence>
+
+      <xs:element name="ui-sprite-name" type="StringAttrType"/>
+
+      <xs:element name="on-make-current" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-stop-being-current" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-use-item" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-try-equip" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-gamelayer-push" type="FunctionContainerType" minOccurs="0"/>
+
+      <xs:element name="on-use-animation" type="StringAttrType"/>
+      <xs:element name="can-use-item" type="BoolAttrType"/>
+      <xs:element name="pickup-sprite-name" type="StringAttrType"/>
+      <xs:element name="b-sound-effect-on-pickup" type="BoolAttrType" minOccurs="0"/>
+      <xs:element name="zzfx-sound-on-pickup" type="StringAttrType" minOccurs="0"/>
+
+      <xs:element name="config-data" type="ConfigDataType" minOccurs="0"/>
+
+    </xs:sequence>
+
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- ========================= -->
+  <!-- Simple attribute wrappers -->
+  <!-- ========================= -->
+  <xs:complexType name="StringAttrType">
+    <xs:attribute name="str" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="BoolAttrType">
+    <xs:attribute name="bool" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <!-- ========================= -->
+  <!-- Function system -->
+  <!-- ========================= -->
+  <xs:complexType name="FunctionContainerType">
+    <xs:choice>
+      <!-- Exactly one function (matches typical intent better) -->
+      <xs:element name="c-function" type="CFunctionType"/>
+      <xs:element name="lua-function" type="LuaFunctionType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="CFunctionType">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <!-- Optional DLL / SO name (no extension enforced by convention) -->
+    <xs:attribute name="dll" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="LuaFunctionType">
+    <xs:attribute name="file" type="xs:string" use="required"/>
+    <xs:attribute name="function" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- ========================= -->
+  <!-- Config data system -->
+  <!-- ========================= -->
+
+  <xs:complexType name="ConfigDataType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:choice>
+        <xs:element name="Float" type="FloatType"/>
+        <xs:element name="Int" type="IntType"/>
+        <xs:element name="Bool" type="BoolType"/>
+        <xs:element name="String" type="StringType"/>
+        <xs:element name="Array" type="ArrayType"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Primitive config types -->
+  <xs:complexType name="FloatType">
+    <xs:attribute name="value" type="xs:float" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="IntType">
+    <xs:attribute name="value" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="BoolType">
+    <xs:attribute name="value" type="xs:boolean" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="StringType">
+    <xs:attribute name="value" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Array type -->
+  <xs:complexType name="ArrayType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="Float" type="FloatType"/>
+      <xs:element name="Int" type="IntType"/>
+      <xs:element name="Bool" type="BoolType"/>
+      <xs:element name="String" type="StringType"/>
+      <xs:element name="Array" type="ArrayType"/>
+    </xs:choice>
+  </xs:complexType>
+
+</xs:schema>

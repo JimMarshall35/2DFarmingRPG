@@ -5,9 +5,7 @@
 
 #include <stdlib.h>
 
-
-
-static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicSwordOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     // struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     // pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
@@ -21,7 +19,7 @@ static void OnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLaye
     // pComp->data.spriteAnimator.onSprite = 0;
 }
 
-static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+void WfBasicSwordOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     // struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     // pEntData->animationSet.layersMask &= ~(1 << WfToolAnimationLayer);
@@ -29,12 +27,12 @@ static void OnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFramewor
     // pComp->data.spriteAnimator.bDraw = false;
 }
 
-static bool OnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
+bool WfBasicSwordOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     return true;
 }
 
-static bool TryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
+bool WfBasicSwordTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
 {
     return false;
 }
@@ -44,10 +42,10 @@ static struct WfItemDef gDef =
 {
     .UISpriteName = "basic-sword",
     .pUserData = NULL,
-    .onMakeCurrent = &OnMakeCurrentItem,
-    .onStopBeingCurrent = &OnStopBeingCurrentItem,
-    .onUseItem = &OnUseItem,
-    .onTryEquip = &TryEquip,
+    .onMakeCurrent = &WfBasicSwordOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBasicSwordOnStopBeingCurrentItem,
+    .onUseItem = &WfBasicSwordOnUseItem,
+    .onTryEquip = &WfBasicSwordTryEquip,
     .pickupSpriteName = "basic-sword",
 };
 

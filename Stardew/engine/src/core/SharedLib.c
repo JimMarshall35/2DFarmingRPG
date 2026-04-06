@@ -24,6 +24,12 @@ void* SharedLib_GetProc(struct SharedLib* pSharedLib, const char* procName)
     return dlsym(pSharedLib->handle, procName);
 }
 
+void* SharedLib_GetCurrentlyLoadedFn(const char* procName)
+{
+    void* pFn = dlsym(RTLD_DEFAULT, procName);
+
+    return pFn;
+}
 
 #else if defined(__WIN32__)
 
@@ -45,6 +51,26 @@ struct SharedLib* SharedLib_LoadSharedLib(const char* path)
 void* SharedLib_GetProc(struct SharedLib* pSharedLib, const char* procName)
 {
     return GetProcAddress(pSharedLib->handle, procName);
+}
+
+void* SharedLib_GetCurrentlyLoadedFn(const char* procName)
+{
+    HMODULE modules[1024];
+    DWORD needed;
+
+    if (!EnumProcessModules(GetCurrentProcess(), modules, sizeof(modules), &needed))
+        return NULL;
+
+    int count = needed / sizeof(HMODULE);
+
+    for (int i = 0; i < count; i++) 
+    {
+        FARPROC proc = GetProcAddress(modules[i], procName);
+        if (proc)
+            return (void*)proc;
+    }
+
+    return NULL;
 }
 
 #endif

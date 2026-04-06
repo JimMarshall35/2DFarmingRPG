@@ -25,6 +25,8 @@ core/ThreadSafeQueue.c
 core/Log.c
 core/String.c
 core/FilesystemUtils.c
+core/XMLSchema.c
+core/XMLHelpers.c
 gameframework/GameFramework.c
 gameframework/GameFrameworkEvent.c
 gameframework/layers/UI/XMLUIGameLayer.c

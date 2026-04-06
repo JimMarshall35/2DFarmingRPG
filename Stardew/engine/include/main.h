@@ -5,6 +5,8 @@
 #include "InputContext.h"
 #include "Network.h"
 #include <stdbool.h>
+#include "SharedLib.h"
+
 
 int Mn_GetScreenWidth();
 int Mn_GetScreenHeight();
@@ -41,6 +43,6 @@ struct CommandLineArgs
     const char* configDir;
 };
 
-extern struct CommandLineArgs gCmdArgs;
+extern STARDEW_API struct CommandLineArgs gCmdArgs;
 
 #endif // ! MAIN_H

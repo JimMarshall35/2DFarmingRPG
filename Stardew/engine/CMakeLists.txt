@@ -61,3 +61,5 @@ else()
   target_link_libraries(StardewEngine PUBLIC PkgConfig::LUA)
   target_link_libraries(StardewEngine PUBLIC ${LIBXML2_LIBRARIES})
 endif()
+
+target_compile_definitions(mylib PRIVATE STARDEW_EXPORTS)

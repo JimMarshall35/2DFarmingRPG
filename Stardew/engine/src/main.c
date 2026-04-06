@@ -24,7 +24,7 @@
 
 InputContext gInputContext;
 DrawContext gDrawContext;
-struct CommandLineArgs gCmdArgs;
+STARDEW_API struct CommandLineArgs gCmdArgs;
 
 DrawContext* GetDrawContext()
 {

@@ -26,7 +26,7 @@
 #include "StringKeyHashMap.h"
 
 // game
-#include "WfItem.h"F
+#include "WfItem.h"
 #include "WfBasicAxe.h"
 #include "WfBasicBow.h"
 #include "WfBasicFishingRod.h"
@@ -38,6 +38,7 @@
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 static struct HashMap gItemNameHashmap;
+
 
 void WfAddItemDef(struct WfItemDef* pDef)
 {
@@ -153,6 +154,61 @@ static struct ZZFXSound ParseZzfxSound(xmlNode* pZzfxOnPickup)
     return r;
 }
 
+static struct WfItemConfigPropertyBag ParseConfigData(xmlNode* pConfigData)
+{
+    struct WfItemConfigPropertyBag b;
+    b.bSet = false;
+    if(!pConfigData)
+    {
+        return b;
+    }
+    HashmapInit(&b.properties, 16, sizeof(struct WfItemConfigProperty));
+    unsigned long numchildren = xmlChildElementCount(pConfigData);
+    for(int i = 0; i < numchildren; i++)
+    {
+        xmlNode* pChildI = GetNthChild(pConfigData, i);
+        int setCount = 0;
+        struct WfItemConfigProperty prop;
+        xmlChar* propName = xmlGetProp(pChildI, "name");
+        xmlChar* value = xmlGetProp(pChildI, "value");
+        if(strcmp(pChildI->name, "Float") == 0)
+        {
+            prop.type = WfItemConfig_Float;
+            prop.val.floatVal = (float)atof(value);
+        }
+        if(strcmp(pChildI->name, "Int") == 0)
+        {
+            prop.type = WfItemConfig_Int;
+            prop.val.intVal = atoi(value);
+        }
+        if(strcmp(pChildI->name, "Bool") == 0)
+        {
+            prop.type = WfItemConfig_Bool;
+            prop.val.boolVal = (strcmp(value, "true") == 0) ? true : false;
+        }
+        if(strcmp(pChildI->name, "String") == 0)
+        {
+            prop.type = WfItemConfig_String;
+            prop.val.stringVal = malloc(strlen(value) + 1);
+            strcpy(prop.val.stringVal, value);
+        }
+        if(strcmp(pChildI->name, "Array") == 0)
+        {
+            prop.type = WfItemConfig_Array;
+            unsigned long numGrandchildrend = xmlChildElementCount(pChildI);
+            prop.val.propertyArray.pData = malloc(sizeof(struct WfItemConfigProperty) * numGrandchildrend);
+            prop.val.propertyArray.length = numGrandchildrend;
+            for(int j=0; j<numGrandchildrend; j++)
+            {
+                prop.val.propertyArray.pData[j].val.bag = ParseConfigData(GetNthChild(pChildI, j));
+            }
+        }
+        HashmapInsert(&b.properties, propName, &prop);
+        b.bSet = true;
+    }
+    return b;
+}
+
 static void AddItemDefXML(xmlNode* pChildI)
 {
     xmlNode* pUISpriteName     = XMLFindChild(pChildI, "ui-sprite-name");
@@ -182,7 +238,8 @@ static void AddItemDefXML(xmlNode* pChildI)
         .pickupSpriteName     = xmlGetProp(pPickupSpriteName, "str"),
         .bSoundEffectOnPickup = pbSFXOnPickup && (strcmp(xmlGetProp(pbSFXOnPickup, "bool"), "true") == 0),
         .zzfxPickup           = ParseZzfxSound(pZzfxOnPickup),
-        .itemName             = malloc(strlen(itemName) + 1)
+        .itemName             = malloc(strlen(itemName) + 1),
+        .config               = ParseConfigData(pConfigData),
     };
     strcpy(def.itemName, itemName);
     WfAddItemDef(&def);

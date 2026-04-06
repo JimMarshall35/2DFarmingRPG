@@ -92,29 +92,30 @@
   <!-- Primitive config types -->
   <xs:complexType name="FloatType">
     <xs:attribute name="value" type="xs:float" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="IntType">
     <xs:attribute name="value" type="xs:int" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="BoolType">
     <xs:attribute name="value" type="xs:boolean" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <xs:complexType name="StringType">
     <xs:attribute name="value" type="xs:string" use="required"/>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
   <!-- Array type -->
   <xs:complexType name="ArrayType">
-    <xs:choice maxOccurs="unbounded">
-      <xs:element name="Float" type="FloatType"/>
-      <xs:element name="Int" type="IntType"/>
-      <xs:element name="Bool" type="BoolType"/>
-      <xs:element name="String" type="StringType"/>
-      <xs:element name="Array" type="ArrayType"/>
-    </xs:choice>
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="config" type="ConfigDataType"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
   </xs:complexType>
 
 </xs:schema>

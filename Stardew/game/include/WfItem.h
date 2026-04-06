@@ -6,6 +6,8 @@
 #include "ZzFX.h"
 #include "DrawContext.h"
 #include "InputContext.h"
+#include "StringKeyHashMap.h"
+
 #define UI_SPRITE_DIMS_PXLS 32
 struct Entity2D;
 struct GameFrameworkLayer;
@@ -46,6 +48,43 @@ typedef void(*OnPushGameLayerItemFnItemFn)(struct WfItemDef* pDef, struct GameFr
 
 /// @brief called when the game layer is popped
 typedef void(*OnPopGameLayerItemFnItemFn)(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext);
+
+enum WfItemConfigPropertyType
+{
+    WfItemConfig_Float,
+    WfItemConfig_Int,
+    WfItemConfig_Bool,
+    WfItemConfig_String,
+    WfItemConfig_Array,
+    WfItemConfig_Bag,
+};
+
+struct WfItemConfigPropertyBag
+{
+    /// @brief map of keys to struct WfItemConfigProperty values
+    struct HashMap properties;
+    bool bSet;
+};
+
+struct WfItemConfigProperty
+{
+    char* name;
+    enum WfItemConfigPropertyType type;
+    union
+    {
+        float floatVal;
+        int intVal;
+        bool boolVal;
+        char* stringVal;
+        struct
+        {
+            int length;
+            struct WfItemConfigProperty* pData;
+        }propertyArray;
+        struct WfItemConfigPropertyBag bag;
+    }val;
+    
+};
 
 struct WfItemDef
 {
@@ -90,6 +129,9 @@ struct WfItemDef
 
     /// @brief name that gameplay code can lookup the item handle by
     char* itemName;
+
+    /// @brief read only properties set through xml. Allows basic aspects of item behavior to be configured without recompiling
+    struct WfItemConfigPropertyBag config;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);
@@ -103,4 +145,8 @@ void WfRegisterItemScriptFunctions();
 const struct WfItemDef* WfGetItemDef(int itemIndex);
 
 struct WfItemDef* WfGetItemDefs(int* numDefs);
+
+
+
+
 #endif

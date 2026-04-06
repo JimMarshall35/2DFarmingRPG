@@ -34,6 +34,8 @@ void* SharedLib_GetCurrentlyLoadedFn(const char* procName)
 #else if defined(__WIN32__)
 
 #include <windows.h>
+#include <psapi.h>
+#include <processthreadsapi.h>
 
 struct SharedLib
 {

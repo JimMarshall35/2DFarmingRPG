@@ -40,6 +40,7 @@ bool WfBasicSwordTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* p
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-sword",
     .UISpriteName = "basic-sword",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicSwordOnMakeCurrentItem,

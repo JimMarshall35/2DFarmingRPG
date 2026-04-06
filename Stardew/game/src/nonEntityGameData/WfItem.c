@@ -23,6 +23,7 @@
 #include "XMLHelpers.h"
 #include "XMLSchema.h"
 #include "SharedLib.h"
+#include "StringKeyHashMap.h"
 
 // game
 #include "WfItem.h"F
@@ -36,10 +37,13 @@
 #include "WfWoodItem.h"
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
+static struct HashMap gItemNameHashmap;
 
 void WfAddItemDef(struct WfItemDef* pDef)
 {
     gItemDefs = VectorPush(gItemDefs, pDef);
+    int i = VectorSize(gItemDefs) - 1;
+    HashmapInsert(&gItemNameHashmap, pDef->itemName, &i);
 }
 
 static void* ResolveXMLSpecifiedFunction(xmlNode* pXMLFn)
@@ -164,8 +168,8 @@ static void AddItemDefXML(xmlNode* pChildI)
     xmlNode* pbSFXOnPickup     = XMLFindChild(pChildI, "b-sound-effect-on-pickup");
     xmlNode* pZzfxOnPickup     = XMLFindChild(pChildI, "zzfx-sound-on-pickup");
 
+    xmlChar* itemName = xmlGetProp(pChildI, "name");
 
-    xmlChar* uiNameVal = xmlGetProp(pUISpriteName, "str");
     struct WfItemDef def = {
         .UISpriteName         = xmlGetProp(pUISpriteName, "str"),
         .onMakeCurrent        = ResolveXMLSpecifiedFunction(pOnMakeCurrent),
@@ -177,8 +181,10 @@ static void AddItemDefXML(xmlNode* pChildI)
         .bCanUseItem          = strcmp(xmlGetProp(pCanUseItem, "bool"), "true") == 0,
         .pickupSpriteName     = xmlGetProp(pPickupSpriteName, "str"),
         .bSoundEffectOnPickup = pbSFXOnPickup && (strcmp(xmlGetProp(pbSFXOnPickup, "bool"), "true") == 0),
-        .zzfxPickup           = ParseZzfxSound(pZzfxOnPickup)
+        .zzfxPickup           = ParseZzfxSound(pZzfxOnPickup),
+        .itemName             = malloc(strlen(itemName) + 1)
     };
+    strcpy(def.itemName, itemName);
     WfAddItemDef(&def);
 }
 
@@ -187,6 +193,7 @@ void WfInitItems()
     char buf[256];
     char buf2[256];
     gItemDefs = NEW_VECTOR(struct WfItemDef);
+    HashmapInit(&gItemNameHashmap, 32, sizeof(int));
     cwk_path_join(gCmdArgs.assetsDir, "items_data.xml", buf, 256);
     cwk_path_join(gCmdArgs.assetsDir, "items_data_schema.xml", buf2, 256);
     xmlDoc* pXMLDoc = NULL;
@@ -217,7 +224,6 @@ void WfInitItems()
                 AddItemDefXML(pChildI);
             }
         }
-        //WfAddBuiltinItems();
     }
     else
     {

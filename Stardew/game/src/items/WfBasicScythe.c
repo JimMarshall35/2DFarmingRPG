@@ -26,6 +26,7 @@ bool WfBasicScytheTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* 
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-scythe",
     .UISpriteName = "basic-scythe",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicScytheOnMakeCurrentItem,

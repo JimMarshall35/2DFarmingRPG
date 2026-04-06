@@ -87,6 +87,9 @@ struct WfItemDef
 
     /// @brief zzfx sound effect to play (will be union with a wav sound effect in future)
     struct ZZFXSound zzfxPickup;
+
+    /// @brief name that gameplay code can lookup the item handle by
+    char* itemName;
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

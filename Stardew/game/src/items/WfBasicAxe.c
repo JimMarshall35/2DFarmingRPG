@@ -73,6 +73,7 @@ bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-axe",
     .UISpriteName = "basic-axe",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicAxeOnMakeCurrentItem,

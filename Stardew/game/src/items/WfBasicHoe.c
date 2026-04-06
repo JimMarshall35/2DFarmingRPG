@@ -275,6 +275,7 @@ bool WfBasicHoeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLa
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-hoe",
     .UISpriteName = "basic-hoe",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicHoeOnMakeCurrentItem,

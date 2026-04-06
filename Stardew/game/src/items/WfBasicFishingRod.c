@@ -26,6 +26,7 @@ bool WfBasicFishingRodTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLay
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-fishing-rod",
     .UISpriteName = "basic-fishing-rod",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicFishingRodOnMakeCurrentItem,

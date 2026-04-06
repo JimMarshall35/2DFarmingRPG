@@ -62,6 +62,7 @@ bool WfBasicPickaxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer*
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "basic-pickaxe",
     .UISpriteName = "basic-pickaxe",
     .pUserData = NULL,
     .onMakeCurrent = &WfBasicPickaxeOnMakeCurrentItem,

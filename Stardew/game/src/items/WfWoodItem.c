@@ -25,6 +25,7 @@ bool WfWoodItemTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLa
 
 static struct WfItemDef gDef = 
 {
+    .itemName = "wood",
     .UISpriteName = "wood",
     .pUserData = NULL,
     .onMakeCurrent = &WfWoodItemOnMakeCurrentItem,

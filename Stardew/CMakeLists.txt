@@ -31,3 +31,36 @@ target_link_libraries(AtlasTool PUBLIC StardewEngine)
 if(NOT WIN32)
     target_link_libraries(EngineNetTest PUBLIC StardewEngine)
 endif()
+
+
+if(WIN32)
+install(TARGETS WarFarmer DESTINATION WarFarmer)
+install(TARGETS StardewEngine DESTINATION WarFarmer)
+install(DIRECTORY WfAssets/
+        DESTINATION WarFarmer/WfAssets
+        FILES_MATCHING
+        PATTERN "*.txt"
+        PATTERN "*.tilemap"
+        PATTERN "*.atlas"
+        PATTERN "*.xml"
+        PATTERN "*.lua"
+        PATTERN "*.game"
+)
+install(FILES WarFarmer/WfAssets/ImageFiles.json DESTINATION WarFarmer/WfAssets)
+install(FILES WarFarmer/WfAssets/Keymap.json DESTINATION WarFarmer/WfAssets)
+else()
+install(TARGETS WarFarmer DESTINATION bin)
+install(TARGETS StardewEngine DESTINATION lib)
+install(DIRECTORY WfAssets/
+        DESTINATION share/WfAssets
+        FILES_MATCHING
+        PATTERN "*.txt"
+        PATTERN "*.tilemap"
+        PATTERN "*.atlas"
+        PATTERN "*.xml"
+        PATTERN "*.lua"
+        PATTERN "*.game"
+)
+install(FILES WfAssets/ImageFiles.json DESTINATION share/WfAssets)
+install(FILES WfAssets/Keymap.json DESTINATION share/WfAssets)
+endif()

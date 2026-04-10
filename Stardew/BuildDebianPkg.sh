@@ -1,3 +1,20 @@
+#!/usr/bin/env bash
+
+game_startup_script=$(cat <<EOF
+#!/usr/bin/env bash
+set -x
+data_dir="\$HOME/.local/share"
+game_saves="\$data_dir/openfarmer/saves"
+game_config="\$data_dir/openfarmer/config"
+mkdir -p \$game_saves
+mkdir -p \$game_config
+cp -a -r  --update=none /usr/share/WfAssets/Saves/. \$game_saves 
+cp --update=none /usr/share/WfAssets/Keymap.json \$game_config
+WarFarmer \$@ --assetsDir /usr/share/WfAssets --configDir \$game_config --savesDir \$game_saves 
+EOF
+)
+
+
 # parse versions from game header
 MAJOR_VERSION=$(cat ./game/include/WfVersion.h | grep -P -o "(?<=#define WF_MAJOR_VERSION \")[0-9]+(?=\")")
 MINOR_VERSION=$(cat ./game/include/WfVersion.h | grep -P -o "(?<=#define WF_MINOR_VERSION \")[0-9]+(?=\")")
@@ -14,27 +31,7 @@ mkdir -p "./$DEB_PKG_NAME/usr/share"
 mkdir -p "./$DEB_PKG_NAME/usr/share/WfAssets"
 mkdir -p "./$DEB_PKG_NAME/DEBIAN"
 
-# install assets
-#cp -R ./WfAssets "./$DEB_PKG_NAME/usr/share"
-cd ./WfAssets
-find . -name '*.txt' \
-    -o -name '*.tilemap'\
-    -o -name '*.atlas'\
-    -o -name '*.xml'\
-    -o -name '*.lua'\
-    -o -name '*.game'\
-    -o -name '*.txt'\
-    | cpio -pdm "../$DEB_PKG_NAME/usr/share/WfAssets"
-cd ..
-
-cp ./WfAssets/ImageFiles.json "./$DEB_PKG_NAME/usr/share/WfAssets/ImageFiles.json"
-cp ./WfAssets/Keymap.json "./$DEB_PKG_NAME/usr/share/WfAssets/Keymap.json"
-
-# install game exe
-cp "./build/game/$EXE_NAME" "./$DEB_PKG_NAME/usr/bin/$EXE_NAME"
-
-# install engine library
-cp "./build/engine/src/libStardewEngine.so" "./$DEB_PKG_NAME/usr/lib/libStardewEngine.so"
+cmake --install build --prefix "./$DEB_PKG_NAME/usr"
 
 # install debian control file
 cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"
@@ -42,7 +39,7 @@ mv "./$DEB_PKG_NAME/DEBIAN/debian_control.txt" "./$DEB_PKG_NAME/DEBIAN/control"
 sed -i "s/<<VERSION>>/$VERSION_STRING/g" "./$DEB_PKG_NAME/DEBIAN/control"
 
 # install script to start the game
-echo "(cd "/usr/share/"; $EXE_NAME \$@)" >> "./$DEB_PKG_NAME/usr/bin/openfarmer"
+echo "$game_startup_script" > "./$DEB_PKG_NAME/usr/bin/openfarmer"
 chmod +x "./$DEB_PKG_NAME/usr/bin/openfarmer"
 
 # build debian package

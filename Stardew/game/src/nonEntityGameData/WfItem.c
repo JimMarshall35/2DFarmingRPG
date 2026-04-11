@@ -26,15 +26,7 @@
 #include "StringKeyHashMap.h"
 
 // game
-#include "WfItem.h"
-#include "WfBasicAxe.h"
-#include "WfBasicBow.h"
-#include "WfBasicFishingRod.h"
-#include "WfBasicHoe.h"
-#include "WfBasicPickaxe.h"
-#include "WfBasicScythe.h"
-#include "WfBasicSword.h"
-#include "WfWoodItem.h"
+#include "WfAllItems.h"
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 static struct HashMap gItemNameHashmap;

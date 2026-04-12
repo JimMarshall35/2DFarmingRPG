@@ -34,12 +34,12 @@ jobs:
     - name: Create version
       run: |
         cd Stardew/game
-        python3 make_release_version_header.py 
+        python3 make_release_version_header.py --baked
 
     - name: Build
       run: |
         cd Stardew
-        bash Build_Internal.sh Release OFF
+        bash Build_Internal.sh Release ON
 
     - name: Test
       run: |

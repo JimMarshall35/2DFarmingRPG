@@ -7,8 +7,6 @@
 struct Entity2D;
 struct GameFrameworkLayer;
 
-void WfAddBasicAxeDef();
-
 bool STARDEW_API WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 void STARDEW_API WfBasicAxeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 void STARDEW_API WfBasicAxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);

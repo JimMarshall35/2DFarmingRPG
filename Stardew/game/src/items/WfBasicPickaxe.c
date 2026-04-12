@@ -91,12 +91,7 @@ bool WfBasicPickaxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer
         .damageType = WfPickaxeDamage,
         .fanLength = gPickaxeFanLength,
         .fanWidth = gPickaxeFanWidth,
-        .pItemDef = &gDef
+        .pItemDef = NULL
     };
     return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
-}
-
-void WfAddBasicPickaxeDef()
-{
-    WfAddItemDef(&gDef);
 }

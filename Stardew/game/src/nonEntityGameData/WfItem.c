@@ -27,6 +27,9 @@
 
 // game
 #include "WfAllItems.h"
+#if BAKE_ITEM_DEFS
+#include "BakedItems.h"
+#endif
 
 static VECTOR(struct WfItemDef) gItemDefs = NULL;
 static struct HashMap gItemNameHashmap;
@@ -239,6 +242,12 @@ static void AddItemDefXML(xmlNode* pChildI)
 
 void WfInitItems()
 {
+#if BAKE_ITEM_DEFS
+    gItemDefs = NEW_VECTOR(struct WfItemDef);
+    HashmapInit(&gItemNameHashmap, 32, sizeof(int));
+    WfInitBakedItems();
+    return;
+#else
     char buf[256];
     char buf2[256];
     gItemDefs = NEW_VECTOR(struct WfItemDef);
@@ -274,28 +283,11 @@ void WfInitItems()
             }
         }
     }
-    else
-    {
-        WfAddBuiltinItems();
-    }
-cleanup:
     if (pXMLDoc)
     {
         xmlFreeDoc(pXMLDoc);
     }
-    return;
-}
-
-void WfAddBuiltinItems()
-{
-    WfAddBasicAxeDef();
-    WfAddBasicSwordDef();
-    WfAddBasicPickaxeDef();
-    WfAddBasicScytheDef();
-    WfAddBasicFishingRodDef();
-    WfAddBasicHoeDef();
-    WfAddBasicBowDef();
-    WfAddWoodItemDef();
+#endif
 }
 
 int l_GetItemUISpriteName(lua_State* L)

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash Build_Internal.sh Release
+bash Build_Internal.sh Release OFF

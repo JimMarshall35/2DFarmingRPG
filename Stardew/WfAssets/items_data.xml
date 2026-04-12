@@ -18,7 +18,7 @@
             <c-function name="WfBasicAxeOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicAxeOnTryEquip"/>
+            <c-function name="WfBasicAxeTryEquip"/>
         </on-try-equip>
         <on-gamelayer-push>
             <c-function name="WfBasicAxeOnGameLayerPush"/>

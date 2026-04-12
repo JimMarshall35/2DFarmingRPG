@@ -5,9 +5,9 @@ if [ ! -d "build" ]; then
 fi
 
 echo $1
-
+echo "bake item defs? $2"
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=$1
+cmake .. -DCMAKE_BUILD_TYPE=$1 -DBAKE_ITEM_DEFS=$2
 make
 cd game
 

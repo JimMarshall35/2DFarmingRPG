@@ -7,8 +7,6 @@
 struct Entity2D;
 struct GameFrameworkLayer;
 
-void WfAddBasicBowDef();
-
 void STARDEW_API WfBasicBowOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 void STARDEW_API WfBasicBowOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 bool STARDEW_API WfBasicBowOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);

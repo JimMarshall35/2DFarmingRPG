@@ -22,22 +22,3 @@ bool WfBasicScytheTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* 
 {
     return false;
 }
-
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-scythe",
-    .UISpriteName = "basic-scythe",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicScytheOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicScytheOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicScytheOnUseItem,
-    .onTryEquip = &WfBasicScytheTryEquip,
-    .pickupSpriteName = "basic-scythe",
-};
-
-void WfAddBasicScytheDef()
-{
-    WfAddItemDef(&gDef);
-}
-

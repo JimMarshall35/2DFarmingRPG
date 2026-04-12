@@ -272,24 +272,3 @@ bool WfBasicHoeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLa
     return false;
 }
 
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-hoe",
-    .UISpriteName = "basic-hoe",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicHoeOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicHoeOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicHoeOnUseItem,
-    .onTryEquip = &WfBasicHoeTryEquip,
-    .onUseAnimation = WfThrustAnim,
-    .bCanUseItem = true,
-    .pickupSpriteName = "basic-hoe",
-    .onGameLayerPush = &WfBasicHoeOnGameLayerPush
-};
-
-void WfAddBasicHoeDef()
-{
-    
-    WfAddItemDef(&gDef);
-}

@@ -76,21 +76,6 @@ void WfBasicAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer
     gAxeFanWidth = WfGetItemConfigProperty(&pDef->config, "AXE_FAN_WIDTH")->val.floatVal;
 }
 
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-axe",
-    .UISpriteName = "basic-axe",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicAxeOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicAxeOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicAxeOnUseItem,
-    .onTryEquip = &WfBasicAxeTryEquip,
-    .onUseAnimation = WfSlashAnim,
-    .bCanUseItem = true,
-    .pickupSpriteName = "basic-axe",
-    .onGameLayerPush = &WfBasicAxeOnGameLayerPush
-};
-
 bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     Au_PlayZzFX(&gSwingSound);
@@ -101,12 +86,7 @@ bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
         .damageType = WfAxeDamage,
         .fanLength = gAxeFanLength,
         .fanWidth = gAxeFanWidth,
-        .pItemDef = &gDef
+        .pItemDef = NULL
     };
     return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
-}
-
-void WfAddBasicAxeDef()
-{
-    WfAddItemDef(&gDef);
 }

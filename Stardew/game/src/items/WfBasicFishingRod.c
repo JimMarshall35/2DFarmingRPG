@@ -22,21 +22,3 @@ bool WfBasicFishingRodTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLay
 {
     return false;
 }
-
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-fishing-rod",
-    .UISpriteName = "basic-fishing-rod",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicFishingRodOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicFishingRodOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicFishingRodOnUseItem,
-    .onTryEquip = &WfBasicFishingRodTryEquip,
-    .pickupSpriteName = "basic-fishing-rod",
-};
-
-void WfAddBasicFishingRodDef()
-{
-    WfAddItemDef(&gDef);
-}

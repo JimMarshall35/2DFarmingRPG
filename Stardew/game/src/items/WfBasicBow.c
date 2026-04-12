@@ -22,20 +22,3 @@ bool WfBasicBowTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLa
     return false;
 }
 
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-bow",
-    .UISpriteName = "basic-bow",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicBowOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicBowOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicBowOnUseItem,
-    .onTryEquip = &WfBasicBowTryEquip,
-    .pickupSpriteName = "basic-bow",
-};
-
-void WfAddBasicBowDef()
-{
-    WfAddItemDef(&gDef);
-}

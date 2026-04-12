@@ -8,7 +8,6 @@
 struct Entity2D;
 struct GameFrameworkLayer;
 
-void WfAddBasicHoeDef();
 
 void STARDEW_API WfBasicHoeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 void STARDEW_API WfBasicHoeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext);

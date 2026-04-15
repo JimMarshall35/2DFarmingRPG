@@ -2,15 +2,15 @@ include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.25)
 project(StardewEngine)
 
-set(STARDEW_PLATFORM "GLFW" CACHE STRING "Backend")
+set(STARDEW_PLATFORM "GLFW3" CACHE STRING "Backend")
 
 set_property(CACHE STARDEW_PLATFORM PROPERTY STRINGS
-    GLFW SDL
+    GLFW3 SDL2
 )
 
-if(STARDEW_PLATFORM STREQUAL "GLFW")
+if(STARDEW_PLATFORM STREQUAL "GLFW3")
   find_package(glfw3 REQUIRED)
-elseif(STARDEW_PLATFORM STREQUAL "SDL")
+elseif(STARDEW_PLATFORM STREQUAL "SDL2")
   find_package(SDL2 REQUIRED)
 endif()
 
@@ -37,9 +37,9 @@ target_link_libraries(StardewEngine PUBLIC
   cglm_headers)
 
 
-if(STARDEW_PLATFORM STREQUAL "GLFW")
+if(STARDEW_PLATFORM STREQUAL "GLFW3")
   target_link_libraries(StardewEngine PUBLIC glfw)
-elseif(STARDEW_PLATFORM STREQUAL "SDL")
+elseif(STARDEW_PLATFORM STREQUAL "SDL2")
   target_link_libraries(StardewEngine PUBLIC SDL2::SDL2)
 endif()
 
@@ -77,3 +77,11 @@ else()
 endif()
 
 target_compile_definitions(StardewEngine PRIVATE STARDEW_EXPORTS)
+
+if(STARDEW_PLATFORM STREQUAL "GLFW3")
+    target_compile_definitions(StardewEngine PRIVATE STARDEW_PLATFORM=1)
+elseif(STARDEW_PLATFORM STREQUAL "SDL2")
+    target_compile_definitions(StardewEngine PRIVATE STARDEW_PLATFORM=2)
+else()
+    message(FATAL_ERROR "Unknown STARDEW_PLATFORM: ${STARDEW_PLATFORM}")
+endif()

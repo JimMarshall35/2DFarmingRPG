@@ -37,7 +37,11 @@ target_link_libraries(StardewEngine PUBLIC
   cglm_headers)
 
 
-target_link_libraries(StardewEngine PUBLIC glfw)
+if(STARDEW_PLATFORM STREQUAL "GLFW")
+  target_link_libraries(StardewEngine PUBLIC glfw)
+elseif(STARDEW_PLATFORM STREQUAL "SDL")
+  target_link_libraries(StardewEngine PUBLIC SDL2::SDL2)
+endif()
 
 target_link_libraries(StardewEngine PUBLIC box2d)
 

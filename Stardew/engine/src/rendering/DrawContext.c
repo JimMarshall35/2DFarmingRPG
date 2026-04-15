@@ -1,6 +1,11 @@
 #include "DrawContext.h"
+#include "Platform.h"
 #include <string.h>
+#if STARDEW_PLATFORM == STARDEW_PLATFORM_GLFW3
 #include <glad/glad.h>
+#elif STARDEW_PLATFORM == STARDEW_PLATFORM_SDL2
+#include <SDL2/SDL_opengles2.h>
+#endif
 #include <cglm/cglm.h>
 #include "ObjectPool.h"
 #include "Widget.h"
@@ -9,6 +14,7 @@
 #include "PlatformDefs.h"
 #include "Game2DLayer.h"
 #include "Log.h"
+
 
 const char* uiVert =
 #if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
@@ -383,6 +389,8 @@ void DestroyWorldspaceVertexBuffer(H2DWorldspaceVertexBuffer hBuf)
 	glDeleteVertexArrays(1, &vertexBuffer->vao);
 }
 
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+
 static void GLAPIENTRY MessageCallback(GLenum source,
     GLenum type,
     GLuint id,
@@ -398,6 +406,8 @@ static void GLAPIENTRY MessageCallback(GLenum source,
             type, severity, message);
     }
 }
+
+#endif
 
 static void ClearScreen()
 {
@@ -415,10 +425,11 @@ DrawContext Dr_InitDrawContext()
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
     // During init, enable debug output
     glEnable(GL_DEBUG_OUTPUT);
 
-#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
     glDebugMessageCallback(MessageCallback, 0);
 #endif
 
@@ -450,5 +461,6 @@ void Dr_OnScreenDimsChange(DrawContext* pCtx, int newW, int newH)
 {
 	pCtx->screenWidth = newW;
 	pCtx->screenHeight = newH;
+	glViewport(0, 0, newW, newH);
 	glm_ortho(0.0f, newW, newH, 0.0f, -1.0f, 1.0f, gScreenspaceOrtho);
 }

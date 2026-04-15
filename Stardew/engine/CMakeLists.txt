@@ -40,7 +40,7 @@ target_link_libraries(StardewEngine PUBLIC
 if(STARDEW_PLATFORM STREQUAL "GLFW3")
   target_link_libraries(StardewEngine PUBLIC glfw)
 elseif(STARDEW_PLATFORM STREQUAL "SDL2")
-  target_link_libraries(StardewEngine PUBLIC SDL2::SDL2)
+  target_link_libraries(StardewEngine PUBLIC SDL2::SDL2 GLESv2)
 endif()
 
 target_link_libraries(StardewEngine PUBLIC box2d)

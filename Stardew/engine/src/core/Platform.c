@@ -3,6 +3,13 @@
 #include "main.h"
 #include "InputContext.h"
 
+void Common_FramebufferSizeChangeHandler(int width, int height)
+{
+    Dr_OnScreenDimsChange(GetDrawContext(), width, height);
+    In_FramebufferResize(GetInputContext(), width, height);
+    GF_OnWindowDimsChanged(width, height);
+
+}
 
 #if STARDEW_PLATFORM == STARDEW_PLATFORM_GLFW3
 
@@ -13,10 +20,7 @@ GLFWwindow* gWindow = NULL;
 
 void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-    glViewport(0, 0, width, height);
-    Dr_OnScreenDimsChange(GetDrawContext(), width, height);
-    In_FramebufferResize(GetInputContext(), width, height);
-    GF_OnWindowDimsChanged(width, height);
+    Common_FramebufferSizeChangeHandler(width, height);
 }
 
 void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
@@ -147,31 +151,106 @@ void Platform_PollEvents()
 
 #elif STARDEW_PLATFORM == STARDEW_PLATFORM_SDL2
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengles2.h>
+#include "Log.h"
+
+SDL_Window* gWindow;
+SDL_GLContext gOpenglContext = NULL;
+bool gShouldWIndowClose = false;
+
 int Platform_InitWindow()
 {
-    return -1;
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+    {
+        Log_Error("Failed to init SDL");
+        return -1;
+    }
+
+    // Tell SDL we want OpenGL ES, not desktop GL
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+
+    // Request version 2.0
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+    // (Optional but usually desired)
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+
+    
+    gWindow = SDL_CreateWindow("Stardew Engine SDL", 0, 0, SCR_WIDTH, SCR_HEIGHT,
+    SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+
+    if(gWindow == NULL)
+    {
+        Log_Error("SDL_CreateWindow Failed");
+        return -1;
+    }
+    gOpenglContext = SDL_GL_CreateContext(gWindow);
+    if(gOpenglContext == NULL)
+    {
+        Log_Error("SDL_GL_CreateContext Failed");
+        return -1;
+    }
+
+
+    return 0;
 }
 
 bool Platform_ShouldWindowClose()
 {
-    return true;
+    return gShouldWIndowClose;
 }
 
 void Platform_SwapBuffers()
 {
+    SDL_GL_SwapWindow(gWindow);
 }
 
 double Platform_GetElapsedSeconds()
 {
-    return 0.0;
+    Uint32 ms = SDL_GetTicks();
+    double seconds = ms / 1000.0;
+    return seconds;
 }
 
 void Platform_DeInit()
 {
+    SDL_Quit();
 }
 
 void Platform_PollEvents()
 {
+    SDL_Event event;
+
+    while (SDL_PollEvent(&event))
+    {
+        /* TODO: handle input */
+        if (event.type == SDL_QUIT)
+        {
+            gShouldWIndowClose = false;
+        }
+        switch(event.type)
+        {
+        case SDL_QUIT:
+            {
+                gShouldWIndowClose = true;
+            }
+            break;
+        case SDL_WINDOWEVENT:
+            {
+                if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+                {
+                    int width = event.window.data1;
+                    int height = event.window.data2;
+                    Common_FramebufferSizeChangeHandler(width, height);
+                }
+            }
+            break;
+        }
+    }
 }
 
 

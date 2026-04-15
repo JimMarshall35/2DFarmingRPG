@@ -2,7 +2,17 @@ include(CMakePrintHelpers)
 cmake_minimum_required(VERSION 3.25)
 project(StardewEngine)
 
-find_package(glfw3 REQUIRED)
+set(STARDEW_PLATFORM "GLFW" CACHE STRING "Backend")
+
+set_property(CACHE STARDEW_PLATFORM PROPERTY STRINGS
+    GLFW SDL
+)
+
+if(STARDEW_PLATFORM STREQUAL "GLFW")
+  find_package(glfw3 REQUIRED)
+elseif(STARDEW_PLATFORM STREQUAL "SDL")
+  find_package(SDL2 REQUIRED)
+endif()
 
 if(WIN32)
   find_package(Lua 5.4 REQUIRED)
@@ -54,7 +64,7 @@ target_include_directories(StardewEngine PUBLIC ${LIBOPENAL_INCLUDE_DIR})
 
 target_link_libraries(StardewEngine PUBLIC OpenAL::OpenAL)
 if(WIN32)
-  target_link_libraries(StardewEngine PUBLIC LibXml2::LibXml2 Freetype::Freetype lua::lua glfw)
+  target_link_libraries(StardewEngine PUBLIC LibXml2::LibXml2 Freetype::Freetype lua::lua)
 else()
   target_link_libraries(StardewEngine PUBLIC ${FREETYPE_LIBRARIES})
   target_link_libraries(StardewEngine PUBLIC m)

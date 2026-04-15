@@ -54,6 +54,8 @@ typedef void(*WorldspaceVertexBufferDataFn)(H2DWorldspaceVertexBuffer hBuf, Worl
 typedef void(*DrawWorldspaceVertexBufferFn)(H2DWorldspaceVertexBuffer hBuf, size_t vertexCount, mat4 view);
 typedef void(*DestroyWorldspaceVertexBufferFn)(H2DWorldspaceVertexBuffer hBuf);
 
+typedef void(*ClearScreenFn)();
+
 
 typedef struct DrawContext
 {
@@ -71,6 +73,7 @@ typedef struct DrawContext
 	WorldspaceVertexBufferDataFn WorldspaceVertexBufferData;
 	DrawWorldspaceVertexBufferFn DrawWorldspaceVertexBuffer;
 	DestroyWorldspaceVertexBufferFn DestroyWorldspaceVertexBuffer;
+	ClearScreenFn ClearScreen;
 }DrawContext;
 
 DrawContext Dr_InitDrawContext();

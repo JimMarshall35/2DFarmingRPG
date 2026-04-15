@@ -27,6 +27,7 @@ core/String.c
 core/FilesystemUtils.c
 core/XMLSchema.c
 core/XMLHelpers.c
+core/Platform.c
 gameframework/GameFramework.c
 gameframework/GameFrameworkEvent.c
 gameframework/layers/UI/XMLUIGameLayer.c

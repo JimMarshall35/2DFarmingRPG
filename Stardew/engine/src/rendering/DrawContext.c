@@ -383,8 +383,45 @@ void DestroyWorldspaceVertexBuffer(H2DWorldspaceVertexBuffer hBuf)
 	glDeleteVertexArrays(1, &vertexBuffer->vao);
 }
 
+static void GLAPIENTRY MessageCallback(GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const GLchar* message,
+    const void* userParam)
+{
+    //if (severity >= minimumLogSeverityIncluding) 
+    {
+        Log_Warning("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type, severity, message);
+    }
+}
+
+static void ClearScreen()
+{
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+} 
+
 DrawContext Dr_InitDrawContext()
 {
+	// configure global opengl state
+    // -----------------------------
+    Log_Verbose("configuring global opengl state");
+    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // During init, enable debug output
+    glEnable(GL_DEBUG_OUTPUT);
+
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+    glDebugMessageCallback(MessageCallback, 0);
+#endif
+
 	DrawContext d;
 	memset(&d, 0, sizeof(DrawContext));
 	d.DestroyVertexBuffer = &DestroyUIVertexBuffer;
@@ -399,6 +436,8 @@ DrawContext Dr_InitDrawContext()
 	d.WorldspaceVertexBufferData = &WorldspaceVertexBufferData;
 	d.DrawWorldspaceVertexBuffer = &DrawWorldspaceVertexBuffer;
 	d.DestroyWorldspaceVertexBuffer = &DestroyWorldspaceVertexBuffer;
+
+	d.ClearScreen = &ClearScreen;
 
 	gVertexBuffersPool = NEW_OBJECT_POOL(struct VertexBuffer, 256);
 	gIndexedVertexBuffersPool = NEW_OBJECT_POOL(struct IndexedVertexBuffer, 256);

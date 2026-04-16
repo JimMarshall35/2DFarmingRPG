@@ -36,6 +36,7 @@ jobs:
         cmd /c "GetDependenciesConan.bat"
 
     - name: Stamp version
+      shell: cmd
       env:
           BAKED: ${{ matrix.baked }}
           TYPE: ${{ matrix.type }} 

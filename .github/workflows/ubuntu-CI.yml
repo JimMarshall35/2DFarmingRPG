@@ -41,7 +41,7 @@ jobs:
     - name: Build
       run: |
         cd Stardew
-        ./BuildInternal.sh Release ${{ matrix.baked }} ${{ matrix.platform }} 
+        ./Build_Internal.sh Release ${{ matrix.baked }} ${{ matrix.platform }} 
 
     - name: Test
       run: |

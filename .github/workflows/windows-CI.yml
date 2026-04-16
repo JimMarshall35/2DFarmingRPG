@@ -38,18 +38,24 @@ jobs:
     - name: Stamp version
       env:
           BAKED: ${{ matrix.baked }}
+          TYPE: ${{ matrix.type }} 
+          PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew/game
         if "%BAKED%"=="ON" (
-            python make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }} --baked
+            python make_release_version_header.py --platform %PLATFORM% --build_type %TYPE% --baked
         ) else (
-            python make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }}
+            python make_release_version_header.py --platform %PLATFORM% --build_type %TYPE%
         )
         
     - name: Build
+      env:
+          BAKED: ${{ matrix.baked }}
+          TYPE: ${{ matrix.type }} 
+          PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew
-        cmd /c "Build.bat" ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} 
+        cmd /c "Build.bat" %TYPE% %BAKED% %PLATFORM% 
 
     - name: Test
       run: |

@@ -7,7 +7,7 @@ fi
 echo $1
 echo "bake item defs? $2"
 cd build
-cmake .. -DCMAKE_BUILD_TYPE=$1 -DBAKE_ITEM_DEFS=$2
+cmake .. -DCMAKE_BUILD_TYPE=$1 -DBAKE_ITEM_DEFS=$2 -DSTARDEW_PLATFORM=$3
 make
 cd game
 

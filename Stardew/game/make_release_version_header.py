@@ -19,6 +19,7 @@ def do_cmd_args():
                     epilog='Jim Marshall - 2025')
     parser.add_argument("--baked", action="store_true")
     parser.add_argument("--platform", type=str)
+    parser.add_argument("--build_type", type=str)
     args = parser.parse_args()
     return args
 
@@ -33,7 +34,7 @@ def main():
         print(f"time: {formatted_time}")
         branch = get_git_branch()
         print(f"branch: {branch}")
-        data = data.replace("BUILD_SHA \"<local_build>\"", f"BUILD_SHA \"{sha}{"-baked" if args.baked else ""}-{args.platform}\"")
+        data = data.replace("BUILD_SHA \"<local_build>\"", f"BUILD_SHA \"{sha}{"-baked" if args.baked else ""}-{args.platform}-{args.build_type}\"")
         data = data.replace("BUILD_TIME \"<local_build>\"", f"BUILD_TIME \"{formatted_time}\"")
         data = data.replace("WF_BRANCH \"main\"", f"WF_BRANCH \"{branch}\"")
 

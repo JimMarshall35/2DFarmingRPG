@@ -27,21 +27,21 @@ jobs:
         cd Stardew
         bash GetDependencies.sh
 
-    - name: Create version
+    - name: Stamp version
       env:
           BAKED: ${{ matrix.baked }}
       run: |
         cd Stardew/game
         if [ "$BAKED" = "ON" ]; then
-          python3 make_release_version_header.py --platform ${{ matrix.platform }} --baked
+          python3 make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }} --baked
         else
-          python3 make_release_version_header.py --platform ${{ matrix.platform }} 
+          python3 make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }}
         fi
         
     - name: Build
       run: |
         cd Stardew
-        ./Build_Internal.sh Release ${{ matrix.baked }} ${{ matrix.platform }} 
+        ./Build_Internal.sh ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} 
 
     - name: Test
       run: |

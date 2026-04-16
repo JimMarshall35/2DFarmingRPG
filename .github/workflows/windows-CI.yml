@@ -11,6 +11,7 @@ jobs:
     runs-on: windows-latest
 
     strategy:
+      fail-fast: false
       matrix:
         platform: ["SDL2", "GLFW3"]
         baked: ["ON", "OFF"]

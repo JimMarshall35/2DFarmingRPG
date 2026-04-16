@@ -42,11 +42,9 @@ jobs:
           PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew/game
-        if "%BAKED%"=="ON" (
-            python make_release_version_header.py --platform %PLATFORM% --build_type %TYPE% --baked
-        ) else (
-            python make_release_version_header.py --platform %PLATFORM% --build_type %TYPE%
-        )
+        set ARGS=--platform %PLATFORM% --build_type %TYPE%
+        if /I "%BAKED%"=="ON" set ARGS=%ARGS% --baked
+        python make_release_version_header.py %ARGS%
         
     - name: Build
       env:

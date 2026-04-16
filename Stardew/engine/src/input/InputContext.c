@@ -4,7 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <GLFW/glfw3.h>
+#include "Platform.h"
+#include "KeyCodes.h"
 #include "FileHelpers.h"
 #include "AssertLib.h"
 #include "Log.h"
@@ -200,30 +201,10 @@ bool In_GetMouseButtonValue(InputContext* context, HMouseButtonBinding hBinding)
 	return context->buttonMappings.MouseButtonMappings.arr[hBinding].data.ButtonMapping.bCurrent;
 }
 
-static bool TextEntryAllowedKeystroke(int key)
-{
-	return 
-		(key >= GLFW_KEY_A && key <= GLFW_KEY_Z) ||
-		(key >= GLFW_KEY_0 && key <= GLFW_KEY_9) ||
-		key == GLFW_KEY_SPACE ||
-		key == GLFW_KEY_APOSTROPHE ||
-		key == GLFW_KEY_COMMA ||
-		key == GLFW_KEY_MINUS ||
-		key == GLFW_KEY_PERIOD ||
-		key == GLFW_KEY_SLASH ||
-		key == GLFW_KEY_SEMICOLON ||
-		key == GLFW_KEY_EQUAL ||
-		key == GLFW_KEY_RIGHT ||
-		key == GLFW_KEY_LEFT ||
-		key == GLFW_KEY_UP ||
-		key == GLFW_KEY_DOWN ||
-		key == GLFW_KEY_BACKSPACE;
-}
-
 static int Shifted(int c, bool capslock)
 {
 	// todo: do this properly for other keys besides 0-9
-	if(c >= GLFW_KEY_0 && c <= GLFW_KEY_9)
+	if(c >= STARDEW_KEY_0 && c <= STARDEW_KEY_9)
 	{
 		int LUT[10] =
 		{
@@ -238,9 +219,9 @@ static int Shifted(int c, bool capslock)
 			'*',
 			'(',
 		};
-		return LUT[c - GLFW_KEY_0];
+		return LUT[c - STARDEW_KEY_0];
 	}
-	else if(c >= GLFW_KEY_A && c <= GLFW_KEY_Z)
+	else if(c >= STARDEW_KEY_A && c <= STARDEW_KEY_Z)
 	{
 		if(capslock)
 		{
@@ -263,41 +244,41 @@ static void DoTextInput(InputContext* context, int key, int scancode, int action
 
 	int ascii = 0;
 
-	if(key == GLFW_KEY_CAPS_LOCK)
+	if(key == STARDEW_KEY_CAPS_LOCK)
 	{
 		switch(action)
 		{
-		case GLFW_PRESS:
+		case STARDEW_PRESS:
 			EASSERT(!context->textInput.capslockModifier);
 			context->textInput.capslockModifier = true;
 			break;
-		case GLFW_RELEASE:
+		case STARDEW_RELEASE:
 			EASSERT(context->textInput.capslockModifier);
 			context->textInput.capslockModifier = false;
 			break;
 		}
 	}
-	else if(key == GLFW_KEY_LEFT_SHIFT)
+	else if(key == STARDEW_KEY_LEFT_SHIFT)
 	{
 		switch(action)
 		{
-		case GLFW_PRESS:
+		case STARDEW_PRESS:
 			EASSERT(!context->textInput.shiftModifier);
 			context->textInput.shiftModifier = true;
 			break;
-		case GLFW_RELEASE:
+		case STARDEW_RELEASE:
 			EASSERT(context->textInput.shiftModifier);
 			context->textInput.shiftModifier = false;
 			break;
 		}
 	}
-	else if (action == GLFW_PRESS)
+	else if (action == STARDEW_PRESS)
 	{
 		if(context->textInput.shiftModifier)
 		{
 			ascii = Shifted((char)key, context->textInput.capslockModifier);
 		}
-		else if(!context->textInput.capslockModifier && (key >= GLFW_KEY_A && key <= GLFW_KEY_Z))
+		else if(!context->textInput.capslockModifier && (key >= STARDEW_KEY_A && key <= STARDEW_KEY_Z))
 		{
 			ascii = tolower(key);
 		}
@@ -320,12 +301,12 @@ void In_RecieveKeyboardKey(InputContext* context, int key, int scancode, int act
 		{
 			if (pMapping->data.ButtonMapping.data.keyboard.keyboadCode == key)
 			{
-				if (action == GLFW_PRESS)
+				if (action == STARDEW_PRESS)
 				{
 					pMapping->data.ButtonMapping.bCurrent = true;
 					pMapping->data.ButtonMapping.bPressThisFrame = true;
 				}
-				else if (action == GLFW_RELEASE)
+				else if (action == STARDEW_RELEASE)
 				{
 					pMapping->data.ButtonMapping.bCurrent = false;
 					pMapping->data.ButtonMapping.bReleaseThisFrame = true;
@@ -363,13 +344,13 @@ void In_RecieveMouseButton(InputContext* context, int button, int action, int mo
 		{
 			if (pMapping->data.ButtonMapping.data.mouseBtn.button == button)
 			{
-				if (action == GLFW_PRESS)
+				if (action == STARDEW_PRESS)
 				{
 					static int dCounter = 0;
 					pMapping->data.ButtonMapping.bCurrent = true;
 					pMapping->data.ButtonMapping.bPressThisFrame = true;
 				}
-				else if (action == GLFW_RELEASE)
+				else if (action == STARDEW_RELEASE)
 				{
 					pMapping->data.ButtonMapping.bCurrent = false;
 					pMapping->data.ButtonMapping.bReleaseThisFrame = true;

@@ -161,6 +161,7 @@ void Platform_PollEvents()
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengles2.h>
 #include "Log.h"
+#include <glad/glad.h>
 
 SDL_Window* gWindow;
 SDL_GLContext gOpenglContext = NULL;
@@ -208,6 +209,22 @@ int Platform_InitWindow()
         Log_Error("SDL_GL_CreateContext Failed");
         return -1;
     }
+    
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+    Log_Verbose("loading Opengl procs\n");
+    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
+    {
+        Log_Verbose("Failed to initialize GLAD");
+        return -1;
+    }
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
+    Log_Verbose("loading Opengl ES procs");
+    if (!gladLoadGLES2Loader((GLADloadproc)SDL_GL_GetProcAddress))
+    {
+        Log_Verbose("Failed to initialize GLAD");
+        return -1;
+    }
+#endif
 
 
     return 0;

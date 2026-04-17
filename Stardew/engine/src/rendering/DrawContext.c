@@ -2,15 +2,8 @@
 #include "Platform.h"
 #include "PlatformDefs.h"
 #include <string.h>
-#if STARDEW_PLATFORM == STARDEW_PLATFORM_GLFW3
 #include <glad/glad.h>
-#elif STARDEW_PLATFORM == STARDEW_PLATFORM_SDL2
-#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
-#include <SDL2/SDL_opengles2.h>
-#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
-#include <SDL2/SDL_opengl.h>
-#endif
-#endif
+
 #include <cglm/cglm.h>
 #include "ObjectPool.h"
 #include "Widget.h"

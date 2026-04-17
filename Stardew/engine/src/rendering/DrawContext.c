@@ -1,5 +1,6 @@
 #include "DrawContext.h"
 #include "Platform.h"
+#include "PlatformDefs.h"
 #include <string.h>
 #if STARDEW_PLATFORM == STARDEW_PLATFORM_GLFW3
 #include <glad/glad.h>

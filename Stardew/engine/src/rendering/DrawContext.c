@@ -4,7 +4,11 @@
 #if STARDEW_PLATFORM == STARDEW_PLATFORM_GLFW3
 #include <glad/glad.h>
 #elif STARDEW_PLATFORM == STARDEW_PLATFORM_SDL2
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
 #include <SDL2/SDL_opengles2.h>
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+#include <SDL2/SDL_opengl.h>
+#endif
 #endif
 #include <cglm/cglm.h>
 #include "ObjectPool.h"
@@ -391,21 +395,21 @@ void DestroyWorldspaceVertexBuffer(H2DWorldspaceVertexBuffer hBuf)
 
 #if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
 
-static void GLAPIENTRY MessageCallback(GLenum source,
-    GLenum type,
-    GLuint id,
-    GLenum severity,
-    GLsizei length,
-    const GLchar* message,
-    const void* userParam)
-{
-    //if (severity >= minimumLogSeverityIncluding) 
-    {
-        Log_Warning("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
-            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
-            type, severity, message);
-    }
-}
+// static void GLAPIENTRY MessageCallback(GLenum source,
+//     GLenum type,
+//     GLuint id,
+//     GLenum severity,
+//     GLsizei length,
+//     const GLchar* message,
+//     const void* userParam)
+// {
+//     //if (severity >= minimumLogSeverityIncluding) 
+//     {
+//         Log_Warning("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n\n",
+//             (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+//             type, severity, message);
+//     }
+// }
 
 #endif
 
@@ -428,9 +432,9 @@ DrawContext Dr_InitDrawContext()
 
 #if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
     // During init, enable debug output
-    glEnable(GL_DEBUG_OUTPUT);
+    //glEnable(GL_DEBUG_OUTPUT);
 
-    glDebugMessageCallback(MessageCallback, 0);
+    //glDebugMessageCallback(MessageCallback, 0);
 #endif
 
 	DrawContext d;

@@ -34,11 +34,28 @@ ZzFX-C is included as a git submodule, so remember to do:
 
 before a local build.
 
+## Build Time Dependencies
+
+- Cmake
+- GCC on linux, msvc on windows
+- Python3
+- Nushell (for "baked" item builds only)
+- Bash on linux, cmd on windows
+
 ## Assets
 
 As part of the build, asset files should be built. See [Asset Tools](./AssetTools.md) documentation for more details, as well as the compile_assets.sh script in the repo.
 
 This isn't currently integrated into CMake and you've got to manually do it. On windows some shuffling of the built files is necessary for the game to then be playable. The compile_assets.bat script may or may not work properly as focus is primarily on the linux one, although I have tested a build from CI relatively recently and it worked fine.
+
+## Build Flags
+
+Pass these flags to the CMake build configure step, prefixed with `-D` (for example `cmake .. -DBAKE_ITEM_DEFS=ON`):
+
+- `BAKE_ITEM_DEFS`
+    - values: `ON`, `OFF`
+- `STARDEW_PLATFORM`
+    - values: `SDL2`, `GLFW3`
 
 ## Packaging
 

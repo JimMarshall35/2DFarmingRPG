@@ -1,1 +1,1 @@
-call Build.bat Release OFF GLFW3
+call Build.bat Release OFF GLFW3 OPENGLES

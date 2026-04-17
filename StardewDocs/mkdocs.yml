@@ -41,6 +41,8 @@ nav:
     - "UI": UI.md
     - "Build": Build.md
     - "Audio": Audio.md
+    - "Platform": Platform.md
+    - "Game Items": GameItems.md
   - API:
       - Engine:
           - 'Links': 'StardewEngine/links.md'

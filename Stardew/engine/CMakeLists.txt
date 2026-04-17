@@ -8,6 +8,13 @@ set_property(CACHE STARDEW_PLATFORM PROPERTY STRINGS
     GLFW3 SDL2
 )
 
+set(STARDEW_GL_API_TYPE "OPENGL" CACHE STRING "Backend")
+
+set_property(CACHE STARDEW_GL_API_TYPE PROPERTY STRINGS
+    OPENGL OPENGLES
+)
+
+
 if(STARDEW_PLATFORM STREQUAL "GLFW3")
   find_package(glfw3 REQUIRED)
 elseif(STARDEW_PLATFORM STREQUAL "SDL2")
@@ -43,6 +50,7 @@ elseif(STARDEW_PLATFORM STREQUAL "SDL2")
   if(WIN32)
     target_link_libraries(StardewEngine PUBLIC SDL2::SDL2 opengl32)
   else()
+  
     target_link_libraries(StardewEngine PUBLIC SDL2::SDL2 GLESv2)
   endif()
 endif()
@@ -88,4 +96,11 @@ elseif(STARDEW_PLATFORM STREQUAL "SDL2")
     target_compile_definitions(StardewEngine PRIVATE STARDEW_PLATFORM=2)
 else()
     message(FATAL_ERROR "Unknown STARDEW_PLATFORM: ${STARDEW_PLATFORM}")
+endif()
+
+
+if(STARDEW_GL_API_TYPE STREQUAL "OPENGL")
+  target_compile_definitions(StardewEngine PRIVATE GAME_GL_API_TYPE=2)
+elseif(STARDEW_GL_API_TYPE STREQUAL "OPENGLES")
+  target_compile_definitions(StardewEngine PRIVATE GAME_GL_API_TYPE=1)
 endif()

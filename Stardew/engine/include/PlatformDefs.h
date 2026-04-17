@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Platform.h"
+
 #ifdef _WIN64 
 #define GAME_PLATFORM_WINDOWS_64
 #define GAME_PTR_SIZE 8
@@ -15,4 +17,8 @@
 #define GAME_GL_API_TYPE_CORE 2
 
 //#define GAME_GL_API_TYPE "OPEN_GL"
-#define GAME_GL_API_TYPE GAME_GL_API_TYPE_ES
+
+#ifndef GAME_GL_API_TYPE
+    #define GAME_GL_API_TYPE GAME_GL_API_TYPE_CORE
+#endif
+

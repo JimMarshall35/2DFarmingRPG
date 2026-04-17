@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "InputContext.h"
+#include "PlatformDefs.h"
 
 void Common_FramebufferSizeChangeHandler(int width, int height)
 {
@@ -61,10 +62,16 @@ int Platform_InitWindow()
     // ------------------------------
     glfwInit();
     Log_Verbose("glfwInit");
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
 
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -168,11 +175,18 @@ int Platform_InitWindow()
     }
 
     // Tell SDL we want OpenGL ES, not desktop GL
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 
     // Request version 2.0
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#endif
+    
 
     // (Optional but usually desired)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);

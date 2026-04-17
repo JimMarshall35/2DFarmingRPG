@@ -19,6 +19,7 @@ jobs:
         platform: ["SDL2", "GLFW3"]
         baked: ["ON", "OFF"]
         type: ["Release", "Debug"]
+        gl_api: ["OPENGL", "OPENGLES"]
     steps:
     - uses: actions/checkout@v4
       with:
@@ -42,7 +43,7 @@ jobs:
     - name: Build
       run: |
         cd Stardew
-        ./Build_Internal.sh ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} 
+        ./Build_Internal.sh ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} ${{ matrix.gl_api }} 
 
     - name: Test
       run: |

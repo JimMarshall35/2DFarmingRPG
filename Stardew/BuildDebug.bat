@@ -1,1 +1,1 @@
-call Build.bat Debug OFF GLFW3
+call Build.bat Debug OFF GLFW3 OPENGLES

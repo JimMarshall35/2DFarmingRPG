@@ -55,7 +55,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew
-        cmd /c "Build.bat" %TYPE% %BAKED% %PLATFORM% 
+        cmd /c "Build.bat" %TYPE% %BAKED% %PLATFORM% OPENGL
 
     - name: Test
       run: |

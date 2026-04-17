@@ -1,6 +1,6 @@
 # Rendering
 
-Currently OpenGL ES is used for rendering. Originally I had used desktop openGL, and traces of this code remain, but this should be removed. In future I'd like to support a vulkan backend as well as opengl ES.
+Either desktop opengl or opengl es can be used as the backend, configurable at build time through the `STARDEW_GL_API_TYPE` cmake flag (see [Build](./Build.md)).
 
 The concept for rendering the Game2D and UI layers is simple, a buffer of verts is populated each frame and is then drawn.
 

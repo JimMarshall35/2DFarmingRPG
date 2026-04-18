@@ -34,20 +34,8 @@ endif()
 
 
 if(WIN32)
-install(TARGETS WarFarmer DESTINATION WarFarmer)
-install(TARGETS StardewEngine DESTINATION WarFarmer)
-install(DIRECTORY WfAssets/
-        DESTINATION WarFarmer/WfAssets
-        FILES_MATCHING
-        PATTERN "*.txt"
-        PATTERN "*.tilemap"
-        PATTERN "*.atlas"
-        PATTERN "*.xml"
-        PATTERN "*.lua"
-        PATTERN "*.game"
-)
-install(FILES WarFarmer/WfAssets/ImageFiles.json DESTINATION WarFarmer/WfAssets)
-install(FILES WarFarmer/WfAssets/Keymap.json DESTINATION WarFarmer/WfAssets)
+# in windows we run cmake install to stage binaries including atlas tool then copy the assets at the end of the asset compilation stage
+install(TARGETS WarFarmer StardewEngine AtlasTool DESTINATION WarFarmer)
 else()
 install(TARGETS WarFarmer DESTINATION bin)
 install(TARGETS StardewEngine DESTINATION lib)

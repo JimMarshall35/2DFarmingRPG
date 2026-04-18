@@ -34,7 +34,6 @@ find_package(OpenAL REQUIRED)
 
 message("lua version: ${Lua_VERSION}")
 
-add_subdirectory(lib/box2d-3.1.1)
 add_subdirectory(lib/box2d-3.1.1 EXCLUDE_FROM_ALL)
 
 add_subdirectory(src)

@@ -80,7 +80,7 @@ jobs:
     - name: Test
       run: |
         cd ./Stardew
-        ./build/install_dir/StardewEngineTest.exe
+        ./build/install_dir/Warfarmer/StardewEngineTest.exe
 
     - name: Compile Assets
       run: |

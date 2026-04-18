@@ -34,12 +34,18 @@ jobs:
         SDL_PACKAGE: sdl/2.30.1
         GLFW_PACKAGE: glfw/3.4
       run: |
-        if $env.PLATFORM == "SDL2" {
-          open Stardew/conanfile.txt | str replace -a $env.GLFW_PACKAGE '' | save Stardew/conanfile.txt
+        do {
+          if $env.PLATFORM == "SDL2" {
+            open Stardew/conanfile.txt 
+            | str replace -a $env.GLFW_PACKAGE '' 
+            | save -f Stardew/conanfile.txt
+          } else if $env.PLATFORM == "GLFW3" {
+            open Stardew/conanfile.txt 
+            | str replace -a $env.SDL_PACKAGE '' 
+            | save -f Stardew/conanfile.txt
+          }
         }
-        else if $env.PLATFORM == "GLFW3" {
-          open Stardew/conanfile.txt | str replace -a $env.SDL_PACKAGE '' | save Stardew/conanfile.txt
-        }
+        
         
 
     - name: Install Conan

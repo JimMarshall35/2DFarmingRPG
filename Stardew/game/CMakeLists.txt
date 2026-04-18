@@ -45,7 +45,7 @@ target_compile_definitions(WarFarmer PRIVATE
 target_include_directories(WarFarmer PRIVATE include)
 
 if(BAKE_ITEM_DEFS)
-    target_sources(WarFarmer PRIVATE src/BakedItems.c)
+    target_sources(WarFarmer PRIVATE ${CMAKE_CURRENT_LIST_DIR}/src/BakedItems.c)
     add_custom_command(
         OUTPUT ${CMAKE_CURRENT_LIST_DIR}/src/BakedItems.c ${CMAKE_CURRENT_LIST_DIR}/include/BakedItems.h
         COMMAND ${CMAKE_CURRENT_LIST_DIR}/ma_baker.nu ${CMAKE_CURRENT_LIST_DIR}/../WfAssets/items_data.xml --out_c_folder ${CMAKE_CURRENT_LIST_DIR}/src --out_h_folder ${CMAKE_CURRENT_LIST_DIR}/include

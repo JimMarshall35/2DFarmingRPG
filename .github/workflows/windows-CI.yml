@@ -35,10 +35,10 @@ jobs:
         GLFW_PACKAGE: glfw/3.4
       run: |
         if $env.PLATFORM == "SDL2" {
-          open conanfile.txt | str replace -a $env.GLFW_PACKAGE '' | save conanfile.txt
+          open Stardew/conanfile.txt | str replace -a $env.GLFW_PACKAGE '' | save Stardew/conanfile.txt
         }
         else if $env.PLATFORM == "GLFW3" {
-          open conanfile.txt | str replace -a $env.SDL_PACKAGE '' | save conanfile.txt
+          open Stardew/conanfile.txt | str replace -a $env.SDL_PACKAGE '' | save Stardew/conanfile.txt
         }
         
 

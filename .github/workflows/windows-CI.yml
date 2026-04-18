@@ -59,7 +59,7 @@ jobs:
 
     - name: Test
       run: |
-        cd ./Stardew/build/enginetest/Release
+        cd ./Stardew/build/enginetest/${{ matrix.type }} 
         ./StardewEngineTest.exe
 
     - name: Compile Assets

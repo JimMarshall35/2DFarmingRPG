@@ -34,7 +34,7 @@ jobs:
     - name: Install Conan dependencies
       run: |
         cd Stardew
-        cmd /c "GetDependenciesConan.bat"
+        cmd /c "GetDependenciesConan.bat" ${{ matrix.type }} 
 
     - name: Stamp version
       shell: cmd

@@ -80,7 +80,7 @@ jobs:
     - name: Test
       run: |
         cd ./Stardew
-        ./install_dir/StardewEngineTest.exe
+        ./build/install_dir/StardewEngineTest.exe
 
     - name: Compile Assets
       run: |
@@ -90,4 +90,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact
-        path: Stardew/install_dir # or path/to/artifact
+        path: Stardew/build/install_dir # or path/to/artifact

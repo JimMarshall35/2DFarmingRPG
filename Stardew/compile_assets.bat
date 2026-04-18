@@ -11,7 +11,7 @@ python engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/ex
 
 "./build/install_dir/Warfarmer/WarFarmer.exe" --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game
 
-robocopy "./WfAssets/" ./"build/install_dir/Warfarmer/WfAssets/" /E /XO *.txt *.tilemap *.atlas *.xml *.lua *.game
+robocopy "./WfAssets/" ./"build/install_dir/Warfarmer/WfAssets/" /E /XO *.txt *.tilemap *.atlas *.xml *.lua *.game *.json
 del "./WfAssets/out/atlascombined.xml" 
 del "./WfAssets/out/expanded_named_sprites.xml" 
 

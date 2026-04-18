@@ -5,13 +5,3 @@ cmake .. -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=generators\conan_tool
 cmake --build . --config %1
 cmake --install . --prefix ./install_dir
 
-@REM robocopy "../WfAssets/" "game\Release/WfAssets/" /E /XO
-@REM robocopy engine\src\%1 game\%1 "StardewEngine.dll" /E /XO
-@REM robocopy engine\src\%1 enginetest\%1 "StardewEngine.dll" /E /XO
-@REM robocopy "..\enginetest\data" enginetest\%1\data /E /XO
-@REM robocopy atlastool\%1 "../engine/scripts" "AtlasTool.exe" /E /XO
-@REM robocopy engine\src\%1 "../engine/scripts" "StardewEngine.dll" /E /XO
-
-@REM rem // This handles the exit code (`ErrorLevel`) returned by `robocopy` properly: (needed for CI)
-@REM if ErrorLevel 8 (exit /B 1) else (exit /B 0)
-

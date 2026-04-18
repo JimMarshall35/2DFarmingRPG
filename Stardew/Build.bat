@@ -12,6 +12,6 @@ cmake --install . --prefix ./install_dir
 @REM robocopy atlastool\%1 "../engine/scripts" "AtlasTool.exe" /E /XO
 @REM robocopy engine\src\%1 "../engine/scripts" "StardewEngine.dll" /E /XO
 
-rem // This handles the exit code (`ErrorLevel`) returned by `robocopy` properly: (needed for CI)
-if ErrorLevel 8 (exit /B 1) else (exit /B 0)
+@REM rem // This handles the exit code (`ErrorLevel`) returned by `robocopy` properly: (needed for CI)
+@REM if ErrorLevel 8 (exit /B 1) else (exit /B 0)
 

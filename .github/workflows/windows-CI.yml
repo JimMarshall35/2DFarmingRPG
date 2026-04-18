@@ -27,24 +27,24 @@ jobs:
       with:
         version: "0.111.0" # Don't use 0.90 here, as it would be a float number and would be converted to 0.9, you can use v0.90/0.90.0 or '0.90'
 
-    # - name: Remove unncessary dependencies from conan
-    #   shell: nu {0}
-    #   env: 
-    #     PLATFORM: ${{ matrix.platform }} 
-    #     SDL_PACKAGE: sdl/2.30.1
-    #     GLFW_PACKAGE: glfw/3.4
-    #   run: |
-    #     do {
-    #       if $env.PLATFORM == "SDL2" {
-    #         open Stardew/conanfile.txt 
-    #         | str replace -a $env.GLFW_PACKAGE '' 
-    #         | save -f Stardew/conanfile.txt
-    #       } else if $env.PLATFORM == "GLFW3" {
-    #         open Stardew/conanfile.txt 
-    #         | str replace -a $env.SDL_PACKAGE '' 
-    #         | save -f Stardew/conanfile.txt
-    #       }
-    #     }
+    - name: Remove unncessary dependencies from conan
+      shell: nu {0}
+      env: 
+        PLATFORM: ${{ matrix.platform }} 
+        SDL_PACKAGE: sdl/2.30.1
+        GLFW_PACKAGE: glfw/3.4
+      run: |
+        do {
+          if $env.PLATFORM == "SDL2" {
+            open Stardew/conanfile.txt 
+            | str replace -a $env.GLFW_PACKAGE '' 
+            | save -f Stardew/conanfile.txt
+          } else if $env.PLATFORM == "GLFW3" {
+            open Stardew/conanfile.txt 
+            | str replace -a $env.SDL_PACKAGE '' 
+            | save -f Stardew/conanfile.txt
+          }
+        }
         
         
 

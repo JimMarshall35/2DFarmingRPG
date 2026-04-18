@@ -34,8 +34,11 @@ find_package(OpenAL REQUIRED)
 
 message("lua version: ${Lua_VERSION}")
 
-add_subdirectory(lib/box2d-3.1.1)
-
+if(WIN32)
+  # use conan box2d
+else()
+  add_subdirectory(lib/box2d-3.1.1)
+endif()
 
 add_subdirectory(src)
 

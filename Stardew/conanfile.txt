@@ -1,5 +1,6 @@
 [requires]
 libxml2/2.13.8 
+box2d/3.1.0
 freetype/2.13.3
 lua/5.4.7
 glfw/3.4

@@ -35,7 +35,7 @@ endif()
 
 if(WIN32)
 # in windows we run cmake install to stage binaries including atlas tool then copy the assets at the end of the asset compilation stage
-install(TARGETS WarFarmer StardewEngine AtlasTool DESTINATION WarFarmer)
+install(TARGETS WarFarmer StardewEngine AtlasTool StardewEngineTest DESTINATION WarFarmer)
 else()
 install(TARGETS WarFarmer DESTINATION bin)
 install(TARGETS StardewEngine DESTINATION lib)

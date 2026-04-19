@@ -93,6 +93,7 @@
                  "height":72,
                  "id":1,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -104,6 +105,7 @@
                  "height":416,
                  "id":2,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -115,6 +117,7 @@
                  "height":432,
                  "id":3,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -126,6 +129,7 @@
                  "height":16,
                  "id":4,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -137,6 +141,7 @@
                  "height":40,
                  "id":6,
                  "name":"",
+                 "opacity":1,
                  "properties":[
                         {
                          "name":"to",
@@ -154,12 +159,23 @@
                  "height":0,
                  "id":7,
                  "name":"",
+                 "opacity":1,
                  "point":true,
                  "properties":[
                         {
                          "name":"from",
                          "type":"string",
                          "value":"Farm"
+                        }, 
+                        {
+                         "name":"matchPreviousX",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"matchPreviousY",
+                         "type":"bool",
+                         "value":false
                         }, 
                         {
                          "name":"thisLocation",
@@ -183,7 +199,7 @@
  "nextobjectid":11,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1-99-gec89c545",
+ "tiledversion":"1.12.1-8-g449813058",
  "tileheight":32,
  "tilesets":[
         {

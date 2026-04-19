@@ -179,6 +179,14 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
 
 }
 
+HEntity2D WfAddDebrisBasedAt(float x, float y, struct WfDebrisDef* def, struct GameLayer2DData* pGameLayerData)
+{
+    struct Entity2D ent;
+    WfMakeEntityIntoDebrisBasedAt(&ent, x, y, def, pGameLayerData);
+    return Et2D_AddEntity(&pGameLayerData->entities, &ent);
+}
+
+
 void WfDeSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
 {
     i32 version = 0;

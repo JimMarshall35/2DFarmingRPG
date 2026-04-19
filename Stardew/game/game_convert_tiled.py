@@ -3,8 +3,6 @@
 #   plugs into and extends engine/scripts/ConvertTiled.py
 #
 
-import sys
-import os
 import struct
 
 from engine.scripts.ConvertTiled import (
@@ -40,6 +38,11 @@ def serialize_PlayerStart(file, obj):
     serialize_string(file, stringVal)
     stringVal = get_tiled_object_custom_prop(obj, "thisLocation")["value"]
     serialize_string(file, stringVal)
+    bUseOldX = get_tiled_object_custom_prop(obj, "matchPreviousX")["value"]
+    bUseOldY = get_tiled_object_custom_prop(obj, "matchPreviousY")["value"]
+    file.write(struct.pack("I", 1 if bUseOldX else 0))
+    file.write(struct.pack("I", 1 if bUseOldY else 0))
+
 
 def get_type_PlayerStart(obj):
     return 4

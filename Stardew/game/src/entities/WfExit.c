@@ -10,6 +10,10 @@
 #include "WfWorld.h"
 #include "WfUI.h"
 #include "Log.h"
+#include "WfGameLayerData.h"WfPlayerGetGroundContactPoint
+#include "WfPlayer.h"
+
+static vec2 gPrevAreaPos = {};
 
 struct WfExitEntityData
 {
@@ -38,8 +42,12 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
     struct Entity2D* pOverlappingEnt = Et2D_GetEntity(&pLayerData->entities, hOverlappingEntity);
     
     
+    
     if(pOverlappingEnt->type == WfEntityType_Player)
     {
+        // set contact point so next layer can maybe read it back and use to set x or y coordinate
+        WfPlayerGetGroundContactPoint(pOverlappingEnt, gPrevAreaPos);
+
         struct WfExitEntityData* pSensorData = &gExitEntityDataPool[pSensorEnt->user.hData];
         if(pLayerData->bCurrentLocationIsDirty)
         {
@@ -102,3 +110,10 @@ void WfSerializeExitEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt,
     BS_SerializeString(pEntData->toArea, bs);
 
 }
+
+void WfGetPreviousAreaPosition(vec2 outPos)
+{
+    outPos[0] = gPrevAreaPos[0];
+    outPos[1] = gPrevAreaPos[1];
+}
+

@@ -103,6 +103,7 @@
                  "height":96,
                  "id":1,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -114,6 +115,7 @@
                  "height":24,
                  "id":2,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -125,6 +127,7 @@
                  "height":32,
                  "id":3,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -136,6 +139,7 @@
                  "height":64,
                  "id":4,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -147,6 +151,7 @@
                  "height":16,
                  "id":5,
                  "name":"",
+                 "opacity":1,
                  "properties":[
                         {
                          "name":"to",
@@ -164,6 +169,7 @@
                  "height":24,
                  "id":8,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -175,6 +181,7 @@
                  "height":368,
                  "id":9,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -186,6 +193,7 @@
                  "height":24,
                  "id":10,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -197,6 +205,7 @@
                  "height":368,
                  "id":11,
                  "name":"",
+                 "opacity":1,
                  "rotation":0,
                  "type":"StaticCollider",
                  "visible":true,
@@ -208,12 +217,23 @@
                  "height":0,
                  "id":12,
                  "name":"",
+                 "opacity":1,
                  "point":true,
                  "properties":[
                         {
                          "name":"from",
                          "type":"string",
                          "value":"Farm"
+                        }, 
+                        {
+                         "name":"matchPreviousX",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"matchPreviousY",
+                         "type":"bool",
+                         "value":false
                         }, 
                         {
                          "name":"thisLocation",
@@ -231,12 +251,23 @@
                  "height":0,
                  "id":13,
                  "name":"",
+                 "opacity":1,
                  "point":true,
                  "properties":[
                         {
                          "name":"from",
                          "type":"string",
                          "value":"Bed"
+                        }, 
+                        {
+                         "name":"matchPreviousX",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"matchPreviousY",
+                         "type":"bool",
+                         "value":false
                         }, 
                         {
                          "name":"thisLocation",
@@ -260,7 +291,7 @@
  "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1-99-gec89c545",
+ "tiledversion":"1.12.1-8-g449813058",
  "tileheight":32,
  "tilesets":[
         {

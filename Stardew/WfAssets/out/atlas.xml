@@ -170,36 +170,36 @@
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="864" width="32" height="32" name="Terrain and Outside_168" />
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="896" width="32" height="32" name="Terrain and Outside_169" />
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="352" left="928" width="32" height="32" name="Terrain and Outside_170" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="896" left="576" width="32" height="32" name="Interior_171" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="608" width="32" height="32" name="Interior_172" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="640" width="32" height="32" name="Interior_173" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="256" left="800" width="32" height="32" name="Interior_174" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="64" width="32" height="32" name="Interior_175" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="320" width="32" height="32" name="Interior_176" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="352" width="32" height="32" name="Interior_177" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="384" width="32" height="32" name="Interior_178" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="608" width="32" height="32" name="Interior_179" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="640" width="32" height="32" name="Interior_180" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="640" width="32" height="32" name="Interior_181" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="800" width="32" height="32" name="Interior_182" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="864" width="32" height="32" name="Interior_183" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="64" width="32" height="32" name="Interior_184" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="320" width="32" height="32" name="Interior_185" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="352" width="32" height="32" name="Interior_186" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="384" width="32" height="32" name="Interior_187" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="576" width="32" height="32" name="Interior_188" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="608" width="32" height="32" name="Interior_189" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="640" width="32" height="32" name="Interior_190" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="608" width="32" height="32" name="Interior_191" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="640" width="32" height="32" name="Interior_192" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="640" width="32" height="32" name="Interior_193" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="672" width="32" height="32" name="Interior_194" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="992" left="352" width="32" height="32" name="Interior_195" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="576" width="32" height="32" name="Interior_196" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="608" width="32" height="32" name="Interior_197" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="640" width="32" height="32" name="Interior_198" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_199" />
-    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_200" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="64" width="32" height="32" name="Interior_171" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="320" width="32" height="32" name="Interior_172" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="352" width="32" height="32" name="Interior_173" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="384" width="32" height="32" name="Interior_174" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="896" left="576" width="32" height="32" name="Interior_175" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="608" width="32" height="32" name="Interior_176" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="0" left="640" width="32" height="32" name="Interior_177" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="576" width="32" height="32" name="Interior_178" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="608" width="32" height="32" name="Interior_179" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="960" left="640" width="32" height="32" name="Interior_180" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="608" width="32" height="32" name="Interior_181" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="256" left="800" width="32" height="32" name="Interior_182" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="64" left="640" width="32" height="32" name="Interior_183" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="640" width="32" height="32" name="Interior_184" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="192" left="672" width="32" height="32" name="Interior_185" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="64" width="32" height="32" name="Interior_186" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="320" width="32" height="32" name="Interior_187" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="352" width="32" height="32" name="Interior_188" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="384" width="32" height="32" name="Interior_189" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="992" left="352" width="32" height="32" name="Interior_190" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="576" width="32" height="32" name="Interior_191" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="608" width="32" height="32" name="Interior_192" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="928" left="640" width="32" height="32" name="Interior_193" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="32" left="640" width="32" height="32" name="Interior_194" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="608" width="32" height="32" name="Interior_195" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="864" left="640" width="32" height="32" name="Interior_196" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="640" width="32" height="32" name="Interior_197" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="800" width="32" height="32" name="Interior_198" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="224" left="672" width="32" height="32" name="Interior_199" />
+    <sprite source="./WfAssets/Image/LPC Submissions/Interior.png" top="288" left="864" width="32" height="32" name="Interior_200" />
     <named-tiles>
      <mapping name="grass_1" index="166" />
      <mapping name="grass_2" index="167" />

@@ -1,10 +1,25 @@
+#!/usr/bin/env bash
+
 # Compile assets for the game
 #
 #  (tiled jsons) + (source images) -> (.tilemap binary) + (.atlas binary)
 #
+map_files=(
+    ./WfAssets/Farm.json 
+    ./WfAssets/House.json 
+    ./WfAssets/RoadToTown.json
+    ./WfAssets/Town.json
+)
+
+map_filenames=(
+    Farm
+    House
+    RoadToTown
+    Town
+)
 
 # convert jsons from the Tiled editor to binary files containing tilemaps and entities + an atlas.xml file of the tiles used
-python3 -m game.game_convert_tiled ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json 
+python3 -m game.game_convert_tiled ./WfAssets/out -m "${map_files[@]}" 
 
 # expand animation nodes
 python3 ./engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites.xml
@@ -22,9 +37,10 @@ python3 engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/e
 ./build/game/WarFarmer --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game
 
 # copy tilemap files into the dev save folder
-cp ./WfAssets/out/Farm.tilemap ./WfAssets/Saves/Dev
-cp ./WfAssets/out/House.tilemap ./WfAssets/Saves/Dev
-cp ./WfAssets/out/RoadToTown.tilemap ./WfAssets/Saves/Dev
+
+for item in "${map_filenames[@]}"; do
+  cp "./WfAssets/out/$item.tilemap" -f ./WfAssets/Saves/Dev
+done
 
 #rm -f ./WfAssets/out/atlascombined.xml
 #rm -f ./WfAssets/out/expanded_named_sprites.xml

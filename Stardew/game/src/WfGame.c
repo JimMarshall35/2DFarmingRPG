@@ -77,6 +77,11 @@ void WfCopySaveToTempFolder(struct WfGameSave* pSave)
     cwk_path_join(gTempFolderPath, "RoadToTown.tilemap", bufDst, 512);
     FS_CopyFile(bufSrc, bufDst);
 
+    cwk_path_join(pSave->folderPath, "Town.tilemap", bufSrc, 512);
+    cwk_path_join(gTempFolderPath, "Town.tilemap", bufDst, 512);
+    FS_CopyFile(bufSrc, bufDst);
+
+
     cwk_path_join(pSave->folderPath, "Persistant.game", bufSrc, 512);
     cwk_path_join(gTempFolderPath, "Persistant.game", bufDst, 512);
     FS_CopyFile(bufSrc, bufDst);
@@ -100,6 +105,10 @@ void WfSetCurrentSaveGame(struct WfGameSave* pSave)
     cwk_path_join(gTempFolderPath, "RoadToTown.tilemap", location.levelFilePath, 256);
     location.bIsInterior = false;
     WfWorld_AddLocation(&location, "RoadToTown");
+
+    cwk_path_join(gTempFolderPath, "Town.tilemap", location.levelFilePath, 256);
+    location.bIsInterior = false;
+    WfWorld_AddLocation(&location, "Town");
 
     char buf[256];
     cwk_path_join(gTempFolderPath, "Persistant.game", buf, 256);

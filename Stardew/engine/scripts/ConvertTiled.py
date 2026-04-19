@@ -224,9 +224,22 @@ def build_runs(file, data : list[int], atlas : Atlas, tilesets) -> list[Run]:
     runs.append(Run(file, 0, 0))
     return runs
 
-def get_tile_layer_tile_dims(data, atlas, tilesets):
+def get_tile_layer_tile_dims(layer, atlas, tilesets):
     lastW = -1
     lastH = -1
+    if "properties" in layer:
+        props = layer["properties"]
+        tileSizeXProps = [x["value"] for x in props if x["name"] == "TileSizeX"]
+        tileSizeYProps = [x["value"] for x in props if x["name"] == "TileSizeY"]
+        assert (len(tileSizeXProps) == 1 or len(tileSizeXProps) == 0)
+        if len(tileSizeXProps) == 1:
+            assert len(tileSizeYProps) == 1
+        else:
+            assert len(tileSizeYProps) == 0
+        print("tile dims specified by custom property")
+        return tileSizeXProps[0], tileSizeYProps[0]
+        
+    data = layer["data"]
     for i in data:
         ts = find_tileset(i, tilesets)
         if ts:
@@ -380,7 +393,7 @@ def build_tilemap_binaries(args, parsed_tile_maps, atlas):
                     # WRITE 1 FOR TILE LAYER
                     f.write(struct.pack("I", 1))
                     data = layer["data"]
-                    tw, th = get_tile_layer_tile_dims(data, atlas, tilesets)
+                    tw, th = get_tile_layer_tile_dims(layer, atlas, tilesets)
                     print(f"Layer {str(layerNum)} Tile width: {tw} Tile height: {th} Width: {layer["width"]} tiles, Height: {layer["height"]} tiles.")
                     layerNum += 1
                     # INT FIELDS FOR LAYER

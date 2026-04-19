@@ -2,6 +2,7 @@
 #define WFGAMELAYERDATA_H
 
 #include "WfSprites.h"
+#include <cglm/cglm.h>
 
 struct GameLayer2DData;
 
@@ -14,7 +15,6 @@ struct WfGameLayerData
     struct WfSprites sprites;
     struct GameFrameworkEventListener* HUDPushedEventListener;
     struct GameFrameworkEventListener* SettingsPushedEventListener;
-
 };
 
 void WfInitGameLayerData(struct GameLayer2DData* pGameLayerData, struct WfGameLayerData* pOutData);

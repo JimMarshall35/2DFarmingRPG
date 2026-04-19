@@ -106,7 +106,7 @@ void UI_AddChild(HWidget hParent, HWidget hChild)
 void UI_Init()
 {
 	gWidgetPool = NEW_OBJECT_POOL(struct UIWidget, 256);
-	GetObjectPoolIndex(gWidgetPool, &gScratchWidget);
+	gWidgetPool = GetObjectPoolIndex(gWidgetPool, &gScratchWidget);
 }
 
 HWidget UI_GetScratchWiget()

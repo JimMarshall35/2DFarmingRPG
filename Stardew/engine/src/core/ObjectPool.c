@@ -32,10 +32,9 @@ void* DoubleObjectPoolSize(void* pObjectPool)
 	pData->capacity *= 2;
 	//Log_Info("Resizing memory pool new size: %i\n", pData->capacity);
 	struct ObjectPoolData* pNewData = malloc(pData->objectSize * pData->capacity + sizeof(u64) * pData->capacity + sizeof(struct ObjectPoolData));
-	memcpy(pNewData, pData, (pData->objectSize * pData->capacity) + sizeof(struct ObjectPoolData));
+	memcpy(pNewData, pData, (pData->objectSize * (pData->capacity / 2)) + sizeof(struct ObjectPoolData));
 	pNewData->freeObjectIndicessArray = (u64*)((char*)pNewData + sizeof(struct ObjectPoolData) + pData->capacity * pData->objectSize);
-	memcpy(pNewData->freeObjectIndicessArray, pData->freeObjectIndicessArray, pData->freeObjectsArraySize * sizeof(u64));
-
+	pNewData->freeObjectsArraySize = 0;
 	for(int i=oldCapacity; i < pData->capacity; i++)
 	{
 		pNewData->freeObjectIndicessArray[pNewData->freeObjectsArraySize++] = i;

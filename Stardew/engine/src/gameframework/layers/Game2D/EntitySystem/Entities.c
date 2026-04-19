@@ -558,6 +558,7 @@ void Et2D_IterateEntities(struct Entity2DCollection* pCollection, Entity2DIterat
         struct Entity2D* pEntity = Et2D_GetEntity(pCollection, hOnEnt);
         if(!itr(pEntity, i++, pUser))
             break;
+        pEntity = Et2D_GetEntity(pCollection, hOnEnt);
         hOnEnt = pEntity->nextSibling;
     }
 }

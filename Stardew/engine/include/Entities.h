@@ -47,7 +47,7 @@ struct EntitySerializerPair
 
 typedef i32 EntityType;
 
-#define MAX_COMPONENTS 16
+#define MAX_COMPONENTS 8
 
 /** @brief types built into the engine */
 enum ComponentType

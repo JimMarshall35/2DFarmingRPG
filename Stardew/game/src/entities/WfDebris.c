@@ -174,7 +174,7 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
 
     // TODO: Put in the quad tree instead - the quad tree is fucked though.
     // re-write the quad tree as a BSP tree as detailed in "Game design patterns"
-    pEnt->bKeepInQuadtree = false;
+    pEnt->bKeepInQuadtree = true;
     pEnt->bKeepInDynamicList = true;
 
 }

@@ -72,6 +72,7 @@ static enum WfDebrisType GetDebrisType(struct WfDebrisFieldData* pData)
 
 void WfDebrisFieldEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx)
 {
+    HEntity2D hEnt = pEnt->thisEntity;
     struct GameLayer2DData* pLayerData = pLayer->userData;
     struct WfSprites* pSprites = &((struct WfGameLayerData*)pLayerData->pUserData)->sprites;
 
@@ -110,7 +111,7 @@ void WfDebrisFieldEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer*
     }
 
     /* destroy the entity */
-    Et2D_DestroyEntity(pLayer, &pLayerData->entities, pEnt->thisEntity);
+    Et2D_DestroyEntity(pLayer, &pLayerData->entities, hEnt);
 }
 
 void WfDebrisFieldEntityOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)

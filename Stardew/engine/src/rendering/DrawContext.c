@@ -251,7 +251,7 @@ static void CreateShaders()
 static HUIVertexBuffer NewUIVertexBuffer(int size)
 {
 	HUIVertexBuffer buf = -1;
-	GetObjectPoolIndex(gVertexBuffersPool, &buf);
+	gVertexBuffersPool = GetObjectPoolIndex(gVertexBuffersPool, &buf);
 	struct VertexBuffer* pBuf = &gVertexBuffersPool[buf];
 	pBuf->capacity = 0;
 	glGenVertexArrays(1, &pBuf->vao);
@@ -315,7 +315,7 @@ static void DestroyTexture(hTexture tex)
 static HWorldspaceVertexBuffer NewWorldspaceVertexBuffer(int size)
 {
 	HWorldspaceVertexBuffer buf = -1;
-	GetObjectPoolIndex(gIndexedVertexBuffersPool, &buf);
+	gVertexBuffersPool = GetObjectPoolIndex(gIndexedVertexBuffersPool, &buf);
 	struct IndexedVertexBuffer* pBuf = &gIndexedVertexBuffersPool[buf];
 	pBuf->capacity = 0;
 	pBuf->eboCapacity = 0;

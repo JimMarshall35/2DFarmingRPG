@@ -4,5 +4,5 @@
 
 void WfGenTest()
 {
-    glm_perlin_vec2()
+    //glm_perlin_vec2()
 }

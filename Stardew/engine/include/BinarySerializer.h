@@ -3,6 +3,7 @@
 #ifdef __cplusplus
 extern "c" {
 #endif
+#include <stdio.h>
 #include <stdbool.h>
 #include "IntTypes.h"
 
@@ -16,6 +17,7 @@ extern "c" {
 	struct BinarySerializer
 	{
 		bool bSaving;
+		FILE* pFile;
 		char* pData;
 		int pDataSize;
 		char* pReadPtr;

@@ -512,6 +512,9 @@ VECTOR(HEntity2D) Et2D_QueryDynEntities(struct GameFrameworkLayer* pLayer, struc
 	return pOutEntities;
 } 
 
+/* TODO: move somewhere sensible */
+bool gDrawDebugLines = true;
+
 static void OutputVertices(
 	struct TileMap* pData, 
 	struct Transform2D* pCam, 
@@ -559,6 +562,10 @@ static void OutputVertices(
 				if(onObjectLayer == pEnt->inDrawLayer)
 				{
 					pEnt->draw(pEnt, pLayer, &pEnt->transform, &verts, &inds, &nextIndexVal);
+					if(gDrawDebugLines && pEnt->drawDebugLines)
+					{
+						pEnt->drawDebugLines(pEnt, pLayer, pCam, &pLayerData->pWorldspaceLineVertices);
+					}
 				}
 			}
 			onObjectLayer++;
@@ -606,6 +613,7 @@ static void Draw(struct GameFrameworkLayer* pLayer, DrawContext* context)
 	glm_translate(view, translate);
 
 	context->DrawWorldspaceVertexBuffer(pData->vertexBuffer, VectorSize(pData->pWorldspaceIndices), view);
+	context->DrawWorldspaceLineVertexBuffer(pData->lineBuffer, VectorSize(pData->pWorldspaceLineVertices), view);
 }
 
 

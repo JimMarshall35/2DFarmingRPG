@@ -80,6 +80,12 @@ void Entity2DDraw(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, stru
     Co_DrawComponents(pEnt, pLayer, pCam, outVerts, outIndices, pNextIndex);
 }
 
+void Entity2DDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts)
+{
+
+}
+
+
 void Entity2DInput(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, InputContext* context)
 {
     Co_InputComponents(pEnt, pLayer, context);
@@ -574,6 +580,7 @@ void Et2D_PopulateCommonHandlers(struct Entity2D* pEnt)
     pEnt->update = &Entity2DUpdate;
     pEnt->postPhys = &Entity2DUpdatePostPhysics;
     pEnt->draw = &Entity2DDraw;
+    pEnt->drawDebugLines = &Entity2DDrawDebugLines;
     pEnt->input = &Entity2DInput;
     pEnt->onDestroy = &Entity2DOnDestroy;
     pEnt->getBB = &Entity2DGetBoundingBox;

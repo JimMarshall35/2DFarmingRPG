@@ -18,6 +18,8 @@ typedef void (*Entity2DOnInitFn)(struct Entity2D* pEnt, struct GameFrameworkLaye
 typedef void (*Entity2DUpdateFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT);
 typedef void (*Entity2DUpdatePostPhysicsFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT);
 typedef void (*Entity2DDrawFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(Worldspace2DVert)* outVerts, VECTOR(VertIndexT)* outIndices, VertIndexT* pNextIndex);
+typedef void (*Entity2DDrawDebugLinesFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts);
+
 typedef void (*Entity2DInputFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, InputContext* context);
 typedef void (*Entity2DOnDestroyFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer);
 typedef void (*Entity2DGetBoundingBoxFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 outTL, vec2 outBR);
@@ -219,6 +221,7 @@ struct Entity2D
     Entity2DUpdateFn update;
     Entity2DUpdatePostPhysicsFn postPhys;
     Entity2DDrawFn draw;
+    Entity2DDrawDebugLinesFn drawDebugLines;
     Entity2DInputFn input;
     Entity2DOnDestroyFn onDestroy;
     Entity2DGetBoundingBoxFn getBB;

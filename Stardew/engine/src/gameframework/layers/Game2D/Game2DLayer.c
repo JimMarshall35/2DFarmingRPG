@@ -517,6 +517,9 @@ static void OutputVertices(
 	struct Transform2D* pCam, 
 	VECTOR(Worldspace2DVert)* outVerts,
 	VECTOR(VertIndexT)* outIndices,
+
+	VECTOR(WorldspaceLineVertex)* pOutLines,
+
 	struct GameLayer2DData* pLayerData,
 	struct GameFrameworkLayer* pLayer
 )
@@ -582,7 +585,8 @@ static void Draw(struct GameFrameworkLayer* pLayer, DrawContext* context)
 	At_SetCurrent(pData->hAtlas, context);
 	pData->pWorldspaceVertices = VectorClear(pData->pWorldspaceVertices);
 	pData->pWorldspaceIndices = VectorClear(pData->pWorldspaceIndices);
-	OutputVertices(&pData->tilemap, &pData->camera, &pData->pWorldspaceVertices, &pData->pWorldspaceIndices, pData, pLayer);
+	pData->pWorldspaceLineVertices = VectorClear(pData->pWorldspaceLineVertices);
+	OutputVertices(&pData->tilemap, &pData->camera, &pData->pWorldspaceVertices, &pData->pWorldspaceIndices, &pData->pWorldspaceLineVertices, pData, pLayer);
 	context->WorldspaceVertexBufferData(pData->vertexBuffer, pData->pWorldspaceVertices, VectorSize(pData->pWorldspaceVertices), pData->pWorldspaceIndices, VectorSize(pData->pWorldspaceIndices));
 	mat4 view;
 	glm_mat4_identity(view);
@@ -743,7 +747,11 @@ void Game2DLayer_OnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
 	Et2D_DestroyCollection(&pData->entities, pLayer);
 	Ev_UnsubscribeEvent(pData->pDebugListener);
 	Ph_DestroyPhysicsWorld(pData->hPhysicsWorld);
-	
+	drawContext->DestroyWorldspaceVertexBuffer(pData->vertexBuffer);
+	drawContext->DestroyWorldspaceLineVertexBuffer(pData->lineBuffer);
+	DestoryVector(pData->pWorldspaceVertices);
+	DestoryVector(pData->pWorldspaceIndices);
+	DestoryVector(pData->pWorldspaceLineVertices);
 }
 
 static void OnWindowDimsChange(struct GameFrameworkLayer* pLayer, int newW, int newH)
@@ -782,8 +790,11 @@ void Game2DLayer_Get(struct GameFrameworkLayer* pLayer, struct Game2DLayerOption
 	pData->camera.scale[1] = 1;
 
 	pData->vertexBuffer = pDC->NewWorldspaceVertBuffer(256);
+	pData->lineBuffer = pDC->NewWorldspaceLineBuffer(256);
+	
 	pData->pWorldspaceVertices = NEW_VECTOR(Worldspace2DVert);
 	pData->pWorldspaceIndices = NEW_VECTOR(VertIndexT);
+	pData->pWorldspaceLineVertices = NEW_VECTOR(WorldspaceLineVertex);
 
 	pData->windowH = pDC->screenHeight;
 	pData->windowW = pDC->screenWidth;

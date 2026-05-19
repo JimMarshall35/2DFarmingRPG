@@ -23,6 +23,9 @@ struct GameFrameworkEventListener;
 struct GameLayer2DData;
 struct BinarySerializer;
 struct Vert2DTexture;
+struct LineVertex;
+typedef struct LineVertex WorldspaceLineVertex;
+
 typedef void (*PreFirstInitFn)(struct GameLayer2DData* pGameLayerData);
 typedef void (*PreLoadLevelFn)(struct GameLayer2DData* pGameLayerData);
 
@@ -134,6 +137,12 @@ struct GameLayer2DData
 	VECTOR(struct Vert2DTexture) pWorldspaceVertices;
 	VECTOR(VertIndexT) pWorldspaceIndices;
 	H2DWorldspaceVertexBuffer vertexBuffer;
+
+	/** @brief
+	 * debug line drawing buffers
+	*/
+	VECTOR(WorldspaceLineVertex) pWorldspaceLineVertices;
+	HWorldspaceLineVertexBuffer lineBuffer;
 
 	/** @brief
 		Path of loaded atlas file

@@ -211,6 +211,7 @@ static void AddItemDefXML(xmlNode* pChildI)
     xmlNode* pOnStopCurrent    = XMLFindChild(pChildI, "on-stop-being-current");
     xmlNode* pOnUseItem        = XMLFindChild(pChildI, "on-use-item");
     xmlNode* pOnTryEquip       = XMLFindChild(pChildI, "on-try-equip");
+    xmlNode* pOnDrawDebugLines = XMLFindChild(pChildI, "on-draw-debug-lines");
     xmlNode* pOnUseAnimation   = XMLFindChild(pChildI, "on-use-animation");
     xmlNode* pCanUseItem       = XMLFindChild(pChildI, "can-use-item");
     xmlNode* pPickupSpriteName = XMLFindChild(pChildI, "pickup-sprite-name");
@@ -228,6 +229,7 @@ static void AddItemDefXML(xmlNode* pChildI)
         .onUseItem            = ResolveXMLSpecifiedFunction(pOnUseItem),
         .onTryEquip           = ResolveXMLSpecifiedFunction(pOnTryEquip),
         .onGameLayerPush      = ResolveXMLSpecifiedFunction(pOnGamelayerPush),
+        .drawDebugLines       = ResolveXMLSpecifiedFunction(pOnDrawDebugLines),
         .onUseAnimation       = GetAnimationFromString(xmlGetProp(pOnUseAnimation, "str")),
         .bCanUseItem          = strcmp(xmlGetProp(pCanUseItem, "bool"), "true") == 0,
         .pickupSpriteName     = xmlGetProp(pPickupSpriteName, "str"),

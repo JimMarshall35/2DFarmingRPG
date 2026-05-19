@@ -42,6 +42,10 @@ typedef void(*OnStopBeingCurrentItemFn)(struct Entity2D* pPlayer, struct GameFra
 typedef bool(*OnUseItemFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer); // return false if item is used up
 typedef bool(*TryEquipFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
 
+
+typedef void (*PlayerDrawDebugLinesFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef);
+
+
 /// @brief called when the game layer is pushed.
 // An item definition might use this to initialize data from the atlas such as sprites or named tiles
 typedef void(*OnPushGameLayerItemFnItemFn)(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext);
@@ -111,6 +115,9 @@ struct WfItemDef
 
     /// @brief called when the game layer is popped.
     OnPushGameLayerItemFnItemFn onGameLayerPop;
+
+    /// @brief called by the player if not null to draw debug lines
+    PlayerDrawDebugLinesFn drawDebugLines;
 
     /// @brief The animation applied to the player when the item is used
     enum WfActionAnimation onUseAnimation;

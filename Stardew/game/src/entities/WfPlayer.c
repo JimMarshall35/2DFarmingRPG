@@ -21,6 +21,8 @@
 #include "Game2DLayerNetwork.h"
 #include "Network.h"
 #include "NetworkID.h"
+#include "Maths.h"
+
 
 #define WALKING_UP_MALE "walk-base-male-up"
 #define WALKING_DOWN_MALE "walk-base-male-down"
@@ -391,7 +393,6 @@ static void GetMovementVector(u8 movementBits, vec2 movementVec)
     }
     glm_vec2_normalize(movementVec);
 }
-#include "Maths.h"
 
 static void OnUpdatePlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
@@ -582,7 +583,19 @@ static void WfPrintPlayerInfo(struct Entity2D* pEnt)
         pEntData->networkPlayerNum
     );
 }
-#include "Maths.h"
+
+static void WfPlayerDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts)
+{
+    struct GameLayer2DData* pData = pLayer->userData;
+    struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pEnt->user.hData];
+    struct WfInventory* pInv = WfGetPlayerInventory(pEntData);
+    struct WfInventoryItem* pItem = &pInv->pItems[pInv->selectedItem];
+    const struct WfItemDef* def = WfGetItemDef(pItem->itemIndex);
+    if(def && def->drawDebugLines)
+    {
+        def->drawDebugLines(pEnt, pLayer, pCam, outVerts, def);
+    }
+}
 
 static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos, bool bNetworkControlled, int networkPlayerNum)
 {
@@ -695,6 +708,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEnt->postPhys = &WfPlayerPostPhys;
     pEnt->input = &OnInputPlayer;
     pEnt->printEntityInfo = &WfPrintPlayerInfo;
+    pEnt->drawDebugLines = &WfPlayerDrawDebugLines;
     pEnt->bKeepInQuadtree = false;
     pEnt->bKeepInDynamicList = true;
     pEnt->bSerializeToDisk = false;

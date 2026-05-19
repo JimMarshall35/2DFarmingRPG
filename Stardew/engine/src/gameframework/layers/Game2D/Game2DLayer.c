@@ -586,7 +586,7 @@ static void Draw(struct GameFrameworkLayer* pLayer, DrawContext* context)
 	context->WorldspaceVertexBufferData(pData->vertexBuffer, pData->pWorldspaceVertices, VectorSize(pData->pWorldspaceVertices), pData->pWorldspaceIndices, VectorSize(pData->pWorldspaceIndices));
 	mat4 view;
 	glm_mat4_identity(view);
-	// TODO: set here based on camera
+	
 	vec3 translate = {
 		pData->camera.position[0],
 		pData->camera.position[1],

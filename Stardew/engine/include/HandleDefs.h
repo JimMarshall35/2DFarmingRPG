@@ -23,6 +23,8 @@ typedef HGeneric HWorldspaceVertexBuffer;
 
 typedef HGeneric HUIVertexBuffer;
 
+typedef HGeneric HWorldspaceLineVertexBuffer;
+
 typedef HGeneric H2DWorldspaceVertexBuffer;
 
 typedef HGeneric HFont;

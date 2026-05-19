@@ -14,6 +14,55 @@
 #include "Log.h"
 
 
+const char* lineVert =
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+"#version 330 core\n"
+"layout (location = 0) in vec2 aPos;\n"
+"layout (location = 1) in vec4 aColour;\n"
+"out vec4 Colour;\n"
+"uniform mat4 vp;\n"
+"void main()\n"
+"{\n"
+	"gl_Position = vp * vec4(aPos, 0.0, 1.0);\n"
+	"Colour = aColour;"
+"}\n"
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
+"#version 300 es\n"
+"in vec2 aPos;\n"
+"in vec4 aColour;\n"
+"out vec4 Colour;\n"
+"uniform mat4 screenToClipMatrix;\n"
+"void main()\n"
+"{\n"
+	"gl_Position = screenToClipMatrix * vec4(aPos, 0.0, 1.0);\n"
+	"Colour = aColour;"
+"}\n"
+#endif
+;
+
+const char* lineFrag =
+#if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"in vec4 Colour;\n"
+
+"void main()\n"
+"{\n"
+	"FragColor = Colour;\n"
+"}\n"
+#elif GAME_GL_API_TYPE == GAME_GL_API_TYPE_ES
+"#version 300 es\n"
+"precision highp float;\n"
+"out vec4 FragColor;\n"
+"in vec4 Colour;\n"
+
+"void main()\n"
+"{\n"
+	"FragColor = Colour;\n"
+"}\n"
+#endif
+;
+
 const char* uiVert =
 #if GAME_GL_API_TYPE == GAME_GL_API_TYPE_CORE
 "#version 330 core\n"
@@ -146,11 +195,15 @@ struct Shader
 	GLuint vert;
 };
 
+struct Shader gWorldspaceLineShader = {0,0,0};
+
 struct Shader gUIShader = {0,0,0};
 
 struct Shader gWorldspace2DShader = { 0,0,0 };
 
 mat4 gScreenspaceOrtho;
+
+OBJECT_POOL(struct VertexBuffer) gLineVertexPool = NULL;
 
 OBJECT_POOL(struct VertexBuffer) gVertexBuffersPool = NULL;
 
@@ -198,23 +251,6 @@ static void TestShaderStatus(GLuint shader, enum ShaderType type)
 	}
 }
 
-static void UIVertexBufferData(HUIVertexBuffer hBuf, WidgetVertex* src, size_t size)
-{
-	struct VertexBuffer* pBuf = &gVertexBuffersPool[hBuf];
-
-	glBindBuffer(GL_ARRAY_BUFFER, pBuf->vbo);
-	if (size * sizeof(WidgetVertex) > pBuf->capacity)
-	{
-		glBufferData(GL_ARRAY_BUFFER, size * sizeof(WidgetVertex), src, GL_DYNAMIC_DRAW);
-		pBuf->capacity = size * sizeof(WidgetVertex);
-	}
-	else
-	{
-		glBufferSubData(GL_ARRAY_BUFFER, 0, size * sizeof(WidgetVertex), src);
-	}
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
 static void CreateShader(const char* vert, const char* frag, struct Shader* pShader)
 {
 	int success = GL_FALSE;
@@ -244,9 +280,88 @@ static void CreateShader(const char* vert, const char* frag, struct Shader* pSha
 
 static void CreateShaders()
 {
+	CreateShader(lineVert, lineFrag, &gWorldspaceLineShader);
 	CreateShader(uiVert, uiFrag, &gUIShader);
 	CreateShader(worldspaceVert, worldspaceFrag, &gWorldspace2DShader);
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////// Worldspace lines
+
+static HWorldspaceLineVertexBuffer NewWorldspaceLineBuffer(int size)
+{
+	HWorldspaceLineVertexBuffer buf = -1;
+	gLineVertexPool = GetObjectPoolIndex(gLineVertexPool, &buf);
+	struct VertexBuffer* pBuf = &gLineVertexPool[buf];
+	pBuf->capacity = 0;
+	glGenVertexArrays(1, &pBuf->vao);
+	glBindVertexArray(pBuf->vao);
+
+	glGenBuffers(1, &pBuf->vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, pBuf->vbo);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(WorldspaceLineVertex), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(WorldspaceLineVertex), (void*)(sizeof(float) * 2));
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	return buf;
+}
+
+static void WorldspaceLineBufferData(HWorldspaceLineVertexBuffer hBuf, WorldspaceLineVertex* src, size_t size)
+{
+	struct VertexBuffer* pBuf = &gLineVertexPool[hBuf];
+
+	glBindBuffer(GL_ARRAY_BUFFER, pBuf->vbo);
+	if (size * sizeof(WorldspaceLineVertex) > pBuf->capacity)
+	{
+		glBufferData(GL_ARRAY_BUFFER, size * sizeof(WorldspaceLineVertex), src, GL_DYNAMIC_DRAW);
+		pBuf->capacity = size * sizeof(WorldspaceLineVertex);
+	}
+	else
+	{
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size * sizeof(WorldspaceLineVertex), src);
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+static void DrawWorldspaceLineVertexBuffer(HWorldspaceLineVertexBuffer hBuf, size_t vertexCount, mat4 view)
+{
+	const struct VertexBuffer* vertexBuffer = &gLineVertexPool[hBuf];
+
+	glUseProgram(gUIShader.program);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->vbo);
+	glBindVertexArray(vertexBuffer->vao);
+	
+	unsigned int projectionViewUniform = glGetUniformLocation(gUIShader.program, "vp");
+	
+	mat4 m;
+	glm_mat4_mul(&gScreenspaceOrtho[0], &view[0], &m[0]);
+
+	glUniformMatrix4fv(projectionViewUniform, 1, false, &m[0][0]);
+
+	glDrawArrays(GL_LINES, 0, vertexCount);
+}
+/*
+	const struct IndexedVertexBuffer* vertexBuffer = &gIndexedVertexBuffersPool[hBuf];
+	glUseProgram(gWorldspace2DShader.program);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexBuffer->ebo);
+	glBindVertexArray(vertexBuffer->vao);
+	unsigned int projectionViewUniform = glGetUniformLocation(gWorldspace2DShader.program, "vp");
+	mat4 m;
+	glm_mat4_mul(&gScreenspaceOrtho[0], &view[0], &m[0]);
+	glUniformMatrix4fv(projectionViewUniform, 1, false, &m[0][0]);
+	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, (void*)0);
+*/
+static void DestroyWorldspaceLineVertexBuffer(HWorldspaceLineVertexBuffer hBuf)
+{
+	const struct VertexBuffer* vertexBuffer = &gLineVertexPool[hBuf];
+	glDeleteBuffers(1, &vertexBuffer->vbo);
+	glDeleteVertexArrays(1, &vertexBuffer->vao);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////// UI (screen space) Sprites
 
 static HUIVertexBuffer NewUIVertexBuffer(int size)
 {
@@ -271,6 +386,23 @@ static HUIVertexBuffer NewUIVertexBuffer(int size)
 	return buf;
 }
 
+static void UIVertexBufferData(HUIVertexBuffer hBuf, WidgetVertex* src, size_t size)
+{
+	struct VertexBuffer* pBuf = &gVertexBuffersPool[hBuf];
+
+	glBindBuffer(GL_ARRAY_BUFFER, pBuf->vbo);
+	if (size * sizeof(WidgetVertex) > pBuf->capacity)
+	{
+		glBufferData(GL_ARRAY_BUFFER, size * sizeof(WidgetVertex), src, GL_DYNAMIC_DRAW);
+		pBuf->capacity = size * sizeof(WidgetVertex);
+	}
+	else
+	{
+		glBufferSubData(GL_ARRAY_BUFFER, 0, size * sizeof(WidgetVertex), src);
+	}
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 static void DrawUIVertexBuffer(HUIVertexBuffer hBuf, size_t vertexCount)
 {
 	const struct VertexBuffer* vertexBuffer = &gVertexBuffersPool[hBuf];
@@ -292,6 +424,9 @@ static void DestroyUIVertexBuffer(HUIVertexBuffer hBuf)
 	glDeleteVertexArrays(1, &vertexBuffer->vao);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////// textures
+
+
 static hTexture UploadTexture(void* src, int channels, int pxWidth, int pxHeight)
 {
 	EASSERT(channels == 4);
@@ -311,6 +446,8 @@ static void DestroyTexture(hTexture tex)
 	glDeleteTextures(1, &tex);
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////// worldspace sprites
 
 static HWorldspaceVertexBuffer NewWorldspaceVertexBuffer(int size)
 {
@@ -413,6 +550,11 @@ static void ClearScreen()
 	glClear(GL_COLOR_BUFFER_BIT);
 } 
 
+static void SetLineWidth(float w)
+{
+	glLineWidth(w);
+}
+
 DrawContext Dr_InitDrawContext()
 {
 	// configure global opengl state
@@ -433,6 +575,12 @@ DrawContext Dr_InitDrawContext()
 
 	DrawContext d;
 	memset(&d, 0, sizeof(DrawContext));
+
+	d.NewWorldspaceLineBuffer = &NewWorldspaceLineBuffer;
+	d.WorldspaceLineBufferData = &WorldspaceLineBufferData;
+	d.DrawWorldspaceLineVertexBuffer = &DrawWorldspaceLineVertexBuffer;
+	d.DestroyWorldspaceLineVertexBuffer = &DestroyWorldspaceLineVertexBuffer;
+
 	d.DestroyVertexBuffer = &DestroyUIVertexBuffer;
 	d.DrawUIVertexBuffer = &DrawUIVertexBuffer;
 	d.NewUIVertexBuffer = &NewUIVertexBuffer;
@@ -447,9 +595,11 @@ DrawContext Dr_InitDrawContext()
 	d.DestroyWorldspaceVertexBuffer = &DestroyWorldspaceVertexBuffer;
 
 	d.ClearScreen = &ClearScreen;
+	d.SetLineWidth = &SetLineWidth;
 
 	gVertexBuffersPool = NEW_OBJECT_POOL(struct VertexBuffer, 256);
 	gIndexedVertexBuffersPool = NEW_OBJECT_POOL(struct IndexedVertexBuffer, 256);
+	gLineVertexPool = NEW_OBJECT_POOL(struct LineVertex, 256);
 	glm_mat4_identity(gScreenspaceOrtho);
 	CreateShaders();
 	return d;

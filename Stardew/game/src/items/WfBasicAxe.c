@@ -90,3 +90,18 @@ bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
     };
     return WfOnUseDamagingWeaponItem(pPlayer, pLayer, &def);
 }
+
+
+void WfBasicAxeDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef)
+{
+    struct WfDamagingWeaponDef def = {
+        .animation = WfSlashAnim,
+        .damageCalculationType = DCT_Constant,
+        .damageCalcData.damageConst = gAxeDamage,
+        .damageType = WfAxeDamage,
+        .fanLength = gAxeFanLength,
+        .fanWidth = gAxeFanWidth,
+        .pItemDef = NULL
+    };
+    WfDrawDamagingWeaponItemDebugLines(pEnt, pLayer, pCam, outVerts, pItemDef, &def);
+}

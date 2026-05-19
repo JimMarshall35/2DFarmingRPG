@@ -23,6 +23,9 @@
         <on-gamelayer-push>
             <c-function name="WfBasicAxeOnGameLayerPush"/>
         </on-gamelayer-push>
+        <on-draw-debug-lines>
+            <c-function name="WfBasicAxeDrawDebugLines"/>
+        </on-draw-debug-lines>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="false"/>
         <pickup-sprite-name str="basic-axe"/>

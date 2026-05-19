@@ -3,7 +3,9 @@
 #include "SharedLib.h"
 #include <stdbool.h>
 #include "WfItem.h"
+#include "DrawContext.h"
 
+struct Transform2D;
 struct Entity2D;
 struct GameFrameworkLayer;
 
@@ -12,5 +14,6 @@ void STARDEW_API WfBasicAxeOnMakeCurrentItem(struct Entity2D* pPlayer, struct Ga
 void STARDEW_API WfBasicAxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 bool STARDEW_API WfBasicAxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
 void STARDEW_API WfBasicAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext);
-
+bool STARDEW_API WfBasicAxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
+void STARDEW_API WfBasicAxeDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef);
 #endif

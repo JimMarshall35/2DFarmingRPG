@@ -31,10 +31,10 @@ const char* lineVert =
 "in vec2 aPos;\n"
 "in vec4 aColour;\n"
 "out vec4 Colour;\n"
-"uniform mat4 screenToClipMatrix;\n"
+"uniform mat4 vp;\n"
 "void main()\n"
 "{\n"
-	"gl_Position = screenToClipMatrix * vec4(aPos, 0.0, 1.0);\n"
+	"gl_Position = vp * vec4(aPos, 0.0, 1.0);\n"
 	"Colour = aColour;"
 "}\n"
 #endif
@@ -329,11 +329,11 @@ static void DrawWorldspaceLineVertexBuffer(HWorldspaceLineVertexBuffer hBuf, siz
 {
 	const struct VertexBuffer* vertexBuffer = &gLineVertexPool[hBuf];
 
-	glUseProgram(gUIShader.program);
+	glUseProgram(gWorldspaceLineShader.program);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->vbo);
 	glBindVertexArray(vertexBuffer->vao);
 	
-	unsigned int projectionViewUniform = glGetUniformLocation(gUIShader.program, "vp");
+	unsigned int projectionViewUniform = glGetUniformLocation(gWorldspaceLineShader.program, "vp");
 	
 	mat4 m;
 	glm_mat4_mul(&gScreenspaceOrtho[0], &view[0], &m[0]);

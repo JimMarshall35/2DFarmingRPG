@@ -18,6 +18,9 @@ struct TileMap;
 struct TileMapLayer;
 struct WfItemDef;
 enum WfActionAnimation;
+struct Transform2D;
+struct LineVertex;
+typedef struct LineVertex WorldspaceLineVertex;
 
 struct WfSearchFan
 {
@@ -118,5 +121,15 @@ struct WfDamagingWeaponDef
 };
 
 bool WfOnUseDamagingWeaponItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, struct WfDamagingWeaponDef* pDef);
+
+void WfDrawDamagingWeaponItemDebugLines(
+    struct Entity2D* pEnt, 
+    struct GameFrameworkLayer* pLayer, 
+    struct Transform2D* pCam, 
+    VECTOR(WorldspaceLineVertex)* outVerts, 
+    struct WfItemDef* pItemDef, 
+    struct WfDamagingWeaponDef* pDef
+);
+
 
 #endif

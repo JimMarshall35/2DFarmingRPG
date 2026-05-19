@@ -595,6 +595,7 @@ static void Draw(struct GameFrameworkLayer* pLayer, DrawContext* context)
 	pData->pWorldspaceLineVertices = VectorClear(pData->pWorldspaceLineVertices);
 	OutputVertices(&pData->tilemap, &pData->camera, &pData->pWorldspaceVertices, &pData->pWorldspaceIndices, &pData->pWorldspaceLineVertices, pData, pLayer);
 	context->WorldspaceVertexBufferData(pData->vertexBuffer, pData->pWorldspaceVertices, VectorSize(pData->pWorldspaceVertices), pData->pWorldspaceIndices, VectorSize(pData->pWorldspaceIndices));
+	context->WorldspaceLineBufferData(pData->lineBuffer, pData->pWorldspaceLineVertices, VectorSize(pData->pWorldspaceLineVertices));
 	mat4 view;
 	glm_mat4_identity(view);
 	

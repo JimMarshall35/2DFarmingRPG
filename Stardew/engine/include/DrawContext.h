@@ -12,7 +12,7 @@ struct TileMap;
 struct LineVertex
 {
 	float x, y;
-	float r, g, b;
+	float r, g, b, a;
 };
 
 typedef struct LineVertex WorldspaceLineVertex;

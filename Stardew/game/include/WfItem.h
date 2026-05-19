@@ -43,7 +43,7 @@ typedef bool(*OnUseItemFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* 
 typedef bool(*TryEquipFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
 
 
-typedef void (*PlayerDrawDebugLinesFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef);
+typedef void (*ItemDrawDebugLinesFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef);
 
 
 /// @brief called when the game layer is pushed.
@@ -117,7 +117,7 @@ struct WfItemDef
     OnPushGameLayerItemFnItemFn onGameLayerPop;
 
     /// @brief called by the player if not null to draw debug lines
-    PlayerDrawDebugLinesFn drawDebugLines;
+    ItemDrawDebugLinesFn drawDebugLines;
 
     /// @brief The animation applied to the player when the item is used
     enum WfActionAnimation onUseAnimation;

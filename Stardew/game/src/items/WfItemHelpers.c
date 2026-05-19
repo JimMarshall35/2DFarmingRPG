@@ -306,6 +306,50 @@ static bool ProcessDamagingWeaponUsage(struct SDTimer* pTimer)
     FreeObjectPoolIndex(gDamagingItemContextPool, (HGeneric)pTimer->pUserData);
     return true; /* remove timer */
 }
+void WfDrawDamagingWeaponItemDebugLines(
+    struct Entity2D* pEnt, 
+    struct GameFrameworkLayer* pLayer, 
+    struct Transform2D* pCam, 
+    VECTOR(WorldspaceLineVertex)* outVerts, 
+    struct WfItemDef* pItemDef, 
+    struct WfDamagingWeaponDef* pDef)
+{
+    vec2 playerGroundPos;
+    WfPlayerGetGroundContactPoint(pEnt, playerGroundPos);
+    struct WfPlayerEntData* pPlayerData = WfGetPlayerEntData(pEnt);
+    vec2 facingVec;
+    WfGetDirectionVector(pPlayerData->directionFacing, facingVec);
+    vec2 v = {
+        facingVec[0] * pDef->fanLength,
+        facingVec[1] * pDef->fanLength,
+    };
+    vec2 pt2 = {0 , 0};
+    glm_vec2_add(playerGroundPos, v, pt2);
+    // Log_Info("player: %.2f,%.2f  pt2: %.2f,%.2f",
+    //     playerGroundPos[0],
+    //     playerGroundPos[1],
+    //     pt2[0],
+    //     pt2[1]
+    // );
+    WorldspaceLineVertex v1 = {
+        .x = playerGroundPos[0],
+        .y = playerGroundPos[1],
+        .r = 0,
+        .g = 1.0,
+        .b = 0,
+        .a = 1.0
+    };
+    WorldspaceLineVertex v2 = {
+        .x = pt2[0],
+        .y = pt2[1],
+        .r = 0,
+        .g = 1.0,
+        .b = 0,
+        .a = 1.0
+    };
+    *outVerts = VectorPush(*outVerts, &v1);
+    *outVerts = VectorPush(*outVerts, &v2);
+}
 
 bool WfOnUseDamagingWeaponItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, struct WfDamagingWeaponDef* pDef)
 {

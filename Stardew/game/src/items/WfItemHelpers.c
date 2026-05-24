@@ -325,12 +325,7 @@ void WfDrawDamagingWeaponItemDebugLines(
     };
     vec2 pt2 = {0 , 0};
     glm_vec2_add(playerGroundPos, v, pt2);
-    // Log_Info("player: %.2f,%.2f  pt2: %.2f,%.2f",
-    //     playerGroundPos[0],
-    //     playerGroundPos[1],
-    //     pt2[0],
-    //     pt2[1]
-    // );
+    
     WorldspaceLineVertex v1 = {
         .x = playerGroundPos[0],
         .y = playerGroundPos[1],

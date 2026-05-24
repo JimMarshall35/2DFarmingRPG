@@ -23,6 +23,3 @@ cd ..
 
 echo "Copying assets folder..."
 cp -a WfAssets build/game
-
-echo "Copying test data..."
-cp -a enginetest/data build/enginetest

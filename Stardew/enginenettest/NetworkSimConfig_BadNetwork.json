@@ -1,6 +1,0 @@
-{
-    "latency_milliseconds": 50.0,
-    "jitter_milliseconds": 20.0,
-    "packet_loss_percent": 30.0,
-    "duplicate_packet_percent": 5.0
-}

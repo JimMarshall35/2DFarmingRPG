@@ -1,7 +1,0 @@
-
-<UIroot>
-	<atlas>
-	</atlas>
-	<screen viewmodelFile="./data/GameFrameworkEventTestUILayer.lua" viewmodelFunction="GetTestViewModel">
-	</screen>
-</UIroot>

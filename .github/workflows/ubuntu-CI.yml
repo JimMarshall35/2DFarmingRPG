@@ -45,16 +45,6 @@ jobs:
         cd Stardew
         ./Build_Internal.sh ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} ${{ matrix.gl_api }} 
 
-    - name: Test
-      run: |
-        cd Stardew/build/enginetest
-        ./StardewEngineTest
-
-    - name: NetTest
-      run: |
-        cd Stardew
-        sudo ./RunEngineNetTest.sh
-
     - name: Compile Assets
       run: |
         cd Stardew

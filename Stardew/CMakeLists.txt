@@ -4,7 +4,6 @@ project(WarFarmer)
 
 add_subdirectory(engine)
 add_subdirectory(game)
-add_subdirectory(matchmaking_server)
 
 target_link_libraries(WarFarmer PUBLIC StardewEngine)
 

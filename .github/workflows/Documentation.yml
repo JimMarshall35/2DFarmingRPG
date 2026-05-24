@@ -17,8 +17,9 @@ jobs:
     # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
       - name: Build static files
         id: build
         run: |

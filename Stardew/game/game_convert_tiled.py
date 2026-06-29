@@ -5,7 +5,7 @@
 
 import struct
 
-from engine.scripts.ConvertTiled import (
+from engine.engine.scripts.ConvertTiled import (
     main,
     register_entity_serializer,
     get_tiled_object_custom_prop

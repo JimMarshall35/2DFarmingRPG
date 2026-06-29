@@ -470,4 +470,118 @@
 		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg6" />
 		<sprite source="./WfAssets/Image/hoe_thrust_bg.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="hoe-thrust-male-right-bg7" />
 	</animation-frames>
+	<animation-frames name="walk-legs-greenish-pants-up" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up7" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="0" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-up8" />
+	</animation-frames>
+	<animation-frames name="walk-legs-greenish-pants-down" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down7" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="128" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-down8" />
+	</animation-frames>
+	<animation-frames name="walk-legs-greenish-pants-left" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left7" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="64" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-left8" />
+	</animation-frames>
+	<animation-frames name="walk-legs-greenish-pants-right" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right7" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png" top="192" left="512" width="64" height="64" bMinimizeSpace="true" name="walk-legs-greenish-pants-right8" />
+	</animation-frames>
+	<animation-frames name="slash-legs-greenish-pants-up" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-up5" />
+	</animation-frames>
+	<animation-frames name="slash-legs-greenish-pants-left" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-left5" />
+	</animation-frames>
+	<animation-frames name="slash-legs-greenish-pants-down" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-down5" />
+	</animation-frames>
+	<animation-frames name="slash-legs-greenish-pants-right" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="slash-legs-greenish-pants-right5" />
+	</animation-frames>
+	<animation-frames name="thrust-legs-greenish-pants-up" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="0" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-up5" />
+	</animation-frames>
+	<animation-frames name="thrust-legs-greenish-pants-left" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="64" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-left7" />
+	</animation-frames>
+	<animation-frames name="thrust-legs-greenish-pants-down" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="128" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-down7" />
+	</animation-frames>
+	<animation-frames name="thrust-legs-greenish-pants-right" fps="10.0">
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="0" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right0" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="64" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right1" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="128" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right2" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="192" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right3" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="256" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right4" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="320" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right5" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="384" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right6" />
+		<sprite source="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png" top="192" left="448" width="64" height="64" bMinimizeSpace="true" name="thrust-legs-greenish-pants-right7" />
+	</animation-frames>
 </atlas>

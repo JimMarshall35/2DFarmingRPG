@@ -1,9 +1,11 @@
 
-python -m game.game_convert_tiled ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json ./WfAssets/Town.json -a engine/scripts/AtlasTool.exe
+python -m game.game_convert_tiled ./WfAssets/out -m ./WfAssets/Farm.json ./WfAssets/House.json ./WfAssets/RoadToTown.json ./WfAssets/Town.json
 
-python ./engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites.xml
+python3 ./engine/engine/scripts/ExpandAtlasTemplate.py ./WfAssets/out/named_sprites.xml -o ./WfAssets/out/named_sprites_expanded_templates.xml
 
-python engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/expanded_named_sprites.xml > ./WfAssets/out/atlascombined.xml
+python3 ./engine/engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites_expanded_templates.xml
+
+python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/expanded_named_sprites.xml > ./WfAssets/out/atlascombined.xml
 
 "./build/install_dir/Warfarmer/AtlasTool.exe" ./WfAssets/out/atlascombined.xml -o ./WfAssets/out/main.atlas
 

@@ -48,6 +48,8 @@ jobs:
     - name: Compile Assets
       run: |
         cd Stardew
+        ls ./build
+        ls ./build/atlastool
         sudo ./compile_assets.sh
 
     - name: Build Debian Package

@@ -14,7 +14,6 @@ void STARDEW_API WfBasicHoeOnGameLayerPush(struct WfItemDef* pDef, struct GameFr
 void STARDEW_API WfBasicHoeOnGameLayerPop(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext);
 void STARDEW_API WfBasicHoeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 bool STARDEW_API WfBasicHoeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
-bool STARDEW_API WfBasicHoeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
 
 
 

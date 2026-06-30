@@ -25,8 +25,10 @@
       <xs:element name="on-stop-being-current" type="FunctionContainerType" minOccurs="0"/>
       <xs:element name="on-use-item" type="FunctionContainerType" minOccurs="0"/>
       <xs:element name="on-try-equip" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-try-unequip" type="FunctionContainerType" minOccurs="0"/>
       <xs:element name="on-gamelayer-push" type="FunctionContainerType" minOccurs="0"/>
       <xs:element name="on-draw-debug-lines" type="FunctionContainerType" minOccurs="0"/>
+      <xs:element name="on-init-itemdef" type="FunctionContainerType" minOccurs="0"/>
 
       <xs:element name="on-use-animation" type="StringAttrType"/>
       <xs:element name="can-use-item" type="BoolAttrType"/>

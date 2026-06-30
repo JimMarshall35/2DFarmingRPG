@@ -17,8 +17,3 @@ bool WfBasicFishingRodOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLa
 {
     return true;
 }
-
-bool WfBasicFishingRodTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}

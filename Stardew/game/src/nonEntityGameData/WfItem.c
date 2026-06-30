@@ -211,8 +211,10 @@ static void AddItemDefXML(xmlNode* pChildI)
     xmlNode* pOnStopCurrent    = XMLFindChild(pChildI, "on-stop-being-current");
     xmlNode* pOnUseItem        = XMLFindChild(pChildI, "on-use-item");
     xmlNode* pOnTryEquip       = XMLFindChild(pChildI, "on-try-equip");
+    xmlNode* pOnTryUnEquip     = XMLFindChild(pChildI, "on-try-unequip");
     xmlNode* pOnDrawDebugLines = XMLFindChild(pChildI, "on-draw-debug-lines");
     xmlNode* pOnUseAnimation   = XMLFindChild(pChildI, "on-use-animation");
+    xmlNode* pOnInitItemDef    = XMLFindChild(pChildI, "on-init-itemdef");
     xmlNode* pCanUseItem       = XMLFindChild(pChildI, "can-use-item");
     xmlNode* pPickupSpriteName = XMLFindChild(pChildI, "pickup-sprite-name");
     xmlNode* pOnGamelayerPush  = XMLFindChild(pChildI, "on-gamelayer-push");
@@ -228,8 +230,10 @@ static void AddItemDefXML(xmlNode* pChildI)
         .onStopBeingCurrent   = ResolveXMLSpecifiedFunction(pOnStopCurrent),
         .onUseItem            = ResolveXMLSpecifiedFunction(pOnUseItem),
         .onTryEquip           = ResolveXMLSpecifiedFunction(pOnTryEquip),
+        .onTryUnequip         = ResolveXMLSpecifiedFunction(pOnTryUnEquip),
         .onGameLayerPush      = ResolveXMLSpecifiedFunction(pOnGamelayerPush),
         .drawDebugLines       = ResolveXMLSpecifiedFunction(pOnDrawDebugLines),
+        .init                 = ResolveXMLSpecifiedFunction(pOnInitItemDef),
         .onUseAnimation       = GetAnimationFromString(xmlGetProp(pOnUseAnimation, "str")),
         .bCanUseItem          = strcmp(xmlGetProp(pCanUseItem, "bool"), "true") == 0,
         .pickupSpriteName     = xmlGetProp(pPickupSpriteName, "str"),
@@ -242,12 +246,24 @@ static void AddItemDefXML(xmlNode* pChildI)
     WfAddItemDef(&def);
 }
 
+static void InitItemDefs()
+{
+    for(int i=0; i<VectorSize(gItemDefs); i++)
+    {
+        if(gItemDefs->init)
+        {
+            gItemDefs->init(&gItemDefs[i]);
+        }
+    }
+}
+
 void WfInitItems()
 {
 #if BAKE_ITEM_DEFS
     gItemDefs = NEW_VECTOR(struct WfItemDef);
     HashmapInit(&gItemNameHashmap, 32, sizeof(int));
     WfInitBakedItems();
+    InitItemDefs();
     return;
 #else
     char buf[256];
@@ -289,6 +305,7 @@ void WfInitItems()
     {
         xmlFreeDoc(pXMLDoc);
     }
+    InitItemDefs();
 #endif
 }
 

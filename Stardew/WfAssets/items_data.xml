@@ -18,14 +18,20 @@
             <c-function name="WfBasicAxeOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicAxeTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
         <on-gamelayer-push>
             <c-function name="WfBasicAxeOnGameLayerPush"/>
         </on-gamelayer-push>
-        <on-draw-debug-lines>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
+        <!-- <on-draw-debug-lines>
             <c-function name="WfBasicAxeDrawDebugLines"/>
-        </on-draw-debug-lines>
+        </on-draw-debug-lines> -->
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="false"/>
         <pickup-sprite-name str="basic-axe"/>
@@ -66,8 +72,14 @@
             <c-function name="WfBasicSwordOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicSwordTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-sword"/>
@@ -88,11 +100,17 @@
             <c-function name="WfBasicPickaxeOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicPickaxeTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
         <on-gamelayer-push>
             <c-function name="WfBasicPickAxeOnGameLayerPush"/>
         </on-gamelayer-push>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-pickaxe"/>
@@ -116,8 +134,14 @@
             <c-function name="WfBasicScytheOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicScytheTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-scythe"/>
@@ -138,8 +162,14 @@
             <c-function name="WfBasicFishingRodOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicFishingRodTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfSlashAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-fishing-rod"/>
@@ -160,11 +190,17 @@
             <c-function name="WfBasicHoeOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicHoeTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
         <on-gamelayer-push>
             <c-function name="WfBasicHoeOnGameLayerPush"/>
         </on-gamelayer-push>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfThrustAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-hoe"/>
@@ -185,8 +221,14 @@
             <c-function name="WfBasicBowOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfBasicBowTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfThrustAnim"/>
         <can-use-item bool="true"/>
         <pickup-sprite-name str="basic-bow"/>
@@ -207,14 +249,53 @@
             <c-function name="WfWoodItemOnUseItem"/>
         </on-use-item>
         <on-try-equip>
-            <c-function name="WfWoodItemTryEquip"/>
+            <c-function name="WfBaseTryEquip"/>
         </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
         <on-use-animation str="WfNoActionAnim"/>
         <can-use-item bool="false"/>
         <pickup-sprite-name str="wood"/>
         <b-sound-effect-on-pickup bool="true"/>
         <zzfx-sound-on-pickup str="{1.0,0.05,175.182,0.053,0.191,0.308,1,1.0,-14.38646272,167.4035968,-80.836,0.134,0.095,0.0,0.0,0.0,0.0,0.504,0.176,0.058,0.0}"/>
         <config-data>
+        </config-data>
+    </item>
+
+
+    <!-- Equipable items (clothes, etc) -->
+    <!-- greenish pants -->
+    <item name="greenish-pants">
+        <ui-sprite-name str="walk-legs-greenish-pants-down"/>
+        <on-make-current>
+            <c-function name="WfEquipableMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfEquipableStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfEquipableOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfEquipableTryEquip"/>
+        </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfInitEquipable"/>
+        </on-init-itemdef>
+        <on-use-animation str="WfNoActionAnim"/>
+        <can-use-item bool="false"/>
+        <pickup-sprite-name str="walk-legs-greenish-pants-left"/>
+        <b-sound-effect-on-pickup bool="false"/>
+        <config-data>
+            <String name="ITEM_NAME" value="greenish-pants"/>
+            <String name="EQUIP_SLOT" value="legs"/>
         </config-data>
     </item>
 </items>

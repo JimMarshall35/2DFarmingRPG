@@ -16,9 +16,3 @@ bool WfBasicBowOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
 {
     return true;
 }
-
-bool WfBasicBowTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
-

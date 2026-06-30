@@ -33,6 +33,8 @@ add_executable( WarFarmer
     src/items/WfBasicSword.c
     src/items/WfWoodItem.c
     src/items/WfDryGroundLUT.c
+    src/items/WfEquipableItem.c
+    src/items/WfBaseItemImpls.c
     src/ui/WfUI.c
     src/WfVersion.c
 )

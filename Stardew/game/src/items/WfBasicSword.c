@@ -31,26 +31,3 @@ bool WfBasicSwordOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* 
 {
     return true;
 }
-
-bool WfBasicSwordTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
-
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-sword",
-    .UISpriteName = "basic-sword",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicSwordOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicSwordOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicSwordOnUseItem,
-    .onTryEquip = &WfBasicSwordTryEquip,
-    .pickupSpriteName = "basic-sword",
-};
-
-void WfAddBasicSwordDef()
-{
-    WfAddItemDef(&gDef);
-}

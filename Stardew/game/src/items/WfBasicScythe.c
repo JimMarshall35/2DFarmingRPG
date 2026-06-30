@@ -18,7 +18,3 @@ bool WfBasicScytheOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer*
     return true;
 }
 
-bool WfBasicScytheTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}

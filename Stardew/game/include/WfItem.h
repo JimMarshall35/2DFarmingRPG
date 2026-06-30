@@ -33,15 +33,19 @@ enum WfEquipSlot
     Head,
     Torso,
     Legs,
-    Arms
+    Arms,
+    UNKNOWN_EQUIP_SLOT
 };
 
 /* when it is switched to in the menu */
 typedef void(*OnMakeItemCurrentFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 typedef void(*OnStopBeingCurrentItemFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 typedef bool(*OnUseItemFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer); // return false if item is used up
-typedef bool(*TryEquipFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot);
+typedef bool(*TryEquipFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef);
+typedef bool(*TryUnEquipFn)(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef);
 
+/* Initialize the item definition itself */
+typedef void(*OnInitializeItemDefFn)(struct WfItemDef*);
 
 typedef void (*ItemDrawDebugLinesFn)(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts, struct WfItemDef* pItemDef);
 
@@ -110,6 +114,8 @@ struct WfItemDef
     /// @brief This isn't used yet, it is for when the player will try to equip a wearable item in their inventory menu
     TryEquipFn onTryEquip;
 
+    TryUnEquipFn onTryUnequip;
+
     /// @brief called when the game layer is pushed.
     OnPushGameLayerItemFnItemFn onGameLayerPush;
 
@@ -118,6 +124,9 @@ struct WfItemDef
 
     /// @brief called by the player if not null to draw debug lines
     ItemDrawDebugLinesFn drawDebugLines;
+
+    /// @brief initialize the item def, it might want to read config data and use it to initialize a C struct, etc
+    OnInitializeItemDefFn init;
 
     /// @brief The animation applied to the player when the item is used
     enum WfActionAnimation onUseAnimation;
@@ -139,6 +148,7 @@ struct WfItemDef
 
     /// @brief read only properties set through xml. Allows basic aspects of item behavior to be configured without recompiling
     struct WfItemConfigPropertyBag config;
+    
 };
 
 void WfAddItemDef(struct WfItemDef* pDef);

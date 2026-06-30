@@ -61,12 +61,6 @@ void WfBasicAxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrame
     pComp->data.spriteAnimator.bDraw = false;
 }
 
-
-bool WfBasicAxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
-
 bool WfBasicAxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 
 void WfBasicAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)

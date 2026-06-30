@@ -54,10 +54,6 @@ void WfBasicPickaxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameF
     pComp->data.spriteAnimator.bDraw = false;
 }
 
-bool WfBasicPickaxeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
 
 void WfBasicPickAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {
@@ -65,21 +61,6 @@ void WfBasicPickAxeOnGameLayerPush(struct WfItemDef* pDef, struct GameFrameworkL
     gPickaxeFanLength = WfGetItemConfigProperty(&pDef->config, "PICKAXE_FAN_LENGTH")->val.floatVal;
     gPickaxeFanWidth = WfGetItemConfigProperty(&pDef->config, "PICKAXE_FAN_WIDTH")->val.floatVal;
 }
-
-static struct WfItemDef gDef = 
-{
-    .itemName = "basic-pickaxe",
-    .UISpriteName = "basic-pickaxe",
-    .pUserData = NULL,
-    .onMakeCurrent = &WfBasicPickaxeOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfBasicPickaxeOnStopBeingCurrentItem,
-    .onUseItem = &WfBasicPickaxeOnUseItem,
-    .onTryEquip = &WfBasicPickaxeTryEquip,
-    .onGameLayerPush = &WfBasicPickAxeOnGameLayerPush,
-    .onUseAnimation = WfSlashAnim,
-    .bCanUseItem = true,
-    .pickupSpriteName = "basic-pickaxe",
-};
 
 bool WfBasicPickaxeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {

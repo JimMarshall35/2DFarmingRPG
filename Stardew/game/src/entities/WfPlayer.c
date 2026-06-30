@@ -853,3 +853,47 @@ struct Component2D* WfGetPlayerAnimationLayerComponent(struct Entity2D* pPlayer,
 {
     return &pPlayer->components[PLAYER_SPRITE_COMP_INDEX + 1 + (int)layer];
 }
+
+
+void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet)
+{
+    struct WfAnimationSet* pSet = WfGetPlayerAnimationSet(pPlayer);
+    pSet->layers[WfLegAnimationLayer].walkAnimations[Up] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Up];
+    pSet->layers[WfLegAnimationLayer].walkAnimations[Down] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Down];
+    pSet->layers[WfLegAnimationLayer].walkAnimations[Left] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Left];
+    pSet->layers[WfLegAnimationLayer].walkAnimations[Right] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Right];
+
+    pSet->layers[WfLegAnimationLayer].thrustAnimations[Up] = pInSet->layers[WfLegAnimationLayer].thrustAnimations[Up];
+    pSet->layers[WfLegAnimationLayer].thrustAnimations[Down] = pInSet->layers[WfLegAnimationLayer].thrustAnimations[Down];
+    pSet->layers[WfLegAnimationLayer].thrustAnimations[Left] = pInSet->layers[WfLegAnimationLayer].thrustAnimations[Left];
+    pSet->layers[WfLegAnimationLayer].thrustAnimations[Right] = pInSet->layers[WfLegAnimationLayer].thrustAnimations[Right];
+
+    pSet->layers[WfLegAnimationLayer].slashAnimations[Up] = pInSet->layers[WfLegAnimationLayer].slashAnimations[Up];
+    pSet->layers[WfLegAnimationLayer].slashAnimations[Down] = pInSet->layers[WfLegAnimationLayer].slashAnimations[Down];
+    pSet->layers[WfLegAnimationLayer].slashAnimations[Left] = pInSet->layers[WfLegAnimationLayer].slashAnimations[Left];
+    pSet->layers[WfLegAnimationLayer].slashAnimations[Right] = pInSet->layers[WfLegAnimationLayer].slashAnimations[Right];
+
+    pSet->layersMask |= (1 << WfLegAnimationLayer);
+
+}
+
+void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet)
+{
+    struct WfAnimationSet* pSet = WfGetPlayerAnimationSet(pPlayer);
+    pSet->layers[WfTorsoAnimationLayer].walkAnimations[Up] = pInSet->layers[WfTorsoAnimationLayer].walkAnimations[Up];
+    pSet->layers[WfTorsoAnimationLayer].walkAnimations[Down] = pInSet->layers[WfTorsoAnimationLayer].walkAnimations[Down];
+    pSet->layers[WfTorsoAnimationLayer].walkAnimations[Left] = pInSet->layers[WfTorsoAnimationLayer].walkAnimations[Left];
+    pSet->layers[WfTorsoAnimationLayer].walkAnimations[Right] = pInSet->layers[WfTorsoAnimationLayer].walkAnimations[Right];
+
+    pSet->layers[WfTorsoAnimationLayer].thrustAnimations[Up] = pInSet->layers[WfTorsoAnimationLayer].thrustAnimations[Up];
+    pSet->layers[WfTorsoAnimationLayer].thrustAnimations[Down] = pInSet->layers[WfTorsoAnimationLayer].thrustAnimations[Down];
+    pSet->layers[WfTorsoAnimationLayer].thrustAnimations[Left] = pInSet->layers[WfTorsoAnimationLayer].thrustAnimations[Left];
+    pSet->layers[WfTorsoAnimationLayer].thrustAnimations[Right] = pInSet->layers[WfTorsoAnimationLayer].thrustAnimations[Right];
+
+    pSet->layers[WfTorsoAnimationLayer].slashAnimations[Up] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Up];
+    pSet->layers[WfTorsoAnimationLayer].slashAnimations[Down] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Down];
+    pSet->layers[WfTorsoAnimationLayer].slashAnimations[Left] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Left];
+    pSet->layers[WfTorsoAnimationLayer].slashAnimations[Right] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Right];
+
+    pSet->layersMask |= (1 << WfTorsoAnimationLayer);
+}

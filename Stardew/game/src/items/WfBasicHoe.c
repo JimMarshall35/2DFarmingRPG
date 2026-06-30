@@ -266,9 +266,3 @@ bool WfBasicHoeOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
     pData->bCurrentLocationIsDirty = true;
     return true;
 }
-
-bool WfBasicHoeTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
-

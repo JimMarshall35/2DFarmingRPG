@@ -3,6 +3,6 @@ Version: <<VERSION>>
 Section: games
 Priority: optional
 Architecture: amd64
-Depends: libxml2 (>=2.9.14+dfsg-1.3ubuntu3), liblua5.4-dev (>=5.4.6-3build2), libglfw3 (>=3.3.10-1build1), libfreetype-dev (2.13.2+dfsg-1build3), libopenal-dev (>=1.23.1-4build1)
+Depends: libxml2 (>=2.9.14), liblua5.4-dev (>=5.4.6), libglfw3 (>=3.3.10), libfreetype-dev (>=2.13.2), libopenal-dev (>=1.23.1)
 Maintainer: Jim Marshall <jimmarshall35@gmail.com>
 Description: An open source farming game

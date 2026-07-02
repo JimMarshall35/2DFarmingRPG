@@ -20,8 +20,8 @@ static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2
 void WfBasicPickaxeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
-    pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
-    pEntData->animationSet.bgLayersMask = (1 << WfBG1);
+    pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask |= (1 << WfBG1);
 
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-pickaxe-male-up";
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-pickaxe-male-down";

@@ -193,10 +193,8 @@ static enum WfEquipSlot GetEquipSlot(const char* equipSlotName)
 
 void WfInitEquipable(struct WfItemDef* pDef)
 {
-    Log_Info("WfInitEquipable");
     if(gEquipableItems.pData == NULL)
     {
-        Log_Info("WfInitEquipable HashmapInit");
         HashmapInit(&gEquipableItems, 128, sizeof(struct WfEquipableItem));
     }
     struct WfEquipableItem equipableItem = {

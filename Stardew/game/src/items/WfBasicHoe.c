@@ -185,8 +185,8 @@ static bool ProcessHoeUsage(struct SDTimer* pTimer)
 void WfBasicHoeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
-    pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
-    pEntData->animationSet.bgLayersMask = (1 << WfBG1);
+    pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask |= (1 << WfBG1);
 
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-hoe-male-up";
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-hoe-male-down";

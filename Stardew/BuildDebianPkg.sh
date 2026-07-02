@@ -14,6 +14,31 @@ WarFarmer \$@ --assetsDir /usr/share/WfAssets --configDir \$game_config --savesD
 EOF
 )
 
+# a post install script that makes the debian package suitable for an ongoing development testing build.
+# it won't preserve saves between installs of the package but will ensure the game doesn't load corrupt data when the game save format changes.
+# When a finished game is released the version numbering system will kick in when the binary format changes and this will be removed
+postinst_script=$(cat <<EOF
+#!/bin/sh
+set -x
+
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # runs once, after files are unpacked and this is a fresh install
+        # or an upgrade from a previous version
+        data_dir="\$HOME/.local/share"
+        game_saves="\$data_dir/openfarmer/saves"
+        rm -rf \$game_saves
+        ;;
+esac
+
+exit 0
+EOF
+)
+
+
 
 # parse versions from game header
 MAJOR_VERSION=$(cat ./game/include/WfVersion.h | grep -P -o "(?<=#define WF_MAJOR_VERSION \")[0-9]+(?=\")")
@@ -36,6 +61,8 @@ cmake --install build --prefix "./$DEB_PKG_NAME/usr"
 # install debian control file
 cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"
 mv "./$DEB_PKG_NAME/DEBIAN/debian_control.txt" "./$DEB_PKG_NAME/DEBIAN/control"
+echo "$postinst_script" > "./$DEB_PKG_NAME/DEBIAN/postinst"
+chmod 0755 "./$DEB_PKG_NAME/DEBIAN/postinst"
 sed -i "s/<<VERSION>>/$VERSION_STRING/g" "./$DEB_PKG_NAME/DEBIAN/control"
 
 # install script to start the game

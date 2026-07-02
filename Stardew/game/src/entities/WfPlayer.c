@@ -243,7 +243,6 @@ static void SyncAnimA2B(struct AnimatedSprite* pA, struct AnimatedSprite* pB)
 
 void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt)
 {
-    Log_Info("WfSetPlayerOverlayAnimations");
     struct Component2D* pCompBaseAnimator = &pEnt->components[PLAYER_SPRITE_COMP_INDEX];
     struct AnimatedSprite* pBaseAnimatedSprite = &pCompBaseAnimator->data.spriteAnimator;
     EASSERT(pCompBaseAnimator->type == ETE_SpriteAnimator);
@@ -282,7 +281,6 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
     {
         if(pPlayerEntData->animationSet.layersMask & (1 << i))
         {
-            Log_Info("mask %i set", i);
             struct Component2D* pComp = &pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i];
             EASSERT(pComp->type == ETE_SpriteAnimator);
             struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;

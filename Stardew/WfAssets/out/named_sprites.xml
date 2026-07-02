@@ -613,7 +613,7 @@
                 bMinimizeSpace="true"/>
 
     <template template_path="clothing_animation_set_template.xml"
-                name="legs-greenish-pants"
+                name="greenish-pants"
                 walk_spritesheet="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png"
                 slash_spritesheet="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png"
                 thrust_spritesheet="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png"/>

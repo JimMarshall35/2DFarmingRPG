@@ -270,7 +270,7 @@
     <!-- Equipable items (clothes, etc) -->
     <!-- greenish pants -->
     <item name="greenish-pants">
-        <ui-sprite-name str="walk-legs-greenish-pants-down"/>
+        <ui-sprite-name str="walk-greenish-pants-down"/>
         <on-make-current>
             <c-function name="WfEquipableMakeCurrentItem"/>
         </on-make-current>
@@ -291,7 +291,7 @@
         </on-init-itemdef>
         <on-use-animation str="WfNoActionAnim"/>
         <can-use-item bool="false"/>
-        <pickup-sprite-name str="walk-legs-greenish-pants-left"/>
+        <pickup-sprite-name str="walk-greenish-pants-left"/>
         <b-sound-effect-on-pickup bool="false"/>
         <config-data>
             <String name="ITEM_NAME" value="greenish-pants"/>

@@ -23,6 +23,7 @@ enum WfItemIndices
     WfBasicHoe,
     WfBasicBow,
     WfWoodItem,
+    WfGreenishPants,
     WfNumBuiltinItems
 };
 

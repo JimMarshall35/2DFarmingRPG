@@ -151,8 +151,10 @@ void WfPlayerGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPos);
 
 struct WfInventory* WfGetPlayerInventory(struct WfPlayerEntData* pEntData);
 
-void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet);
+void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet, struct GameFrameworkLayer* pLayer);
 
-void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet);
+void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet, struct GameFrameworkLayer* pLayer);
+
+void WfPlayerUnsetAnimationSetMask(struct Entity2D* pPlayer, enum WfAnimationLayerNames layer);
 
 #endif

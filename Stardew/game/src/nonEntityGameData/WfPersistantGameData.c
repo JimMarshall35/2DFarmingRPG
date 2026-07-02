@@ -60,6 +60,9 @@ void WfLoadPersistantDataFileV1(struct BinarySerializer* pBS, struct WfPersistan
         pData->inventory.pItems = VectorPush(pData->inventory.pItems, &item);
     }
 
+    BS_DeSerializeI32(&pData->inventory.legItem, pBS);
+    BS_DeSerializeI32(&pData->inventory.torsoItem, pBS);
+
     BS_DeSerializeFloat(&pData->preferences.zoomLevel, pBS);
 }
 
@@ -104,6 +107,9 @@ void WfSavePersistantDataFileInternal(struct BinarySerializer* pBS, struct WfPer
         BS_SerializeI32(pGameData->inventory.pItems[i].quantity, pBS);
     }
 
+    BS_SerializeI32(pGameData->inventory.legItem, pBS);
+    BS_SerializeI32(pGameData->inventory.torsoItem, pBS);
+
     /* Preferences */
     BS_SerializeFloat(pGameData->preferences.zoomLevel, pBS);
 }
@@ -139,6 +145,10 @@ void WfNewSavePersistantData()
     gPersistantData.inventory.pItems[2].quantity = 1;
 
     gPersistantData.inventory.selectedItem = 0;
+
+    gPersistantData.inventory.legItem = WfGreenishPants;
+
+    gPersistantData.inventory.torsoItem = -1;
 
     /* Preferences */
     gPersistantData.preferences.zoomLevel = 1.0f;

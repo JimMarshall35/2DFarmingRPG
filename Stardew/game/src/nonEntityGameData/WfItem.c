@@ -223,6 +223,7 @@ static void AddItemDefXML(xmlNode* pChildI)
     xmlNode* pZzfxOnPickup     = XMLFindChild(pChildI, "zzfx-sound-on-pickup");
 
     xmlChar* itemName = xmlGetProp(pChildI, "name");
+    Log_Info("AddItemDefXML %s", itemName);
 
     struct WfItemDef def = {
         .UISpriteName         = xmlGetProp(pUISpriteName, "str"),
@@ -250,9 +251,9 @@ static void InitItemDefs()
 {
     for(int i=0; i<VectorSize(gItemDefs); i++)
     {
-        if(gItemDefs->init)
+        if(gItemDefs[i].init)
         {
-            gItemDefs->init(&gItemDefs[i]);
+            gItemDefs[i].init(&gItemDefs[i]);
         }
     }
 }

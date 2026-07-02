@@ -123,6 +123,17 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
         Log_Info("Sending G2DRPC_CreateEntity for clients player entity");
         G2D_SendRPC(-1, G2DRPC_CreateEntity, &rpc);
     }
+    struct WfInventory* pInventory = WfGetPlayerInventory(pPlayerEntData);
+    if (pInventory->legItem >= 0)
+    {
+        struct WfItemDef* pItemDef = WfGetItemDef(pInventory->legItem);
+        pItemDef->onTryEquip(pEnt, pLayer, Legs, pItemDef);
+    }
+    if(pInventory->torsoItem >= 0)
+    {
+        struct WfItemDef* pItemDef = WfGetItemDef(pInventory->torsoItem);
+        pItemDef->onTryEquip(pEnt, pLayer, Legs, pItemDef);
+    }
 }
 
 static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)
@@ -232,6 +243,7 @@ static void SyncAnimA2B(struct AnimatedSprite* pA, struct AnimatedSprite* pB)
 
 void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt)
 {
+    Log_Info("WfSetPlayerOverlayAnimations");
     struct Component2D* pCompBaseAnimator = &pEnt->components[PLAYER_SPRITE_COMP_INDEX];
     struct AnimatedSprite* pBaseAnimatedSprite = &pCompBaseAnimator->data.spriteAnimator;
     EASSERT(pCompBaseAnimator->type == ETE_SpriteAnimator);
@@ -270,6 +282,7 @@ void WfSetPlayerOverlayAnimations(enum WfDirection dir, struct GameFrameworkLaye
     {
         if(pPlayerEntData->animationSet.layersMask & (1 << i))
         {
+            Log_Info("mask %i set", i);
             struct Component2D* pComp = &pEnt->components[PLAYER_SPRITE_COMP_INDEX + 1 + i];
             EASSERT(pComp->type == ETE_SpriteAnimator);
             struct AnimatedSprite* pOverlayAnimator = &pComp->data.spriteAnimator;
@@ -611,6 +624,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEntData->groundColliderCenter2EntTransform[0] = -32;
     pEntData->groundColliderCenter2EntTransform[1] = -60;
     pEntData->animationSet.layersMask = 0;
+    pEntData->animationSet.bgLayersMask = 0;
     pEntData->state = WfWalking;
     pEntData->bNetworkControlled = bNetworkControlled;
     pEntData->networkPlayerNum = networkPlayerNum - 1;
@@ -638,7 +652,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pComponent2->data.dynamicCollider.onSensorOverlapEnd = NULL;
 
     /*
-        player background animation 1
+        player background animation 1a
     */
 
     struct Component2D* pComponent3 = &pEnt->components[pEnt->numComponents++];
@@ -855,8 +869,9 @@ struct Component2D* WfGetPlayerAnimationLayerComponent(struct Entity2D* pPlayer,
 }
 
 
-void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet)
+void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet, struct GameFrameworkLayer* pLayer)
 {
+    Log_Info("WfPlayerSetLegsAnimationSet");
     struct WfAnimationSet* pSet = WfGetPlayerAnimationSet(pPlayer);
     pSet->layers[WfLegAnimationLayer].walkAnimations[Up] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Up];
     pSet->layers[WfLegAnimationLayer].walkAnimations[Down] = pInSet->layers[WfLegAnimationLayer].walkAnimations[Down];
@@ -875,9 +890,14 @@ void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet
 
     pSet->layersMask |= (1 << WfLegAnimationLayer);
 
+    struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfLegAnimationLayer);
+    struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pPlayer->user.hData];
+    WfSetPlayerOverlayAnimations(pEntData->directionFacing, pLayer, pEntData, pPlayer);
+    pComp->data.spriteAnimator.onSprite = 0;
+
 }
 
-void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet)
+void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet* pInSet, struct GameFrameworkLayer* pLayer)
 {
     struct WfAnimationSet* pSet = WfGetPlayerAnimationSet(pPlayer);
     pSet->layers[WfTorsoAnimationLayer].walkAnimations[Up] = pInSet->layers[WfTorsoAnimationLayer].walkAnimations[Up];
@@ -896,4 +916,10 @@ void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSe
     pSet->layers[WfTorsoAnimationLayer].slashAnimations[Right] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Right];
 
     pSet->layersMask |= (1 << WfTorsoAnimationLayer);
+}
+
+void WfPlayerUnsetAnimationSetMask(struct Entity2D* pPlayer, enum WfAnimationLayerNames layer)
+{
+    struct WfAnimationSet* pSet = WfGetPlayerAnimationSet(pPlayer);
+    pSet->layersMask &= ~(1 << layer);
 }

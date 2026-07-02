@@ -1,5 +1,5 @@
 #include "WfBaseItemImpls.h"
-
+#include "Log.h"
 
 void WfBaseOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {

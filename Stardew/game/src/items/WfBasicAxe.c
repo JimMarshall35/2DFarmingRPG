@@ -28,8 +28,8 @@ static struct ZZFXSound gSwingSound = {1.0,0.05,32.268,0.008,0.046,0.208,0,1.0,2
 void WfBasicAxeOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
-    pEntData->animationSet.layersMask = (1 << WfToolAnimationLayer);
-    pEntData->animationSet.bgLayersMask = (1 << WfBG1);
+    pEntData->animationSet.layersMask |= (1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask |= (1 << WfBG1);
     
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Up] = "walk-axe-male-up";
     pEntData->animationSet.layers[WfToolAnimationLayer].walkAnimations[Down] = "walk-axe-male-down";
@@ -57,6 +57,7 @@ void WfBasicAxeOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrame
 {
     struct WfPlayerEntData* pEntData = WfGetPlayerEntData(pPlayer);
     pEntData->animationSet.layersMask &= ~(1 << WfToolAnimationLayer);
+    pEntData->animationSet.bgLayersMask &= ~(1 << WfBG1);
     struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfToolAnimationLayer);
     pComp->data.spriteAnimator.bDraw = false;
 }

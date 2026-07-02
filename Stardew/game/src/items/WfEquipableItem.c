@@ -35,6 +35,8 @@ bool WfEquipableOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* p
 
 bool WfEquipableTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef)
 {
+    Log_Info("WfEquipableTryEquip");
+    bool r = false;
     struct WfEquipableItem* pEquipable = HashmapSearch(&gEquipableItems, WfGetItemConfigProperty(&pDef->config, "ITEM_NAME")->val.stringVal);
     switch (pEquipable->slot)
     {
@@ -42,10 +44,12 @@ bool WfEquipableTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
         // TODO: implement
         break;
     case Torso:
-        WfPlayerSetTorsoAnimationSet(pPlayer, &pEquipable->animationSet);
+        WfPlayerSetTorsoAnimationSet(pPlayer, &pEquipable->animationSet, pLayer);
+        r = true;
         break;
     case Legs:
-        WfPlayerSetLegsAnimationSet(pPlayer, &pEquipable->animationSet);
+        WfPlayerSetLegsAnimationSet(pPlayer, &pEquipable->animationSet, pLayer);
+        r = true;
         break;
     case Arms:
         // TODO: implement
@@ -53,12 +57,33 @@ bool WfEquipableTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pL
     default:
         break;
     }
-    return false;
+    return r;
 }
 
 bool WfEquipableTryUnEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef)
 {
-    return true;
+    bool r = false;
+    struct WfEquipableItem* pEquipable = HashmapSearch(&gEquipableItems, WfGetItemConfigProperty(&pDef->config, "ITEM_NAME")->val.stringVal);
+    switch (pEquipable->slot)
+    {
+    case Head:
+        // TODO: implement
+        break;
+    case Torso:
+        WfPlayerUnsetAnimationSetMask(pPlayer, WfTorsoAnimationLayer);
+        r = true;
+        break;
+    case Legs:
+        WfPlayerUnsetAnimationSetMask(pPlayer, WfLegAnimationLayer);
+        r = true;
+        break;
+    case Arms:
+        // TODO: implement
+        break;
+    default:
+        break;
+    }
+    return r;
 }
 
 static void PopulateAnimationSetLayerFromName(struct WfAnimationSetLayer* pLayer, const char* name)
@@ -67,55 +92,55 @@ static void PopulateAnimationSetLayerFromName(struct WfAnimationSetLayer* pLayer
     ///////////////////////////////////////// walk
 
     char buf[256];
-    sprintf(buf, "walk-%i-up", name);
+    sprintf(buf, "walk-%s-up", name);
     pLayer->walkAnimations[Up] = malloc(strlen(buf) + 1);
     strcpy(pLayer->walkAnimations[Up], buf);
 
-    sprintf(buf, "walk-%i-down", name);
+    sprintf(buf, "walk-%s-down", name);
     pLayer->walkAnimations[Down] = malloc(strlen(buf) + 1);
     strcpy(pLayer->walkAnimations[Down], buf);
 
-    sprintf(buf, "walk-%i-left", name);
+    sprintf(buf, "walk-%s-left", name);
     pLayer->walkAnimations[Left] = malloc(strlen(buf) + 1);
     strcpy(pLayer->walkAnimations[Left], buf);
 
-    sprintf(buf, "walk-%i-right", name);
+    sprintf(buf, "walk-%s-right", name);
     pLayer->walkAnimations[Right] = malloc(strlen(buf) + 1);
     strcpy(pLayer->walkAnimations[Right], buf);
 
     ///////////////////////////////////////// slash
 
-    sprintf(buf, "slash-%i-up", name);
+    sprintf(buf, "slash-%s-up", name);
     pLayer->slashAnimations[Up] = malloc(strlen(buf) + 1);
     strcpy(pLayer->slashAnimations[Up], buf);
 
-    sprintf(buf, "slash-%i-down", name);
+    sprintf(buf, "slash-%s-down", name);
     pLayer->slashAnimations[Down] = malloc(strlen(buf) + 1);
     strcpy(pLayer->slashAnimations[Down], buf);
 
-    sprintf(buf, "slash-%i-left", name);
+    sprintf(buf, "slash-%s-left", name);
     pLayer->slashAnimations[Left] = malloc(strlen(buf) + 1);
     strcpy(pLayer->slashAnimations[Left], buf);
 
-    sprintf(buf, "slash-%i-right", name);
+    sprintf(buf, "slash-%s-right", name);
     pLayer->slashAnimations[Right] = malloc(strlen(buf) + 1);
     strcpy(pLayer->slashAnimations[Right], buf);
 
     ///////////////////////////////////////// thrust
 
-    sprintf(buf, "thrust-%i-up", name);
+    sprintf(buf, "thrust-%s-up", name);
     pLayer->thrustAnimations[Up] = malloc(strlen(buf) + 1);
     strcpy(pLayer->thrustAnimations[Up], buf);
 
-    sprintf(buf, "thrust-%i-down", name);
+    sprintf(buf, "thrust-%s-down", name);
     pLayer->thrustAnimations[Down] = malloc(strlen(buf) + 1);
     strcpy(pLayer->thrustAnimations[Down], buf);
 
-    sprintf(buf, "thrust-%i-left", name);
+    sprintf(buf, "thrust-%s-left", name);
     pLayer->thrustAnimations[Left] = malloc(strlen(buf) + 1);
     strcpy(pLayer->thrustAnimations[Left], buf);
 
-    sprintf(buf, "thrust-%i-right", name);
+    sprintf(buf, "thrust-%s-right", name);
     pLayer->thrustAnimations[Right] = malloc(strlen(buf) + 1);
     strcpy(pLayer->thrustAnimations[Right], buf);
 
@@ -166,10 +191,12 @@ static enum WfEquipSlot GetEquipSlot(const char* equipSlotName)
     }
 }
 
-bool WfInitEquipable(struct WfItemDef* pDef)
+void WfInitEquipable(struct WfItemDef* pDef)
 {
+    Log_Info("WfInitEquipable");
     if(gEquipableItems.pData == NULL)
     {
+        Log_Info("WfInitEquipable HashmapInit");
         HashmapInit(&gEquipableItems, 128, sizeof(struct WfEquipableItem));
     }
     struct WfEquipableItem equipableItem = {

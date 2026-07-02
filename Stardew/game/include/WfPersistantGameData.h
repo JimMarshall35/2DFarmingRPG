@@ -27,6 +27,9 @@ struct WfInventory
 {
     VECTOR(struct WfInventoryItem) pItems;
     int selectedItem;
+
+    int torsoItem;
+    int legItem;
 };
 
 struct WfPersistantData

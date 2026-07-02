@@ -17,6 +17,6 @@ bool STARDEW_API WfEquipableTryEquip(struct Entity2D* pPlayer, struct GameFramew
 
 bool STARDEW_API WfEquipableTryUnEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef);
 
-bool STARDEW_API WfInitEquipable(struct WfItemDef* pDef);
+void STARDEW_API WfInitEquipable(struct WfItemDef* pDef);
 
 #endif

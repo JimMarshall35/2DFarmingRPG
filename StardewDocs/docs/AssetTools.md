@@ -337,3 +337,183 @@ You can use it to fit the correct tiles together in your game for things like th
 
 Calculate an 8 bit index into the array where a bit should be set if the tile is any in gDryGroundLUT_Names and unset for anything else.
 
+## ExpandAtlasTemplate.py
+
+This is a simple tool that lets you write an xml node like this in an atlas xml such as `named_sprites.xml`:
+
+```xml
+<template template_path="clothing_animation_set_template.xml"
+                name="greenish-pants"
+                walk_spritesheet="./WfAssets/Image/lpc_entry/png/walkcycle/LEGS_pants_greenish.png"
+                slash_spritesheet="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png"
+                thrust_spritesheet="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png"/>
+```
+
+The script will expand this node according to the template in clothing_animation_set_template.xml:
+
+```xml
+<template>
+    <!-- 
+        NAME: base-male
+        walk_spritesheet: ./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png
+        slash_spritesheet: ./WfAssets/Image/slash.png
+        thrust_spritesheet: ./WfAssets/Image/thrust.png
+    -->
+
+    <animation name="walk-{{name}}-up"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-down"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+    
+    <animation name="walk-{{name}}-left"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+    
+    <animation name="walk-{{name}}-right"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+                <!-- slash -->
+    <animation name="slash-{{name}}-up"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="slash-{{name}}-left"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="slash-{{name}}-down"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"but powerful
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="slash-{{name}}-right"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+                <!-- Thrust -->
+    <animation name="thrust-{{name}}-up"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="thrust-{{name}}-left"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+        
+    <animation name="thrust-{{name}}-down"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="thrust-{{name}}-right"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+</template>
+```
+
+The above is a template file that uses pythons jinja2 syntax where the variables in the "{{}}" correspond to attributes in the `<template/>` node. 
+
+use it like this:
+
+`python3 ExpandAtlasTemplate.py [INPUT_FILE] -o|--output [OUTPUT_FILE]`
+
+Both the input file and output file arguments are required.
+
+This way you can add the sprites required for your game with as little syntax as possible, adding sprites animations will inevitably involve adding sprite sheets with the same patterns of sprites that your game demands.

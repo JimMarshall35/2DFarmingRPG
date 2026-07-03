@@ -6,3 +6,4 @@ StardewDocs/site
 *.atlas
 *.game
 *.bmp
+*.pyc

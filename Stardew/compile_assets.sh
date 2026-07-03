@@ -45,6 +45,6 @@ for item in "${map_filenames[@]}"; do
   cp "./WfAssets/out/$item.tilemap" -f ./WfAssets/Saves/Dev
 done
 
-#rm -f ./WfAssets/out/atlascombined.xml
-#rm -f ./WfAssets/out/expanded_named_sprites.xml
-
+rm -f ./WfAssets/out/atlascombined.xml
+rm -f ./WfAssets/out/expanded_named_sprites.xml
+rm -f ./WfAssets/out/named_sprites_expanded_templates.xml

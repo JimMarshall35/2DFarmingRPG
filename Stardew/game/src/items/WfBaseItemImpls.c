@@ -32,7 +32,7 @@ bool WfBaseTryUnEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLaye
     return false;
 }
 
-void WfBaseInitDef(struct WfItemDef*)
+void WfBaseInitDef(struct WfItemDef* def)
 {
 
 }

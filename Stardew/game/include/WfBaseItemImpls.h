@@ -17,6 +17,6 @@ void STARDEW_API WfBaseOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct G
 bool STARDEW_API WfBaseOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer);
 bool STARDEW_API WfBaseTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot,  struct WfItemDef* pDef);
 bool STARDEW_API WfBaseTryUnEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot, struct WfItemDef* pDef);
-void STARDEW_API WfBaseInitDef(struct WfItemDef*);
+void STARDEW_API WfBaseInitDef(struct WfItemDef* pDef);
 
 #endif

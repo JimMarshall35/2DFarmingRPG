@@ -2,3 +2,7 @@ Stardew/build/
 .vscode/
 venv/
 StardewDocs/site
+*.tilemap
+*.atlas
+*.game
+*.bmp

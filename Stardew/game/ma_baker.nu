@@ -173,7 +173,8 @@ def get_property_setter_lines [
                     let val = $e.attributes.value
                     [
                         "prop.type = WfItemConfig_String;"
-                        $"prop.val.stringVal = \"($val)\""
+                        $"prop.val.stringVal = \"($val)\";"
+                        $"HashmapInsert\(&($hashmap_name).properties, \"($e.attributes.name)\", &prop\);"
                     ]
 
                 }

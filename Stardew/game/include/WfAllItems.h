@@ -10,5 +10,7 @@
 #include "WfBasicScythe.h"
 #include "WfBasicSword.h"
 #include "WfWoodItem.h"
+#include "WfEquipableItem.h"
+#include "WfBaseItemImpls.h"
 
 #endif

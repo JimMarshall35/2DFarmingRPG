@@ -271,8 +271,8 @@ void WfInitItems()
     char buf2[256];
     gItemDefs = NEW_VECTOR(struct WfItemDef);
     HashmapInit(&gItemNameHashmap, 32, sizeof(int));
-    cwk_path_join(gCmdArgs.assetsDir, "items_data.xml", buf, 256);
-    cwk_path_join(gCmdArgs.assetsDir, "items_data_schema.xml", buf2, 256);
+    cwk_path_join(gCmdArgs.assetsDir, "Data/items_data.xml", buf, 256);
+    cwk_path_join(gCmdArgs.assetsDir, "Data/items_data_schema.xml", buf2, 256);
     xmlDoc* pXMLDoc = NULL;
     if(FS_DoesFileExist(buf))
     {

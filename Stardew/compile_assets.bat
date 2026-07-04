@@ -9,7 +9,7 @@ python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAss
 
 "./build/install_dir/Warfarmer/AtlasTool.exe" ./WfAssets/out/atlascombined.xml -o ./WfAssets/out/main.atlas
 
-"./build/install_dir/Warfarmer/AtlasTool.exe" ./WfAssets/ui_atlas.xml -o ./WfAssets/ui_atlas.atlas
+"./build/install_dir/Warfarmer/AtlasTool.exe" ./WfAssets/out/ui_atlas.xml -o ./WfAssets/out/ui_atlas.atlas
 
 "./build/install_dir/Warfarmer/WarFarmer.exe" --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game
 

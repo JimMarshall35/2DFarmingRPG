@@ -19,7 +19,7 @@
 			<size type="pts" val="16"/>
 		</font>
 	</atlas>
-	<screen viewmodelFile="./console.lua" viewmodelFunction="GetTestViewModel">
+	<screen viewmodelFile="./UI/console.lua" viewmodelFunction="GetTestViewModel">
 		<stackpanel dockPoint="centre" orientation = "horizontal">
             <backgroundbox sprite="fantasy_9Panel" scaleX="3.0" scaleY="3.0">
 				<stackpanel orientation="vertical">

@@ -34,7 +34,7 @@ python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAss
 ./build/engine/atlastool/AtlasTool ./WfAssets/out/atlascombined.xml -o ./WfAssets/out/main.atlas -bmp Atlas.bmp -iw 1024 -ih 1024
 
 # compile another atlas file containing sprites and fonts for the games UI 
-./build/engine/atlastool/AtlasTool ./WfAssets/ui_atlas.xml -o ./WfAssets/ui_atlas.atlas -bmp UIAtlas.bmp -iw 1024 -ih 1024
+./build/engine/atlastool/AtlasTool ./WfAssets/out/ui_atlas.xml -o ./WfAssets/out/ui_atlas.atlas -bmp UIAtlas.bmp -iw 1024 -ih 1024
 
 # make a dev save file (temporary measure)
 ./build/game/WarFarmer --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game

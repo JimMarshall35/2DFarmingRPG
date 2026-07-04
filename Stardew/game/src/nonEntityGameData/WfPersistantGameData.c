@@ -148,7 +148,7 @@ void WfNewSavePersistantData()
 
     gPersistantData.inventory.legItem = WfGreenishPants;
 
-    gPersistantData.inventory.torsoItem = -1;
+    gPersistantData.inventory.torsoItem = WfWhiteShirt;
 
     /* Preferences */
     gPersistantData.preferences.zoomLevel = 1.0f;

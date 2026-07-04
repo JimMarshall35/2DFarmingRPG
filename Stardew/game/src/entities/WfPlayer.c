@@ -914,6 +914,11 @@ void WfPlayerSetTorsoAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSe
     pSet->layers[WfTorsoAnimationLayer].slashAnimations[Right] = pInSet->layers[WfTorsoAnimationLayer].slashAnimations[Right];
 
     pSet->layersMask |= (1 << WfTorsoAnimationLayer);
+
+    struct Component2D* pComp = WfGetPlayerAnimationLayerComponent(pPlayer, WfTorsoAnimationLayer);
+    struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pPlayer->user.hData];
+    WfSetPlayerOverlayAnimations(pEntData->directionFacing, pLayer, pEntData, pPlayer);
+    pComp->data.spriteAnimator.onSprite = 0;
 }
 
 void WfPlayerUnsetAnimationSetMask(struct Entity2D* pPlayer, enum WfAnimationLayerNames layer)

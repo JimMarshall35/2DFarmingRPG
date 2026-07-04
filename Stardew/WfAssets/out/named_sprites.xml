@@ -61,4 +61,9 @@
                 slash_spritesheet="./WfAssets/Image/lpc_entry/png/slash/LEGS_pants_greenish.png"
                 thrust_spritesheet="./WfAssets/Image/lpc_entry/png/thrust/LEGS_pants_greenish.png"/>
 
+    <template template_path="templates/clothing_animation_set_template.xml"
+                name="white-shirt"
+                walk_spritesheet="./WfAssets/Image/lpc_entry/png/walkcycle/TORSO_leather_armor_shirt_white.png"
+                slash_spritesheet="./WfAssets/Image/lpc_entry/png/slash/TORSO_leather_armor_shirt_white.png"
+                thrust_spritesheet="./WfAssets/Image/lpc_entry/png/thrust/TORSO_leather_armor_shirt_white.png"/>
 </atlas>

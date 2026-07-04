@@ -1,0 +1,152 @@
+<template>
+    <!-- 
+        name: axe
+        walk_spritesheet: ./WfAssets/Image/axe.png
+        slash_spritesheet_fg: ./WfAssets/Image/axe_slash_fg.png
+        slash_spritesheet_bg: ./WfAssets/Image/axe_slash_bg.png
+    -->
+    <animation name="walk-{{name}}-male-up"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-left"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-down"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-right"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-slash-male-up-fg"
+                fps="10"
+                source="{{slash_spritesheet_fg}}"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-slash-male-up-bg"
+                fps="10"
+                source="{{slash_spritesheet_bg}}"
+                startx="32"
+                starty="32"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-slash-male-left-fg"
+                fps="10"
+                source="{{slash_spritesheet_fg}}"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-slash-male-left-bg"
+                fps="10"
+                source="{{slash_spritesheet_bg}}"
+                startx="32"
+                starty="160"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-slash-male-down-fg"
+                fps="10"
+                source="{{slash_spritesheet_fg}}"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-slash-male-down-bg"
+                fps="10"
+                source="{{slash_spritesheet_bg}}"
+                startx="32"
+                starty="288"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    
+    <animation name="{{name}}-slash-male-right-fg"
+                fps="10"
+                source="{{slash_spritesheet_fg}}"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-slash-male-right-bg"
+                fps="10"
+                source="{{slash_spritesheet_bg}}"
+                startx="32"
+                starty="416"
+                incx="128"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+</template>

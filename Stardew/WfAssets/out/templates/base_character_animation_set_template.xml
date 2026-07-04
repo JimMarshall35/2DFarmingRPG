@@ -1,0 +1,154 @@
+<template>
+    <!-- 
+        name: male
+        walk_spritesheet: ./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png
+        slash_spritesheet: ./WfAssets/Image/slash.png
+        thrust_spritesheet: ./WfAssets/Image/thrust.png
+    -->
+
+    <animation name="walk-base-{{name}}-up"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-base-{{name}}-down"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+    
+    <animation name="walk-base-{{name}}-left"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+    
+    <animation name="walk-base-{{name}}-right"
+                fps="10.0"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+                <!-- slash -->
+    <animation name="slash-base-{{name}}-up"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="slash-base-{{name}}-left"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="slash-base-{{name}}-down"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+    <animation name="slash-base-{{name}}-right"
+                fps="10.0"
+                source="{{slash_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+
+                <!-- Thrust -->
+    <animation name="thrust-base-{{name}}-up"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="6"
+                bMinimizeSpace="true"/>
+        
+    <animation name="thrust-base-{{name}}-left"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+        
+    <animation name="thrust-base-{{name}}-down"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="thrust-base-{{name}}-right"
+                fps="10.0"
+                source="{{thrust_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+</template>

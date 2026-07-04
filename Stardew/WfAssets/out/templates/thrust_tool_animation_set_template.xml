@@ -1,0 +1,151 @@
+<template>
+    <!-- 
+        NAME: hoe
+        walk_spritesheet: ./WfAssets/Image/hoe.png
+        thrust_spritesheet_fg: ./WfAssets/Image/hoe_thrust_fg.png
+        thrust_spritesheet_bg: ./WfAssets/Image/hoe_thrust_bg.png
+    -->
+    <animation name="walk-{{name}}-male-up"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-left"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-down"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="walk-{{name}}-male-right"
+                fps="10"
+                source="{{walk_spritesheet}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="9"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-thrust-male-up-fg"
+                fps="10"
+                source="{{thrust_spritesheet_fg}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-thrust-male-left-fg"
+                fps="10"
+                source="{{thrust_spritesheet_fg}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-thrust-male-down-fg"
+                fps="10"
+                source="{{thrust_spritesheet_fg}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-thrust-male-right-fg"
+                fps="10"
+                source="{{thrust_spritesheet_fg}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-thrust-male-up-bg"
+                fps="10"
+                source="{{thrust_spritesheet_bg}}"
+                startx="0"
+                starty="0"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-thrust-male-left-bg"
+                fps="10"
+                source="{{thrust_spritesheet_bg}}"
+                startx="0"
+                starty="64"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+
+    <animation name="{{name}}-thrust-male-down-bg"
+                fps="10"
+                source="{{thrust_spritesheet_bg}}"
+                startx="0"
+                starty="128"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+    
+    <animation name="{{name}}-thrust-male-right-bg"
+                fps="10"
+                source="{{thrust_spritesheet_bg}}"
+                startx="0"
+                starty="192"
+                incx="64"
+                incy="0"
+                width="64"
+                height="64"
+                numFrames="8"
+                bMinimizeSpace="true"/>
+</template>

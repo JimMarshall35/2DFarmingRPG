@@ -298,4 +298,38 @@
             <String name="EQUIP_SLOT" value="legs"/>
         </config-data>
     </item>
+
+    <!-- white shirt -->
+    <!-- <item name="white-shirt">
+        <ui-sprite-name str="walk-greenish-pants-down"/>
+        <on-make-current>
+            <c-function name="WfEquipableMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfEquipableStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfEquipableOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfEquipableTryEquip"/>
+        </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfInitEquipable"/>
+        </on-init-itemdef>
+        <on-use-animation str="WfNoActionAnim"/>
+        <can-use-item bool="false"/>
+        <pickup-sprite-name str="walk-greenish-pants-left"/>
+        <b-sound-effect-on-pickup bool="false"/>
+        <config-data>
+            <String name="ITEM_NAME" value="greenish-pants"/>
+            <String name="EQUIP_SLOT" value="legs"/>
+        </config-data>
+    </item> -->
 </items>
+
+
+<!--TORSO_leather_armor_shirt_white.png-->

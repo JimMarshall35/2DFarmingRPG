@@ -31,10 +31,10 @@ jobs:
         export DEBIAN_FRONTEND=noninteractive
         apt install -y python3 build-essential cmake libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev
 
-    - name: Stamp version
-      run: |
-        cd Stardew/game
-        python3 make_release_version_header.py --platform GLFW3 --build_type Debug 
+    # - name: Stamp version
+    #   run: |
+    #     cd Stardew/game
+    #     python3 make_release_version_header.py --platform GLFW3 --build_type Debug 
         
     - name: Build
       run: |

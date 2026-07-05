@@ -18,8 +18,11 @@ jobs:
     container: ubuntu:20.04
     steps:
     - uses: actions/checkout@v5
-      with:
-        submodules: recursive
+    
+    - name: Init Submodules
+      run: |
+        git submodule update --init --recursive
+        
     - name: Get Dependencies
       run: |
         cd Stardew

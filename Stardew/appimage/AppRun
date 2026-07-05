@@ -1,5 +1,6 @@
 #!/bin/sh
 HERE="$(dirname "$(readlink -f "${0}")")"
+echo "LOLOLOLOL\n"
 export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
 exec "${HERE}/usr/bin/WarFarmer" \
   --assetsDir "${HERE}/usr/share/WfAssets" \

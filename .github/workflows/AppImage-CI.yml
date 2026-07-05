@@ -29,7 +29,7 @@ jobs:
         cd Stardew
         # for some reasom appimage tool needs this libfuse
         export DEBIAN_FRONTEND=noninteractive
-        apt install -y python3 build-essential libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev
+        apt install -y wget python3 build-essential libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev
 
         wget https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-linux-x86_64.tar.gz
         tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt

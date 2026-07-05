@@ -17,12 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     container: ubuntu:20.04
     steps:
-    - uses: actions/checkout@v5
-    
-    - name: Init Submodules
+    - name: Install git
       run: |
-        git submodule update --init --recursive
-        
+        sudo apt update
+        sudo apt install git
+    - uses: actions/checkout@v5
+      with:
+        submodules: recursive
     - name: Get Dependencies
       run: |
         cd Stardew

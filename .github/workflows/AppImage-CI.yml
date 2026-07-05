@@ -1,0 +1,55 @@
+#
+#  Build an appimage using an ubuntu 20 based image and therefore an older glibc 
+#  for maximum compatibility. Only build one configuration as an appimage.
+#  instead of the full matrix as debian packages and windows files
+#
+
+name: AppImage CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        submodules: recursive
+    - name: Get Dependencies
+      run: |
+        cd Stardew
+        # for some reasom appimage tool needs this libfuse
+        sudo apt install libfuse2t64 
+        bash GetDependencies.sh
+
+    - name: Stamp version
+      run: |
+        cd Stardew/game
+        python3 make_release_version_header.py --platform GLFW3 --build_type Debug 
+        
+    - name: Build
+      run: |
+        cd Stardew
+        ./Build_Internal.sh Debug OFF GLFW3 OPENGLES
+
+    - name: Compile Assets
+      run: |
+        cd Stardew
+        sudo ./compile_assets.sh
+    
+    - name: Build appimage
+      run: |
+        cd Stardew
+        sudo ./appimage/BuildAppImage.sh
+      
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact-appimage
+        path: |
+          Stardew/appimage/farming.AppImage
+

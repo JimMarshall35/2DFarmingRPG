@@ -28,7 +28,6 @@ jobs:
       run: |
         cd Stardew
         # for some reasom appimage tool needs this libfuse
-        sudo apt install libfuse2t64 
         bash GetDependencies.sh
 
     - name: Stamp version
@@ -56,16 +55,10 @@ jobs:
       run: |
         cd Stardew
         sudo ./BuildDebianPkg.sh
-    
-    - name: Build appimage
-      run: |
-        cd Stardew
-        sudo ./appimage/BuildAppImage.sh
       
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact-${{ matrix.baked }}-${{ matrix.platform }}-${{ matrix.type }} 
         path: |
           Stardew/*.deb
-          Stardew/appimage/farming.AppImage
 

@@ -8,8 +8,13 @@ permissions:
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'StardewDocs/**'
+
   pull_request:
     branches: [ "master" ]
+    paths:
+      - 'StardewDocs/**'
 
 jobs:
   # Build job

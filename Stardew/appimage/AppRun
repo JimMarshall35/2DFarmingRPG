@@ -5,4 +5,5 @@ export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
 exec "${HERE}/usr/bin/WarFarmer" \
   --assetsDir "${HERE}/usr/share/WfAssets" \
   --configDir "${HERE}/usr/share/WfAssets" \
+  --savesDir "${HERE}/usr/share/WfAssets/Saves"
   "$@"

@@ -28,7 +28,7 @@ jobs:
       run: |
         cd Stardew
         # for some reasom appimage tool needs this libfuse
-        apt install -y libfuse2t64 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev libopenal-dev libsdl2-dev
+        apt install -y libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev
         bash GetDependencies.sh
 
     - name: Stamp version

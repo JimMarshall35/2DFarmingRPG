@@ -27,6 +27,8 @@ jobs:
     - name: Get Dependencies
       run: |
         cd Stardew
+        # for some reasom appimage tool needs this libfuse
+        sudo apt install libfuse2t64 
         bash GetDependencies.sh
 
     - name: Stamp version

@@ -40,6 +40,8 @@ mkdir -p ./appimage/appdir/usr/share/applications
 
 cp ./appimage/WarFarmer.desktop ./appimage/appdir/usr/share/applications/WarFarmer.desktop
 
+export LD_LIBRARY_PATH="./build/engine/engine/src:$LD_LIBRARY_PATH"
+
 $linuxdeploy --appdir appimage/appdir -e appimage/appdir/usr/bin/WarFarmer -i appimage/aphex.png
 
 $appimagetool appimage/appdir appimage/farming.AppImage

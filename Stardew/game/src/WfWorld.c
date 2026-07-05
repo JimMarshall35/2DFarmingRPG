@@ -3,6 +3,7 @@
 #include "AssertLib.h"
 #include "GameFramework.h"
 #include <string.h>
+#include "Log.h"
 
 struct WfWorld
 {
@@ -26,6 +27,7 @@ void WfWorld_AddLocation(const struct WfLocation* pLocation, const char* locatio
 
 void WfWorld_LoadLocation(const char* locationName, DrawContext* pDC)
 {
+    Log_Info("Loading location: %s", locationName);
     struct WfLocation* pLocation = HashmapSearch(&gWorld.locationsHashMap, locationName);
     if(pLocation)
     {

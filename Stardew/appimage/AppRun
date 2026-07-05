@@ -1,9 +1,27 @@
 #!/bin/sh
+
+# dev build - delete saves and config and copy afresh each time
+rm -rf $saves
+rm -rf $config
+
+saves="~/.local/share/farmer/saves"
+config="~/.local/share/farmer/config"
+
+mkdir -p "$config"
+mkdir -p "$saves"
+
 HERE="$(dirname "$(readlink -f "${0}")")"
-echo "LOLOLOLOL\n"
+
+cp -a -r  --update=none "${HERE}/usr/share/WfAssets/Saves/." $saves 
+cp --update=none "${HERE}/usr/share/WfAssets/Keymap.json" $config
+
 export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
 exec "${HERE}/usr/bin/WarFarmer" \
   --assetsDir "${HERE}/usr/share/WfAssets" \
-  --configDir "${HERE}/usr/share/WfAssets" \
-  --savesDir "${HERE}/usr/share/WfAssets/Saves"
+  --configDir "$config" \
+  --savesDir "$saves"
   "$@"
+
+
+rm -rf $saves
+rm -rf $config

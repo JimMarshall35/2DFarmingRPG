@@ -30,7 +30,6 @@ jobs:
         # for some reasom appimage tool needs this libfuse
         export DEBIAN_FRONTEND=noninteractive
         apt install -y libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev
-        bash GetDependencies.sh
 
     - name: Stamp version
       run: |

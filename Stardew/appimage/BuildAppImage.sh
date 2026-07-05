@@ -42,13 +42,13 @@ cp ./appimage/WarFarmer.desktop ./appimage/appdir/usr/share/applications/WarFarm
 
 export LD_LIBRARY_PATH="./build/engine/engine/src:$LD_LIBRARY_PATH"
 
-$linuxdeploy --appdir appimage/appdir -e appimage/appdir/usr/bin/WarFarmer -i appimage/aphex.png
+$linuxdeploy --appimage-extract-and-run --appdir appimage/appdir -e appimage/appdir/usr/bin/WarFarmer -i appimage/aphex.png
 
 rm -f appimage/appdir/AppRun
 cp appimage/appdir/usr/AppRun appimage/appdir/AppRun
 chmod +x appimage/appdir/AppRun
 
-$appimagetool appimage/appdir appimage/farming.AppImage
+$appimagetool --appimage-extract-and-run appimage/appdir appimage/farming.AppImage
 
 chmod +x appimage/farming.AppImage
 

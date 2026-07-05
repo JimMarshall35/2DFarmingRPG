@@ -138,6 +138,7 @@ void ParseGameCmdLineArgs(int argc, char** argv, int* onArg)
         int arg = *onArg;
         arg++;
         gGameArgs.savesDir = argv[arg];
+        Log_Info(gGameArgs.savesDir);
         *onArg = arg;
     }
 }

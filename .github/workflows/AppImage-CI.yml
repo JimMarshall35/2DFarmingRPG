@@ -47,12 +47,12 @@ jobs:
     - name: Compile Assets
       run: |
         cd Stardew
-        sudo ./compile_assets.sh
+        ./compile_assets.sh
     
     - name: Build appimage
       run: |
         cd Stardew
-        sudo ./appimage/BuildAppImage.sh
+        ./appimage/BuildAppImage.sh
       
     - uses: actions/upload-artifact@v4
       with:

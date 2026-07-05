@@ -35,7 +35,7 @@ jobs:
         tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt
         ln -s /opt/cmake-3.29.0-linux-x86_64/bin/cmake /usr/local/bin/cmake
     # - name: Stamp version
-    #   run: |
+    #   run: | 
     #     cd Stardew/game
     #     python3 make_release_version_header.py --platform GLFW3 --build_type Debug 
         

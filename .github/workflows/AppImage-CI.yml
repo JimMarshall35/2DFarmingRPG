@@ -19,8 +19,8 @@ jobs:
     steps:
     - name: Install git
       run: |
-        sudo apt update
-        sudo apt install git
+        apt update
+        apt install git
     - uses: actions/checkout@v5
       with:
         submodules: recursive

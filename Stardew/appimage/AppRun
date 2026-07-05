@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/bin/WarFarmer --assetsDir /usr/share/WfAssets --configDir /usr/share/WfAssets

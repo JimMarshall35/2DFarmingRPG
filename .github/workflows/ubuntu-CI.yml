@@ -54,9 +54,16 @@ jobs:
       run: |
         cd Stardew
         sudo ./BuildDebianPkg.sh
+    
+    - name: Build appimage
+      run: |
+        cd Stardew
+        sudo ./appimage/BuildAppImage.sh
       
     - uses: actions/upload-artifact@v4
       with:
         name: my-artifact-${{ matrix.baked }}-${{ matrix.platform }}-${{ matrix.type }} 
-        path: Stardew/*.deb
+        path: |
+          Stardew/*.deb
+          Stardew/appimage/farming.AppImage
 

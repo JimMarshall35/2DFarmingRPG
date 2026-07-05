@@ -56,7 +56,7 @@ mkdir -p "./$DEB_PKG_NAME/usr/share"
 mkdir -p "./$DEB_PKG_NAME/usr/share/WfAssets"
 mkdir -p "./$DEB_PKG_NAME/DEBIAN"
 
-cmake --install build --prefix "./$DEB_PKG_NAME/usr"
+cmake --install build --prefix "./$DEB_PKG_NAME"
 
 # install debian control file
 cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"

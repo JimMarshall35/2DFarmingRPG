@@ -41,7 +41,7 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
     struct Entity2D* pSensorEnt = Et2D_GetEntity(&pLayerData->entities, thisSensorEntity);
     struct Entity2D* pOverlappingEnt = Et2D_GetEntity(&pLayerData->entities, hOverlappingEntity);
     
-    
+    Log_Info("WfOnExitSensorOverlapBegin");
     
     if(pOverlappingEnt->type == WfEntityType_Player)
     {

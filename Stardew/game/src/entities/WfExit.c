@@ -61,6 +61,10 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
         WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
         WfPushHUD(pLayerData->pDrawContext);
     }
+    else
+    {
+        Log_Info("Sensor overlap type is %i", pOverlappingEnt->type);
+    }
 }
 
 void WfDeSerializeExitEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)

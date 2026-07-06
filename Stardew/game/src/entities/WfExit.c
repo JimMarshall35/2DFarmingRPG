@@ -47,7 +47,7 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
     {
         // set contact point so next layer can maybe read it back and use to set x or y coordinate
         WfPlayerGetGroundContactPoint(pOverlappingEnt, gPrevAreaPos);
-
+        Log_Info("WfPlayerGetGroundContactPoint done");
         struct WfExitEntityData* pSensorData = &gExitEntityDataPool[pSensorEnt->user.hData];
         if(pLayerData->bCurrentLocationIsDirty)
         {
@@ -57,9 +57,15 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
             pLayerData->bCurrentLocationIsDirty = false;
         }
         GF_PopGameFrameworkLayer();
+        Log_Info("GF_PopGameFrameworkLayer 1");
         GF_PopGameFrameworkLayer();
+        Log_Info("GF_PopGameFrameworkLayer 2");
         WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
+        Log_Info("WfWorld_LoadLocation");
+
         WfPushHUD(pLayerData->pDrawContext);
+        Log_Info("WfPushHUD");
+
     }
     else
     {

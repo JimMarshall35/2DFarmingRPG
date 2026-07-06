@@ -560,6 +560,7 @@ float WfGetPlayerSortPosition(struct Entity2D* pEnt)
 
 void WfPlayerGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPos)
 {
+    Log_Info("WfPlayerGetGroundContactPoint");
     struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[pEnt->user.hData];
     vec2 pos2ground = {
         -pPlayerEntData->groundColliderCenter2EntTransform[0],

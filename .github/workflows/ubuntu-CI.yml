@@ -67,4 +67,5 @@ jobs:
         name: my-artifact-${{ matrix.baked }}-${{ matrix.platform }}-${{ matrix.type }} 
         path: |
           Stardew/*.deb
+          Stardew/*.AppImage
 

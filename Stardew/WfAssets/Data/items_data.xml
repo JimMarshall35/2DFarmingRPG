@@ -329,6 +329,36 @@
             <String name="EQUIP_SLOT" value="torso"/>
         </config-data>
     </item>
+
+    <!-- Stone -->
+    <item name="stone">
+        <ui-sprite-name str="stone_item_1"/>
+        <on-make-current>
+            <c-function name="WfWoodItemOnMakeCurrentItem"/>
+        </on-make-current>
+        <on-stop-being-current>
+            <c-function name="WfWoodItemOnStopBeingCurrentItem"/>
+        </on-stop-being-current>
+        <on-use-item>
+            <c-function name="WfWoodItemOnUseItem"/>
+        </on-use-item>
+        <on-try-equip>
+            <c-function name="WfBaseTryEquip"/>
+        </on-try-equip>
+        <on-try-unequip>
+            <c-function name="WfBaseTryUnEquip"/>
+        </on-try-unequip>
+        <on-init-itemdef>
+            <c-function name="WfBaseInitDef"/>
+        </on-init-itemdef>
+        <on-use-animation str="WfNoActionAnim"/>
+        <can-use-item bool="false"/>
+        <pickup-sprite-name str="stone_item_1"/>
+        <b-sound-effect-on-pickup bool="true"/>
+        <zzfx-sound-on-pickup str="{1.0,0.05,175.182,0.053,0.191,0.308,1,1.0,-14.38646272,167.4035968,-80.836,0.134,0.095,0.0,0.0,0.0,0.0,0.504,0.176,0.058,0.0}"/>
+        <config-data>
+        </config-data>
+    </item>
 </items>
 
 

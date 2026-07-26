@@ -1,4 +1,5 @@
 #include "WfDebris.h"
+#include <string.h>
 #include "BinarySerializer.h"
 #include "Entities.h"
 #include "Game2DLayer.h"

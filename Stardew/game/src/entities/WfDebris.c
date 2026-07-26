@@ -198,7 +198,7 @@ void WfDeSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pOu
             struct WfDebrisDef def;
             int xTile, yTile;
             BS_DeSerializeFloat(&def.health, bs);
-            BS_DeSerializeI32(&def.type, bs);
+            BS_DeSerializeI32((i32*)&def.type, bs);
             BS_DeSerializeI32(&xTile, bs);
             BS_DeSerializeI32(&yTile, bs);
             WfMakeEntityIntoDebrisBasedAt(pOutEnt, xTile, yTile, &def, pData);

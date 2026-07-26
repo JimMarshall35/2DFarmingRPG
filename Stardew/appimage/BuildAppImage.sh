@@ -2,7 +2,7 @@
 
 # run from the Stardew directory after building to create an appimage called farming.AppImage in the appimage folder
 
-appdir="./appimage/appdir"
+appdir="./appimage/appdir/usr"
 
 linuxdeploy="./appimage/linuxdeploy-x86_64.AppImage"
 

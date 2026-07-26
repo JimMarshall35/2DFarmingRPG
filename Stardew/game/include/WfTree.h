@@ -19,7 +19,6 @@ enum WfTreeType
 
 struct WfTreeDef
 {
-    enum WfSeason season;
     enum WfTreeType type;
     int subtype;
 };

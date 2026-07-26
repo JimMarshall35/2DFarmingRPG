@@ -127,7 +127,7 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
 
     
     struct WfSprites* pSprites = &((struct WfGameLayerData*)pGameLayerData->pUserData)->sprites;
-    TileIndex sprites[3] = {pSprites->debrisSpritesPerSeason[Spring].rock2, pSprites->debrisSpritesPerSeason[Spring].rock1, pSprites->debrisSpritesPerSeason[Spring].debrisWood};
+    TileIndex sprites[3] = {pSprites->debrisSprites.rock2, pSprites->debrisSprites.rock1, pSprites->debrisSprites.debrisWood};
 
     pComponent1->type = ETE_Tiles;
     pComponent1->data.tiles.numTiles = 1;

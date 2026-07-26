@@ -235,7 +235,7 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     struct Component2D* pComponent3 = &pEnt->components[pEnt->numComponents++];
     struct Component2D* pComponent4 = &pEnt->components[pEnt->numComponents++];
 
-    struct WfTreeSprites* pFoundSeason = &pSprites->treeSpritesPerSeason[def->season];
+    struct WfTreeSprites* pTreeSprites = &pSprites->treeSprites;
     hSprite topSprite = NULL_HANDLE;
     hSprite trunkSprite = NULL_HANDLE;
     hSprite stumpSprite = NULL_HANDLE;
@@ -243,14 +243,14 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     switch (def->type)
     {
     case Coniferous:
-        topSprite = def->subtype == 0 ? pFoundSeason->coniferousTop1 : pFoundSeason->coniferousTop2;
-        trunkSprite = pFoundSeason->trunk2;
-        stumpSprite = pFoundSeason->stump2;
+        topSprite = def->subtype == 0 ? pTreeSprites->coniferousTop1 : pTreeSprites->coniferousTop2;
+        trunkSprite = pTreeSprites->trunk2;
+        stumpSprite = pTreeSprites->stump2;
         break;
     case Deciduous:
-        topSprite = def->subtype == 0 ? pFoundSeason->deciduousTop1 : pFoundSeason->deciduousTop2;
-        trunkSprite = pFoundSeason->trunk1;
-        stumpSprite = pFoundSeason->stump1;
+        topSprite = def->subtype == 0 ? pTreeSprites->deciduousTop1 : pTreeSprites->deciduousTop2;
+        trunkSprite = pTreeSprites->trunk1;
+        stumpSprite = pTreeSprites->stump1;
         break;
     default:
         break;
@@ -326,7 +326,6 @@ void WfDeSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pOutE
     case 1:
         {
             struct WfTreeEntityData entData;
-            BS_DeSerializeI32((i32*)&entData.def.season, bs);
             BS_DeSerializeI32((i32*)&entData.def.type, bs);
             BS_DeSerializeI32((i32*)&entData.def.subtype, bs);
             BS_DeSerializeFloat(&entData.groundContactPoint[0], bs);
@@ -345,7 +344,6 @@ void WfSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt,
 {
     struct WfTreeEntityData* pEntData = &gTreeDataObjectPool[pInEnt->user.hData];
     BS_SerializeU32(1, bs); // version
-    BS_SerializeI32((i32)pEntData->def.season, bs);
     BS_SerializeI32((i32)pEntData->def.type, bs);
     BS_SerializeI32((i32)pEntData->def.subtype, bs);
     BS_SerializeFloat(pEntData->groundContactPoint[0], bs);

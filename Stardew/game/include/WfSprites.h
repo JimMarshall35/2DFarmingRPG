@@ -28,8 +28,8 @@ struct WfDebrisSprites
 
 struct WfSprites
 {
-    struct WfTreeSprites treeSpritesPerSeason[NumSeasons];
-    struct WfDebrisSprites debrisSpritesPerSeason[NumSeasons];
+    struct WfTreeSprites treeSprites;
+    struct WfDebrisSprites debrisSprites;
 };
 
 /* Populate the WfSprites struct with the sprites from the GameLayer2DData's atlas */

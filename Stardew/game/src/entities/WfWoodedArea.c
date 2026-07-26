@@ -57,7 +57,6 @@ void WfWoodedAreaEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer* 
     struct WfTreeDef treeDef;
     for(int i = 0; i < numTrees; i++)
     {
-        treeDef.season = Summer;
         treeDef.type = Ra_RandZeroTo(2);
         treeDef.subtype = 0;
         AddTreeAtRandomPos(

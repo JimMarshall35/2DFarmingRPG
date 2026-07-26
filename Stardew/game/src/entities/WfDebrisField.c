@@ -39,12 +39,6 @@ static bool IsDebrisAt(int x, int y, struct TileMap* pMap, struct WfSprites* pSp
 {
     bool b = false;
     TileIndex pIndex = *WfGetTileAtXY(&pMap->layers[1], x, y);
-    
-    // b = pIndex == pSprites->debrisSpritesPerSeason[Spring].rock1 ||
-    //     pIndex == pSprites->debrisSpritesPerSeason[Spring].rock2 ||
-    //     pIndex == pSprites->debrisSpritesPerSeason[Spring].debrisWood;
-    // Log_Info("IsDebrisAt: %i", b);
-
     b = pIndex != 0;
     return b;
 }

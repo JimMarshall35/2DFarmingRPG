@@ -1,37 +1,17 @@
 #include "WfWoodItem.h"
+#include "WfBaseItemImpls.h"
 #include "WfItem.h"
 #include <stdlib.h>
-
-
-void WfWoodItemOnMakeCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
-{
-
-}
-
-void WfWoodItemOnStopBeingCurrentItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
-{
-
-}
-
-bool WfWoodItemOnUseItem(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer)
-{
-    return true;
-}
-
-bool WfWoodItemTryEquip(struct Entity2D* pPlayer, struct GameFrameworkLayer* pLayer, enum WfEquipSlot slot)
-{
-    return false;
-}
 
 static struct WfItemDef gDef = 
 {
     .itemName = "wood",
     .UISpriteName = "wood",
     .pUserData = NULL,
-    .onMakeCurrent = &WfWoodItemOnMakeCurrentItem,
-    .onStopBeingCurrent = &WfWoodItemOnStopBeingCurrentItem,
-    .onUseItem = &WfWoodItemOnUseItem,
-    .onTryEquip = &WfWoodItemTryEquip,
+    .onMakeCurrent = &WfBaseOnMakeCurrentItem,
+    .onStopBeingCurrent = &WfBaseOnStopBeingCurrentItem,
+    .onUseItem = &WfBaseOnUseItem,
+    .onTryEquip = &WfBaseTryEquip,
     .onUseAnimation = WfNoActionAnim,
     .bCanUseItem = true,
     .pickupSpriteName = "wood",

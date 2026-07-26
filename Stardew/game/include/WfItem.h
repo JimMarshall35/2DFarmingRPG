@@ -25,6 +25,7 @@ enum WfItemIndices
     WfWoodItem,
     WfGreenishPants,
     WfWhiteShirt,
+    WfStoneItem,
     WfNumBuiltinItems
 };
 

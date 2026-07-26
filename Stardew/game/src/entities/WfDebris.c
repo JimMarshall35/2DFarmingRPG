@@ -13,6 +13,7 @@
 #include "ZzFX.h"
 #include "Audio.h"
 #include "WfTileLayers.h"
+#include "WfItemPickup.h"
 
 struct ZZFXSound gWrongDamageTypeSFX = {1.0,0.05,55.748,0.066,0.252,0.447,0,1.0,0.0,0.0,0.0,0.0,0.062,1.633,0.0,0.333,0.433,0.309,0.171,0.057,0.0};
 struct ZZFXSound gPickaxeHitRockSFX = {1.0,0.05,62.25,0.011,0.133,0.298,3,1.0,1.503,0.0,0.0,0.0,0.29,1.191,0.0,0.619,0.0,0.485,0.2,0.0,-2357.049};
@@ -27,6 +28,18 @@ struct WfDebrisData
     struct WfDebrisDef def;
     vec2 groundContactPoint;
 };
+
+// static void WfSpawnWoodAt(vec2 pos, int quant, struct GameLayer2DData* pGameLayerData)
+// {
+//     /* spawn wood pickups */
+//     struct WfItemPickupDef def = 
+//     {
+//         .itemID = WfStoneItem,
+//         .itemQuantity = 1
+//     };
+//     WfAddPickupBasedAt(pos[0], pos[1], &def, pGameLayerData);
+// }
+
 
 static OBJECT_POOL(struct WfDebrisData) gDebrisDataPool = NULL;
 
@@ -64,6 +77,13 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
                         pGameLayerData->bCurrentLocationIsDirty = true;
                         Au_PlayZzFX(&gDestroyRockSFX);
+                        /* spawn stone pickup */
+                        struct WfItemPickupDef def = 
+                        {
+                            .itemID = WfStoneItem,
+                            .itemQuantity = 1
+                        };
+                        WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
                     }
                     else
                     {
@@ -84,6 +104,14 @@ static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSende
                         Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
                         pGameLayerData->bCurrentLocationIsDirty = true;
                         Au_PlayZzFX(&gLogDestroySFX);
+
+                        /* spawn wood pickup */
+                        struct WfItemPickupDef def = 
+                        {
+                            .itemID = WfWoodItem,
+                            .itemQuantity = 1
+                        };
+                        WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
                     }
                     else
                     {

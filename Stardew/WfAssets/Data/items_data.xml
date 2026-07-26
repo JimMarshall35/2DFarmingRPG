@@ -240,13 +240,13 @@
     <item name="wood">
         <ui-sprite-name str="wood"/>
         <on-make-current>
-            <c-function name="WfWoodItemOnMakeCurrentItem"/>
+            <c-function name="WfBaseOnMakeCurrentItem"/>
         </on-make-current>
         <on-stop-being-current>
-            <c-function name="WfWoodItemOnStopBeingCurrentItem"/>
+            <c-function name="WfBaseOnStopBeingCurrentItem"/>
         </on-stop-being-current>
         <on-use-item>
-            <c-function name="WfWoodItemOnUseItem"/>
+            <c-function name="WfBaseOnUseItem"/>
         </on-use-item>
         <on-try-equip>
             <c-function name="WfBaseTryEquip"/>
@@ -334,13 +334,13 @@
     <item name="stone">
         <ui-sprite-name str="stone_item_1"/>
         <on-make-current>
-            <c-function name="WfWoodItemOnMakeCurrentItem"/>
+            <c-function name="WfBaseOnMakeCurrentItem"/>
         </on-make-current>
         <on-stop-being-current>
-            <c-function name="WfWoodItemOnStopBeingCurrentItem"/>
+            <c-function name="WfBaseOnStopBeingCurrentItem"/>
         </on-stop-being-current>
         <on-use-item>
-            <c-function name="WfWoodItemOnUseItem"/>
+            <c-function name="WfBaseOnUseItem"/>
         </on-use-item>
         <on-try-equip>
             <c-function name="WfBaseTryEquip"/>

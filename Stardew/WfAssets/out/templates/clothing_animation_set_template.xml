@@ -1,6 +1,6 @@
 <template>
     <!-- 
-        NAME: base-male
+        name: base-male
         walk_spritesheet: ./WfAssets/Image/lpc_base_assets/LPC Base Assets/sprites/people/male_walkcycle.png
         slash_spritesheet: ./WfAssets/Image/slash.png
         thrust_spritesheet: ./WfAssets/Image/thrust.png

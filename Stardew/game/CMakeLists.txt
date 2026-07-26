@@ -39,6 +39,13 @@ add_executable( WarFarmer
     src/WfVersion.c
 )
 
+# TODO: this below, except properly, it must work for appimage, native install, and flatpak.
+# Appimage tools set these correctly for me and flatpak uses a wrapper script
+#set_target_properties(WarFarmer PROPERTIES
+#    BUILD_RPATH "$ORIGIN/../lib"      # dev: build tree
+#    INSTALL_RPATH "$ORIGIN/../lib"    # packaged: AppImage/install tree
+#    BUILD_WITH_INSTALL_RPATH FALSE    # default; keeps the two separate
+#)
 
 target_compile_definitions(WarFarmer PRIVATE
     BAKE_ITEM_DEFS=$<BOOL:${BAKE_ITEM_DEFS}>

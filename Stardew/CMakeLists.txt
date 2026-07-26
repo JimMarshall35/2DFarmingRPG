@@ -9,21 +9,22 @@ target_link_libraries(WarFarmer PUBLIC StardewEngine)
 
 
 if(WIN32)
-# in windows we run cmake install to stage binaries including atlas tool then copy the assets at the end of the asset compilation stage
-install(TARGETS WarFarmer StardewEngine AtlasTool StardewEngineTest DESTINATION WarFarmer)
+        # in windows we run cmake install to stage binaries including atlas tool then copy the assets at the end of the asset compilation stage
+        install(TARGETS WarFarmer StardewEngine AtlasTool StardewEngineTest DESTINATION WarFarmer)
 else()
-install(TARGETS WarFarmer DESTINATION usr/bin)
-install(TARGETS StardewEngine DESTINATION usr/lib)
-install(DIRECTORY WfAssets/
-        DESTINATION usr/share/WfAssets
-        FILES_MATCHING
-        PATTERN "*.txt"
-        PATTERN "*.tilemap"
-        PATTERN "*.atlas"
-        PATTERN "*.xml"
-        PATTERN "*.lua"
-        PATTERN "*.game"
-)
-install(FILES WfAssets/ImageFiles.json DESTINATION usr/share/WfAssets)
-install(FILES WfAssets/Keymap.json DESTINATION usr/share/WfAssets)
+        include(GNUInstallDirs)
+        install(TARGETS WarFarmer DESTINATION ${CMAKE_INSTALL_BINDIR})
+        install(TARGETS StardewEngine DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        install(DIRECTORY WfAssets/
+                DESTINATION ${CMAKE_INSTALL_DATADIR}/WfAssets
+                FILES_MATCHING
+                PATTERN "*.txt"
+                PATTERN "*.tilemap"
+                PATTERN "*.atlas"
+                PATTERN "*.xml"
+                PATTERN "*.lua"
+                PATTERN "*.game"
+        )
+        install(FILES WfAssets/ImageFiles.json DESTINATION ${CMAKE_INSTALL_DATADIR}/WfAssets)
+        install(FILES WfAssets/Keymap.json DESTINATION ${CMAKE_INSTALL_DATADIR}/WfAssets)
 endif()

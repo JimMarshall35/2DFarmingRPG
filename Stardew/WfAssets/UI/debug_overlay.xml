@@ -5,5 +5,25 @@
 		<stackpanel dockPoint="topLeft" orientation="vertical">
 				<text font="default" colour="0,0,0,255" fontSize="32pts">{DebugString}</text>
 		</stackpanel>
+		<stackpanel dockPoint="bottomLeft" orientation="vertical">
+			<stackpanel orientation="vertical" 
+									dockPoint="bottomLeft" 
+									paddingLeft="20" 
+									childrenBinding="stackpanelChildren"
+									horizontalAlignment="left">
+							
+			</stackpanel>
+			<textInput font="default" 
+							colour="0,0,0,255" 
+							paddingLeft="20" 
+							width="200px" 
+							fontSize="32pts" 
+							paddingBottom="20" 
+							maxStringLength="128" 
+							onEnter="onTextLineEnter" 
+							horizontalAlignment="left">
+							{entryLine}
+					</textInput>
+		</stackpanel>
 	</screen>
 </UIroot>

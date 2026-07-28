@@ -82,6 +82,8 @@ enum WfPlayerDirection
 struct WfPlayerEntData
 {
     vec2 groundColliderCenter2EntTransform;
+
+    struct ButtonBinding freeLookModeBinding;
     struct ButtonBinding moveUpBinding;
     struct ButtonBinding moveDownBinding;
     struct ButtonBinding moveLeftBinding;
@@ -126,6 +128,8 @@ struct WfPlayerEntData
     u32 bNetworkControlled : 1;
 
     enum WfActionAnimation actionAnimation;
+
+    struct GameFrameworkEventListener* DebugLayerPoppedEventListener;
     
 };
 

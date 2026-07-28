@@ -50,10 +50,20 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
 
 static OBJECT_POOL(struct WfPlayerEntData) gPlayerEntDataPool = NULL;
 
+HGeneric gLocalPlayerEntData = NULL_HANDLE;
 
 void WfInitPlayer()
 {
     gPlayerEntDataPool = NEW_OBJECT_POOL(struct WfPlayerEntData, 4);
+}
+
+static void WfOnDebugLayerPopped(void* pUserData, void* pEventData)
+{
+    DrawContext* pDC = GetDrawContext();
+    InputContext* pIC = GetInputContext();
+    struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[gLocalPlayerEntData];
+    //In_SetMask(&pPlayerEntData->playerControlsMask, pIC);
+    WfPushHUD(pDC);
 }
 
 static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, DrawContext* pDrawCtx, InputContext* pInputCtx)
@@ -80,6 +90,11 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
         /* serialize the local players entity in network game state updates */
         pEnt->bSerializeInNetworkUpdate = true;
     }
+    if(!pPlayerEntData->bNetworkControlled)
+    {
+        pPlayerEntData->DebugLayerPoppedEventListener = Ev_SubscribeEvent("onDebugLayerPopped", &WfOnDebugLayerPopped, pLayer);
+        gLocalPlayerEntData = pEnt->user.hData;
+    }
 
     Entity2DOnInit(pEnt,pLayer, pDrawCtx, pInputCtx);
 
@@ -87,10 +102,11 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     pPlayerEntData->networkPlayerNum = -1;
 
     pPlayerEntData->movementBits = 0;
-    pPlayerEntData->moveUpBinding    = In_FindButtonMapping(pInputCtx, "playerMoveUp");
-    pPlayerEntData->moveDownBinding  = In_FindButtonMapping(pInputCtx, "playerMoveDown");
-    pPlayerEntData->moveLeftBinding  = In_FindButtonMapping(pInputCtx, "playerMoveLeft");
-    pPlayerEntData->moveRightBinding = In_FindButtonMapping(pInputCtx, "playerMoveRight");
+    pPlayerEntData->freeLookModeBinding = In_FindButtonMapping(pInputCtx, "freeLookMode");
+    pPlayerEntData->moveUpBinding       = In_FindButtonMapping(pInputCtx, "playerMoveUp");
+    pPlayerEntData->moveDownBinding     = In_FindButtonMapping(pInputCtx, "playerMoveDown");
+    pPlayerEntData->moveLeftBinding     = In_FindButtonMapping(pInputCtx, "playerMoveLeft");
+    pPlayerEntData->moveRightBinding    = In_FindButtonMapping(pInputCtx, "playerMoveRight");
 
     pPlayerEntData->nextItemBinding = In_FindButtonMapping(pInputCtx, "nextItem");
     pPlayerEntData->prevItemBinding = In_FindButtonMapping(pInputCtx, "prevItem");
@@ -107,6 +123,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     In_ActivateButtonBinding(pPlayerEntData->nextItemBinding, &pPlayerEntData->playerControlsMask);
     In_ActivateButtonBinding(pPlayerEntData->prevItemBinding, &pPlayerEntData->playerControlsMask);
     In_ActivateButtonBinding(pPlayerEntData->mainActionBinding, &pPlayerEntData->playerControlsMask);
+    In_ActivateButtonBinding(pPlayerEntData->freeLookModeBinding, &pPlayerEntData->playerControlsMask);
 
     In_SetMask(&pPlayerEntData->playerControlsMask, pInputCtx);
     
@@ -138,8 +155,14 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
 
 static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)
 {
+    struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[pEnt->user.hData];
+    if(!pPlayerEntData->bNetworkControlled)
+    {
+        Ev_UnsubscribeEvent(pPlayerEntData->DebugLayerPoppedEventListener);
+    }
     FreeObjectPoolIndex(gPlayerEntDataPool, pEnt->user.hData);
     Entity2DOnDestroy(pEnt, pData);
+    
 }
 
 static void SetBasePlayerActionAnimation(enum WfDirection dir, struct GameFrameworkLayer* pLayer, struct WfPlayerEntData* pPlayerEntData, struct Entity2D* pEnt)
@@ -530,6 +553,11 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
     {
         ChangeItem(pLayer, pEnt, pPlayerEntData, -1);
     }
+    if(In_GetButtonPressThisFrame(context, pPlayerEntData->freeLookModeBinding))
+    {
+        GF_PopGameFrameworkLayer();
+        Game2DLayer_ActivateFreeLookMode(context, pLayerData->pDrawContext);
+    }
     if(In_GetButtonPressThisFrame(context, pPlayerEntData->mainActionBinding) && 
         pPlayerEntData->actionAnimation == WfNoActionAnim &&
         WfGetInventory()->pItems[WfGetInventory()->selectedItem].itemIndex >= 0)
@@ -550,7 +578,6 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
         
     }
 }
-
 
 
 float WfGetPlayerSortPosition(struct Entity2D* pEnt)
@@ -581,7 +608,7 @@ void WfPlayerPostPhys(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, 
     Ph_PhysicsCoords2PixelCoords(pLayerData->hPhysicsWorld, physPos, pixelsPos);
     glm_vec2_add(pixelsPos, pPlayerEntData->groundColliderCenter2EntTransform, pEnt->transform.position);
 
-    if(!pPlayerEntData->bNetworkControlled)
+    if(!pPlayerEntData->bNetworkControlled && !pLayerData->bDebugLayerAttatched)
     {
         CenterCameraAt(pixelsPos[0], pixelsPos[1], &pLayerData->camera, pLayerData->windowW, pLayerData->windowH);
     }

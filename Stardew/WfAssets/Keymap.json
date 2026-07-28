@@ -19,7 +19,9 @@
 			{ "settings" : "Escape" },
 			{ "nextItem" : "X" },
 			{ "prevItem" : "Z" },
-			{ "mainActionBinding" : "C"}
+			{ "mainActionBinding" : "C"},
+			{ "freeLookMode" : "F1" },
+			{ "exitFreeLookMode" : "F1" }
 		],
 		"MouseScroll" : [
 			{ "zoomIn" : 2 },

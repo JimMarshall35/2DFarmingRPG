@@ -19,6 +19,7 @@
 #include "main.h"
 #include "cwalk.h"
 #include "WfItem.h"
+#include "WfUI.h"
 
 void WfPublishInventoryChangedEvent()
 {
@@ -75,7 +76,6 @@ static void WfOnSettingsLayerPushed(void* pUserData, void* pEventData)
 {
     WfPublishInitSettingsEvent(pUserData);
 }
-
 
 void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)
 {

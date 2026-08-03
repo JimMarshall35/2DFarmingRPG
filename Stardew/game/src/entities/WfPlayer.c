@@ -556,7 +556,7 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
     if(In_GetButtonPressThisFrame(context, pPlayerEntData->freeLookModeBinding))
     {
         GF_PopGameFrameworkLayer();
-        Game2DLayer_ActivateFreeLookMode(context, pLayerData->pDrawContext);
+        Game2DLayer_ActivateFreeLookMode(context, pLayerData);
     }
     if(In_GetButtonPressThisFrame(context, pPlayerEntData->mainActionBinding) && 
         pPlayerEntData->actionAnimation == WfNoActionAnim &&

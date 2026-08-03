@@ -43,7 +43,7 @@ void WfOnPickupSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D h
     struct Entity2D* pSensorEnt = Et2D_GetEntity(&pLayerData->entities, thisSensorEntity);
     struct Entity2D* pOverlappingEnt = Et2D_GetEntity(&pLayerData->entities, hOverlappingEntity);
     struct WfItemPickupEntData* pEntData = &gItemPickupDataPool[pSensorEnt->user.hData];
-    if(pOverlappingEnt->type = WfEntityType_Player)
+    if(pOverlappingEnt->type == WfEntityType_Player)
     {
         /* add to players inventory here */
         struct WfPlayerEntData* pPlayerEntData = WfGetPlayerEntData(pOverlappingEnt);

@@ -42,6 +42,7 @@ function GetDebugOverlayViewModel()
 			FireGameFrameworkEvent({vm=self, type="basic"}, "onDebugLayerPushed")
 		end,
 		OnXMLUILayerPop = function(self)
+			UnsubscribeGameFrameworkEvent(self._debugStringListener)
 			FireGameFrameworkEvent({vm=self, type="basic"}, "onDebugLayerPopped")
 		end,
 		stackpanelChildren = function(self)

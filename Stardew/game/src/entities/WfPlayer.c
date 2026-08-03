@@ -61,8 +61,11 @@ static void WfOnDebugLayerPopped(void* pUserData, void* pEventData)
 {
     DrawContext* pDC = GetDrawContext();
     InputContext* pIC = GetInputContext();
+    struct GameFrameworkLayer* pLayer = (struct GameFrameworkLayer*)pUserData;
     struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[gLocalPlayerEntData];
-    //In_SetMask(&pPlayerEntData->playerControlsMask, pIC);
+    In_SetMask(&pPlayerEntData->playerControlsMask, pIC);
+    struct GameLayer2DData* pData = pLayer->userData;
+    pData->bDebugLayerAttatched = false;
     WfPushHUD(pDC);
 }
 
@@ -750,6 +753,7 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEnt->input = &OnInputPlayer;
     pEnt->printEntityInfo = &WfPrintPlayerInfo;
     pEnt->drawDebugLines = &WfPlayerDrawDebugLines;
+    pEnt->onDestroy = &OnDestroyPlayer;
     pEnt->bKeepInQuadtree = false;
     pEnt->bKeepInDynamicList = true;
     pEnt->bSerializeToDisk = false;

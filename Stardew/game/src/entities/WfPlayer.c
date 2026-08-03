@@ -22,7 +22,7 @@
 #include "Network.h"
 #include "NetworkID.h"
 #include "Maths.h"
-
+#include "main.h"
 
 #define WALKING_UP_MALE "walk-base-male-up"
 #define WALKING_DOWN_MALE "walk-base-male-down"

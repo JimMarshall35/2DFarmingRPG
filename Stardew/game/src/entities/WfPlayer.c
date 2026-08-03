@@ -553,11 +553,19 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
     {
         ChangeItem(pLayer, pEnt, pPlayerEntData, -1);
     }
-    if(In_GetButtonPressThisFrame(context, pPlayerEntData->freeLookModeBinding))
+    if(pPlayerEntData->freeLookModeBinding != NULL_HANDLE)
     {
-        GF_PopGameFrameworkLayer();
-        Game2DLayer_ActivateFreeLookMode(context, pLayerData);
+        if(In_GetButtonPressThisFrame(context, pPlayerEntData->freeLookModeBinding))
+        {
+            GF_PopGameFrameworkLayer();
+            Game2DLayer_ActivateFreeLookMode(context, pLayerData);
+        }
     }
+    else
+    {
+        Log_Warning("freeLookModeBinding is NULL_HANDLE");
+    }
+    
     if(In_GetButtonPressThisFrame(context, pPlayerEntData->mainActionBinding) && 
         pPlayerEntData->actionAnimation == WfNoActionAnim &&
         WfGetInventory()->pItems[WfGetInventory()->selectedItem].itemIndex >= 0)

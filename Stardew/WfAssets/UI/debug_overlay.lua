@@ -51,8 +51,14 @@ function GetDebugOverlayViewModel()
 
         onTextLineEnter = function(self)
             print("onTextLineEnter\n")
+
+			-- Evaluate the string
+			local chunk = load(self.entryLine)
+			local result = chunk()  -- 3
+			self.entryLine = ""
+			
             tw = GetTextWidget(
-                self.entryLine,
+                tostring(result),
                 { r=0.0, g=0.0, b=0.0 },
                 { paddingTop=10.0 }
             )
@@ -68,7 +74,7 @@ function GetDebugOverlayViewModel()
                 children = {}
             })
             OnPropertyChanged(self, "stackpanelChildren")
-            self.entryLine = ""
+            
             OnPropertyChanged(self, "entryLine")
         end,
 

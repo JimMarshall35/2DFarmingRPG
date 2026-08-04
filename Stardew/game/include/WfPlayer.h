@@ -161,4 +161,9 @@ void WfPlayerSetLegsAnimationSet(struct Entity2D* pPlayer, struct WfAnimationSet
 
 void WfPlayerUnsetAnimationSetMask(struct Entity2D* pPlayer, enum WfAnimationLayerNames layer);
 
+struct WfPlayerEntData* WfGetLocalPlayerEntity();
+
+HEntity2D WfGetLocalPlayerHandle();
+
+
 #endif

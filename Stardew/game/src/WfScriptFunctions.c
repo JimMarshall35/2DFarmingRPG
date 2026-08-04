@@ -69,11 +69,73 @@ static int L_GetPlayerLocation(lua_State* L)
     return 2;
 }
 
+static int L_SetInventorySlot(lua_State* L)
+{
+    if(!lua_isinteger(L, -1))
+    {
+        Log_Error("L_GetLocalPlayer, arg 1 should be an int");
+    }
+
+    if(!lua_isinteger(L, -2))
+    {
+        Log_Error("L_GetLocalPlayer, arg 2 should be an int");
+    }
+
+    if(!lua_isinteger(L, -3))
+    {
+        Log_Error("L_GetLocalPlayer, arg 3 should be an int");
+    }
+
+    int quantity = lua_tointeger(L, -1);
+    int item = lua_tointeger(L, -2);
+    int slot = lua_tointeger(L, -3);
+
+    struct WfPersistantData* pPersistant = WfGetLocalPlayerPersistantGameData();
+    pPersistant->inventory.pItems[slot].itemIndex = item;
+    pPersistant->inventory.pItems[slot].quantity = quantity;
+    return 1;
+}
+
+static int L_SetEquipmentSlot(lua_State* L)
+{
+    if(!lua_isinteger(L, -1))
+    {
+        Log_Error("L_SetEquipmentSlot, arg 1 should be an int");
+    }
+
+    if(!lua_isinteger(L, -2))
+    {
+        Log_Error("L_SetEquipmentSlot, arg 2 should be an int");
+    }
+
+    int slot = lua_tointeger(L, -1);
+    int item = lua_tointeger(L, -2);
+    struct WfPersistantData* pPersistant = WfGetLocalPlayerPersistantGameData();
+
+    switch(slot)
+    {
+    case 1:
+        pPersistant->inventory.legItem = item;
+        {
+            struct WfItemDef* pItemDef = WfGetItemDef(pPersistant->inventory.legItem);
+
+        }
+        break;
+    case 2:
+        pPersistant->inventory.torsoItem = item;
+        break;
+    }
+    return 0;
+}
+
+
 void WfRegisterScriptFunctions()
 {
     WfRegisterItemScriptFunctions();
     Sc_RegisterCFunction("WfPushHUD", &L_PushHUDLayer);
     Sc_RegisterCFunction("WfSavePreferences", &L_SavePreferences);
     Sc_RegisterCFunction("WfGetPlayerLocation", &L_GetPlayerLocation);
+    Sc_RegisterCFunction("WfSetInventorySlot", &L_SetInventorySlot);
+    Sc_RegisterCFunction("WfSetEquipmentSlot", &L_SetEquipmentSlot);
 }
 

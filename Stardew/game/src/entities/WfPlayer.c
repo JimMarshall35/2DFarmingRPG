@@ -52,6 +52,18 @@ static OBJECT_POOL(struct WfPlayerEntData) gPlayerEntDataPool = NULL;
 
 HGeneric gLocalPlayerEntData = NULL_HANDLE;
 
+HEntity2D gLocalPlayerEnt = NULL_HANDLE;
+
+struct WfPlayerEntData* WfGetLocalPlayerEntity()
+{
+    return gLocalPlayerEnt;
+}
+
+HEntity2D WfGetLocalPlayerHandle()
+{
+    return gLocalPlayerEnt;
+}
+
 void WfInitPlayer()
 {
     gPlayerEntDataPool = NEW_OBJECT_POOL(struct WfPlayerEntData, 4);
@@ -97,6 +109,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     {
         pPlayerEntData->DebugLayerPoppedEventListener = Ev_SubscribeEvent("onDebugLayerPopped", &WfOnDebugLayerPopped, pLayer);
         gLocalPlayerEntData = pEnt->user.hData;
+        gLocalPlayerEnt = pEnt->thisEntity;
     }
 
     Entity2DOnInit(pEnt,pLayer, pDrawCtx, pInputCtx);

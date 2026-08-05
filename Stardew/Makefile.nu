@@ -1,5 +1,13 @@
 #!/usr/bin/env nu
 
+#
+#
+#   This is the master script, similar to how some projects use a makefile, except this doesn't have
+#   a makefiles incremental task running behavior. It allows reuse of the same scripts for CI and local development
+#   and between windows and linux (and mac if i add it in the future).
+#
+#
+
 use std/dirs
 
 def compile_assets [
@@ -108,6 +116,7 @@ def "main strip_unnecessary_conan_deps" [
         | str replace -a $sdl_package '' 
         | save -f conanfile.txt
     }
+    cat conanfile.txt
 }
 
 def "main stamp_version" [
@@ -216,7 +225,7 @@ def "main build_windows" [
     platform: string,
     gl_api: string
 ] {
-    (build_linux 
+    (build_windows 
         "Debug" 
         false
         "GLFW3"

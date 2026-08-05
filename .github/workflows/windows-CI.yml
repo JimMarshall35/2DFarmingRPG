@@ -34,7 +34,7 @@ jobs:
         GLFW_PACKAGE: glfw/3.4
       run: |
         cd Stardew
-        nu ./Makefile.nu strip_unnecessary_conan_deps %PLATFORM% %SDL_PACKAGE% %GLFW_PACKAG%
+        nu ./Makefile.nu strip_unnecessary_conan_deps %PLATFORM% %SDL_PACKAGE% %GLFW_PACKAGE%
         
     - name: Install Conan
       uses: conan-io/setup-conan@v1

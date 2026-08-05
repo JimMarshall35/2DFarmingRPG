@@ -25,9 +25,9 @@ jobs:
       with:
         submodules: recursive
 
-    - uses: hustcer/setup-nu@v3
-      with:
-        version: "0.111.0" # Don't use 0.90 here, as it would be a float number and would be converted to 0.9, you can use v0.90/0.90.0 or '0.90'
+    - name: install nushell
+      run: |
+        sudo snap install nushell --classic
 
     - name: Get Dependencies
       run: |

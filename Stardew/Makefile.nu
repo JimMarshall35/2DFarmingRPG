@@ -186,8 +186,8 @@ def build_windows [
     #cmake .. -G "Visual Studio 18 2026" -DCMAKE_TOOLCHAIN_FILE=generators\conan_toolchain.cmake  -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DBAKE_ITEM_DEFS=%2 -DSTARDEW_PLATFORM=%3 -DSTARDEW_GL_API_TYPE=%4
 
     let args = [
-        "-G",
-        "\"Visual Studio 18 2026\"",
+        #"-G",
+        #"\"Visual Studio 18 2026\"",
         "-DCMAKE_TOOLCHAIN_FILE=generators\\conan_toolchain.cmake",
         "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
         "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE"

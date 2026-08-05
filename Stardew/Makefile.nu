@@ -228,10 +228,10 @@ def "main build_windows" [
     gl_api: string
 ] {
     (build_windows 
-        "Debug" 
-        false
-        "GLFW3"
-        "OPENGLES")
+    $build_type 
+    $bake_item_defs
+    $platform 
+    $gl_api)
 }
 
 def "main build_debian" [

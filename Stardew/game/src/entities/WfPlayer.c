@@ -56,7 +56,7 @@ HEntity2D gLocalPlayerEnt = NULL_HANDLE;
 
 struct WfPlayerEntData* WfGetLocalPlayerEntity()
 {
-    return gLocalPlayerEnt;
+    return &gPlayerEntDataPool[gLocalPlayerEnt];
 }
 
 HEntity2D WfGetLocalPlayerHandle()

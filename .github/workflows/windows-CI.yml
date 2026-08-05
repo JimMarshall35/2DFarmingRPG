@@ -34,7 +34,8 @@ jobs:
         GLFW_PACKAGE: glfw/3.4
       run: |
         cd Stardew
-        nu ./Makefile.nu strip_unnecessary_conan_deps %PLATFORM% %SDL_PACKAGE% %GLFW_PACKAGE%
+        nu ./Makefile.nu strip_unnecessary_conan_deps $env:PLATFORM $env:SDL_PACKAGE $env:GLFW_PACKAGE
+        type filename.txt
         
     - name: Install Conan
       uses: conan-io/setup-conan@v1
@@ -52,7 +53,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew
-        nu ./Makefile.nu stamp_version %BAKED% %PLATFORM% %TYPE%
+        nu ./Makefile.nu stamp_version $env:BAKED $env:PLATFORM $env:TYPE
         
     - name: Build
       env:
@@ -61,7 +62,7 @@ jobs:
           PLATFORM: ${{ matrix.platform }} 
       run: |
         cd Stardew
-        nu ./Makefile.nu build_windows %TYPE% %BAKED% %PLATFORM% OPENGL
+        nu ./Makefile.nu build_windows $env:TYPE $env:BAKED $env:PLATFORM OPENGL
 
     - name: Compile Assets
       run: |

@@ -17,50 +17,49 @@ jobs:
       fail-fast: false
       matrix:
         platform: ["SDL2", "GLFW3"]
-        baked: ["ON", "OFF"]
+        baked: ["true", "false"]
         type: ["Release", "Debug"]
         gl_api: ["OPENGL", "OPENGLES"]
     steps:
     - uses: actions/checkout@v5
       with:
         submodules: recursive
+
+    - uses: hustcer/setup-nu@v3
+      with:
+        version: "0.111.0" # Don't use 0.90 here, as it would be a float number and would be converted to 0.9, you can use v0.90/0.90.0 or '0.90'
+
     - name: Get Dependencies
       run: |
         cd Stardew
-        # for some reasom appimage tool needs this libfuse
-        sudo apt install libfuse2t64 
-        bash GetDependencies.sh
+        ./Makefile.nu get_dependencies_apt
 
     - name: Stamp version
       env:
           BAKED: ${{ matrix.baked }}
       run: |
-        cd Stardew/game
-        if [ "$BAKED" = "ON" ]; then
-          python3 make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }} --baked
-        else
-          python3 make_release_version_header.py --platform ${{ matrix.platform }} --build_type ${{ matrix.type }}
-        fi
+        cd Stardew
+        ./Makefile.nu stamp_version $BAKED ${{ matrix.platform }} ${{ matrix.type }}
         
     - name: Build
       run: |
         cd Stardew
-        ./Build_Internal.sh ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} ${{ matrix.gl_api }} 
+        ./Makefile.nu build_linux ${{ matrix.type }} ${{ matrix.baked }} ${{ matrix.platform }} ${{ matrix.gl_api }} 
 
     - name: Compile Assets
       run: |
         cd Stardew
-        sudo ./compile_assets.sh
+        ./Makefile.nu compile_assets_linux
 
     - name: Build Debian Package
       run: |
         cd Stardew
-        sudo ./BuildDebianPkg.sh
+        ./Makefile.nu build_debian
     
     - name: Build appimage
       run: |
         cd Stardew
-        sudo ./appimage/BuildAppImage.sh
+        ./Makefile.nu build_appimage
       
     - uses: actions/upload-artifact@v4
       with:

@@ -59,7 +59,7 @@ mkdir -p "./$DEB_PKG_NAME/DEBIAN"
 cmake --install build --prefix "./$DEB_PKG_NAME"
 
 # install debian control file
-cp "./debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"
+cp "./debian/debian_control.txt" "./$DEB_PKG_NAME/DEBIAN"
 mv "./$DEB_PKG_NAME/DEBIAN/debian_control.txt" "./$DEB_PKG_NAME/DEBIAN/control"
 echo "$postinst_script" > "./$DEB_PKG_NAME/DEBIAN/postinst"
 chmod 0755 "./$DEB_PKG_NAME/DEBIAN/postinst"

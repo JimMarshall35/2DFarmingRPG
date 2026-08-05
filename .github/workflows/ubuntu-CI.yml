@@ -32,7 +32,7 @@ jobs:
     - name: Get Dependencies
       run: |
         cd Stardew
-        ./Makefile.nu get_dependencies_apt
+        sudo ./Makefile.nu get_dependencies_apt
 
     - name: Stamp version
       env:

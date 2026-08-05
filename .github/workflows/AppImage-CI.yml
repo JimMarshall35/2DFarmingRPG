@@ -25,6 +25,7 @@ jobs:
       with:
         submodules: recursive
     - name: Get Dependencies
+      shell: bash
       run: |
         cd Stardew
         
@@ -35,7 +36,7 @@ jobs:
 
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
         source "$HOME/.cargo/env"
-        
+
         wget https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-linux-x86_64.tar.gz
         tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt
         ln -s /opt/cmake-3.29.0-linux-x86_64/bin/cmake /usr/local/bin/cmake

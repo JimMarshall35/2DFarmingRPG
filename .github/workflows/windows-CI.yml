@@ -35,7 +35,6 @@ jobs:
       run: |
         cd Stardew
         nu ./Makefile.nu strip_unnecessary_conan_deps $env:PLATFORM $env:SDL_PACKAGE $env:GLFW_PACKAGE
-        type filename.txt
         
     - name: Install Conan
       uses: conan-io/setup-conan@v1

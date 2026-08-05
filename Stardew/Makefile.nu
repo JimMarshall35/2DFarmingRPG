@@ -125,8 +125,7 @@ def "main stamp_version" [
     dirs add ./game
     if $baked {
         python3 make_release_version_header.py --platform $platform --build_type $type --baked
-    }
-    else {
+    } else {
         python3 make_release_version_header.py --platform $platform --build_type $type
     }
     dirs drop

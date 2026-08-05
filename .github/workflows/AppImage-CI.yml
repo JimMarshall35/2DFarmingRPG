@@ -37,7 +37,7 @@ jobs:
 
         
         pip install jinja2
-        sudo snap install nushell --classic
+        snap install nushell --classic
     # - name: Stamp version
     #   run: | 
     #     cd Stardew/game

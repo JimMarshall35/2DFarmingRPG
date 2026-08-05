@@ -35,8 +35,9 @@ jobs:
         tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt
         ln -s /opt/cmake-3.29.0-linux-x86_64/bin/cmake /usr/local/bin/cmake
 
-
+        
         pip install jinja2
+        sudo snap install nushell --classic
     # - name: Stamp version
     #   run: | 
     #     cd Stardew/game
@@ -45,17 +46,17 @@ jobs:
     - name: Build
       run: |
         cd Stardew
-        ./Build_Internal.sh Debug OFF GLFW3 OPENGLES
+        ./Makefile.nu build_linux Debug OFF GLFW3 OPENGLES
 
     - name: Compile Assets
       run: |
         cd Stardew
-        ./compile_assets.sh
+        ./Makefile.nu compile_assets
     
     - name: Build appimage
       run: |
         cd Stardew
-        ./appimage/BuildAppImage.sh
+        ./Makefile.nu build_appimage
       
     - uses: actions/upload-artifact@v4
       with:

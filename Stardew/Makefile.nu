@@ -115,6 +115,8 @@ def "main strip_unnecessary_conan_deps" [
         open conanfile.txt 
         | str replace -a $sdl_package '' 
         | save -f conanfile.txt
+    } else {
+        error make {msg: "invalid platform option"}
     }
     cat conanfile.txt
 }

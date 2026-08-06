@@ -191,14 +191,13 @@ def build_windows [
         "-DCMAKE_TOOLCHAIN_FILE=generators\\conan_toolchain.cmake",
         "-DCMAKE_POLICY_DEFAULT_CMP0091=NEW",
         "-DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE"
-        $"-DCMAKE_BUILD_TYPE=($build_type)",
         $"-DBAKE_ITEM_DEFS=($baked)",
         $"-DSTARDEW_PLATFORM=($platform)",
         $"-DSTARDEW_GL_API_TYPE=($gl_api)"
     ]
     cmake .. ...$args
-    cmake --build .
-    cmake --install . --prefix ./install_dir
+    cmake --build . --config $build_type
+    cmake --install . --prefix ./install_dir --config $build_type
 
     dirs drop
 }

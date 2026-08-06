@@ -1,3 +1,3 @@
 [submodule "Stardew/engine"]
 	path = Stardew/engine
-	url = https://github.com/JimMarshall35/GameEngine.git
+	url = ../GameEngine.git

@@ -12,7 +12,9 @@ use std/dirs
 
 def compile_assets [
     atlas_tool_executable: string, #./build/engine/atlastool/AtlasTool
-    game_executable: string        #./build/game/WarFarmer
+    game_executable: string,       #./build/game/WarFarmer
+    output_main_bitmap: bool,
+    output_ui_bitmap: bool               
 ] {
     let map_files = [
         ./WfAssets/Farm.json
@@ -33,6 +35,8 @@ def compile_assets [
     if (not ($game_executable | path exists )) {
         error make {msg: $"game_executable doesn't exist ($game_executable)"}
     } 
+    print $"atlas_tool_executable: ($atlas_tool_executable)"
+    print $"game_executable: ($game_executable)"
 
     # convert jsons from the Tiled editor to binary files containing tilemaps and entities + an atlas.xml file of the tiles used
     python3 -m game.game_convert_tiled ./WfAssets/out -m ...$map_files
@@ -51,12 +55,45 @@ def compile_assets [
     python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/expanded_named_sprites.xml | save -f ./WfAssets/out/atlascombined.xml
 
     print "BUILDING MAIN .atlas FILE\n"
+
+    let main_atlas_args = [
+        "./WfAssets/out/atlascombined.xml",
+        "-o",
+        "./WfAssets/out/main.atlas",
+        "-iw",
+        1024, 
+        "-ih",
+        1024
+    ]
+    let main_atlas_args = match $output_main_bitmap {
+        true => ( $main_atlas_args | append "-bmp" | append "Atlas.bmp" ),
+        false => $main_atlas_args
+    } 
+    print $main_atlas_args
     # compile the atlascombined.xml into a binary atlas file
-    ^$atlas_tool_executable ./WfAssets/out/atlascombined.xml -o ./WfAssets/out/main.atlas -bmp Atlas.bmp -iw 1024 -ih 1024
+    ^$atlas_tool_executable ...$main_atlas_args
 
     print "BUILDING UI .atlas FILE\n"
+
+    let ui_atlas_args = [
+        "./WfAssets/out/ui_atlas.xml",
+        "-o",
+        "./WfAssets/out/ui_atlas.atlas",
+        "-iw",
+        1024,
+        "-ih",
+        1024
+    ]
+    print $ui_atlas_args
+
+    let ui_atlas_args = match $output_ui_bitmap {
+        true => ( $ui_atlas_args | append "-bmp" | append "Atlas.bmp" ),
+        false => $ui_atlas_args
+    } 
+
+
     # compile another atlas file containing sprites and fonts for the games UI
-    ^$atlas_tool_executable ./WfAssets/out/ui_atlas.xml -o ./WfAssets/out/ui_atlas.atlas -bmp UIAtlas.bmp -iw 1024 -ih 1024
+    ^$atlas_tool_executable ...$ui_atlas_args
 
     print "MAKING DEV SAVE\n"
     # make a dev save file (temporary measure)
@@ -94,11 +131,19 @@ def copy_built_assets_to_dir [
 }
 
 def "main compile_assets_linux" [] {
-    compile_assets "./build/engine/atlastool/AtlasTool" "./build/game/WarFarmer"
+    ( compile_assets 
+    "./build/engine/atlastool/AtlasTool" 
+    "./build/game/WarFarmer" 
+    false 
+    false )
 }
 
 def "main compile_assets_windows" [] {
-    compile_assets "./build/install_dir/Warfarmer/AtlasTool.exe" "./build/install_dir/Warfarmer/WarFarmer.exe"
+    ( compile_assets 
+    "./build/install_dir/Warfarmer/AtlasTool.exe" 
+    "./build/install_dir/Warfarmer/WarFarmer.exe" 
+    false 
+    false )
     copy_built_assets_to_dir ./build/install_dir/Warfarmer/WfAssets
 }
 

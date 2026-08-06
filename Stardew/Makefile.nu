@@ -42,16 +42,16 @@ def compile_assets [
     python3 -m game.game_convert_tiled ./WfAssets/out -m ...$map_files
 
     print "EXPANDING TEMPLATES\n"
-    # expand templates
+
     python3 ./engine/engine/scripts/ExpandAtlasTemplate.py ./WfAssets/out/named_sprites.xml -o ./WfAssets/out/named_sprites_expanded_templates.xml
 
     print "EXPANDING ANIMATION NODES\n"
-    # expand animation nodes
+
     python3 ./engine/engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites_expanded_templates.xml
 
 
     print "MERGING HAND MADE AND TILEMAP ATLAS XMLS\n"
-    # merge the list of named sprites into the ones used by the tilemap
+
     python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/expanded_named_sprites.xml | save -f ./WfAssets/out/atlascombined.xml
 
     print "BUILDING MAIN .atlas FILE\n"
@@ -70,7 +70,7 @@ def compile_assets [
         false => $main_atlas_args
     } 
     print $main_atlas_args
-    # compile the atlascombined.xml into a binary atlas file
+
     ^$atlas_tool_executable ...$main_atlas_args
 
     print "BUILDING UI .atlas FILE\n"
@@ -96,11 +96,11 @@ def compile_assets [
     ^$atlas_tool_executable ...$ui_atlas_args
 
     print "MAKING DEV SAVE\n"
-    # make a dev save file (temporary measure)
+
     ^$game_executable --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game
 
     print "COPYING TILEMAPS TO DEV SAVE\n"
-    # copy tilemap files into the dev save folder
+
     for item in $map_filenames {
         cp -f $"./WfAssets/out/($item).tilemap" ./WfAssets/Saves/Dev
     }
@@ -127,7 +127,6 @@ def copy_built_assets_to_dir [
         mkdir ($dest_path | path dirname)
         cp -f $file $dest_path
     }
-
 }
 
 def "main compile_assets_linux" [] {
@@ -159,7 +158,6 @@ def "main get_dependencies_apt" [] {
     apt-get update
     # for some reason the appimage tool needs libfuse2t64
     apt-get install -y libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev libopenal-dev libsdl2-dev libfuse2t64
-
 }
 
 def "main strip_unnecessary_conan_deps" [

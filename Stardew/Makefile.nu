@@ -31,38 +31,38 @@ def compile_assets [
     # convert jsons from the Tiled editor to binary files containing tilemaps and entities + an atlas.xml file of the tiles used
     python3 -m game.game_convert_tiled ./WfAssets/out -m ...$map_files
 
-    echo "EXPANDING TEMPLATES\n"
+    print "EXPANDING TEMPLATES\n"
     # expand templates
     python3 ./engine/engine/scripts/ExpandAtlasTemplate.py ./WfAssets/out/named_sprites.xml -o ./WfAssets/out/named_sprites_expanded_templates.xml
 
-    echo "EXPANDING ANIMATION NODES\n"
+    print "EXPANDING ANIMATION NODES\n"
     # expand animation nodes
     python3 ./engine/engine/scripts/ExpandAnimations.py -o ./WfAssets/out/expanded_named_sprites.xml ./WfAssets/out/named_sprites_expanded_templates.xml
 
 
-    echo "MERGING HAND MADE AND TILEMAP ATLAS XMLS\n"
+    print "MERGING HAND MADE AND TILEMAP ATLAS XMLS\n"
     # merge the list of named sprites into the ones used by the tilemap
     python3 ./engine/engine/scripts/MergeAtlases.py ./WfAssets/out/atlas.xml ./WfAssets/out/expanded_named_sprites.xml | save -f ./WfAssets/out/atlascombined.xml
 
-    echo "BUILDING MAIN .atlas FILE\n"
+    print "BUILDING MAIN .atlas FILE\n"
     # compile the atlascombined.xml into a binary atlas file
     ^$atlas_tool_executable ./WfAssets/out/atlascombined.xml -o ./WfAssets/out/main.atlas -bmp Atlas.bmp -iw 1024 -ih 1024
 
-    echo "BUILDING UI .atlas FILE\n"
+    print "BUILDING UI .atlas FILE\n"
     # compile another atlas file containing sprites and fonts for the games UI
     ^$atlas_tool_executable ./WfAssets/out/ui_atlas.xml -o ./WfAssets/out/ui_atlas.atlas -bmp UIAtlas.bmp -iw 1024 -ih 1024
 
-    echo "MAKING DEV SAVE\n"
+    print "MAKING DEV SAVE\n"
     # make a dev save file (temporary measure)
     ^$game_executable --outPersistantFile ./WfAssets/Saves/Dev/Persistant.game
 
-    echo "COPYING TILEMAPS TO DEV SAVE\n"
+    print "COPYING TILEMAPS TO DEV SAVE\n"
     # copy tilemap files into the dev save folder
     for item in $map_filenames {
         cp -f $"./WfAssets/out/($item).tilemap" ./WfAssets/Saves/Dev
     }
 
-    echo "CLEANING UP\n"
+    print "CLEANING UP\n"
     rm -f ./WfAssets/out/atlascombined.xml
     rm -f ./WfAssets/out/expanded_named_sprites.xml
     rm -f ./WfAssets/out/named_sprites_expanded_templates.xml

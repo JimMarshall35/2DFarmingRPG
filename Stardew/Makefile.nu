@@ -27,6 +27,12 @@ def compile_assets [
         RoadToTown
         Town
     ]
+    if !($atlas_tool_executable | path exists ) {
+        error make {msg: $"atlas_tool_executable doesn't exist ($atlas_tool_executable)"}
+    } 
+    if !($game_executable | path exists ) {
+        error make {msg: $"game_executable doesn't exist ($game_executable)"}
+    } 
 
     # convert jsons from the Tiled editor to binary files containing tilemaps and entities + an atlas.xml file of the tiles used
     python3 -m game.game_convert_tiled ./WfAssets/out -m ...$map_files

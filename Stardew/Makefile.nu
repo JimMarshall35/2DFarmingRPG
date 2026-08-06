@@ -27,10 +27,10 @@ def compile_assets [
         RoadToTown
         Town
     ]
-    if !($atlas_tool_executable | path exists ) {
+    if (not ($atlas_tool_executable | path exists )) {
         error make {msg: $"atlas_tool_executable doesn't exist ($atlas_tool_executable)"}
     } 
-    if !($game_executable | path exists ) {
+    if (not ($game_executable | path exists )) {
         error make {msg: $"game_executable doesn't exist ($game_executable)"}
     } 
 

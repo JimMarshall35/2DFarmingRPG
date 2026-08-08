@@ -13,8 +13,8 @@ use std/dirs
 def compile_assets [
     atlas_tool_executable: string, #./build/engine/atlastool/AtlasTool
     game_executable: string,       #./build/game/WarFarmer
-    output_main_bitmap: bool,
-    output_ui_bitmap: bool               
+    output_main_bitmap: bool,      # do we want to output a bitmap of the main atlas?
+    output_ui_bitmap: bool         # do we want to output a bitmap of the UI atlas?
 ] {
     let map_files = [
         ./WfAssets/Farm.json

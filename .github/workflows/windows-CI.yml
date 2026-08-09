@@ -9,6 +9,8 @@ on:
 defaults:
   run:
     shell: nu {0}
+env:
+  CONAN_HOME: ${{ github.workspace }}/.conan2
 
 jobs:
   build:
@@ -26,7 +28,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
+      - name: Cache Conan packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CONAN_HOME }}
+          key: conan-${{ runner.os }}-${{ hashFiles('**/conanfile.txt') }}
+          restore-keys: conan-${{ runner.os }}-
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.111.0"

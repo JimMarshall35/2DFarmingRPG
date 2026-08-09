@@ -128,10 +128,10 @@ def "main compile_assets_linux" [] {
 }
 
 def "main compile_assets_windows" [] {
-    # ( compile_assets 
-    # "./build/install_dir/Warfarmer/AtlasTool.exe" 
-    # "./build/install_dir/Warfarmer/WarFarmer.exe"
-    # [])
+    ( compile_assets 
+    "./build/install_dir/Warfarmer/AtlasTool.exe" 
+    "./build/install_dir/Warfarmer/WarFarmer.exe"
+    [])
     copy_built_assets_to_dir ./build/install_dir/Warfarmer/WfAssets
 }
 

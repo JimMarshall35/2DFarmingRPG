@@ -89,9 +89,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: atlascombined-${{ matrix.platform }}-${{ matrix.baked }}-${{ matrix.type }}
-          path: Stardew/WfAssets/out/atlascombined.xml
+          path: |
+            Stardew/WfAssets/out/atlascombined.xml
+            Stardew/WfAssets/out/atlascombined.xml.log
           if-no-files-found: warn
-          
+
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact

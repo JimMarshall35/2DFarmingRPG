@@ -41,10 +41,10 @@ jobs:
         pip install jinja2
         source "$HOME/.cargo/env"
         cargo install nu --locked
-    - name: Stamp version
-      run: | 
-        cd Stardew
-        ./Makefile.nu stamp_version false GLFW3 Release
+    # - name: Stamp version
+    #   run: | 
+    #     cd Stardew
+    #     ./Makefile.nu stamp_version false GLFW3 Release
         
     - name: Build
       run: |

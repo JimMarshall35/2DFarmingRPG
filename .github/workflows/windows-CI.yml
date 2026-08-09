@@ -79,10 +79,10 @@ jobs:
           cd Stardew
           nu ./Makefile.nu run_tests_windows
 
-      # - name: Compile Assets
-      #   run: |
-      #     cd Stardew
-      #     nu ./Makefile.nu compile_assets_windows
+      - name: Compile Assets
+        run: |
+          cd Stardew
+          nu ./Makefile.nu compile_assets_windows
 
       - uses: actions/upload-artifact@v4
         with:

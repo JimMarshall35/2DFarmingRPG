@@ -13,8 +13,7 @@ use std/dirs
 def compile_assets [
     atlas_tool_executable: string, #./build/engine/atlastool/AtlasTool
     game_executable: string,       #./build/game/WarFarmer
-    output_main_bitmap: bool,      # do we want to output a bitmap of the main atlas?
-    output_ui_bitmap: bool         # do we want to output a bitmap of the UI atlas?
+    atlas_tool_args: list
 ] {
     let map_files = [
         ./WfAssets/Farm.json
@@ -59,16 +58,10 @@ def compile_assets [
     let main_atlas_args = [
         "./WfAssets/out/atlascombined.xml",
         "-o",
-        "./WfAssets/out/main.atlas",
-        "-iw",
-        1024, 
-        "-ih",
-        1024
+        "./WfAssets/out/main.atlas"
     ]
-    let main_atlas_args = match $output_main_bitmap {
-        true => ( $main_atlas_args | append "-bmp" | append "Atlas.bmp" ),
-        false => $main_atlas_args
-    } 
+    let main_atlas_args = $main_atlas_args ++ $atlas_tool_args
+
     print $main_atlas_args
 
     ^$atlas_tool_executable ...$main_atlas_args
@@ -82,19 +75,11 @@ def compile_assets [
     let ui_atlas_args = [
         "./WfAssets/out/ui_atlas.xml",
         "-o",
-        "./WfAssets/out/ui_atlas.atlas",
-        "-iw",
-        1024,
-        "-ih",
-        1024
+        "./WfAssets/out/ui_atlas.atlas"
     ]
-    print $ui_atlas_args
+    let ui_atlas_args = $ui_atlas_args ++ $atlas_tool_args
 
-    let ui_atlas_args = match $output_ui_bitmap {
-        true => ( $ui_atlas_args | append "-bmp" | append "Atlas.bmp" ),
-        false => $ui_atlas_args
-    } 
-
+    print $ui_atlas_args 
 
     # compile another atlas file containing sprites and fonts for the games UI
     ^$atlas_tool_executable ...$ui_atlas_args
@@ -136,17 +121,15 @@ def copy_built_assets_to_dir [
 def "main compile_assets_linux" [] {
     ( compile_assets 
     "./build/engine/atlastool/AtlasTool" 
-    "./build/game/WarFarmer" 
-    false 
-    false )
+    "./build/game/WarFarmer"
+    ["-iw", 1024, "-ih", 1024] )
 }
 
 def "main compile_assets_windows" [] {
     ( compile_assets 
     "./build/install_dir/Warfarmer/AtlasTool.exe" 
-    "./build/install_dir/Warfarmer/WarFarmer.exe" 
-    false 
-    false )
+    "./build/install_dir/Warfarmer/WarFarmer.exe"
+    [])
     copy_built_assets_to_dir ./build/install_dir/Warfarmer/WfAssets
 }
 

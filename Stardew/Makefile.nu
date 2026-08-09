@@ -104,10 +104,10 @@ def compile_assets [
 def copy_built_assets_to_dir [
     destination: string
 ] {
-    let src = ("WfAssets" | path expand)
+    let src = ("./WfAssets" | path expand)
     let dst = $destination
     let exts = [txt tilemap atlas xml lua game json]
-    let pattern = $"($src)/**/*.{($exts | str join ',')}"
+    let pattern = $".WfAssets/**/*.{($exts | str join ',')}"
     for file in (glob $pattern) {
         let rel = ($file | path relative-to $src)
         let dest_path = ($dst | path join $rel)

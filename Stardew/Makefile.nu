@@ -111,6 +111,7 @@ def copy_built_assets_to_dir [
     let pattern = $"($src)/**/*.{($exts | str join ',')}"
 
     for file in (glob $pattern) {
+        print "copying file"
         let rel = ($file | str replace $"($src)/" "")
         let dest_path = $"($dst)/($rel)"
         mkdir ($dest_path | path dirname)

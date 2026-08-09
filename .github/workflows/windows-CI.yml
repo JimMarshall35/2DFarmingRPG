@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: conan-${{ runner.os }}-${{ hashFiles('**/conanfile.txt') }}-${{ matrix.type }}
+          key: conan-${{ runner.os }}-${{ hashFiles('Stardew/conanfile.txt') }}-${{ matrix.type }}
           restore-keys: conan-${{ runner.os }}-
 
       - uses: hustcer/setup-nu@v3

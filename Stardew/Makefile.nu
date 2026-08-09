@@ -108,7 +108,7 @@ def copy_built_assets_to_dir [
     let dst = $destination #"./build/install_dir/Warfarmer/WfAssets"
     let exts = [txt tilemap atlas xml lua game json]
 
-    let pattern = $"($src)/**/*.{($exts | str join ',')}"
+    let pattern = $"./WfAssets/**/*.{($exts | str join ',')}"
 
     for file in (glob $pattern) {
         print $"file ($file) src ($src)"

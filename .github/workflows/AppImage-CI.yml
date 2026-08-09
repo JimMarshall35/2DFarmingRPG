@@ -28,32 +28,28 @@ jobs:
       shell: bash
       run: |
         cd Stardew
-        
-
-        # for some reasom appimage tool needs this libfuse
         export DEBIAN_FRONTEND=noninteractive
         apt install -y curl wget python3 python3-pip build-essential libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev libgtest-dev
 
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        source "$HOME/.cargo/env"
+        echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
 
         wget https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-linux-x86_64.tar.gz
         tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt
         ln -s /opt/cmake-3.29.0-linux-x86_64/bin/cmake /usr/local/bin/cmake
 
-        
         pip install jinja2
+        source "$HOME/.cargo/env"
         cargo install nu --locked
-        which nu
-    # - name: Stamp version
-    #   run: | 
-    #     cd Stardew/game
-    #     python3 make_release_version_header.py --platform GLFW3 --build_type Debug 
+    - name: Stamp version
+      run: | 
+        cd Stardew
+        ./Makefile.nu stamp_version false GLFW3 Release
         
     - name: Build
       run: |
         cd Stardew
-        nu ./Makefile.nu build_linux Debug OFF GLFW3 OPENGLES
+        nu ./Makefile.nu build_linux Release OFF GLFW3 OPENGLES
 
     - name: Compile Assets
       run: |

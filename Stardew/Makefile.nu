@@ -110,7 +110,7 @@ def compile_assets [
     }
 
     print "CLEANING UP\n"
-    rm -f ./WfAssets/out/atlascombined.xml
+    #rm -f ./WfAssets/out/atlascombined.xml
     rm -f ./WfAssets/out/expanded_named_sprites.xml
     rm -f ./WfAssets/out/named_sprites_expanded_templates.xml
     rm -f ./WfAssets/out/atlas.xml

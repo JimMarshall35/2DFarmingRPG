@@ -84,6 +84,14 @@ jobs:
           cd Stardew
           nu ./Makefile.nu compile_assets_windows
 
+      - name: Upload atlas debug artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlascombined-${{ matrix.platform }}-${{ matrix.baked }}-${{ matrix.type }}
+          path: Stardew/WfAssets/out/atlascombined.xml
+          if-no-files-found: warn
+          
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact

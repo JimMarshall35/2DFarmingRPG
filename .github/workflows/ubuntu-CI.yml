@@ -50,6 +50,16 @@ jobs:
       run: |
         cd Stardew
         ./Makefile.nu compile_assets_linux
+        
+    - name: Upload atlas debug artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: atlascombined-${{ matrix.platform }}-${{ matrix.baked }}-${{ matrix.type }}
+        path: |
+          Stardew/WfAssets/out/atlascombined.xml
+          Stardew/WfAssets/out/atlascombined.xml.log
+        if-no-files-found: warn
 
     - name: Build Debian Package
       run: |

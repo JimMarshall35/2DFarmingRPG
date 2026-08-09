@@ -141,8 +141,8 @@ def "main compile_assets_windows" [] {
     ( compile_assets 
     "./build/install_dir/Warfarmer/AtlasTool.exe" 
     "./build/install_dir/Warfarmer/WarFarmer.exe" 
-    true 
-    true )
+    false 
+    false )
     copy_built_assets_to_dir ./build/install_dir/Warfarmer/WfAssets
 }
 
@@ -325,7 +325,7 @@ def "main launch_game_server_linux" [
 def "main run_tests_windows" [
 
 ] {
-    ./build/engine/enginetest/StardewEngineTest
+    ./build/install_dir/Tests/StardewEngineTest.exe
 }
 
 def main [

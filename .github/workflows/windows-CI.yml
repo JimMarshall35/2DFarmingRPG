@@ -68,7 +68,7 @@ jobs:
       - name: Test
         run: |
           cd Stardew
-          nu ./Makefile.nu get_dependencies_conan ${{ matrix.type }}
+          nu ./Makefile.nu run_tests_windows
 
       - name: Compile Assets
         run: |

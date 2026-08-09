@@ -14,14 +14,17 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
-
     strategy:
       fail-fast: false
       matrix:
         platform: ["SDL2", "GLFW3"]
         baked: ["true", "false"]
         type: ["Release", "Debug"]
+
+    # the SDL conan package doesn't compile on windows latest:
+    # sdl/2.30.1: RUN: cmake -G "Visual Studio 18 2026" -DCMAKE_TOOLCHAIN_FILE="generators/conan_toolchain.cmake" -DCMAKE_INSTALL_PREFIX="D:/a/2DFarmingRPG/2DFarmingRPG/.conan2/p/b/sdla4998b09ea34a/p" -DCMAKE_POLICY_DEFAULT_CMP0077="NEW" -DCMAKE_POLICY_DEFAULT_CMP0091="NEW" "D:/a/2DFarmingRPG/2DFarmingRPG/.conan2/p/b/sdla4998b09ea34a/b/src"
+    # CMake Error: Could not create named generator Visual Studio 18 2026
+    runs-on: ${{ matrix.platform == 'SDL2' && 'windows-2022' || 'windows-latest' }}
 
     steps:
       - name: Checkout code
@@ -33,7 +36,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: conan-${{ runner.os }}-${{ hashFiles('Stardew/conanfile.txt') }}-${{ matrix.type }}
+          key: conan-${{ runner.os }}-${{ hashFiles('Stardew/conanfile.txt') }}-${{ matrix.type }}-${{ matrix.platform }}
 
       - uses: hustcer/setup-nu@v3
         with:

@@ -49,12 +49,12 @@ jobs:
     - name: Build
       run: |
         cd Stardew
-        nu ./Makefile.nu build_linux Release OFF GLFW3 OPENGLES
+        nu ./Makefile.nu build_linux Release false GLFW3 OPENGLES
 
     - name: Compile Assets
       run: |
         cd Stardew
-        nu ./Makefile.nu compile_assets
+        nu ./Makefile.nu compile_assets_linux
     
     - name: Build appimage
       run: |

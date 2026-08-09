@@ -141,8 +141,8 @@ def "main compile_assets_windows" [] {
     ( compile_assets 
     "./build/install_dir/Warfarmer/AtlasTool.exe" 
     "./build/install_dir/Warfarmer/WarFarmer.exe" 
-    false 
-    false )
+    true 
+    true )
     copy_built_assets_to_dir ./build/install_dir/Warfarmer/WfAssets
 }
 
@@ -150,7 +150,7 @@ def "main get_dependencies_conan" [build_type: string] {
     mkdir build
     conan profile detect --force
     dirs add ./build
-    conan install .. -s $"build_type=($build_type)" --deployer=full_deploy --deployer-folder=./ --build=missing
+    conan install .. -s $"build_type=($build_type)" -o "*:shared=False" --deployer=full_deploy --deployer-folder=./ --build=missing
     dirs drop
 }
 
@@ -321,6 +321,12 @@ def "main launch_game_server_linux" [
     ./build/game/WarFarmer -r s -s 127.0.0.1:666 -l i 
 }
 
+
+def "main run_tests_windows" [
+
+] {
+    ./build/engine/enginetest/StardewEngineTest
+}
 
 def main [
 ] {

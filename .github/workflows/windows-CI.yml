@@ -64,6 +64,11 @@ jobs:
         run: |
           cd Stardew
           nu ./Makefile.nu build_windows $env.TYPE $env.BAKED $env.PLATFORM OPENGL
+      
+      - name: Test
+        run: |
+          cd Stardew
+          nu ./Makefile.nu get_dependencies_conan ${{ matrix.type }}
 
       - name: Compile Assets
         run: |

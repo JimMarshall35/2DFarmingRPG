@@ -104,17 +104,13 @@ def compile_assets [
 def copy_built_assets_to_dir [
     destination: string
 ] {
-    let src = "./WfAssets" | path expand
-    let dst = $destination #"./build/install_dir/Warfarmer/WfAssets"
+    let src = ("./WfAssets" | path expand)
+    let dst = $destination
     let exts = [txt tilemap atlas xml lua game json]
-
-    let pattern = $"./WfAssets/**/*.{($exts | str join ',')}"
-
+    let pattern = $"($src)/**/*.{($exts | str join ',')}"
     for file in (glob $pattern) {
-        print $"file ($file) src ($src)"
-        let rel = ($file | str replace $"($src)/" "")
-        print $"rel ($rel)"
-        let dest_path = $"($dst)/($rel)"
+        let rel = ($file | path relative-to $src)
+        let dest_path = ($dst | path join $rel)
         print $"copying file ($file) to ($dest_path)"
         mkdir ($dest_path | path dirname)
         cp -f $file $dest_path

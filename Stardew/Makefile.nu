@@ -113,6 +113,7 @@ def copy_built_assets_to_dir [
     for file in (glob $pattern) {
         print $"file ($file) src ($src)"
         let rel = ($file | str replace $"($src)/" "")
+        print $"rel ($rel)"
         let dest_path = $"($dst)/($rel)"
         print $"copying file ($file) to ($dest_path)"
         mkdir ($dest_path | path dirname)

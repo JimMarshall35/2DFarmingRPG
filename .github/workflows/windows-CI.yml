@@ -28,12 +28,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
       - name: Cache Conan packages
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}
-          key: conan-${{ runner.os }}-${{ hashFiles('**/conanfile.txt') }}
+          key: conan-${{ runner.os }}-${{ hashFiles('**/conanfile.txt') }}-${{ matrix.type }}
           restore-keys: conan-${{ runner.os }}-
+
       - uses: hustcer/setup-nu@v3
         with:
           version: "0.111.0"
@@ -77,10 +79,10 @@ jobs:
           cd Stardew
           nu ./Makefile.nu run_tests_windows
 
-      - name: Compile Assets
-        run: |
-          cd Stardew
-          nu ./Makefile.nu compile_assets_windows
+      # - name: Compile Assets
+      #   run: |
+      #     cd Stardew
+      #     nu ./Makefile.nu compile_assets_windows
 
       - uses: actions/upload-artifact@v4
         with:

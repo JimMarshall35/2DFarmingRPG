@@ -72,6 +72,10 @@ def compile_assets [
     print $main_atlas_args
 
     ^$atlas_tool_executable ...$main_atlas_args
+    print $"exit code: ($env.LAST_EXIT_CODE)"
+    if $env.LAST_EXIT_CODE != 0 {
+        error make {msg: "AtlasTool failed on main atlas"}
+    }
 
     print "BUILDING UI .atlas FILE\n"
 

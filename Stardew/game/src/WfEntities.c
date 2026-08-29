@@ -24,15 +24,19 @@
 /* Pickup */
 #include "WfItemPickup.h"
 
-static struct EntitySerializerPair gPlayerStartSerializer = { .serialize = &WfSerializePlayerStartEntity, .deserialize = &WfDeSerializePlayerStartEntity };
-static struct EntitySerializerPair gExitSerializer        = { .serialize = &WfSerializeExitEntity,        .deserialize = &WfDeSerializeExitEntity };
-static struct EntitySerializerPair gWoodedAreaSerializer  = { .serialize = &WfSerializeWoodedAreaEntity,  .deserialize = &WfDeSerializeWoodedAreaEntity };
-static struct EntitySerializerPair gDebrisFieldSerializer = { .serialize = &WfSerializeDebrisFieldEntity, .deserialize = &WfDeSerializeDebrisFieldEntity };
+/* Procedural Dungeon Entrance */
+#include "WfProceduralDungeonEntrance.h"
 
-static struct EntitySerializerPair gTreeSerializer        = { .serialize = &WfSerializeTreeEntity,         .deserialize = &WfDeSerializeTreeEntity };
-static struct EntitySerializerPair gRockSerializer        = { .serialize = &WfSerializeDebrisEntity,         .deserialize = &WfDeSerializeDebrisEntity }; 
-static struct EntitySerializerPair gPlayerSerializer      = { .serialize = &WfSerializePlayerEntity,       .deserialize = &WfDeSerializePlayerEntity };
-static struct EntitySerializerPair gPickupSerializer      = { .serialize = &WfDeSerializeItemPickupEntity, .deserialize = &WfDeSerializeItemPickupEntity };
+static struct EntitySerializerPair gPlayerStartSerializer               = { .serialize = &WfSerializePlayerStartEntity,               .deserialize = &WfDeSerializePlayerStartEntity };
+static struct EntitySerializerPair gExitSerializer                      = { .serialize = &WfSerializeExitEntity,                      .deserialize = &WfDeSerializeExitEntity };
+static struct EntitySerializerPair gWoodedAreaSerializer                = { .serialize = &WfSerializeWoodedAreaEntity,                .deserialize = &WfDeSerializeWoodedAreaEntity };
+static struct EntitySerializerPair gDebrisFieldSerializer               = { .serialize = &WfSerializeDebrisFieldEntity,               .deserialize = &WfDeSerializeDebrisFieldEntity };
+
+static struct EntitySerializerPair gTreeSerializer                      = { .serialize = &WfSerializeTreeEntity,                      .deserialize = &WfDeSerializeTreeEntity };
+static struct EntitySerializerPair gRockSerializer                      = { .serialize = &WfSerializeDebrisEntity,                    .deserialize = &WfDeSerializeDebrisEntity }; 
+static struct EntitySerializerPair gPlayerSerializer                    = { .serialize = &WfSerializePlayerEntity,                    .deserialize = &WfDeSerializePlayerEntity };
+static struct EntitySerializerPair gPickupSerializer                    = { .serialize = &WfSerializeItemPickupEntity,                .deserialize = &WfDeSerializeItemPickupEntity };
+static struct EntitySerializerPair gProceduralDungeonEntranceSerializer = { .serialize = &WfSerializeProceduralDungeonEntranceEntity, .deserialize = &WfDeSerializeProceduralDungeonEntranceEntity };
 
 void WfRegisterEntityTypes()
 {
@@ -44,4 +48,5 @@ void WfRegisterEntityTypes()
     Et2D_RegisterEntityType(WfEntityType_Rock, &gRockSerializer);
     Et2D_RegisterEntityType(WfEntityType_Player, &gPlayerSerializer);
     Et2D_RegisterEntityType(WfEntityType_ItemPickup, &gPickupSerializer);
+    Et2D_RegisterEntityType(WfEntityType_ProceduralDungeonEntrance, &gProceduralDungeonEntranceSerializer);
 }

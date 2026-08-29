@@ -6,9 +6,50 @@
  "name":"Interior",
  "spacing":0,
  "tilecount":1024,
- "tiledversion":"1.5.0",
+ "tiledversion":"1.12.2-2-geb83ddb9",
  "tileheight":32,
+ "tiles":[
+        {
+         "id":712,
+         "type":"dungeon_vertical_top_inside_right_end_1"
+        }, 
+        {
+         "id":713,
+         "type":"dungeon_vertical_top_inside_left_end_1"
+        }, 
+        {
+         "id":744,
+         "type":"dungeon_vertical_top_inside_right_middle_1"
+        }, 
+        {
+         "id":745,
+         "type":"dungeon_vertical_top_inside_left_middle_1"
+        }, 
+        {
+         "id":776,
+         "type":"dungeon_vertical_top_inside_right_other_end_1"
+        }, 
+        {
+         "id":777,
+         "type":"dungeon_vertical_top_inside_left_other_end_1"
+        }, 
+        {
+         "id":833,
+         "type":"dungeon_vertical_wall_top_1"
+        }, 
+        {
+         "id":865,
+         "type":"dungeon_vertical_wall_middle_1"
+        }, 
+        {
+         "id":867,
+         "type":"dungeon_floor_1"
+        }, 
+        {
+         "id":897,
+         "type":"dungeon_vertical_wall_bottom_1"
+        }],
  "tilewidth":32,
  "type":"tileset",
- "version":1.5
+ "version":"1.11"
 }

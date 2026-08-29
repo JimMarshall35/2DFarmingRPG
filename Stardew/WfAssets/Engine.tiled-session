@@ -272,7 +272,7 @@
             "scale": 0.1715,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 1314.8688046647228,
+                "x": 1311.9533527696792,
                 "y": 1454.810495626822
             }
         },
@@ -288,11 +288,11 @@
             "expandedObjectLayers": [
                 5
             ],
-            "scale": 1.183,
-            "selectedLayer": 4,
+            "scale": 1.18,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 495.77345731191883,
-                "y": 510.989010989011
+                "x": 145.7627118644068,
+                "y": 219.91525423728817
             }
         },
         "Interior 2.json": {
@@ -317,8 +317,8 @@
             "scale": 0.3866,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 799.2757371960682,
-                "y": 482.4107604759442
+                "x": 693.2229694774961,
+                "y": 479.82410760475955
             }
         },
         "Soil.json": {
@@ -340,8 +340,16 @@
             "scale": 0.3244,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1786.3748458692971,
+                "x": 1787.9161528976572,
                 "y": -504.00739827373604
+            }
+        },
+        "dungeon_sample.json": {
+            "scale": 0.7179,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 227.05112132609003,
+                "y": -89.8453823652319
             }
         },
         "empty_map.json": {
@@ -378,7 +386,7 @@
     "last.exportedFilePath": "C:/Users/User1/source/repos/ReacherRPG/ReacherRPG/json",
     "last.externalTilesetPath": "C:/Users/User1/source/repos/TileMapRendererExperiments/Engine/WfAssets/",
     "last.imagePath": "/home/jimmarshall/Jim/TileMapRendererExperiments/Stardew/WfAssets/Image/LPC Submissions",
-    "map.fixedSize": true,
+    "map.fixedSize": false,
     "map.height": 12,
     "map.lastUsedExportFilter": "JSON map files (*.json)",
     "map.lastUsedFormat": "json",
@@ -398,13 +406,13 @@
     "project": "Engine.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "House.json",
         "Town.json",
         "Jims_Ground_Tiles.json",
         "Farm.json",
         "pickaxe.tsj",
         "Outside Objects.json",
         "RoadToTown.json",
-        "House.json",
         "empty_map.json",
         "Terrain and Outside.json",
         "Farm.tmj",

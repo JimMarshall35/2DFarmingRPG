@@ -10,7 +10,7 @@
 #include "WfWorld.h"
 #include "WfUI.h"
 #include "Log.h"
-#include "WfGameLayerData.h"WfPlayerGetGroundContactPoint
+#include "WfGameLayerData.h"
 #include "WfPlayer.h"
 
 static vec2 gPrevAreaPos = {};
@@ -57,19 +57,11 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
             pLayerData->bCurrentLocationIsDirty = false;
         }
         GF_PopGameFrameworkLayer();
-        Log_Info("GF_PopGameFrameworkLayer 1");
         GF_PopGameFrameworkLayer();
-        Log_Info("GF_PopGameFrameworkLayer 2");
         WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
-        Log_Info("WfWorld_LoadLocation");
 
         WfPushHUD(pLayerData->pDrawContext);
-        Log_Info("WfPushHUD");
 
-    }
-    else
-    {
-        Log_Info("Sensor overlap type is %i", pOverlappingEnt->type);
     }
 }
 

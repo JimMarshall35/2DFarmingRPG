@@ -73,6 +73,17 @@ def serialize_DebrisField(file, obj):
 def get_type_DebrisField(obj):
     return 7
 
+########################################### exit
+
+def serialize_ProceduralDungeonEntrance(file, obj):
+    file.write(struct.pack("I", 1)) # version
+    file.write(struct.pack("f", obj["width"]))
+    file.write(struct.pack("f", obj["height"]))
+    stringVal = get_tiled_object_custom_prop(obj, "script")["value"]
+    serialize_string(file, stringVal)
+
+def get_type_ProceduralDungeonEntrance(obj):
+    return 12
 
 ########################################### registration
 
@@ -81,4 +92,6 @@ if __name__ == "__main__":
     register_entity_serializer("PlayerStart", serialize_PlayerStart, get_type_PlayerStart, False)
     register_entity_serializer("Exit", serialize_Exit, get_type_Exit, False)
     register_entity_serializer("DebrisField", serialize_DebrisField, get_type_DebrisField, False)
+    register_entity_serializer("ProceduralDungeonEntrance", serialize_ProceduralDungeonEntrance, get_type_ProceduralDungeonEntrance, False)
+
     main()

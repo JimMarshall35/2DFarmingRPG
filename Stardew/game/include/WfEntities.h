@@ -12,6 +12,7 @@ enum WfEntityTypes
     WfEntityType_Rock,
     WfEntityType_Player,
     WfEntityType_ItemPickup,
+    WfEntityType_ProceduralDungeonEntrance,
 };
 
 void WfRegisterEntityTypes();

@@ -144,6 +144,20 @@ function PlacePlayerStartInFirstRoom(rooms, pEntities)
     AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, playerX, playerY)
 end
 
+function SetCorridorFloorTile(pTileMap, x, y)
+    TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, x, y)
+    if GetTileAtXY(behind_player_walls_tile_layer_i, pTileMap, x, y) ~= 0 then
+        TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y)
+    end
+    if GetTileAtXY(in_front_of_player_walls_tile_layer_i, pTileMap, x, y) ~= 0 then
+        TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y)
+    end
+    if GetTileAtXY(wall_tops_tile_layer_i, pTileMap, x, y) ~= 0 then
+        TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, x, y)
+    end
+
+end
+
 function LinkRooms(roomA, roomB, rooms, pTileMap)
     -- roomA and roombB are indices into rooms
     local roomAVal = rooms[roomA].floor
@@ -169,53 +183,56 @@ function LinkRooms(roomA, roomB, rooms, pTileMap)
         incr = 1
     end
 
+    -- This implementation implicitly hard codes a corridor width of 4
     while cursor.x ~= centerB.x do
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y - 1)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y + 1)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y + 2)
+        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y - 1)
+        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y)
+        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 1)
+        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 2)
         cursor.x = cursor.x + incr
     end
 
     -- tunnel y
     if centerA.y > centerB.y then
+        -- "back fill" to produce squared off edges
         local backfillCursor = 
         {
             x = cursor.x,
             y = cursor.y + 1
         }
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
         backfillCursor = 
         {
             x = cursor.x,
             y = cursor.y + 2
         }
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
         incr = -1
     else
+        -- "back fill" to produce squared off edges
         local backfillCursor = 
         {
             x = cursor.x,
             y = cursor.y - 1
         }
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
+        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
         incr = 1
     end
 
     while cursor.y ~= centerB.y do
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x - 1, cursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x,     cursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x + 1, cursor.y)
-        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x + 2, cursor.y)
+        SetCorridorFloorTile(pTileMap, cursor.x - 1, cursor.y)
+        SetCorridorFloorTile(pTileMap, cursor.x,     cursor.y)
+        SetCorridorFloorTile(pTileMap, cursor.x + 1, cursor.y)
+        SetCorridorFloorTile(pTileMap, cursor.x + 2, cursor.y)
 
         cursor.y = cursor.y + incr
     end
@@ -226,6 +243,30 @@ function LinkAllRooms(rooms, pTileMap)
         if i + 1 <= #rooms then
             LinkRooms(i, i + 1, rooms, pTileMap)
         end
+    end 
+end
+
+function AddWallAtCursorBase(cursor, pTileMap, layer)
+    local cursor = { x = cursor.x, y = cursor.y}
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_bottom_1_tile, layer, cursor.x, cursor.y)
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_middle_1_tile, layer, cursor.x, cursor.y - 1)
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_top_1_tile,    layer, cursor.x, cursor.y - 2)
+end
+
+function AddWallsToRoom(room, pTileMap)
+    local backWallCursor = {
+        x = room.floor.l,
+        y = room.floor.t - 1
+    }
+    for i = 1, room.floor.r - room.floor.l do
+        AddWallAtCursorBase(backWallCursor, pTileMap, behind_player_walls_tile_layer_i)
+        backWallCursor.x = backWallCursor.x + 1
+    end
+end
+
+function AddWallsToRooms(rooms, pTileMap)
+    for i, v in ipairs(rooms) do
+        AddWallsToRoom(v, pTileMap)
     end 
 end
 
@@ -240,6 +281,7 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         r = 0
     })
     PlaceRoomFloorTiles(pTileMap, rooms)
+    AddWallsToRooms(rooms, pTileMap)
     LinkAllRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
 end

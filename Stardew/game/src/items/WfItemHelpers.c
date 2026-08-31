@@ -177,6 +177,17 @@ TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y)
     return pLayer->Tiles + (y * pLayer->widthTiles + x);
 }
 
+TileIndex* WfGetTileAtXYIndex(struct TileMap* pTilemap, int layer, int x, int y)
+{
+    struct TileMapLayer* pLayer = &pTilemap->layers[layer];
+    if(pLayer->Tiles == NULL)
+    {
+        return NULL;
+    }
+    return WfGetTileAtXY(pLayer, x, y);
+}
+
+
 TileIndex* WfGetTileAtPoint(vec2 pt, struct GameLayer2DData* pData, int tileLayer, int* pXOut, int* pYOut)
 {
     int iX = ((int)pt[0] / (int)pData->tilemap.layers[tileLayer].tileWidthPx);

@@ -79,6 +79,7 @@ u8 WfGetTerrainLUTIndex(int tileX, int tileY, struct TileMap* tilemap, int layer
 
 
 TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y);
+TileIndex* WfGetTileAtXYIndex(struct TileMap* pTilemap, int layer, int x, int y);
 
 /// @brief how to calculate damage
 enum WfDamageCalculationType

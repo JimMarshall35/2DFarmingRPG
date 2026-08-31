@@ -9,7 +9,7 @@
 #include "Scripting.h"
 #include "Atlas.h"
 #include "WfPlayerStart.h"
-
+#include "WfItemHelpers.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// C Functions
 
@@ -263,6 +263,49 @@ static int L_AddPlayerStartEntityAt(lua_State* L)
     return 1;
 }
 
+static int L_GetTileAtXY(lua_State* L)
+{
+    //TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y)
+    if(!lua_isinteger(L, -1))
+    {
+        // y pos
+        Log_Error("L_GetTileAtXY, arg 4 should be a y pos integer");
+    }
+    if(!lua_isinteger(L, -2))
+    {
+        // x pos
+        Log_Error("L_GetTileAtXY, arg 3 should be an x pos integer");
+    }
+    if(!lua_islightuserdata(L, -3))
+    {
+        // pLayer
+        Log_Error("L_GetTileAtXY, arg 2 should be a struct TileMap*");
+    }
+    if(!lua_isinteger(L, -4))
+    {
+        // pLayer
+        Log_Error("L_GetTileAtXY, arg 1 should be an int, layer");
+    }
+    struct TileMapLayer* pTileMap = lua_topointer(L, -3);
+    int x = lua_tointeger(L, -2);
+    int y = lua_tointeger(L, -1);
+    int layer = lua_tointeger(L, -4);
+
+    TileIndex* pi = WfGetTileAtXYIndex(pTileMap, layer, x, y);
+    if(pi)
+    {
+        TileIndex t = *pi;
+        lua_pushinteger(L, (int)t);
+    }
+    else
+    {
+        Log_Warning("L_GetTileAtXY, WfGetTileAtXY returned null ptr");
+        lua_pushinteger(L, 0);
+    }
+    return 1;
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Register Lua Wrappers
 
 
@@ -272,4 +315,5 @@ void WfRegisterMapGenLuaFunctions()
     Sc_RegisterCFunction("TilemapSetTile", &L_TilemapSetTile);
     Sc_RegisterCFunction("LookupNamedTile", &L_At_LookupNamedTile);
     Sc_RegisterCFunction("AddPlayerStartEntityAt", &L_AddPlayerStartEntityAt);
+    Sc_RegisterCFunction("GetTileAtXY", &L_GetTileAtXY);
 }

@@ -116,8 +116,10 @@ void WfSerializePlayerStartEntity(struct BinarySerializer* bs, struct Entity2D* 
 HEntity2D WfAddPlayerStartEntityAt(struct Entity2DCollection* pEntities, struct WfPlayerStartData* pData, float x, float y)
 {
     struct Entity2D ent;
+    ZeroMemory(&ent, sizeof(struct Entity2D));
     ent.transform.position[0] = x;
     ent.transform.position[1] = y;
+    Et2D_PopulateCommonHandlers(&ent);
     MakeEntityIntoPlayerStartEntity(&ent, pData);
     return Et2D_AddEntity(pEntities, &ent);
 

@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include "Scripting.h"
 #include "Atlas.h"
+#include "WfPlayerStart.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// C Functions
@@ -203,6 +204,58 @@ static int L_At_LookupNamedTile(lua_State* L)
     return 1;
 }
 
+static int L_AddPlayerStartEntityAt(lua_State* L)
+{
+    // from, thislocation, bUsePrevLocationX, bUsePrevLocationY, struct Entity2DCollection* pEntities, float x, float y
+    // returns HEntity
+    if(!lua_isnumber(L, -1))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 7 should be a float (y position)");
+    }
+    if(!lua_isnumber(L, -2))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 6 should be a float (x position)");
+    }
+    if(!lua_islightuserdata(L, -3))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 5 should be a ptr (struct Entity2DCollection* pEntities)");
+    }
+    if(!lua_isboolean(L, -4))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 4 should be a bool (bUsePrevLocationY)");
+    }
+    if(!lua_isboolean(L, -5))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 3 should be a bool (bUsePrevLocationX)");
+    }
+    if(!lua_isstring(L, -6))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 2 should be a bool (thisLocation)");
+    }
+    if(!lua_isstring(L, -7))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 1 should be a bool (from)");
+    }
+
+
+
+    float y = lua_tonumber(L, -1);
+    float x = lua_tonumber(L, -2);
+    struct Entity2DCollection* pEntities = lua_topointer(L, -3);
+
+    struct WfPlayerStartData data = {
+        .bUsePrevLocationX = lua_toboolean(L, -5),
+        .bUsePrevLocationY = lua_toboolean(L, -4)
+    };
+    const char* from = lua_tostring(L, -7);
+    const char* thisLocation = lua_tostring(L, -6);
+    strcpy(data.from, from);
+    strcpy(data.thisLocation, thisLocation);
+
+    HEntity2D hEnt = WfAddPlayerStartEntityAt(pEntities, &data, x, y);
+    lua_pushinteger(L, hEnt);
+    return 1;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Register Lua Wrappers
 
@@ -212,4 +265,5 @@ void WfRegisterMapGenLuaFunctions()
     Sc_RegisterCFunction("TilemapAddLayer", &L_TilemapAddLayer);
     Sc_RegisterCFunction("TilemapSetTile", &L_TilemapSetTile);
     Sc_RegisterCFunction("LookupNamedTile", &L_At_LookupNamedTile);
+    Sc_RegisterCFunction("AddPlayerStartEntityAt", &L_AddPlayerStartEntityAt);
 }

@@ -54,7 +54,7 @@ static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, 
         return;
     }
     
-    struct ScriptCallArgument arguments[5] = 
+    struct ScriptCallArgument arguments[6] = 
     {
         {
             .type = SCA_userdata,

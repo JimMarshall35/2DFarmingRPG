@@ -37,6 +37,7 @@ function AddFloorTileRect(pTileMap, topleft_x, topleft_y, width, height)
 end
 
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
+    print("FUCK OFF")
     print(pTileMap)
     floor_tile = LookupNamedTile(hAtlas, "dungeon_floor_1")
     print(floor_tile)
@@ -47,4 +48,6 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     wall_tops_tile_layer                = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 0)
 
     AddFloorTileRect(pTileMap, 0, 0, 20, 20)
+    --from, thislocation, bUsePrevLocationX, bUsePrevLocationY, struct Entity2DCollection* pEntities, float x, float y
+    AddPlayerStartEntityAt("farm", "dungeon", false, false, pEntities, 10.0, 10.0)
 end

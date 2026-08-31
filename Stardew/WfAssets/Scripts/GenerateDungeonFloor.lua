@@ -132,30 +132,22 @@ function PlaceRoomFloorTiles(pTileMap, rooms)
     end
 end
 
-function PlacePlayerStartInRoomCenter(pEntities, room)
-    print(dump(room))
-    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, 
-        (room.floor.l * TileSize) + ((room.floor.r - room.floor.l) * TileSize) / 2, 
-        (room.floor.t * TileSize) + ((room.floor.b - room.floor.t) * TileSize) / 2
-    )
+function PlacePlayerStartInFirstRoom(rooms, pEntities)
+    local playerX = (rooms[1].floor.l * TileSize) + ((rooms[1].floor.r - rooms[1].floor.l) * TileSize) / 2
+    local playerY = (rooms[1].floor.t * TileSize) + ((rooms[1].floor.b - rooms[1].floor.t) * TileSize) / 2
+    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, playerX, playerY)
 end
 
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     LookupNamedTileIndices(hAtlas)
     SetupLayers(pTileMap)
     print("Generate")
-    --AddFloorTileRect(pTileMap, 0, 0, 20, 20)
-
-    --AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, 320.0, 320.0)
     rooms = GetRoomFloorRects(4, {
         t = 3,
         l = 0,
         b = 0,
         r = 0
     })
-    --print(dump(rooms))
-    local playerX = (rooms[1].floor.l * TileSize) + ((rooms[1].floor.r - rooms[1].floor.l) * TileSize) / 2
-    local playerY = (rooms[1].floor.t * TileSize) + ((rooms[1].floor.b - rooms[1].floor.t) * TileSize) / 2
     PlaceRoomFloorTiles(pTileMap, rooms)
-    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, playerX, playerY)
+    PlacePlayerStartInFirstRoom(rooms, pEntities)
 end

@@ -49,5 +49,5 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
 
     AddFloorTileRect(pTileMap, 0, 0, 20, 20)
     --from, thislocation, bUsePrevLocationX, bUsePrevLocationY, struct Entity2DCollection* pEntities, float x, float y
-    AddPlayerStartEntityAt("farm", "dungeon", false, false, pEntities, 10.0, 10.0)
+    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, 10.0, 10.0)
 end

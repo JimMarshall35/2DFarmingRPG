@@ -262,6 +262,16 @@ function AddWallsToRoom(room, pTileMap)
         AddWallAtCursorBase(backWallCursor, pTileMap, behind_player_walls_tile_layer_i)
         backWallCursor.x = backWallCursor.x + 1
     end
+
+    local frontWallCursor = {
+        x = room.floor.l,
+        y = room.floor.t + (room.floor.b - room.floor.t)
+    }
+
+    for i = 1, room.floor.r - room.floor.l do
+        AddWallAtCursorBase(frontWallCursor, pTileMap, in_front_of_player_walls_tile_layer_i)
+        frontWallCursor.x = frontWallCursor.x + 1
+    end
 end
 
 function AddWallsToRooms(rooms, pTileMap)

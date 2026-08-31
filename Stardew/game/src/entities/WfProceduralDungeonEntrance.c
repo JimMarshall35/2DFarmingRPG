@@ -19,6 +19,7 @@
 #include <lua.h>
 #include "AssertLib.h"
 #include "cwalk.h"
+#include "Entity2DCollection.h"
 
 struct WfProceduralDungeonEntranceEntityData
 {
@@ -40,7 +41,7 @@ void WfInitProceduralDungeonEntrance()
     gProceduralEntranceEntityDataPool = NEW_OBJECT_POOL(struct WfProceduralDungeonEntranceEntityData, 16);
 }
 
-static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, hAtlas atlas, struct GameLayer2DData* pData, void* pUser)
+static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, hAtlas atlas, struct GameLayer2DData* pData, void* pUser, struct Entity2DCollection* pEntities)
 {
     struct WfProceduralDungeonEntranceEntityData* pUserData = pUser;
     
@@ -74,10 +75,14 @@ static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, 
         {
             .type = SCA_userdata,
             .val.userData = NULL /* set up a value to be passed here representing stuff such as "what level of the dungeon are we on?", "what is the luck value today?" */
+        },
+        {
+            .type = SCA_userdata,
+            .val.userData = pEntities
         }
     };
 
-    Sc_CallGlobalFunc(pUserData->genFn, &arguments[0], 5);
+    Sc_CallGlobalFunc(pUserData->genFn, &arguments[0], 6);
 }
 
 void WfPushProceduralDungeonLayer(struct WfProceduralDungeonEntranceEntityData* pSensorData)

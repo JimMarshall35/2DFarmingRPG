@@ -113,7 +113,12 @@ void WfSerializePlayerStartEntity(struct BinarySerializer* bs, struct Entity2D* 
     BS_SerializeI32((i32)gPlayerStartDataPool[pInEnt->user.hData].bUsePrevLocationY, bs);
 }
 
-void WfAddPlayerStartEntityAt(struct WfPlayerStartData* pData, float x, float y)
+HEntity2D WfAddPlayerStartEntityAt(struct Entity2DCollection* pEntities, struct WfPlayerStartData* pData, float x, float y)
 {
+    struct Entity2D ent;
+    ent.transform.position[0] = x;
+    ent.transform.position[1] = y;
+    MakeEntityIntoPlayerStartEntity(&ent, pData);
+    return Et2D_AddEntity(pEntities, &ent);
 
 }

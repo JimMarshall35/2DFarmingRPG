@@ -6,6 +6,7 @@
 struct BinarySerializer;
 struct Entity2D;
 struct GameLayer2DData;
+struct Entity2DCollection;
 
 struct WfPlayerStartData
 {
@@ -23,6 +24,6 @@ void WfInitPlayerStart();
 
 HEntity2D WfGetCurrentLocalPlayer();
 
-void WfAddPlayerStartEntityAt(struct WfPlayerStartData* pData, float x, float y);
+HEntity2D WfAddPlayerStartEntityAt(struct Entity2DCollection* pEntities, struct WfPlayerStartData* pData, float x, float y);
 
 #endif

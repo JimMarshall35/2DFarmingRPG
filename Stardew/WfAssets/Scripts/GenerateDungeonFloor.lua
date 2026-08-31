@@ -36,7 +36,7 @@ function AddFloorTileRect(pTileMap, topleft_x, topleft_y, width, height)
     end
 end
 
-function Generate(pTileMap, pDC, hAtlas, pData, pUser)
+function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     print(pTileMap)
     floor_tile = LookupNamedTile(hAtlas, "dungeon_floor_1")
     print(floor_tile)

@@ -22,6 +22,8 @@ local floor_tile = nil
 local dungeon_vertical_wall_bottom_1_tile = nil
 local dungeon_vertical_wall_middle_1_tile = nil
 local dungeon_vertical_wall_top_1_tile = nil
+local dungeon_vertical_top_inside_left_middle_1_tile = nil
+local dungeon_vertical_top_inside_right_middle_1_tile = nil
 
 -- Layer 0
 local floor_tile_layer = nil
@@ -57,8 +59,6 @@ function dump(o)
    end
 end
 
-
-
 function AddFloorTileRect(pTileMap, topleft_x, topleft_y, width, height)
     for y = topleft_y, topleft_y + height - 1 do
         for x = topleft_x, topleft_x + width - 1 do
@@ -68,10 +68,12 @@ function AddFloorTileRect(pTileMap, topleft_x, topleft_y, width, height)
 end
 
 function LookupNamedTileIndices(hAtlas)
-    floor_tile                          = LookupNamedTile(hAtlas, "dungeon_floor_1")
-    dungeon_vertical_wall_bottom_1_tile = LookupNamedTile(hAtlas, "dungeon_vertical_wall_bottom_1")
-    dungeon_vertical_wall_middle_1_tile = LookupNamedTile(hAtlas, "dungeon_vertical_wall_middle_1")
-    dungeon_vertical_wall_top_1_tile    = LookupNamedTile(hAtlas, "dungeon_vertical_wall_top_1")
+    floor_tile                                      = LookupNamedTile(hAtlas, "dungeon_floor_1")
+    dungeon_vertical_wall_bottom_1_tile             = LookupNamedTile(hAtlas, "dungeon_vertical_wall_bottom_1")
+    dungeon_vertical_wall_middle_1_tile             = LookupNamedTile(hAtlas, "dungeon_vertical_wall_middle_1")
+    dungeon_vertical_wall_top_1_tile                = LookupNamedTile(hAtlas, "dungeon_vertical_wall_top_1")
+    dungeon_vertical_top_inside_left_middle_1_tile  = LookupNamedTile(hAtlas, "dungeon_vertical_top_inside_left_middle_1")
+    dungeon_vertical_top_inside_right_middle_1_tile = LookupNamedTile(hAtlas, "dungeon_vertical_top_inside_right_middle_1")
 end
 
 function SetupLayers(pTileMap)
@@ -265,13 +267,34 @@ function AddWallsToRoom(room, pTileMap)
 
     local frontWallCursor = {
         x = room.floor.l,
-        y = room.floor.t + (room.floor.b - room.floor.t)
+        y = room.floor.t + (room.floor.b - room.floor.t) - 1
     }
 
     for i = 1, room.floor.r - room.floor.l do
         AddWallAtCursorBase(frontWallCursor, pTileMap, in_front_of_player_walls_tile_layer_i)
         frontWallCursor.x = frontWallCursor.x + 1
     end
+
+    local leftWallCursor = {
+        x = room.floor.l,
+        y = room.floor.t - 3
+    }
+
+    for i = 1, (room.floor.b - room.floor.t) do
+        TilemapSetTile(pTileMap, dungeon_vertical_top_inside_left_middle_1_tile, wall_tops_tile_layer_i, leftWallCursor.x, leftWallCursor.y)
+        leftWallCursor.y = leftWallCursor.y + 1
+    end 
+
+    local rightWallCursor = {
+        x = room.floor.l + (room.floor.r - room.floor.l) - 1,
+        y = room.floor.t - 3
+    }
+
+    for i = 1, (room.floor.b - room.floor.t) do
+        TilemapSetTile(pTileMap, dungeon_vertical_top_inside_right_middle_1_tile, wall_tops_tile_layer_i, rightWallCursor.x, rightWallCursor.y)
+        rightWallCursor.y = rightWallCursor.y + 1
+    end 
+
 end
 
 function AddWallsToRooms(rooms, pTileMap)

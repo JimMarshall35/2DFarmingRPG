@@ -5,6 +5,8 @@ local TilemapType_Entity = 2
 local DrawOrder_TopDown = 0
 local DrawOrder_Index = 1
 
+local TileSize = 32
+
 -- Named Tiles
 local floor_tile = nil
 
@@ -49,5 +51,5 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
 
     AddFloorTileRect(pTileMap, 0, 0, 20, 20)
     --from, thislocation, bUsePrevLocationX, bUsePrevLocationY, struct Entity2DCollection* pEntities, float x, float y
-    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, 10.0, 10.0)
+    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, 320.0, 320.0)
 end

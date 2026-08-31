@@ -22,6 +22,12 @@ static struct TileMapLayer* TilemapAddLayer(struct TileMap* pTileMap, enum TileM
     layer.type = type;
     layer.transform.position[0] = position[0];
     layer.transform.position[1] = position[1];
+
+    if(!layer.bIsObjectLayer)
+    {
+        layer.tileHeightPx = 32;
+        layer.tileWidthPx = 32;
+    }
     pTileMap->layers = VectorPush(pTileMap->layers, &layer);
     return &pTileMap->layers[VectorSize(pTileMap->layers) - 1];
 }

@@ -10,6 +10,12 @@ local TileSize = 32
 local MaxMapSize = 100
 local MinRoomSize = 5
 local MaxRoomSize = 30
+local RoomBorders = {
+    t = 3,
+    l = 0,
+    b = 0,
+    r = 0
+}
 
 -- Named Tiles
 local floor_tile = nil
@@ -138,6 +144,91 @@ function PlacePlayerStartInFirstRoom(rooms, pEntities)
     AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, playerX, playerY)
 end
 
+function LinkRooms(roomA, roomB, rooms, pTileMap)
+    -- roomA and roombB are indices into rooms
+    local roomAVal = rooms[roomA].floor
+    local roomBVal = rooms[roomB].floor
+
+    local centerA = {
+        x = roomAVal.l + ((roomAVal.r - roomAVal.l) // 2),
+        y = roomAVal.t + ((roomAVal.b - roomAVal.t) // 2)
+    }
+
+    local centerB = {
+        x = roomBVal.l + ((roomBVal.r - roomBVal.l) // 2),
+        y = roomBVal.t + ((roomBVal.b - roomBVal.t) // 2)
+    }
+
+    local cursor = { x = centerA.x, y = centerA.y }
+    local incr = 0
+
+    -- tunnel x
+    if centerA.x > centerB.x then
+        incr = -1
+    else
+        incr = 1
+    end
+
+    while cursor.x ~= centerB.x do
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y - 1)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y + 1)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x, cursor.y + 2)
+        cursor.x = cursor.x + incr
+    end
+
+    -- tunnel y
+    if centerA.y > centerB.y then
+        local backfillCursor = 
+        {
+            x = cursor.x,
+            y = cursor.y + 1
+        }
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        backfillCursor = 
+        {
+            x = cursor.x,
+            y = cursor.y + 2
+        }
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        incr = -1
+    else
+        local backfillCursor = 
+        {
+            x = cursor.x,
+            y = cursor.y - 1
+        }
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x - 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x,     backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 1, backfillCursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, backfillCursor.x + 2, backfillCursor.y)
+        incr = 1
+    end
+
+    while cursor.y ~= centerB.y do
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x - 1, cursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x,     cursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x + 1, cursor.y)
+        TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, cursor.x + 2, cursor.y)
+
+        cursor.y = cursor.y + incr
+    end
+end
+
+function LinkAllRooms(rooms, pTileMap)
+    for i, v in ipairs(rooms) do
+        if i + 1 <= #rooms then
+            LinkRooms(i, i + 1, rooms, pTileMap)
+        end
+    end 
+end
+
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     LookupNamedTileIndices(hAtlas)
     SetupLayers(pTileMap)
@@ -149,5 +240,6 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         r = 0
     })
     PlaceRoomFloorTiles(pTileMap, rooms)
+    LinkAllRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
 end

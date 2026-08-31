@@ -11,14 +11,7 @@
 #include "Network.h"
 #include "WfGameLayerData.h"
 #include "WfExit.h"
-
-struct WfPlayerStartData
-{
-    char from[64];
-    char thisLocation[64];
-    bool bUsePrevLocationX;
-    bool bUsePrevLocationY;
-};
+#include "EngineUtils.h"
 
 static HEntity2D hCurrentLocalPlayer = NULL_HANDLE;
 
@@ -68,24 +61,31 @@ void WfPlayerStartEntityOnDestroy(struct Entity2D* pEnt, struct GameFrameworkLay
     Entity2DOnDestroy(pEnt, pData);
 }
 
-void WfDeSerializePlayerStartEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+static void MakeEntityIntoPlayerStartEntity(struct Entity2D* pOutEnt, struct WfPlayerStartData* pData)
 {
     gPlayerStartDataPool = GetObjectPoolIndex(gPlayerStartDataPool, &pOutEnt->user.hData);
-    BS_DeSerializeStringInto(gPlayerStartDataPool[pOutEnt->user.hData].from, bs);
 
-    BS_DeSerializeStringInto(gPlayerStartDataPool[pOutEnt->user.hData].thisLocation, bs);
+    memcpy(&gPlayerStartDataPool[pOutEnt->user.hData], pData, sizeof(struct WfPlayerStartData));
     HGeneric hPlayer = pOutEnt->user.hData;
     pOutEnt->init = &WfPlayerStartEntityOnInit;
     pOutEnt->bKeepInDynamicList = false;
     pOutEnt->bKeepInQuadtree = false;
     pOutEnt->bSerializeToDisk = true;
     pOutEnt->bSerializeToNetwork = true;
+}
 
+void WfDeSerializePlayerStartEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+{
+    struct WfPlayerStartData data;
+    ZeroMemory(&data, sizeof(struct WfPlayerStartData));
+    BS_DeSerializeStringInto(data.from, bs);
+    BS_DeSerializeStringInto(data.thisLocation, bs);
     i32 i;
     BS_DeSerializeI32(&i, bs);
-    gPlayerStartDataPool[pOutEnt->user.hData].bUsePrevLocationX = (i != 0);
+    data.bUsePrevLocationX = (i != 0);
     BS_DeSerializeI32(&i, bs);
-    gPlayerStartDataPool[pOutEnt->user.hData].bUsePrevLocationY = (i != 0);
+    data.bUsePrevLocationY = (i != 0);
+    MakeEntityIntoPlayerStartEntity(pOutEnt, &data);
 }
 
 void WfDeSerializePlayerStartEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
@@ -111,4 +111,9 @@ void WfSerializePlayerStartEntity(struct BinarySerializer* bs, struct Entity2D* 
 
     BS_SerializeI32((i32)gPlayerStartDataPool[pInEnt->user.hData].bUsePrevLocationX, bs);
     BS_SerializeI32((i32)gPlayerStartDataPool[pInEnt->user.hData].bUsePrevLocationY, bs);
+}
+
+void WfAddPlayerStartEntityAt(struct WfPlayerStartData* pData, float x, float y)
+{
+
 }

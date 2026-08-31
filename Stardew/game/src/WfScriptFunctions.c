@@ -11,6 +11,7 @@
 #include "WfPlayerStart.h" /*WfGetCurrentLocalPlayer*/
 #include "Entities.h"
 #include "WfPlayer.h"
+#include "WfGenerateMap.h"
 
 static int L_PushHUDLayer(lua_State* L)
 {
@@ -137,5 +138,6 @@ void WfRegisterScriptFunctions()
     Sc_RegisterCFunction("WfGetPlayerLocation", &L_GetPlayerLocation);
     Sc_RegisterCFunction("WfSetInventorySlot", &L_SetInventorySlot);
     Sc_RegisterCFunction("WfSetEquipmentSlot", &L_SetEquipmentSlot);
+    WfRegisterMapGenLuaFunctions();
 }
 

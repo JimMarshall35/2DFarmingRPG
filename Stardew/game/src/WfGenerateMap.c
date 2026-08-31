@@ -9,8 +9,6 @@
 #include "Scripting.h"
 #include "Atlas.h"
 
-//typedef void(*MapGeneratorFn)(struct TileMap* pTileMap, DrawContext* pDC, hAtlas atlas, struct GameLayer2DData* pData, void* pUser);
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// C Functions
 
@@ -20,6 +18,9 @@ static struct TileMapLayer* TilemapAddLayer(struct TileMap* pTileMap, enum TileM
     ZeroMemory(&layer, sizeof(struct TileMapLayer));
     layer.bIsObjectLayer = type == TilemapType_Entity ? true : false;
     layer.drawOrder = drawOrder;
+    layer.type = type;
+    layer.transform.position[0] = position[0];
+    layer.transform.position[1] = position[1];
     pTileMap->layers = VectorPush(pTileMap->layers, &layer);
     return &pTileMap->layers[VectorSize(pTileMap->layers) - 1];
 }
@@ -30,19 +31,20 @@ static struct TileMapLayer* TilemapAddLayer(struct TileMap* pTileMap, enum TileM
 /// @param newH 
 static void TileLayerResize(struct TileMapLayer* pTargetLayer, int newW, int newH)
 {
-    if(newW <= pTargetLayer->widthTiles)
+    if(newW < pTargetLayer->widthTiles)
     {
-        Log_Error("TileLayerResize: newW (%i) is <= old width (%i)", newW, pTargetLayer->tileWidthPx);
+        Log_Error("TileLayerResize: newW (%i) is < old width (%i)", newW, pTargetLayer->tileWidthPx);
         return;
     }
     
-    if(newH <= pTargetLayer->heightTiles)
+    if(newH < pTargetLayer->heightTiles)
     {
-        Log_Error("TileLayerResize: newW (%i) is <= old width (%i)", newH, pTargetLayer->tileHeightPx);
+        Log_Error("TileLayerResize: newH (%i) is < old height (%i)", newH, pTargetLayer->tileHeightPx);
         return;
     }
 
     TileIndex* newTilemap = malloc(newW * newH * sizeof(TileIndex));
+    ZeroMemory(newTilemap, sizeof(TileIndex) * newW * newH);
     TileIndex* pWrite = newTilemap;
     TileIndex* pRead = pTargetLayer->Tiles;
 
@@ -139,8 +141,8 @@ static int L_TilemapAddLayer(lua_State* L)
     vec2 pos;
     pos[0] = lua_tonumber(L, -3);
     pos[1] = lua_tonumber(L, -2);
-    enum TileMapLayerType type = (enum TileMapLayerType)lua_tointeger(L, -1);
-    struct TileMap* pTileMap = (struct TileMap*)lua_topointer(L, -4);
+    enum TileMapLayerType type = (enum TileMapLayerType)lua_tointeger(L, -4);
+    struct TileMap* pTileMap = (struct TileMap*)lua_topointer(L, -5);
     struct TileMapLayer* pNewLayer = TilemapAddLayer(pTileMap, type, pos, drawOrder);
     lua_pushlightuserdata(L, pNewLayer);
     return 1;
@@ -188,13 +190,11 @@ static int L_At_LookupNamedTile(lua_State* L)
 {
     if(!lua_isstring(L, -1))
     {
-        // y pos
-        Log_Error("L_TilemapSetTile, arg 2 should be a string");
+        Log_Error("L_At_LookupNamedTile, arg 2 should be a string");
     }
     if(!lua_isinteger(L, -2))
     {
-        // x pos
-        Log_Error("L_TilemapSetTile, arg 1 should be an atlas handle");
+        Log_Error("L_At_LookupNamedTile, arg 1 should be an atlas handle");
     }
     const char* name = lua_tostring(L, -1);
     hAtlas atlas = (hAtlas)lua_tointeger(L, -2);

@@ -269,11 +269,11 @@
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 0.1715,
-            "selectedLayer": 6,
+            "scale": 1.718,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1311.9533527696792,
-                "y": 1454.810495626822
+                "x": 1433.3527357392318,
+                "y": -14.26076833527361
             }
         },
         "Farm.tmj": {
@@ -289,9 +289,9 @@
                 5
             ],
             "scale": 1.18,
-            "selectedLayer": 1,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 145.7627118644068,
+                "x": 37.71186440677968,
                 "y": 219.91525423728817
             }
         },
@@ -348,8 +348,8 @@
             "scale": 0.7179,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 227.05112132609003,
-                "y": -89.8453823652319
+                "x": 49.449784092491996,
+                "y": -91.23833402980915
             }
         },
         "empty_map.json": {
@@ -404,12 +404,12 @@
         "Town.json"
     ],
     "project": "Engine.tiled-project",
-    "property.type": "float",
+    "property.type": "string",
     "recentFiles": [
+        "Farm.json",
         "House.json",
         "Town.json",
         "Jims_Ground_Tiles.json",
-        "Farm.json",
         "pickaxe.tsj",
         "Outside Objects.json",
         "RoadToTown.json",

@@ -10,6 +10,8 @@
 #include "WfItemPickup.h"
 #include "WfDebrisField.h"
 #include "WfItemHelpers.h"
+#include "WfProceduralDungeonEntrance.h"
+
 
 void WfInit()
 {
@@ -24,5 +26,6 @@ void WfInit()
     WfInitItemPickup();
     WfDebrisFieldInit();
     WfInitItemHelpers();
+    WfInitProceduralDungeonEntrance();
 }
 

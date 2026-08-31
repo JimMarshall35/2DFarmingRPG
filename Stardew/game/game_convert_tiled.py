@@ -79,8 +79,11 @@ def serialize_ProceduralDungeonEntrance(file, obj):
     file.write(struct.pack("I", 1)) # version
     file.write(struct.pack("f", obj["width"]))
     file.write(struct.pack("f", obj["height"]))
-    stringVal = get_tiled_object_custom_prop(obj, "script")["value"]
-    serialize_string(file, stringVal)
+    scriptVal = get_tiled_object_custom_prop(obj, "script")["value"]
+    fnVal = get_tiled_object_custom_prop(obj, "generatorFn")["value"]
+
+    serialize_string(file, scriptVal)
+    serialize_string(file, fnVal)
 
 def get_type_ProceduralDungeonEntrance(obj):
     return 12

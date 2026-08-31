@@ -15,10 +15,15 @@
 #include "main.h"
 #include "WfGameLayer.h"
 #include "WfPersistantGameData.h"
+#include "Scripting.h"
+#include <lua.h>
+#include "AssertLib.h"
+#include "cwalk.h"
 
 struct WfProceduralDungeonEntranceEntityData
 {
     char genScript[64];
+    char genFn[64];
     float w, h;
 };
 
@@ -37,7 +42,42 @@ void WfInitProceduralDungeonEntrance()
 
 static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, hAtlas atlas, struct GameLayer2DData* pData, void* pUser)
 {
+    struct WfProceduralDungeonEntranceEntityData* pUserData = pUser;
+    
+    char script[256];
+    cwk_path_join(gCmdArgs.assetsDir, pUserData->genScript, script, 256);
+    
+    if(!Sc_OpenFile(script))
+    {
+        Log_Error("GenerateProceduralLevel can't open file %s", pUserData->genScript);
+        return;
+    }
+    
+    struct ScriptCallArgument arguments[5] = 
+    {
+        {
+            .type = SCA_userdata,
+            .val.userData = pTileMap
+        },
+        {
+            .type = SCA_userdata,
+            .val.userData = pTileMap
+        },
+        {
+            .type = SCA_int,
+            .val.userData = atlas
+        },
+        {
+            .type = SCA_userdata,
+            .val.userData = pData
+        },
+        {
+            .type = SCA_userdata,
+            .val.userData = NULL /* set up a value to be passed here representing stuff such as "what level of the dungeon are we on?", "what is the luck value today?" */
+        }
+    };
 
+    Sc_CallGlobalFunc(pUserData->genFn, &arguments[0], 5);
 }
 
 void WfPushProceduralDungeonLayer(struct WfProceduralDungeonEntranceEntityData* pSensorData)
@@ -50,6 +90,8 @@ void WfPushProceduralDungeonLayer(struct WfProceduralDungeonEntranceEntityData* 
     cwk_path_join(gCmdArgs.assetsDir, "out/main.atlas", buf, 256);
     options.atlasFilePath = buf;
     options.Generator = &GenerateProceduralLevel;
+    options.pGeneratorUserData = pSensorData;
+    options.levelFilePath = "PROCEDURALLY GENERATED";
     Game2DLayer_Get(&testLayer, &options, GetDrawContext());
     testLayer.onPush = &WfGameLayerOnPush;
     testLayer.onPop = &WfGameLayerOnPop;
@@ -86,19 +128,21 @@ void WfOnProceduralDungeonEntranceSensorOverlapBegin(struct GameFrameworkLayer* 
         GF_PopGameFrameworkLayer();
         GF_PopGameFrameworkLayer();
         //WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
-
+        WfPushProceduralDungeonLayer(pSensorData);
         WfPushHUD(pLayerData->pDrawContext);
     }
 }
 
-static  WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+static void WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
 {
     HGeneric hExitData = NULL_HANDLE;
     gProceduralEntranceEntityDataPool = GetObjectPoolIndex(gProceduralEntranceEntityDataPool, &hExitData);
     pOutEnt->user.hData = hExitData;
-    BS_DeSerializeFloat(&gProceduralEntranceEntityDataPool[hExitData].w, bs);
-    BS_DeSerializeFloat(&gProceduralEntranceEntityDataPool[hExitData].h, bs);
-    BS_DeSerializeStringInto(gProceduralEntranceEntityDataPool[hExitData].genScript, bs);
+    struct WfProceduralDungeonEntranceEntityData* pEntranceData = &gProceduralEntranceEntityDataPool[hExitData];
+    BS_DeSerializeFloat(&pEntranceData->w, bs);
+    BS_DeSerializeFloat(&pEntranceData->h, bs);
+    BS_DeSerializeStringInto(pEntranceData->genScript, bs);
+    BS_DeSerializeStringInto(pEntranceData->genFn, bs);
     Et2D_PopulateCommonHandlers(pOutEnt);
     pOutEnt->onDestroy = &DestroyProceduralDungeonEntranceEntity;
     struct Component2D* pComponent1 = &pOutEnt->components[pOutEnt->numComponents++];
@@ -136,6 +180,7 @@ void WfSerializeProceduralDungeonEntranceEntity(struct BinarySerializer* bs, str
     BS_SerializeFloat(pEntData->w, bs);
     BS_SerializeFloat(pEntData->h, bs);
     BS_SerializeString(pEntData->genScript, bs);
+    BS_SerializeString(pEntData->genFn, bs);
 
 }
 

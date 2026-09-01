@@ -13,7 +13,7 @@ rm -rf "$appdir"
 mkdir "$appdir"
 
 cmake --install build --prefix $appdir
-
+find $appdir -iname "Keymap.json"
 
 # get tools if they don't exist
 if [ ! -f $linuxdeploy ]; then

@@ -25,6 +25,5 @@ else()
                 PATTERN "*.lua"
                 PATTERN "*.game"
         )
-        install(FILES WfAssets/ImageFiles.json DESTINATION ${CMAKE_INSTALL_DATADIR}/WfAssets)
         install(FILES WfAssets/Keymap.json DESTINATION ${CMAKE_INSTALL_DATADIR}/WfAssets)
 endif()

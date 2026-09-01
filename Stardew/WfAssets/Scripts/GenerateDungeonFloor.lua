@@ -8,13 +8,13 @@ local DrawOrder_Index = 1
 -- Constants
 local TileSize = 32
 local MaxMapSize = 100
-local MinRoomSize = 5
+local MinRoomSize = 10
 local MaxRoomSize = 30
 local RoomBorders = {
-    t = 3,
-    l = 0,
-    b = 0,
-    r = 0
+    t = 8,
+    l = 8,
+    b = 8,
+    r = 8
 }
 
 -- Named Tiles
@@ -160,6 +160,14 @@ function SetCorridorFloorTile(pTileMap, x, y)
 
 end
 
+function AddWallAtCursorBase(cursor, pTileMap, layer)
+    local cursor = { x = cursor.x, y = cursor.y}
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_bottom_1_tile, layer, cursor.x, cursor.y)
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_middle_1_tile, layer, cursor.x, cursor.y - 1)
+    TilemapSetTile(pTileMap, dungeon_vertical_wall_top_1_tile,    layer, cursor.x, cursor.y - 2)
+end
+
+
 function LinkRooms(roomA, roomB, rooms, pTileMap)
     -- roomA and roombB are indices into rooms
     local roomAVal = rooms[roomA].floor
@@ -248,12 +256,6 @@ function LinkAllRooms(rooms, pTileMap)
     end 
 end
 
-function AddWallAtCursorBase(cursor, pTileMap, layer)
-    local cursor = { x = cursor.x, y = cursor.y}
-    TilemapSetTile(pTileMap, dungeon_vertical_wall_bottom_1_tile, layer, cursor.x, cursor.y)
-    TilemapSetTile(pTileMap, dungeon_vertical_wall_middle_1_tile, layer, cursor.x, cursor.y - 1)
-    TilemapSetTile(pTileMap, dungeon_vertical_wall_top_1_tile,    layer, cursor.x, cursor.y - 2)
-end
 
 function AddWallsToRoom(room, pTileMap)
     local backWallCursor = {

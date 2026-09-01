@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "House.json",
+    "activeFile": "Interior.json",
     "automapping.whileDrawing": true,
     "expandedProjectPaths": [
         "."
@@ -300,7 +300,8 @@
             "scaleInEditor": 1
         },
         "Interior.json": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Jims_Ground_Tiles.json": {
             "scaleInDock": 1,
@@ -345,11 +346,11 @@
             }
         },
         "dungeon_sample.json": {
-            "scale": 0.7179,
-            "selectedLayer": 4,
+            "scale": 0.8896,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 49.449784092491996,
-                "y": -91.23833402980915
+                "x": 467.6258992805756,
+                "y": -372.6393884892086
             }
         },
         "empty_map.json": {
@@ -362,6 +363,10 @@
                 "x": 1371.5424568184562,
                 "y": 232.5160043483512
             }
+        },
+        "items.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "pickaxe.tsj": {
             "scaleInDock": 1,
@@ -395,29 +400,35 @@
     "map.tileWidth": 32,
     "map.width": 12,
     "openFiles": [
-        "House.json",
         "RoadToTown.json",
         "Outside Objects.json",
         "pickaxe.tsj",
-        "Farm.json",
         "Jims_Ground_Tiles.json",
-        "Town.json"
+        "Town.json",
+        "Interior 2.json",
+        "House.json",
+        "Exterior Tiles.json",
+        "Interior.json",
+        "Terrain and Outside.json",
+        "items.json",
+        "dungeon_sample.json",
+        "Farm.json"
     ],
     "project": "Engine.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "Farm.json",
-        "House.json",
-        "Town.json",
-        "Jims_Ground_Tiles.json",
-        "pickaxe.tsj",
-        "Outside Objects.json",
         "RoadToTown.json",
-        "empty_map.json",
-        "Terrain and Outside.json",
-        "Farm.tmj",
+        "Outside Objects.json",
+        "pickaxe.tsj",
+        "Jims_Ground_Tiles.json",
+        "Town.json",
         "Interior 2.json",
-        "Exterior Tiles.json"
+        "House.json",
+        "Exterior Tiles.json",
+        "Farm.json",
+        "dungeon_sample.json",
+        "items.json",
+        "Terrain and Outside.json"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFilter": "JSON tileset files (*.json)",

@@ -62,6 +62,8 @@ jobs:
         nu ./Makefile.nu build_appimage
     
     - name: Upload Itchio
+      env: 
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: |
         cd Stardew
         nu ./Makefile.nu itchio_butler_appimage_x64

@@ -60,6 +60,11 @@ jobs:
       run: |
         cd Stardew
         nu ./Makefile.nu build_appimage
+    
+    - name: Upload Itchio
+      run: |
+        cd Stardew
+        nu ./Makefile.nu itchio_butler_appimage_x64
       
     - uses: actions/upload-artifact@v4
       with:

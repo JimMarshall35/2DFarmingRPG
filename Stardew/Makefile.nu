@@ -315,6 +315,37 @@ def "main run_tests_windows" [
     ./build/install_dir/Tests/StardewEngineTest.exe
 }
 
+# Upload an appimage x64 build to itch.io
+def "main itchio_butler_appimage_x64" [
+
+] {
+    let butler_url = "https://broth.itch.zone/butler/linux-amd64/LATEST/archive/default"
+    let install_dir = ($env.HOME | path join "bin")
+
+    mkdir $install_dir
+
+    print "Downloading butler..."
+    http get $butler_url | save -f /tmp/butler.zip
+
+    print "Extracting..."
+    ^unzip -o /tmp/butler.zip -d $install_dir
+
+    # GNU unzip doesn't always preserve/set the executable bit
+    ^chmod +x ($install_dir | path join "butler")
+
+    rm /tmp/butler.zip
+
+    $env.PATH = ($env.PATH | prepend $install_dir)
+
+    print "butler installed:"
+    ^butler -V
+
+    mkdir appimage/out 
+    cp appimage/farming.AppImage appimage/out/farming.AppImage
+
+    ^butler push appimage/out JimmyM420/farming-rpg:linux_x64
+}
+
 def main [
 ] {
     

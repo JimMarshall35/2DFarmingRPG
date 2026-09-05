@@ -351,8 +351,11 @@ def "main itchio_butler_windows_x64" [
 
 ] {
     let butler_url = "https://broth.itch.zone/butler/windows-amd64/LATEST/archive/default"
-    let install_dir = ($nu.home-path | path join "bin")
-    let archive_path = ($nu.temp-path | path join "butler.zip")
+    let home_dir = ($env.HOME? | default $env.USERPROFILE?)
+    let temp_dir = ($env.TEMP? | default ($env.TMPDIR? | default "/tmp"))
+
+    let install_dir = ($home_dir | path join "bin")
+    let archive_path = ($temp_dir | path join "butler.zip")
 
     mkdir $install_dir
 

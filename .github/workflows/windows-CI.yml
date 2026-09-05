@@ -97,7 +97,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload to itch.io
-        if: matrix.platform == 'SDL2' && matrix.baked == 'true' && matrix.type == 'Release'
+        if: matrix.platform == 'SDL2' && matrix.baked == 'false' && matrix.type == 'Release'
         run: |
           cd Stardew
           nu ./Makefile.nu itchio_butler_windows_x64

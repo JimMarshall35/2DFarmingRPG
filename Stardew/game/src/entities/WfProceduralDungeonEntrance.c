@@ -119,9 +119,6 @@ void WfOnProceduralDungeonEntranceSensorOverlapBegin(struct GameFrameworkLayer* 
         
     if(pOverlappingEnt->type == WfEntityType_Player)
     {
-        // set contact point so next layer can maybe read it back and use to set x or y coordinate
-        //WfPlayerGetGroundContactPoint(pOverlappingEnt, gPrevAreaPos);
-
         struct WfProceduralDungeonEntranceEntityData* pSensorData = &gProceduralEntranceEntityDataPool[pSensorEnt->user.hData];
         if(pLayerData->bCurrentLocationIsDirty)
         {
@@ -132,7 +129,6 @@ void WfOnProceduralDungeonEntranceSensorOverlapBegin(struct GameFrameworkLayer* 
         }
         GF_PopGameFrameworkLayer();
         GF_PopGameFrameworkLayer();
-        //WfWorld_LoadLocation(pSensorData->toArea, pLayerData->pDrawContext);
         WfPushProceduralDungeonLayer(pSensorData);
         WfPushHUD(pLayerData->pDrawContext);
     }

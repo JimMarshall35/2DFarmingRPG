@@ -148,11 +148,41 @@ end
 
 function SetCorridorFloorTile(pTileMap, x, y)
     TilemapSetTile(pTileMap, floor_tile, floor_tile_layer_i, x, y)
-    if GetTileAtXY(behind_player_walls_tile_layer_i, pTileMap, x, y) ~= 0 then
+    local behindPlayerWallTile = GetTileAtXY(behind_player_walls_tile_layer_i, pTileMap, x, y)
+
+    if behindPlayerWallTile ~= 0 then
         TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y)
+        -- delete all of the wall that the tile is part of
+        if behindPlayerWallTile == dungeon_vertical_wall_bottom_1_tile then
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y - 1)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y - 2)
+        elseif behindPlayerWallTile == dungeon_vertical_wall_middle_1_tile then
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y - 1)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y + 1)
+        elseif behindPlayerWallTile == dungeon_vertical_wall_top_1_tile then
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y + 1)
+            TilemapSetTile(pTileMap, 0, behind_player_walls_tile_layer_i, x, y + 2)
+        end
     end
-    if GetTileAtXY(in_front_of_player_walls_tile_layer_i, pTileMap, x, y) ~= 0 then
-        TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y)
+    local inFrontOfPlayerWallTile = GetTileAtXY(in_front_of_player_walls_tile_layer_i, pTileMap, x, y)
+    if inFrontOfPlayerWallTile ~= 0 then
+        -- delete all of the wall that the tile is part of
+        if inFrontOfPlayerWallTile == dungeon_vertical_wall_bottom_1_tile then
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y - 1)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y - 2)
+        elseif inFrontOfPlayerWallTile == dungeon_vertical_wall_middle_1_tile then
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y + 1)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y - 1)
+        elseif inFrontOfPlayerWallTile == dungeon_vertical_wall_top_1_tile then
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y + 1)
+            TilemapSetTile(pTileMap, 0, in_front_of_player_walls_tile_layer_i, x, y + 2)
+        end
     end
     if GetTileAtXY(wall_tops_tile_layer_i, pTileMap, x, y) ~= 0 then
         TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, x, y)
@@ -165,10 +195,45 @@ function AddWallAtCursorBase(cursor, pTileMap, layer)
     TilemapSetTile(pTileMap, dungeon_vertical_wall_bottom_1_tile, layer, cursor.x, cursor.y)
     TilemapSetTile(pTileMap, dungeon_vertical_wall_middle_1_tile, layer, cursor.x, cursor.y - 1)
     TilemapSetTile(pTileMap, dungeon_vertical_wall_top_1_tile,    layer, cursor.x, cursor.y - 2)
+
+    TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, cursor.x, cursor.y)
+    TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, cursor.x, cursor.y - 1)
+    TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, cursor.x, cursor.y - 2)
+
+end
+
+-- Make the floor of a four tile wide horizontal corridor
+function FourWideCorridorHorizontal(pTileMap, cursor, potentialWallLocations)
+    -- a corridor section "potentially" has walls
+    potentialWallLocations.topWallTiles[#potentialWallLocations.topWallTiles + 1] = {
+        x = cursor.x, y = cursor.y - 2
+    }
+    SetCorridorFloorTile(pTileMap, cursor.x, cursor.y - 1)
+    SetCorridorFloorTile(pTileMap, cursor.x, cursor.y)
+    SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 1)
+    SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 2)
+    potentialWallLocations.bottomWallTiles[#potentialWallLocations.bottomWallTiles + 1] = {
+        x = cursor.x, y = cursor.y + 2
+    }
+end
+
+-- Make the floor of a four tile wide vertical corridor
+function FourWideCorridorVertical(pTileMap, cursor, potentialWallLocations)
+    potentialWallLocations.leftWallTiles[#potentialWallLocations.leftWallTiles + 1] = {
+        x = cursor.x - 1, y = cursor.y
+    } 
+    SetCorridorFloorTile(pTileMap, cursor.x - 1, cursor.y)
+    SetCorridorFloorTile(pTileMap, cursor.x,     cursor.y)
+    SetCorridorFloorTile(pTileMap, cursor.x + 1, cursor.y)
+    SetCorridorFloorTile(pTileMap, cursor.x + 2, cursor.y)
+    potentialWallLocations.rightWallTiles[#potentialWallLocations.rightWallTiles + 1] = {
+        x = cursor.x + 2, y = cursor.y
+    } 
 end
 
 
-function LinkRooms(roomA, roomB, rooms, pTileMap)
+function LinkRooms(roomA, roomB, rooms, pTileMap, potentialWallLocations)
+    
     -- roomA and roombB are indices into rooms
     local roomAVal = rooms[roomA].floor
     local roomBVal = rooms[roomB].floor
@@ -195,10 +260,7 @@ function LinkRooms(roomA, roomB, rooms, pTileMap)
 
     -- This implementation implicitly hard codes a corridor width of 4
     while cursor.x ~= centerB.x do
-        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y - 1)
-        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y)
-        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 1)
-        SetCorridorFloorTile(pTileMap, cursor.x, cursor.y + 2)
+        FourWideCorridorHorizontal(pTileMap, cursor, potentialWallLocations)
         cursor.x = cursor.x + incr
     end
 
@@ -210,19 +272,29 @@ function LinkRooms(roomA, roomB, rooms, pTileMap)
             x = cursor.x,
             y = cursor.y + 1
         }
-        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
+
+        FourWideCorridorVertical(pTileMap, backfillCursor, potentialWallLocations)
+        
         backfillCursor = 
         {
             x = cursor.x,
             y = cursor.y + 2
         }
-        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
+        FourWideCorridorVertical(pTileMap, backfillCursor, potentialWallLocations)
+
+        potentialWallLocations.bottomWallTiles[#potentialWallLocations.bottomWallTiles + 1] = {
+            x = backfillCursor.x - 1, y = backfillCursor.y
+        } 
+        potentialWallLocations.bottomWallTiles[#potentialWallLocations.bottomWallTiles + 1] = {
+            x = backfillCursor.x, y = backfillCursor.y
+        }
+        potentialWallLocations.bottomWallTiles[#potentialWallLocations.bottomWallTiles + 1] = {
+            x = backfillCursor.x + 1, y = backfillCursor.y
+        }
+        potentialWallLocations.bottomWallTiles[#potentialWallLocations.bottomWallTiles + 1] = {
+            x = backfillCursor.x + 2, y = backfillCursor.y
+        }
+
         incr = -1
     else
         -- "back fill" to produce squared off edges
@@ -231,29 +303,65 @@ function LinkRooms(roomA, roomB, rooms, pTileMap)
             x = cursor.x,
             y = cursor.y - 1
         }
-        SetCorridorFloorTile(pTileMap, backfillCursor.x - 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x,     backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 1, backfillCursor.y)
-        SetCorridorFloorTile(pTileMap, backfillCursor.x + 2, backfillCursor.y)
+
+        FourWideCorridorVertical(pTileMap, backfillCursor, potentialWallLocations)
+
+        potentialWallLocations.topWallTiles[#potentialWallLocations.topWallTiles + 1] = {
+            x = backfillCursor.x, y = backfillCursor.y - 1
+        }
+        potentialWallLocations.topWallTiles[#potentialWallLocations.topWallTiles + 1] = {
+            x = backfillCursor.x + 1, y = backfillCursor.y - 1
+        }
+        potentialWallLocations.topWallTiles[#potentialWallLocations.topWallTiles + 1] = {
+            x = backfillCursor.x + 2, y = backfillCursor.y - 1
+        }
+
         incr = 1
     end
 
     while cursor.y ~= centerB.y do
-        SetCorridorFloorTile(pTileMap, cursor.x - 1, cursor.y)
-        SetCorridorFloorTile(pTileMap, cursor.x,     cursor.y)
-        SetCorridorFloorTile(pTileMap, cursor.x + 1, cursor.y)
-        SetCorridorFloorTile(pTileMap, cursor.x + 2, cursor.y)
-
+        FourWideCorridorVertical(pTileMap, cursor, potentialWallLocations)
         cursor.y = cursor.y + incr
     end
 end
 
+function AddCorridorWalls(pTileMap, potentialWallLocations)
+    for i, v in ipairs(potentialWallLocations.topWallTiles) do
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, v.x, v.y) == 0 then
+            AddWallAtCursorBase(v, pTileMap, behind_player_walls_tile_layer_i)
+        end
+    end
+    for i, v in ipairs(potentialWallLocations.bottomWallTiles) do
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, v.x, v.y + 1) == 0 then
+            AddWallAtCursorBase(v, pTileMap, in_front_of_player_walls_tile_layer_i)
+        end
+    end
+    for i, v in ipairs(potentialWallLocations.leftWallTiles) do
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, v.x - 1, v.y) == 0 then
+            TilemapSetTile(pTileMap, dungeon_vertical_top_inside_left_middle_1_tile, wall_tops_tile_layer_i, v.x, v.y)
+        end
+    end
+    for i, v in ipairs(potentialWallLocations.rightWallTiles) do
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, v.x + 1, v.y) == 0 then
+            TilemapSetTile(pTileMap, dungeon_vertical_top_inside_right_middle_1_tile, wall_tops_tile_layer_i, v.x, v.y)
+        end
+    end
+
+end
+
 function LinkAllRooms(rooms, pTileMap)
+    local potentialWallLocations = {
+        topWallTiles = {},
+        bottomWallTiles = {},
+        leftWallTiles = {},
+        rightWallTiles = {}
+    }
     for i, v in ipairs(rooms) do
         if i + 1 <= #rooms then
-            LinkRooms(i, i + 1, rooms, pTileMap)
+            LinkRooms(i, i + 1, rooms, pTileMap, potentialWallLocations)
         end
     end 
+    AddCorridorWalls(pTileMap, potentialWallLocations)
 end
 
 

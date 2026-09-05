@@ -262,7 +262,7 @@ def "main build_linux_dev" [
         "Debug" 
         false
         "GLFW3"
-        "OPENGLES")
+        "OPENGL")
 }
 
 def "main build_windows" [

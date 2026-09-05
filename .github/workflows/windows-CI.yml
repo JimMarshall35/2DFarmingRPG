@@ -96,6 +96,12 @@ jobs:
             Stardew/WfAssets/out/atlascombined.xml.log
           if-no-files-found: warn
 
+      - name: Upload to itch.io
+        if: matrix.platform == 'SDL2' && matrix.baked == 'true' && matrix.type == 'Release'
+        run: |
+          cd Stardew
+          nu ./Makefile.nu itchio_butler_windows_x64
+
       - uses: actions/upload-artifact@v4
         with:
           name: my-artifact

@@ -346,6 +346,35 @@ def "main itchio_butler_appimage_x64" [
     ^butler push appimage/out JimmyM420/farming-rpg:linux_x64
 }
 
+# Upload an appimage x64 build to itch.io
+def "main itchio_butler_windows_x64" [
+
+] {
+    let butler_url = "https://broth.itch.zone/butler/windows-amd64/LATEST/archive/default"
+    let install_dir = ($env.HOME | path join "bin")
+
+    mkdir $install_dir
+
+    print "Downloading butler..."
+    http get $butler_url | save -f /tmp/butler.zip
+
+    print "Extracting..."
+    ^powershell -Command $"Expand-Archive -Path '(/tmp/butler.zip)' -DestinationPath '($install_dir)' -Force"
+
+    rm /tmp/butler.zip
+
+    $env.PATH = ($env.PATH | prepend $install_dir)
+
+    print "butler installed:"
+    ^butler -V
+    dirs add ./build/install_dir
+    
+    ^butler push --ignore 'Tests' --ignore 'AtlasTool.exe' --ignore 'StardewEngineTest.exe' . JimmyM420/farming-rpg:windows_x64
+
+    dirs drop
+}
+
+
 def main [
 ] {
     

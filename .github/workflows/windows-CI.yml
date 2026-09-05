@@ -97,6 +97,8 @@ jobs:
           if-no-files-found: warn
 
       - name: Upload to itch.io
+        env: 
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
         if: matrix.platform == 'SDL2' && matrix.baked == 'false' && matrix.type == 'Release'
         run: |
           cd Stardew

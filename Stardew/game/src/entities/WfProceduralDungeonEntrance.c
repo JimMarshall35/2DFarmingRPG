@@ -20,6 +20,8 @@
 #include "AssertLib.h"
 #include "cwalk.h"
 #include "Entity2DCollection.h"
+#include <string.h>
+#include "EngineUtils.h"
 
 struct WfProceduralDungeonEntranceEntityData
 {
@@ -134,16 +136,16 @@ void WfOnProceduralDungeonEntranceSensorOverlapBegin(struct GameFrameworkLayer* 
     }
 }
 
-static void WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+static void MakeEntityIntoProceduralDungeonEntrance(struct Entity2D* pOutEnt, float w, float h, const char* genScript, const char* genFn)
 {
     HGeneric hExitData = NULL_HANDLE;
     gProceduralEntranceEntityDataPool = GetObjectPoolIndex(gProceduralEntranceEntityDataPool, &hExitData);
     pOutEnt->user.hData = hExitData;
     struct WfProceduralDungeonEntranceEntityData* pEntranceData = &gProceduralEntranceEntityDataPool[hExitData];
-    BS_DeSerializeFloat(&pEntranceData->w, bs);
-    BS_DeSerializeFloat(&pEntranceData->h, bs);
-    BS_DeSerializeStringInto(pEntranceData->genScript, bs);
-    BS_DeSerializeStringInto(pEntranceData->genFn, bs);
+    pEntranceData->w = w;
+    pEntranceData->h = h;
+    strcpy(pEntranceData->genScript, genScript);
+    strcpy(pEntranceData->genFn, genFn);
     Et2D_PopulateCommonHandlers(pOutEnt);
     pOutEnt->onDestroy = &DestroyProceduralDungeonEntranceEntity;
     struct Component2D* pComponent1 = &pOutEnt->components[pOutEnt->numComponents++];
@@ -157,6 +159,19 @@ static void WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializ
     pComponent1->data.staticCollider.bGenerateSensorEvents = true;
     pOutEnt->bSerializeToDisk = true;
     pOutEnt->bSerializeToNetwork = true;
+}
+
+static void WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+{
+    float w, h;
+    char genScript[64];
+    char genFn[64];
+    BS_DeSerializeFloat(&w, bs);
+    BS_DeSerializeFloat(&h, bs);
+    BS_DeSerializeStringInto(genScript, bs);
+    BS_DeSerializeStringInto(genFn, bs);
+    MakeEntityIntoProceduralDungeonEntrance(pOutEnt, w, h, genScript, genFn);
+
 }
 
 void WfDeSerializeProceduralDungeonEntranceEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
@@ -182,6 +197,15 @@ void WfSerializeProceduralDungeonEntranceEntity(struct BinarySerializer* bs, str
     BS_SerializeFloat(pEntData->h, bs);
     BS_SerializeString(pEntData->genScript, bs);
     BS_SerializeString(pEntData->genFn, bs);
-
 }
 
+HEntity2D WfAddProceduralDungeonEntranceAt(struct Entity2DCollection* pEntities, float x, float y, float w, float h, const char* genScript, const char* genFn)
+{
+    struct Entity2D ent;
+    ZeroMemory(&ent, sizeof(struct Entity2D));
+    ent.transform.position[0] = x;
+    ent.transform.position[1] = y;
+    Et2D_PopulateCommonHandlers(&ent);
+    MakeEntityIntoProceduralDungeonEntrance(&ent, w, h, genScript, genFn);
+    return Et2D_AddEntity(pEntities, &ent);
+}

@@ -10,6 +10,22 @@
  "tileheight":32,
  "tiles":[
         {
+         "id":478,
+         "type":"dungeon_door_tl"
+        }, 
+        {
+         "id":479,
+         "type":"dungeon_door_tr"
+        }, 
+        {
+         "id":510,
+         "type":"dungeon_door_bl"
+        }, 
+        {
+         "id":511,
+         "type":"dungeon_door_br"
+        }, 
+        {
          "id":712,
          "type":"dungeon_vertical_top_inside_right_end_1"
         }, 

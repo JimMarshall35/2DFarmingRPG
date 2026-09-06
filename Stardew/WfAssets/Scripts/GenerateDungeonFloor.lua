@@ -24,6 +24,10 @@ local dungeon_vertical_wall_middle_1_tile = nil
 local dungeon_vertical_wall_top_1_tile = nil
 local dungeon_vertical_top_inside_left_middle_1_tile = nil
 local dungeon_vertical_top_inside_right_middle_1_tile = nil
+local dungeon_door_tl_tile = nil
+local dungeon_door_tr_tile = nil
+local dungeon_door_bl_tile = nil
+local dungeon_door_br_tile = nil
 
 -- Layer 0
 local floor_tile_layer = nil
@@ -33,17 +37,21 @@ local floor_tile_layer_i = 0
 local behind_player_walls_tile_layer = nil
 local behind_player_walls_tile_layer_i = 1
 
--- Layer 2
-local object_layer = nil
-local object_layer_i = 2
+-- layer 2
+local behind_player_features_layer = nil
+local behind_player_features_layer_i = 2
 
--- layer 3
-local in_front_of_player_walls_tile_layer = nil
-local in_front_of_player_walls_tile_layer_i = 3
+-- Layer 3
+local object_layer = nil
+local object_layer_i = 3
 
 -- layer 4
+local in_front_of_player_walls_tile_layer = nil
+local in_front_of_player_walls_tile_layer_i = 4
+
+-- layer 5
 local wall_tops_tile_layer = nil
-local wall_tops_tile_layer_i = 4
+local wall_tops_tile_layer_i = 5
 
 
 -- coordinate set
@@ -97,11 +105,16 @@ function LookupNamedTileIndices(hAtlas)
     dungeon_vertical_wall_top_1_tile                = LookupNamedTile(hAtlas, "dungeon_vertical_wall_top_1")
     dungeon_vertical_top_inside_left_middle_1_tile  = LookupNamedTile(hAtlas, "dungeon_vertical_top_inside_left_middle_1")
     dungeon_vertical_top_inside_right_middle_1_tile = LookupNamedTile(hAtlas, "dungeon_vertical_top_inside_right_middle_1")
+    dungeon_door_tl_tile                            = LookupNamedTile(hAtlas, "dungeon_door_tl")
+    dungeon_door_tr_tile                            = LookupNamedTile(hAtlas, "dungeon_door_tr")
+    dungeon_door_bl_tile                            = LookupNamedTile(hAtlas, "dungeon_door_bl")
+    dungeon_door_br_tile                            = LookupNamedTile(hAtlas, "dungeon_door_br")
 end
 
 function SetupLayers(pTileMap)
     floor_tile_layer                    = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 69)
     behind_player_walls_tile_layer      = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 0)
+    behind_player_features_layer        = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 0)
     object_layer                        = TilemapAddLayer(pTileMap, TilemapType_Entity, 0, 0, DrawOrder_TopDown)
     in_front_of_player_walls_tile_layer = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 0)
     wall_tops_tile_layer                = TilemapAddLayer(pTileMap, TilemapType_Tile, 0, 0, 0)
@@ -195,7 +208,7 @@ end
 function PlacePlayerStartInFirstRoom(rooms, pEntities)
     local playerX = (rooms[1].floor.l * TileSize) + ((rooms[1].floor.r - rooms[1].floor.l) * TileSize) / 2
     local playerY = (rooms[1].floor.t * TileSize) + ((rooms[1].floor.b - rooms[1].floor.t) * TileSize) / 2
-    AddPlayerStartEntityAt("Farm", "dungeon", false, false, pEntities, playerX, playerY)
+    AddPlayerStartEntityAt("Farm", "Dungeon", false, false, pEntities, playerX, playerY)
 end
 
 function SetCorridorFloorTile(pTileMap, x, y, bDestroyTop)
@@ -510,6 +523,31 @@ function CullCollisionTiles(pTileMap, potentialCollisionTiles)
     end
 end
 
+function AddExit(pTileMap, rooms, pEntities)
+    local firstRoom = rooms[1]
+    local cursor = { x = firstRoom.floor.l, y = firstRoom.floor.t - 1 }
+    local lastClear = false
+    for x = firstRoom.floor.l + 1, firstRoom.floor.r do
+        cursor.x = x
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, cursor.x, cursor.y) == 0 then
+            if lastClear then
+                TilemapSetTile(pTileMap, dungeon_door_bl_tile, behind_player_features_layer_i, cursor.x - 1, cursor.y)
+                TilemapSetTile(pTileMap, dungeon_door_br_tile, behind_player_features_layer_i, cursor.x,     cursor.y)
+                TilemapSetTile(pTileMap, dungeon_door_tl_tile, behind_player_features_layer_i, cursor.x - 1, cursor.y - 1)
+                TilemapSetTile(pTileMap, dungeon_door_tr_tile, behind_player_features_layer_i, cursor.x,     cursor.y - 1)
+                local exitW = TileSize * 2
+                local exitH = TileSize / 2
+                local exitX = (cursor.x - 1) * TileSize
+                local exitY = (cursor.y* TileSize) + TileSize
+                AddExitAt(pEntities, exitX, exitY, exitW, exitH, "Farm")
+                return
+            else
+                lastClear = true
+            end
+        end
+    end
+end
+
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     local potentialCollisionTiles = {}
     LookupNamedTileIndices(hAtlas)
@@ -528,6 +566,7 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     AddWallsToRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
     CullCollisionTiles(pTileMap, potentialCollisionTiles)
+    -- TODO: Join collision tiles into bigger collider rectangles
     for k, v in pairs(potentialCollisionTiles) do
         pixelCoords = {
             x = v.x * TileSize,
@@ -536,4 +575,5 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         AddRectangularStaticCollider(pEntities, pixelCoords.x, pixelCoords.y, TileSize, TileSize)
     end
     AddMaskLayer(hAtlas, pTileMap)
+    AddExit(pTileMap, rooms, pEntities)
 end

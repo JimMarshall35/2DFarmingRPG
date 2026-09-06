@@ -11,6 +11,8 @@
 #include "WfPlayerStart.h"
 #include "WfItemHelpers.h"
 #include "StaticColliderEntity.h"
+#include "WfExit.h"
+#include "WfProceduralDungeonEntrance.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// C Functions
 
@@ -365,7 +367,7 @@ static int L_AddMaskLayer(lua_State* L)
 {
     /*
         Add a layer on the top of the layer stack that has a black tile
-        at all positions where one is not set on the layers below.
+        at all positions where no tile is set on the layers below.
         The idea is this will block out any parts of sprites that clip outside the bounds of the rooms and corridors.
         All done in C for speed.
     */
@@ -417,6 +419,94 @@ static int L_AddMaskLayer(lua_State* L)
     return 0;
 }
 
+static int L_AddExitAt(lua_State* L)
+{
+    //HEntity2D WfAddExitAt(struct Entity2DCollection* pEntities, float x, float y, float w, float h, const char* toArea);
+    if(!lua_isstring(L, -1))
+    {
+        Log_Error("L_AddMaskLayer, arg 6 should be a string (toArea)");
+    }
+    if(!lua_isnumber(L, -2))
+    {
+        Log_Error("L_AddMaskLayer, arg 5 should be a float (h)");
+    }
+    if(!lua_isnumber(L, -3))
+    {
+        Log_Error("L_AddMaskLayer, arg 4 should be a float (w)");
+    }
+    if(!lua_isnumber(L, -4))
+    {
+        Log_Error("L_AddMaskLayer, arg 3 should be a float (y)");
+    }
+    if(!lua_isnumber(L, -5))
+    {
+        Log_Error("L_AddMaskLayer, arg 2 should be a float (x)");
+    }
+    if(!lua_islightuserdata(L, -6))
+    {
+        Log_Error("L_AddMaskLayer, arg 1 should be a struct Entity2DCollection*");
+    }
+
+    const char* toArea = lua_tostring(L, -1);
+    float x = lua_tonumber(L, -5);
+    float y = lua_tonumber(L, -4);
+    float w = lua_tonumber(L, -3);
+    float h = lua_tonumber(L, -2);
+    struct Entity2DCollection* pEntities = lua_topointer(L, -6);
+
+    HEntity2D hEnt = WfAddExitAt(pEntities, x, y, w, h, toArea);
+    lua_pushinteger(L, hEnt);
+    return 1;
+}
+
+static int L_AddProceduralDungeonEntranceAt(lua_State* L)
+{
+    //HEntity2D WfAddProceduralDungeonEntranceAt(struct Entity2DCollection* pEntities, float x, float y, float w, float h, const char* genScript, const char* genFn)
+    if(!lua_isstring(L, -1))
+    {
+        Log_Error("L_AddMaskLayer, arg 7 should be a string (genFn)");
+    }
+
+    if(!lua_isstring(L, -2))
+    {
+        Log_Error("L_AddMaskLayer, arg 6 should be a string (genScript)");
+    }
+    if(!lua_isnumber(L, -3))
+    {
+        Log_Error("L_AddMaskLayer, arg 5 should be a float (h)");
+    }
+    if(!lua_isnumber(L, -4))
+    {
+        Log_Error("L_AddMaskLayer, arg 4 should be a float (w)");
+    }
+    if(!lua_isnumber(L, -5))
+    {
+        Log_Error("L_AddMaskLayer, arg 3 should be a float (y)");
+    }
+    if(!lua_isnumber(L, -6))
+    {
+        Log_Error("L_AddMaskLayer, arg 2 should be a float (x)");
+    }
+    if(!lua_islightuserdata(L, -7))
+    {
+        Log_Error("L_AddMaskLayer, arg 1 should be a struct Entity2DCollection*");
+    }
+
+    const char* genFn = lua_tostring(L, -1);
+    const char* genScript = lua_tostring(L, -2);
+    float x = lua_tonumber(L, -6);
+    float y = lua_tonumber(L, -5);
+    float w = lua_tonumber(L, -4);
+    float h = lua_tonumber(L, -3);
+    struct Entity2DCollection* pEntities = lua_topointer(L, -7);
+
+    HEntity2D hEnt = WfAddProceduralDungeonEntranceAt(pEntities, x, y, w, h, genScript, genFn);
+    lua_pushinteger(L, hEnt);
+    return 1;
+}
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Register Lua Wrappers
 
 
@@ -429,4 +519,6 @@ void WfRegisterMapGenLuaFunctions()
     Sc_RegisterCFunction("GetTileAtXY", &L_GetTileAtXY);
     Sc_RegisterCFunction("AddRectangularStaticCollider", &L_AddRectangularStaticCollider);
     Sc_RegisterCFunction("AddMaskLayer", &L_AddMaskLayer);
+    Sc_RegisterCFunction("AddExitAt", &L_AddExitAt);
+    Sc_RegisterCFunction("AddProceduralDungeonEntranceAt", &L_AddProceduralDungeonEntranceAt);
 }

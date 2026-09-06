@@ -2,10 +2,12 @@
 #define WFEXIT_H
 
 #include <cglm/cglm.h>
+#include "HandleDefs.h"
 
 struct BinarySerializer;
 struct Entity2D;
 struct GameLayer2DData;
+struct Entity2DCollection;
 
 void WfInitExit();
 
@@ -16,5 +18,7 @@ void WfSerializeExitEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt,
 /// @brief Get the players position as they left the previous area
 /// @param outPos 
 void WfGetPreviousAreaPosition(vec2 outPos);
+
+HEntity2D WfAddExitAt(struct Entity2DCollection* pEntities, float x, float y, float w, float h, const char* toArea);
 
 #endif

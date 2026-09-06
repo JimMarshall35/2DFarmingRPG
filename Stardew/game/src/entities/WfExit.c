@@ -12,6 +12,8 @@
 #include "Log.h"
 #include "WfGameLayerData.h"
 #include "WfPlayer.h"
+#include <string.h>
+#include "EngineUtils.h"
 
 static vec2 gPrevAreaPos = {};
 
@@ -65,14 +67,14 @@ void WfOnExitSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D hOv
     }
 }
 
-void WfDeSerializeExitEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+static void MakeEntityIntoExit(struct Entity2D* pOutEnt, float w, float h, const char* toArea)
 {
     HGeneric hExitData = NULL_HANDLE;
     gExitEntityDataPool = GetObjectPoolIndex(gExitEntityDataPool, &hExitData);
     pOutEnt->user.hData = hExitData;
-    BS_DeSerializeFloat(&gExitEntityDataPool[hExitData].w, bs);
-    BS_DeSerializeFloat(&gExitEntityDataPool[hExitData].h, bs);
-    BS_DeSerializeStringInto(gExitEntityDataPool[hExitData].toArea, bs);
+    gExitEntityDataPool[hExitData].w = w;
+    gExitEntityDataPool[hExitData].h = h;
+    strcpy(gExitEntityDataPool[hExitData].toArea, toArea);
     Et2D_PopulateCommonHandlers(pOutEnt);
     pOutEnt->onDestroy = &DestroyExitEntity;
     struct Component2D* pComponent1 = &pOutEnt->components[pOutEnt->numComponents++];
@@ -86,6 +88,17 @@ void WfDeSerializeExitEntityV1(struct BinarySerializer* bs, struct Entity2D* pOu
     pComponent1->data.staticCollider.bGenerateSensorEvents = true;
     pOutEnt->bSerializeToDisk = true;
     pOutEnt->bSerializeToNetwork = true;
+
+}
+
+void WfDeSerializeExitEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
+{
+    float w, h;
+    char toArea[64];
+    BS_DeSerializeFloat(&w, bs);
+    BS_DeSerializeFloat(&h, bs);
+    BS_DeSerializeStringInto(toArea, bs);
+    MakeEntityIntoExit(pOutEnt, w, h, toArea);
 }
 
 void WfDeSerializeExitEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
@@ -119,3 +132,14 @@ void WfGetPreviousAreaPosition(vec2 outPos)
     outPos[1] = gPrevAreaPos[1];
 }
 
+
+HEntity2D WfAddExitAt(struct Entity2DCollection* pEntities, float x, float y, float w, float h, const char* toArea)
+{
+    struct Entity2D ent;
+    ZeroMemory(&ent, sizeof(struct Entity2D));
+    ent.transform.position[0] = x;
+    ent.transform.position[1] = y;
+    Et2D_PopulateCommonHandlers(&ent);
+    MakeEntityIntoExit(&ent, w, h, toArea);
+    return Et2D_AddEntity(pEntities, &ent);
+}

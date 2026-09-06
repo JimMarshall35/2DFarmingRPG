@@ -615,8 +615,8 @@
                  "rotation":0,
                  "type":"DebrisField",
                  "visible":true,
-                 "width":808,
-                 "x":1560,
+                 "width":693.480142887161,
+                 "x":1674.51985711284,
                  "y":128
                 }, 
                 {
@@ -885,6 +885,73 @@
                  "width":63.3685303790896,
                  "x":1599.78535572096,
                  "y":105.759062021811
+                }, 
+                {
+                 "height":0,
+                 "id":52,
+                 "name":"",
+                 "opacity":1,
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"from",
+                         "type":"string",
+                         "value":"Dungeon"
+                        }, 
+                        {
+                         "name":"matchPreviousX",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"matchPreviousY",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"thisLocation",
+                         "type":"string",
+                         "value":"Farm"
+                        }],
+                 "rotation":0,
+                 "type":"PlayerStart",
+                 "visible":true,
+                 "width":0,
+                 "x":1631.56858886046,
+                 "y":174.178311356032
+                }, 
+                {
+                 "height":614.455137633957,
+                 "id":54,
+                 "name":"",
+                 "opacity":1,
+                 "properties":[
+                        {
+                         "name":"BigRocksPercentage",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"Density",
+                         "type":"float",
+                         "value":0.1
+                        }, 
+                        {
+                         "name":"LogsPercentage",
+                         "type":"float",
+                         "value":0.4
+                        }, 
+                        {
+                         "name":"RocksPercentage",
+                         "type":"float",
+                         "value":0.5
+                        }],
+                 "rotation":0,
+                 "type":"DebrisField",
+                 "visible":true,
+                 "width":108.273023744484,
+                 "x":1564.37578062618,
+                 "y":201.282622399664
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1226,7 +1293,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":52,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.12.2-2-geb83ddb9",

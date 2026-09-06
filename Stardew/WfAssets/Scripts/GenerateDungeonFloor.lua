@@ -162,25 +162,25 @@ function AddRoomsCollisionTiles(outCollisionTileSet, rooms)
         local cursor = { x = v.floor.l, y = v.floor.t - 1 }
         for x = v.floor.l, v.floor.r do
             cursor.x = x
-            CoordSetAdd(outCollisionTileSet, cursor)
+            CoordSetAdd(outCollisionTileSet, { x = cursor.x, y = cursor.y })
         end
         -- bottom collision row
-        cursor.y = v.floor.b + 1
+        cursor.y = v.floor.b 
         for x = v.floor.l, v.floor.r do
             cursor.x = x
-            CoordSetAdd(outCollisionTileSet, cursor)
+            CoordSetAdd(outCollisionTileSet, { x = cursor.x, y = cursor.y })
         end
         cursor.x = v.floor.l - 1
         -- left collision row
         for y = v.floor.t, v.floor.b do
             cursor.y = y
-            CoordSetAdd(outCollisionTileSet, cursor)
+            CoordSetAdd(outCollisionTileSet, { x = cursor.x, y = cursor.y })
         end
         cursor.x = v.floor.r + 1
         -- right collision row
         for y = v.floor.t, v.floor.b do
             cursor.y = y
-            CoordSetAdd(outCollisionTileSet, cursor)
+            CoordSetAdd(outCollisionTileSet, { x = cursor.x, y = cursor.y })
         end
 
     end
@@ -528,4 +528,11 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     AddWallsToRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
     CullCollisionTiles(pTileMap, potentialCollisionTiles)
+    for k, v in pairs(potentialCollisionTiles) do
+        pixelCoords = {
+            x = v.x * TileSize,
+            y = v.y * TileSize
+        }
+        AddRectangularStaticCollider(pEntities, pixelCoords.x, pixelCoords.y, TileSize, TileSize)
+    end
 end

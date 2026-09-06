@@ -10,6 +10,7 @@
 #include "Atlas.h"
 #include "WfPlayerStart.h"
 #include "WfItemHelpers.h"
+#include "StaticColliderEntity.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// C Functions
 
@@ -210,6 +211,39 @@ static int L_At_LookupNamedTile(lua_State* L)
     return 1;
 }
 
+static int L_AddRectangularStaticCollider(lua_State* L)
+{
+    // pEntities, x, y, w, h
+    if(!lua_isnumber(L, -1))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 5 should be a float (h)");
+    }
+    if(!lua_isnumber(L, -2))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 4 should be a float (w)");
+    }
+    if(!lua_isnumber(L, -3))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 3 should be a float (y)");
+    }
+    if(!lua_isnumber(L, -4))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 2 should be a float (x)");
+    }
+    if(!lua_islightuserdata(L, -5))
+    {
+        Log_Error("L_AddPlayerStartEntityAt arg 1 should be a float (entities)");
+    }
+    struct Entity2DCollection* pEntities = lua_topointer(L, -5);
+    float x = lua_tonumber(L, -4);
+    float y = lua_tonumber(L, -3);
+    float w = lua_tonumber(L, -2);
+    float h = lua_tonumber(L, -1);
+    HEntity2D hEnt = Et2D_AddRectangularStaticColliderEntity(pEntities, x, y, w, h);
+    lua_pushinteger(L, hEnt);
+    return 1;
+}
+
 static int L_AddPlayerStartEntityAt(lua_State* L)
 {
     // from, thislocation, bUsePrevLocationX, bUsePrevLocationY, struct Entity2DCollection* pEntities, float x, float y
@@ -316,4 +350,5 @@ void WfRegisterMapGenLuaFunctions()
     Sc_RegisterCFunction("LookupNamedTile", &L_At_LookupNamedTile);
     Sc_RegisterCFunction("AddPlayerStartEntityAt", &L_AddPlayerStartEntityAt);
     Sc_RegisterCFunction("GetTileAtXY", &L_GetTileAtXY);
+    Sc_RegisterCFunction("AddRectangularStaticCollider", &L_AddRectangularStaticCollider);
 }

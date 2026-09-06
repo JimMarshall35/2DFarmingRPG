@@ -46,6 +46,10 @@
          "type":"dungeon_floor_1"
         }, 
         {
+         "id":871,
+         "type":"all_black"
+        }, 
+        {
          "id":897,
          "type":"dungeon_vertical_wall_bottom_1"
         }],

@@ -535,4 +535,5 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         }
         AddRectangularStaticCollider(pEntities, pixelCoords.x, pixelCoords.y, TileSize, TileSize)
     end
+    AddMaskLayer(hAtlas, pTileMap)
 end

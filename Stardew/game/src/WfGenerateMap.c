@@ -320,7 +320,7 @@ static int L_GetTileAtXY(lua_State* L)
         // pLayer
         Log_Error("L_GetTileAtXY, arg 1 should be an int, layer");
     }
-    struct TileMapLayer* pTileMap = lua_topointer(L, -3);
+    struct TileMap* pTileMap = lua_topointer(L, -3);
     int x = lua_tointeger(L, -2);
     int y = lua_tointeger(L, -1);
     int layer = lua_tointeger(L, -4);
@@ -340,6 +340,83 @@ static int L_GetTileAtXY(lua_State* L)
 
 }
 
+static bool AnyNonzeroTile(struct TileMap* pTileMap, int x, int y)
+{
+    VECTOR(struct TileMapLayer) pLayers = pTileMap->layers;
+    bool bAnyNonzero = false;
+    for(int i = 0; i < VectorSize(pLayers); i++)
+    {
+        if(pLayers[i].bIsObjectLayer)
+        {
+            continue;
+        }
+        TileIndex* pTile = WfGetTileAtXY(&pLayers[i], x, y);
+        if(pTile != NULL)
+        {
+            bAnyNonzero = *pTile != 0;
+            if(bAnyNonzero)
+                break;
+        }
+    }
+    return bAnyNonzero;
+}
+
+static int L_AddMaskLayer(lua_State* L)
+{
+    /*
+        Add a layer on the top of the layer stack that has a black tile
+        at all positions where one is not set on the layers below.
+        The idea is this will block out any parts of sprites that clip outside the bounds of the rooms and corridors.
+        All done in C for speed.
+    */
+    if(!lua_islightuserdata(L, -1))
+    {
+        // pLayer
+        Log_Error("L_AddMaskLayer, arg 2 should be a struct TileMap*");
+    }
+    if(!lua_isinteger(L, -2))
+    {
+        Log_Error("L_At_LookupNamedTile, arg 1 should be an atlas handle");
+    }
+
+    struct TileMap* pTileMap = lua_topointer(L, -1);
+    hAtlas atlas = lua_tointeger(L, -2);
+    int biggestW = 0;
+    int biggestH = 0;
+    TileIndex blackTile = At_LookupNamedTile(atlas, "all_black");
+    VECTOR(struct TileMapLayer) pLayers = pTileMap->layers;
+    for(int i = 0; i < VectorSize(pLayers); i++)
+    {
+        if(pLayers[i].bIsObjectLayer)
+        {
+            continue;
+        }
+        if(pLayers[i].widthTiles > biggestW)
+        {
+            biggestW = pLayers[i].widthTiles;
+        }
+        if(pLayers[i].heightTiles > biggestH)
+        {
+            biggestH = pLayers[i].heightTiles;
+        }
+    }
+    vec2 pos = {0,0};
+    struct TileMapLayer* pMaskLayer = TilemapAddLayer(pTileMap, TilemapType_Tile, pos, DrawOrder_TopDown);
+    int topLayer = VectorSize(pTileMap->layers) - 1;
+    TileLayerResize(pMaskLayer, biggestW, biggestH);
+    for(int i = 0; i < pMaskLayer->heightTiles; i++)
+    {
+        for(int j = 0; j < pMaskLayer->widthTiles; j++)
+        {
+            if(!AnyNonzeroTile(pTileMap, j, i))
+            {
+                TilemapSetTile(pTileMap, blackTile, topLayer, j, i);
+            }
+        }
+    }
+    return 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Register Lua Wrappers
 
 
@@ -351,4 +428,5 @@ void WfRegisterMapGenLuaFunctions()
     Sc_RegisterCFunction("AddPlayerStartEntityAt", &L_AddPlayerStartEntityAt);
     Sc_RegisterCFunction("GetTileAtXY", &L_GetTileAtXY);
     Sc_RegisterCFunction("AddRectangularStaticCollider", &L_AddRectangularStaticCollider);
+    Sc_RegisterCFunction("AddMaskLayer", &L_AddMaskLayer);
 }

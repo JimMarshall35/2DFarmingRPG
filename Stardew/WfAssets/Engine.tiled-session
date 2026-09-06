@@ -270,9 +270,9 @@
                 6
             ],
             "scale": 1.0162,
-            "selectedLayer": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 1564.6526274355442,
+                "x": 1419.996063766975,
                 "y": 281.9326904152726
             }
         },
@@ -338,19 +338,19 @@
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 0.3244,
+            "scale": 0.6226,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1599.876695437731,
-                "y": 1598.3353884093713
+                "x": 2059.106970767748,
+                "y": 301.1564407324125
             }
         },
         "dungeon_sample.json": {
-            "scale": 0.8896,
-            "selectedLayer": 3,
+            "scale": 0.7644,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 467.6258992805756,
-                "y": -372.6393884892086
+                "x": 468.3411826268969,
+                "y": -411.43380429094714
             }
         },
         "empty_map.json": {

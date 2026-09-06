@@ -176,7 +176,7 @@ function AddRoomsCollisionTiles(outCollisionTileSet, rooms)
             cursor.y = y
             CoordSetAdd(outCollisionTileSet, { x = cursor.x, y = cursor.y })
         end
-        cursor.x = v.floor.r + 1
+        cursor.x = v.floor.r 
         -- right collision row
         for y = v.floor.t, v.floor.b do
             cursor.y = y

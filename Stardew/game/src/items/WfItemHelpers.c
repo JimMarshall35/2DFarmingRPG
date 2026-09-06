@@ -174,6 +174,10 @@ struct Entity2D* WfFindClosestEntity(vec2 pointClosestTo, VECTOR(struct Entity2D
 
 TileIndex* WfGetTileAtXY(struct TileMapLayer* pLayer, int x, int y)
 {
+    if(x >= pLayer->widthTiles || y >= pLayer->heightTiles)
+    {
+        return NULL;
+    }
     return pLayer->Tiles + (y * pLayer->widthTiles + x);
 }
 

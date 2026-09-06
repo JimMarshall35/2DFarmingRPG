@@ -46,6 +46,29 @@ local wall_tops_tile_layer = nil
 local wall_tops_tile_layer_i = 4
 
 
+-- coordinate set
+
+function CoordSetKey(t)
+    return t.x .. "," .. t.y
+end
+
+function CoordSetAdd(set, value)
+    set[CoordSetKey(value)] = value
+end
+
+function CoordSetRemove(set, value)
+    set[CoordSetKey(value)] = nil
+end
+
+
+function CoordSetContains(set, t)
+    return set[key(t)] ~= nil
+end
+
+
+
+-- set end
+
 function dump(o)
    if type(o) == 'table' then
       local s = '{ '
@@ -131,6 +154,36 @@ function GetRoomFloorRects(numberOfRooms, borders)
         }
     end
     return rooms
+end
+
+function AddRoomsCollisionTiles(outCollisionTileSet, rooms)
+    for i, v in ipairs(rooms) do
+        -- top collision row
+        local cursor = { x = v.floor.l, y = v.floor.t - 1 }
+        for x = v.floor.l, v.floor.r do
+            cursor.x = x
+            CoordSetAdd(outCollisionTileSet, cursor)
+        end
+        -- bottom collision row
+        cursor.y = v.floor.b + 1
+        for x = v.floor.l, v.floor.r do
+            cursor.x = x
+            CoordSetAdd(outCollisionTileSet, cursor)
+        end
+        cursor.x = v.floor.l - 1
+        -- left collision row
+        for y = v.floor.t, v.floor.b do
+            cursor.y = y
+            CoordSetAdd(outCollisionTileSet, cursor)
+        end
+        cursor.x = v.floor.r + 1
+        -- right collision row
+        for y = v.floor.t, v.floor.b do
+            cursor.y = y
+            CoordSetAdd(outCollisionTileSet, cursor)
+        end
+
+    end
 end
 
 function PlaceRoomFloorTiles(pTileMap, rooms)
@@ -354,7 +407,7 @@ function AddCorridorWalls(pTileMap, potentialWallLocations)
 
 end
 
-function LinkAllRooms(rooms, pTileMap)
+function LinkAllRooms(rooms, pTileMap, potentialCollisionTiles)
     local potentialWallLocations = {
         topWallTiles = {},
         bottomWallTiles = {},
@@ -367,6 +420,18 @@ function LinkAllRooms(rooms, pTileMap)
         end
     end 
     AddCorridorWalls(pTileMap, potentialWallLocations)
+    for i, v in ipairs(potentialWallLocations.topWallTiles) do
+        CoordSetAdd(potentialCollisionTiles, v)
+    end
+    for i, v in ipairs(potentialWallLocations.bottomWallTiles) do
+        CoordSetAdd(potentialCollisionTiles, {x = v.x, y = v.y + 1})
+    end
+    for i, v in ipairs(potentialWallLocations.leftWallTiles) do
+        CoordSetAdd(potentialCollisionTiles, {x = v.x - 1, y = v.y})
+    end
+    for i, v in ipairs(potentialWallLocations.rightWallTiles) do
+        CoordSetAdd(potentialCollisionTiles, {x = v.x + 1, y = v.y})
+    end
 end
 
 
@@ -376,7 +441,9 @@ function AddWallsToRoom(room, pTileMap)
         y = room.floor.t - 1
     }
     for i = 1, room.floor.r - room.floor.l do
-        AddWallAtCursorBase(backWallCursor, pTileMap, behind_player_walls_tile_layer_i)
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, backWallCursor.x, backWallCursor.y) == 0 then
+            AddWallAtCursorBase(backWallCursor, pTileMap, behind_player_walls_tile_layer_i)
+        end
         backWallCursor.x = backWallCursor.x + 1
     end
 
@@ -386,7 +453,9 @@ function AddWallsToRoom(room, pTileMap)
     }
 
     for i = 1, room.floor.r - room.floor.l do
-        AddWallAtCursorBase(frontWallCursor, pTileMap, in_front_of_player_walls_tile_layer_i)
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, frontWallCursor.x, frontWallCursor.y + 1) == 0 then
+            AddWallAtCursorBase(frontWallCursor, pTileMap, in_front_of_player_walls_tile_layer_i)
+        end
         frontWallCursor.x = frontWallCursor.x + 1
     end
 
@@ -396,7 +465,14 @@ function AddWallsToRoom(room, pTileMap)
     }
 
     for i = 1, (room.floor.b - room.floor.t) do
-        TilemapSetTile(pTileMap, dungeon_vertical_top_inside_left_middle_1_tile, wall_tops_tile_layer_i, leftWallCursor.x, leftWallCursor.y)
+        if (GetTileAtXY(floor_tile_layer_i, pTileMap, leftWallCursor.x - 1, leftWallCursor.y) == 0)
+            or
+            (GetTileAtXY(in_front_of_player_walls_tile_layer_i, pTileMap, leftWallCursor.x - 1, leftWallCursor.y) ~= 0)
+        then
+            TilemapSetTile(pTileMap, dungeon_vertical_top_inside_left_middle_1_tile, wall_tops_tile_layer_i, leftWallCursor.x, leftWallCursor.y)
+        else
+            TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, leftWallCursor.x, leftWallCursor.y)
+        end
         leftWallCursor.y = leftWallCursor.y + 1
     end 
 
@@ -406,7 +482,15 @@ function AddWallsToRoom(room, pTileMap)
     }
 
     for i = 1, (room.floor.b - room.floor.t) do
-        TilemapSetTile(pTileMap, dungeon_vertical_top_inside_right_middle_1_tile, wall_tops_tile_layer_i, rightWallCursor.x, rightWallCursor.y)
+        if (GetTileAtXY(floor_tile_layer_i, pTileMap, rightWallCursor.x + 1, rightWallCursor.y) == 0)
+            or
+            (GetTileAtXY(in_front_of_player_walls_tile_layer_i, pTileMap, rightWallCursor.x + 1, rightWallCursor.y) ~= 0)
+        then
+            TilemapSetTile(pTileMap, dungeon_vertical_top_inside_right_middle_1_tile, wall_tops_tile_layer_i, rightWallCursor.x, rightWallCursor.y)
+        else
+            TilemapSetTile(pTileMap, 0, wall_tops_tile_layer_i, rightWallCursor.x, rightWallCursor.y)
+        end
+
         rightWallCursor.y = rightWallCursor.y + 1
     end 
 
@@ -418,7 +502,16 @@ function AddWallsToRooms(rooms, pTileMap)
     end 
 end
 
+function CullCollisionTiles(pTileMap, potentialCollisionTiles)
+    for k, v in pairs(potentialCollisionTiles) do
+        if GetTileAtXY(floor_tile_layer_i, pTileMap, v.x, v.y) ~= 0 then
+            potentialCollisionTiles[k] = nil
+        end
+    end
+end
+
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
+    local potentialCollisionTiles = {}
     LookupNamedTileIndices(hAtlas)
     SetupLayers(pTileMap)
     print("Generate")
@@ -429,7 +522,10 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         r = 0
     })
     PlaceRoomFloorTiles(pTileMap, rooms)
+    AddRoomsCollisionTiles(potentialCollisionTiles, rooms)
     AddWallsToRooms(rooms, pTileMap)
-    LinkAllRooms(rooms, pTileMap)
+    LinkAllRooms(rooms, pTileMap, potentialCollisionTiles)
+    AddWallsToRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
+    CullCollisionTiles(pTileMap, potentialCollisionTiles)
 end

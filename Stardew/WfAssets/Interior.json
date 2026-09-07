@@ -26,6 +26,14 @@
          "type":"dungeon_door_br"
         }, 
         {
+         "id":710,
+         "type":"stairs_down_l"
+        }, 
+        {
+         "id":711,
+         "type":"stairs_down_r"
+        }, 
+        {
          "id":712,
          "type":"dungeon_vertical_top_inside_right_end_1"
         }, 

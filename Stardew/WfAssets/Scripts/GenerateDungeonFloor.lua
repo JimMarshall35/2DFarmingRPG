@@ -28,6 +28,8 @@ local dungeon_door_tl_tile = nil
 local dungeon_door_tr_tile = nil
 local dungeon_door_bl_tile = nil
 local dungeon_door_br_tile = nil
+local stairs_down_l_tile = nil
+local stairs_down_r_tile = nil
 
 -- Layer 0
 local floor_tile_layer = nil
@@ -109,6 +111,8 @@ function LookupNamedTileIndices(hAtlas)
     dungeon_door_tr_tile                            = LookupNamedTile(hAtlas, "dungeon_door_tr")
     dungeon_door_bl_tile                            = LookupNamedTile(hAtlas, "dungeon_door_bl")
     dungeon_door_br_tile                            = LookupNamedTile(hAtlas, "dungeon_door_br")
+    stairs_down_r_tile                              = LookupNamedTile(hAtlas, "stairs_down_r")
+    stairs_down_l_tile                              = LookupNamedTile(hAtlas, "stairs_down_l")
 end
 
 function SetupLayers(pTileMap)
@@ -209,6 +213,8 @@ function PlacePlayerStartInFirstRoom(rooms, pEntities)
     local playerX = (rooms[1].floor.l * TileSize) + ((rooms[1].floor.r - rooms[1].floor.l) * TileSize) / 2
     local playerY = (rooms[1].floor.t * TileSize) + ((rooms[1].floor.b - rooms[1].floor.t) * TileSize) / 2
     AddPlayerStartEntityAt("Farm", "Dungeon", false, false, pEntities, playerX, playerY)
+    --AddPlayerStartEntityAt("Dungeon", "Dungeon", false, false, pEntities, playerX - TileSize, playerY)
+
 end
 
 function SetCorridorFloorTile(pTileMap, x, y, bDestroyTop)
@@ -523,7 +529,7 @@ function CullCollisionTiles(pTileMap, potentialCollisionTiles)
     end
 end
 
-function AddExit(pTileMap, rooms, pEntities)
+function AddExitBackToFarm(pTileMap, rooms, pEntities)
     local firstRoom = rooms[1]
     local cursor = { x = firstRoom.floor.l, y = firstRoom.floor.t - 1 }
     local lastClear = false
@@ -538,7 +544,7 @@ function AddExit(pTileMap, rooms, pEntities)
                 local exitW = TileSize * 2
                 local exitH = TileSize / 2
                 local exitX = (cursor.x - 1) * TileSize
-                local exitY = (cursor.y* TileSize) + TileSize
+                local exitY = (cursor.y * TileSize) + TileSize
                 AddExitAt(pEntities, exitX, exitY, exitW, exitH, "Farm")
                 return
             else
@@ -547,6 +553,37 @@ function AddExit(pTileMap, rooms, pEntities)
         end
     end
 end
+
+function AddExitToNextFloor(pTileMap, rooms, pEntities)
+    local lastRoom = rooms[#rooms]
+    local x = lastRoom.floor.l + ((lastRoom.floor.r - lastRoom.floor.l) // 2)
+    local y = lastRoom.floor.t + ((lastRoom.floor.b - lastRoom.floor.t) // 2)
+    local cursor = { x = x, y = y }
+    TilemapSetTile(pTileMap, stairs_down_l_tile, behind_player_walls_tile_layer_i, x, y)
+    TilemapSetTile(pTileMap, stairs_down_r_tile, behind_player_walls_tile_layer_i, x + 1, y)
+    local pixelCoordsTopCollider = {
+        x = cursor.x * TileSize,
+        y = (cursor.y * TileSize) - (TileSize / 10.0)
+    }
+    local pixelCoordsBottomCollider = {
+        x = cursor.x * TileSize,
+        y = (cursor.y * TileSize) + TileSize
+    }
+    local pixelCoordsLeftCollider = {
+        x = (cursor.x * TileSize) - (TileSize / 10.0),
+        y = (cursor.y * TileSize) - (TileSize / 10.0)
+    }
+    local pixelCoordsExit = {
+        x = (cursor.x * TileSize),
+        y = (cursor.y * TileSize)
+    }
+
+    AddRectangularStaticCollider(pEntities, pixelCoordsTopCollider.x, pixelCoordsTopCollider.y, TileSize * 2, TileSize / 10.0)
+    AddRectangularStaticCollider(pEntities, pixelCoordsBottomCollider.x, pixelCoordsBottomCollider.y, TileSize * 2, TileSize / 10.0)
+    AddRectangularStaticCollider(pEntities, pixelCoordsBottomCollider.x, pixelCoordsBottomCollider.y, TileSize / 10.0, TileSize)
+    AddProceduralDungeonEntranceAt(pEntities, pixelCoordsExit.x, pixelCoordsExit.y, TileSize * 2, TileSize, "Scripts/GenerateDungeonFloor.lua", "Generate")
+end
+
 
 function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     local potentialCollisionTiles = {}
@@ -563,6 +600,8 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
     AddRoomsCollisionTiles(potentialCollisionTiles, rooms)
     AddWallsToRooms(rooms, pTileMap)
     LinkAllRooms(rooms, pTileMap, potentialCollisionTiles)
+    AddExitToNextFloor(pTileMap, rooms, pEntities)
+
     AddWallsToRooms(rooms, pTileMap)
     PlacePlayerStartInFirstRoom(rooms, pEntities)
     CullCollisionTiles(pTileMap, potentialCollisionTiles)
@@ -575,5 +614,5 @@ function Generate(pTileMap, pDC, hAtlas, pData, pUser, pEntities)
         AddRectangularStaticCollider(pEntities, pixelCoords.x, pixelCoords.y, TileSize, TileSize)
     end
     AddMaskLayer(hAtlas, pTileMap)
-    AddExit(pTileMap, rooms, pEntities)
+    AddExitBackToFarm(pTileMap, rooms, pEntities)
 end

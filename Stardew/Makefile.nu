@@ -191,7 +191,8 @@ def build_linux [
     build_type: string,
     bake_item_defs: bool,
     platform: string,
-    gl_api: string
+    gl_api: string,
+    tracy_on: bool
 ] {
     mkdir build
     dirs add ./build
@@ -200,11 +201,17 @@ def build_linux [
     } else {
         "OFF"
     }
+    let tracy = if $tracy_on {
+        "ON"
+    } else {
+        "OFF"
+    }
     let args = [
         $"-DCMAKE_BUILD_TYPE=($build_type)",
         $"-DBAKE_ITEM_DEFS=($baked)",
         $"-DSTARDEW_PLATFORM=($platform)",
-        $"-DSTARDEW_GL_API_TYPE=($gl_api)"
+        $"-DSTARDEW_GL_API_TYPE=($gl_api)",
+        $"-DENABLE_PROFILING=($tracy)"
     ]
     cmake .. ...$args
     make
@@ -253,7 +260,7 @@ def "main build_linux" [
     platform: string,
     gl_api: string
 ] {
-    build_linux $build_type $bake_item_defs $platform $gl_api
+    build_linux $build_type $bake_item_defs $platform $gl_api false
 }
 
 def "main build_linux_dev" [
@@ -262,8 +269,20 @@ def "main build_linux_dev" [
         "Debug" 
         false
         "GLFW3"
-        "OPENGL")
+        "OPENGL"
+        false)
 }
+
+def "main build_linux_tracy" [
+] {
+    (build_linux 
+        "Release" 
+        false
+        "GLFW3"
+        "OPENGL"
+        true)
+}
+
 
 def "main build_windows" [
     build_type: string,

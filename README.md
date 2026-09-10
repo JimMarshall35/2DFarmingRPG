@@ -65,3 +65,6 @@ nu ./Makefile.nu compile_assets_windows
 
 Copy the files in JimsVSCodeFiles into a folder called .vscode in the projects root or run JimsVSCodeFiles/Install.sh from the JimsVSCodeFiles folder to be able to debug the game with gdb inside vscode on linux (run the "Launch Game" from the gui)
  
+# Authoring new content
+
+To create edit levels you need the GUI level editor "Tiled". Open the file "Stardew/WfAssets/Engine.tiled-project". See docs for more details on how to add new content.

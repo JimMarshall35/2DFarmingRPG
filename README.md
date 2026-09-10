@@ -60,3 +60,8 @@ nu ./Makefile.nu build_windows "Debug" false "GLFW3" "OPENGL" # select other opt
 nu ./Makefile.nu compile_assets_windows
 # you should now have a build in Stardew/build/game
 ```
+
+# Developing with vscode
+
+Copy the files in JimsVSCodeFiles into a folder called .vscode in the projects root or run JimsVSCodeFiles/Install.sh from the JimsVSCodeFiles folder to be able to debug the game with gdb inside vscode on linux (run the "Launch Game" from the gui)
+ 

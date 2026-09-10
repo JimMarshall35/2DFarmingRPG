@@ -67,4 +67,4 @@ Copy the files in JimsVSCodeFiles into a folder called .vscode in the projects r
  
 # Authoring new content
 
-To create edit levels you need the GUI level editor "Tiled". Open the file "Stardew/WfAssets/Engine.tiled-project". See docs for more details on how to add new content.
+To create levels and edit existing ones you need the GUI level editor program "Tiled". Open the file "Stardew/WfAssets/Engine.tiled-project". See docs for more details on how to add new content.

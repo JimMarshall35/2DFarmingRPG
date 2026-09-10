@@ -17,43 +17,46 @@ https://jimmarshall35.github.io/2DFarmingRPG/
 
 # Runtime Dependencies
 
-System supplied:
-(Should exist as system packages on linux, or gotten through conan package manager for windows build - version numbers are the versions conan fetches)
-- libxml2/2.13.8 
-- freetype/2.13.3
-- lua/5.4.7
-- glfw/3.4
-- gtest/1.16.0 (optional for unit test project only, you can pass -DNoGTest=ON to cmake to remove this dependency and not build the test project)
-- openal/1.22.2
-
-Future work will be to make the linux build use conan for consistency, I don't mind having the vendored libraries
-
-Vendored:
-- Box2D
-- cJSON
-- glad
-- CGLM
-- netcode
-
+See Makefile.nu or the conanfile.txt (note that either SDL2 OR GLFW3 is required, not both).
 
 # Build
 
-To Build:
-- Windows
-  - Buildtime Dependencies
-      - MSVC toolchain
-      - Conan package manager
-      - CMake
-      - Python 3
-  - Run GetDependenciesConan.bat
-  - Run BuildRelease.bat
-  - Run compile_assets.bat
-  - Run BuildDebug.bat
-- Linux (Ubuntu)
-  - Buildtime Dependencies
-    - GCC toolchain
-    - CMake
-    - Python 3
-  - Run GetDependencies.sh
-  - Run BuildDebug.sh
-  - Run compile_assets.sh
+Some projects use a makefile as a collection of top level scripts to build, install and test the applicatione etc.
+Being able to develop and compile on both linux and natively on windows has always been a goal of this project, and so a makefile is perhaps not ideal. What I want is a common shell scripting language for both windows and linux, and the one I've chosen is nushell.
+
+This is a really nice shell and basically a functional programming language, and so it's ideal for doing both shell stuff and stuff that I might have previously written a python script for.
+
+It does mean that you have to install this as a build time dependency however.
+
+Build time dependencies Windows:
+- msvc / visual studio
+- nushell
+- python 3
+- CMake
+- Conan package manager
+
+Build time dependencies on linux
+- gcc toolchain
+- nushell
+- python3
+- CMake
+
+To build on ubuntu run these commands from the repository's root:
+
+```bash
+cd Stardew
+./Makefile.nu get_dependencies_apt
+./Makefile.nu build_linux_dev                 # or just "build_linux" if you want to specify different build options
+./Makefile.nu compile_assets_linux
+# you now have a build in Stardew/build/game
+```
+
+To build on windows run this:
+
+```
+cd Stardew
+nu ./Makefile.nu get_dependencies_conan "Debug"               # chose "Debug" or "Release", you might want to run both
+nu ./Makefile.nu build_windows "Debug" false "GLFW3" "OPENGL" # select other options if you want
+nu ./Makefile.nu compile_assets_windows
+# you should now have a build in Stardew/build/game
+```

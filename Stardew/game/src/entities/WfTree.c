@@ -204,6 +204,7 @@ void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float 
     default:
         break;
     }
+    Entity2DUpdate(pEnt, pLayer, deltaT);
 }
 
 static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y, struct WfTreeDef* def, struct GameLayer2DData* pGameLayerData)

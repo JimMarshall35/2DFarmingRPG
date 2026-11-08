@@ -27,4 +27,10 @@
 	<sprite source="./WfAssets/Image/LPC Submissions/Extensions/items1.png" top="32"  left="128" width="32" height="32" name="basic-bow"/>
 	<sprite source="./WfAssets/Image/LPC Submissions/Outside Objects.png"   top="479" left="543" width="32" height="32" name="wood"/>
     <sprite source="./WfAssets/Image/LPC Submissions/Terrain and Outside.png" top="544" left="992" width="32" height="32" name="stone_item_1"/>
+
+	<sprite source="./WfAssets/Image/original/HealthAndEnergyBars.png" top="0" left="0" width="26" height="28" name="energy_bar_top"/>
+	<sprite source="./WfAssets/Image/original/HealthAndEnergyBars.png" top="28" left="0" width="26" height="28" name="health_bar_top"/>
+	<sprite source="./WfAssets/Image/original/HealthAndEnergyBars.png" top="56" left="0" width="26" height="20" name="bar_frame"/>
+	<sprite source="./WfAssets/Image/original/HealthAndEnergyBars.png" top="76" left="0" width="26" height="20" name="energy_bar_fill"/>
+	<sprite source="./WfAssets/Image/original/HealthAndEnergyBars.png" top="96" left="0" width="26" height="20" name="health_bar_fill"/>
 </atlas>

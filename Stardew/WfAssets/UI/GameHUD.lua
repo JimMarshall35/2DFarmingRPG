@@ -18,6 +18,12 @@ function GetGameHUDViewModel()
         _items = { },--0, 1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1 },
         _selectedItemIndex = 1,
         widgetChildren = {},
+        Get_HealthVal = function(self)
+            return 0.7
+        end,
+        Get_EnergyVal = function(self)
+            return 0.3
+        end,
         InventoryChildren = function(self)
             self.widgetChildren = {}
             for index, item in pairs(self._items) do

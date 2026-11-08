@@ -6,5 +6,34 @@
         <stackpanel orientation="horizontal" childrenBinding="InventoryChildren" paddingBottom="32" dockPoint="bottomMiddle">
 
         </stackpanel>
+
+        <stackpanel orientation="horizontal" dockPoint="middleLeft" paddingLeft="25">
+            <stackpanel orientation="vertical" paddingRight="10">
+                <static sprite="health_bar_top"/>
+                <bar frameSprite="bar_frame"
+                    frameScaleX="1.0"
+                    frameScaleY="1.0"
+                    orientation="vertical"
+                    fillSprite="health_bar_fill"
+                    fillScaleX="1.0"
+                    fillScaleY="1.0"
+                    val="{HealthVal}"
+                    lengthPx="200.0"
+                    fillAnchorPoint="rightOrBottom"/>
+            </stackpanel>
+            <stackpanel orientation="vertical">
+                <static sprite="energy_bar_top"/>
+                <bar frameSprite="bar_frame"
+                    frameScaleX="1.0"
+                    frameScaleY="1.0"
+                    orientation="vertical"
+                    fillSprite="energy_bar_fill"
+                    fillScaleX="1.0"
+                    fillScaleY="1.0"
+                    val="{EnergyVal}"
+                    lengthPx="200.0"
+                    fillAnchorPoint="rightOrBottom"/>
+            </stackpanel>
+        </stackpanel>
     </screen>
 </UIroot>

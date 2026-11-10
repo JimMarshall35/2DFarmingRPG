@@ -39,6 +39,8 @@ add_executable( WarFarmer
     src/ui/WfUI.c
     src/WfVersion.c
     src/WfGenerateMap.c
+    src/components/WfHealthComponent.c
+    src/components/WfComponents.c
 )
 
 # TODO: this below, except properly, it must work for appimage, native install, and flatpak.

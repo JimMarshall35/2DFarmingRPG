@@ -23,6 +23,7 @@
 #include "WfVersion.h"
 #include "WfPersistantGameData.h"
 #include "WfCmdArgs.h"
+#include "components/WfComponents.h"
 
 enum WfExeMode
 {
@@ -147,6 +148,7 @@ int main(int argc, char** argv)
 {
     struct PreEngineCmdLineArgs args = ParsePreCmdLineArgs(argc, argv);
     WfSetupTempFolder();
+    WfRegisterGameComponentHandlers();
     switch (args.mode)
     {
     case NormalGame:

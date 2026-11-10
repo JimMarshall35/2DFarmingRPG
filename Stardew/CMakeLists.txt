@@ -6,6 +6,7 @@ add_subdirectory(engine)
 add_subdirectory(game)
 
 target_link_libraries(WarFarmer PUBLIC StardewEngine)
+target_include_directories(StardewEngine PRIVATE game/include)
 
 
 if(WIN32)

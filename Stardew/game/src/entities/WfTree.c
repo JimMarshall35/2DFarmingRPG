@@ -17,6 +17,7 @@
 #include "WfItem.h"
 #include "WfPlayer.h"
 #include "Audio.h"
+#include "components/WfHealthComponent.h"
 
 #define STUMP_SPITE_INDEX  0
 #define TRUNK_SPRITE_INDEX 1
@@ -82,77 +83,6 @@ static void WfSpawnWoodAt(vec2 pos, int quant, struct GameLayer2DData* pGameLaye
     WfAddPickupBasedAt(pos[0], pos[1], &def, pGameLayerData);
 }
 
-static void TreeHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
-{
-    struct GameLayer2DData* pGameLayerData = pLayer->userData;
-    struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
-    switch(pMsg->type)
-    {
-    case E2EM_Damage:
-        {
-            struct WfDamageMsg* pDamageMessage = WfGetDamageMessage(pMsg);//pMsg->pMsgData;
-            switch (pDamageMessage->type)
-            {
-            case WfAxeDamage:
-                Au_PlayZzFX(&gTreeHitSFX);
-                pData->health -= pDamageMessage->damage;
-                if(pData->health <= 0)
-                {
-                    switch(pData->state)
-                    {
-                    case WfStanding:
-                        {
-                            if(pSender->type == WfEntityType_Player)
-                            {
-                                vec2 playerGroundPos, treeGroundContactPoint;
-                                WfPlayerGetGroundContactPoint(pSender, playerGroundPos);
-                                WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
-                                if(playerGroundPos[0] > treeGroundContactPoint[0])
-                                {
-                                    // player to the right of the tree
-                                    pData->treeFallDirection = -1.0f;
-                                }
-                                else
-                                {
-                                    pData->treeFallDirection = 1.0f;
-                                }
-                            }
-                            else
-                            {
-                                pData->treeFallDirection = 1.0f;
-                            }
-                            pData->health = 0;
-                    
-                            Au_PlayZzFX(&gTreeFallSFX);
-                            pData->state = WfFalling;
-                        }
-                        break;
-                    case WfStump:
-                        {
-                            vec2 treeGroundContactPoint;
-                            vec2 addition = {pData->treeFallDirection * 5.0f};
-                            WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
-                            glm_vec2_add(addition, treeGroundContactPoint, treeGroundContactPoint);
-                            WfSpawnWoodAt(treeGroundContactPoint, 2, pGameLayerData);
-                            Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
-                            pGameLayerData->bCurrentLocationIsDirty = true;
-                        }
-                        break;
-                    }
-                    
-                }
-                Log_Info("Tree with ID %i took %.2f %s damage from entity %i, %.2f health remaining", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity, pData->health);
-                break;
-            
-            default:
-                EASSERT(pDamageMessage->type < sizeof(WfDamageTypeNameLUT) / sizeof(char*) && pDamageMessage->type >= 0);
-                Log_Info("Tree with ID %i resisted %.2f %s damage from entity %i, immune", pEnt->thisEntity, pDamageMessage->damage, WfDamageTypeNameLUT[pDamageMessage->type], pSender->thisEntity);
-                break;
-            }
-        }
-    }
-}
-
 void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float deltaT)
 {
     struct GameLayer2DData* pGameLayerData = pLayer->userData;
@@ -205,6 +135,82 @@ void TreeUpdate(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, float 
         break;
     }
     Entity2DUpdate(pEnt, pLayer, deltaT);
+}
+
+static void OnDamage(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent,
+    struct WfDamageMsg* pDamageMsg,
+    struct Entity2D* pSender,
+    struct GameFrameworkLayer* pLayer)
+{
+    Au_PlayZzFX(&gTreeHitSFX);
+}
+
+static void OnKill(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent, 
+    struct WfDamageMsg* pDamageMsg, 
+    struct Entity2D* pSender, 
+    struct GameFrameworkLayer* pLayer)
+{
+    struct GameLayer2DData* pGameLayerData = pLayer->userData;
+    struct WfTreeEntityData* pData = &gTreeDataObjectPool[pEnt->user.hData];
+    switch(pData->state)
+    {
+    case WfStanding:
+        {
+            if(pSender->type == WfEntityType_Player)
+            {
+                vec2 playerGroundPos, treeGroundContactPoint;
+                WfPlayerGetGroundContactPoint(pSender, playerGroundPos);
+                WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
+                if(playerGroundPos[0] > treeGroundContactPoint[0])
+                {
+                    // player to the right of the tree
+                    pData->treeFallDirection = -1.0f;
+                }
+                else
+                {
+                    pData->treeFallDirection = 1.0f;
+                }
+            }
+            else
+            {
+                pData->treeFallDirection = 1.0f;
+            }
+            pData->health = 0;
+    
+            Au_PlayZzFX(&gTreeFallSFX);
+            pData->state = WfFalling;
+        }
+        break;
+    case WfStump:
+        {
+            vec2 treeGroundContactPoint;
+            vec2 addition = {pData->treeFallDirection * 5.0f};
+            WfTreeGetGroundContactPoint(pEnt, treeGroundContactPoint);
+            glm_vec2_add(addition, treeGroundContactPoint, treeGroundContactPoint);
+            WfSpawnWoodAt(treeGroundContactPoint, 2, pGameLayerData);
+            Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+            pGameLayerData->bCurrentLocationIsDirty = true;
+        }
+        break;
+    }
+}
+
+static float DamageModifier(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent, 
+    struct WfDamageMsg* pDamageMsg, 
+    struct Entity2D* pSender, 
+    struct GameFrameworkLayer* pLayer)
+{
+    if(pDamageMsg->type != WfAxeDamage)
+    {
+        return 0.0f;
+    }
+    return pDamageMsg->damage;
 }
 
 static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y, struct WfTreeDef* def, struct GameLayer2DData* pGameLayerData)
@@ -297,6 +303,14 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     pComponent4->data.staticCollider.bGenerateSensorEvents = false;
     pComponent4->data.sprite.bDraw = true;
 
+    struct WfHealthComponent health = {
+        .health = 100.0f,
+        .onDamageCallback = &OnDamage,
+        .onKill = &OnKill,
+        .damageModifier = &DamageModifier
+    };
+    WfAddHealthComponent(&health, pEnt);
+
     HGeneric hTreeData = NULL_HANDLE;
     gTreeDataObjectPool = GetObjectPoolIndex(gTreeDataObjectPool, &hTreeData);
     struct WfTreeEntityData* pTreeData = &gTreeDataObjectPool[hTreeData];
@@ -311,7 +325,7 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     Et2D_PopulateCommonHandlers(pEnt);
     pEnt->onDestroy = &TreeOnDestroy;
     pEnt->getSortPos = &TreeGetPreDrawSortValue;
-    pEnt->handleEntityMsg = &TreeHandleEntityMsg;
+    //pEnt->handleEntityMsg = &TreeHandleEntityMsg;
     pEnt->update = &TreeUpdate;
     pEnt->bSerializeToDisk = true;
     pEnt->bSerializeToNetwork = true;

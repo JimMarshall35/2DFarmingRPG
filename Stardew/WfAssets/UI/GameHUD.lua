@@ -15,14 +15,18 @@ function GetGameHUDViewModel()
     return {
         _inventoryChangedListener = nil,
         _selectedItemChangedListener = nil,
+        _healthChangedListener = nil,
+        _energyChangedListener = nil,
         _items = { },--0, 1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1 },
         _selectedItemIndex = 1,
+        _currentHealth = 1.0,
+        _currentEnergy = 1.0,
         widgetChildren = {},
         Get_HealthVal = function(self)
-            return 0.7
+            return self._currentHealth
         end,
         Get_EnergyVal = function(self)
-            return 0.3
+            return self._currentEnergy
         end,
         InventoryChildren = function(self)
             self.widgetChildren = {}
@@ -81,6 +85,17 @@ function GetGameHUDViewModel()
             end
             return self.widgetChildren
         end,
+
+        OnHealthChanged = function(self, msg)
+            self._currentHealth = msg
+            OnPropertyChanged(self, "HealthVal")
+        end,
+
+        OnEnergyChanged = function(self, msg)
+            self._currentEnergy = msg
+            OnPropertyChanged(self, "EnergyVal")
+        end,
+
         OnInventoryChanged = function(self, msg)
 			self._items = msg
 			OnPropertyChanged(self, "InventoryChildren")
@@ -94,6 +109,9 @@ function GetGameHUDViewModel()
         OnXMLUILayerPush = function(self)
             self._inventoryChangedListener = SubscribeGameFrameworkEvent("InventoryChanged", self, self.OnInventoryChanged)
             self._selectedItemChangedListener = SubscribeGameFrameworkEvent("SelectedItemChanged", self, self.OnSelectedItemChanged)
+            self._healthChangedListener = SubscribeGameFrameworkEvent("HealthChanged", self, self.OnHealthChanged)
+            self._energyChangedListener = SubscribeGameFrameworkEvent("EnergyChanged", self, self.OnEnergyChanged)
+
             OnPropertyChanged(self, "InventoryChildren")
             FireGameFrameworkEvent({vm=self, type="basic"}, "onHUDLayerPushed")
         end,
@@ -101,6 +119,8 @@ function GetGameHUDViewModel()
         OnXMLUILayerPop = function(self)
 			UnsubscribeGameFrameworkEvent(self._inventoryChangedListener)
             UnsubscribeGameFrameworkEvent(self._selectedItemChangedListener)
+            UnsubscribeGameFrameworkEvent(self._healthChangedListener)
+            UnsubscribeGameFrameworkEvent(self._energyChangedListener)
 		end
 
     }

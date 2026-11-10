@@ -10,6 +10,7 @@ enum WfDamageType
     WfAxeDamage,
     WfPickaxeDamage,
     WfWeaponDamage,
+    WfNumDamageTypes
 };
 
 extern char* WfDamageTypeNameLUT[3];

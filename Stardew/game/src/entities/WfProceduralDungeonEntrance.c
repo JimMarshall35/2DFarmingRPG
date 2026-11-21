@@ -68,7 +68,7 @@ static void GenerateProceduralLevel(struct TileMap* pTileMap, DrawContext* pDC, 
         },
         {
             .type = SCA_int,
-            .val.userData = atlas
+            .val.i = atlas
         },
         {
             .type = SCA_userdata,

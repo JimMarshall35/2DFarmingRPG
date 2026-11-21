@@ -144,7 +144,18 @@ def "main get_dependencies_conan" [build_type: string] {
 def "main get_dependencies_apt" [] {
     apt-get update
     # for some reason the appimage tool needs libfuse2t64
-    apt-get install -y libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libgtest-dev libopenal-dev libsdl2-dev libfuse2t64
+    let packages = [
+        "liblua5.3-dev",
+        "libxml2-dev", 
+        "libbox2d-dev",
+        "libglfw3-dev", 
+        "libfreetype-dev",
+        "libgtest-dev",
+        "libopenal-dev",
+        "libsdl2-dev",
+        "libfuse2t64"
+    ]
+    apt-get install -y ...$packages
 }
 
 def "main strip_unnecessary_conan_deps" [

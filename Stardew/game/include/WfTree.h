@@ -21,6 +21,7 @@ struct WfTreeDef
 {
     enum WfTreeType type;
     int subtype;
+    float intialHealth;
 };
 
 void WfDeSerializeTreeEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData);

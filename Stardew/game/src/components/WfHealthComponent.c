@@ -5,6 +5,7 @@
 #include "Entity2DCollection.h"
 #include "WfEntityMessages.h"
 #include "GameComponents.h"
+#include "Log.h"
 
 /*
 typedef bool (*AcceptsMsgFn)(struct Component2D* pComponent, int msgType, struct Entity2D* pSender, struct GameFrameworkLayer* pLayer);
@@ -55,4 +56,22 @@ void WfAddHealthComponent(struct WfHealthComponent* pComponent, struct Entity2D*
     pNew->processMsg = &ProcessMsg;
     pNew->type = GCT_HealthComponent;
     memcpy(&pNew->data.health, pComponent, sizeof(struct WfHealthComponent));
+}
+
+struct WfHealthComponent* WfFindHealthComponent(struct Entity2D* pEnt)
+{
+    struct WfHealthComponent* pComponent = NULL;
+    for(int i=0; i<pEnt->numComponents; i++)
+    {
+        if(pEnt->components[i].type = GCT_HealthComponent)
+        {
+            if(pComponent)
+            {
+                Log_Warning("Entity %i has multiple health components, WfFindHealthComponent will return the last one",
+                    pEnt->thisEntity);
+            }
+            pComponent = &pEnt->components[i].data.health;
+        }
+    }
+    return pComponent;
 }

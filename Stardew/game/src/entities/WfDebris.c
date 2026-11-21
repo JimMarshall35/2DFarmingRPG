@@ -14,6 +14,8 @@
 #include "Audio.h"
 #include "WfTileLayers.h"
 #include "WfItemPickup.h"
+#include "AssertLib.h"
+#include "components/WfHealthComponent.h"
 
 struct ZZFXSound gWrongDamageTypeSFX = {1.0,0.05,55.748,0.066,0.252,0.447,0,1.0,0.0,0.0,0.0,0.0,0.062,1.633,0.0,0.333,0.433,0.309,0.171,0.057,0.0};
 struct ZZFXSound gPickaxeHitRockSFX = {1.0,0.05,62.25,0.011,0.133,0.298,3,1.0,1.503,0.0,0.0,0.0,0.29,1.191,0.0,0.619,0.0,0.485,0.2,0.0,-2357.049};
@@ -56,78 +58,99 @@ void WfDebrisGetGroundContactPoint(struct Entity2D* pEnt, vec2 outPoint)
     outPoint[1] = pData->groundContactPoint[1];
 }
 
-static void DebrisHandleEntityMsg(struct Entity2D* pEnt, struct Entity2D* pSender, struct EntityToEntityMessage* pMsg, struct GameFrameworkLayer* pLayer)
+static float DamageModifier(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent, 
+    struct WfDamageMsg* pDamageMsg, 
+    struct Entity2D* pSender, 
+    struct GameFrameworkLayer* pLayer)
 {
-    struct GameLayer2DData* pGameLayerData = pLayer->userData;
     struct WfDebrisData* pData = &gDebrisDataPool[pEnt->user.hData];
-    switch(pMsg->type)
+    switch (pData->def.type)
     {
-    case E2EM_Damage:
+    case WfRockType2:
+    case WfRockType1:
+        switch (pDamageMsg->type)
         {
-            struct WfDamageMsg* pDamageMessage = WfGetDamageMessage(pMsg);
-            switch (pDamageMessage->type)
-            {
-            case WfPickaxeDamage:
-                if(pData->def.type == WfRockType1 || pData->def.type == WfRockType2)
-                {
-
-                    pData->def.health -= pDamageMessage->damage;
-                    if(pData->def.health <= 0)
-                    {
-                        Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
-                        pGameLayerData->bCurrentLocationIsDirty = true;
-                        Au_PlayZzFX(&gDestroyRockSFX);
-                        /* spawn stone pickup */
-                        struct WfItemPickupDef def = 
-                        {
-                            .itemID = WfStoneItem,
-                            .itemQuantity = 1
-                        };
-                        WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
-                    }
-                    else
-                    {
-                        Au_PlayZzFX(&gPickaxeHitRockSFX);
-                    }
-                }
-                else
-                {
-                    Au_PlayZzFX(&gWrongDamageTypeSFX);
-                }
-                break;
-            case WfAxeDamage:
-                if(pData->def.type == WfLogType1)
-                {
-                    pData->def.health -= pDamageMessage->damage;
-                    if(pData->def.health <= 0)
-                    {
-                        Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
-                        pGameLayerData->bCurrentLocationIsDirty = true;
-                        Au_PlayZzFX(&gLogDestroySFX);
-
-                        /* spawn wood pickup */
-                        struct WfItemPickupDef def = 
-                        {
-                            .itemID = WfWoodItem,
-                            .itemQuantity = 1
-                        };
-                        WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
-                    }
-                    else
-                    {
-                        Au_PlayZzFX(&gLogHitSFX);
-                    }
-                }
-                else
-                {
-                    Au_PlayZzFX(&gWrongDamageTypeSFX);
-                }
-                break;
-            }
+        case WfPickaxeDamage:
+            Au_PlayZzFX(&gPickaxeHitRockSFX);
+            return pDamageMsg->damage;
+        default:
+            Au_PlayZzFX(&gWrongDamageTypeSFX);
+            break;
         }
         break;
-    };
+    case WfLogType1:
+        switch (pDamageMsg->type)
+        {
+        case WfAxeDamage:
+            Au_PlayZzFX(&gLogHitSFX);
+            return pDamageMsg->damage;
+        default:
+            Au_PlayZzFX(&gWrongDamageTypeSFX);
+            break;
+        }
+        break;
+    default:
+        Log_Error("Debris DamageModifier Unknown debris type");
+        EASSERT(false);
+    }
+    return 0;
 }
+
+static void OnDamage(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent,
+    struct WfDamageMsg* pDamageMsg,
+    struct Entity2D* pSender,
+    struct GameFrameworkLayer* pLayer)
+{
+    // spawn some particle effects
+}
+
+static void OnKill(
+    struct Entity2D* pEnt,
+    struct WfHealthComponent* pComponent, 
+    struct WfDamageMsg* pDamageMsg, 
+    struct Entity2D* pSender, 
+    struct GameFrameworkLayer* pLayer)
+{
+    struct WfDebrisData* pData = &gDebrisDataPool[pEnt->user.hData];
+    struct GameLayer2DData* pGameLayerData = pLayer->userData;
+    Et2D_DestroyEntity(pLayer, &pGameLayerData->entities, pEnt->thisEntity);
+    pGameLayerData->bCurrentLocationIsDirty = true;
+    switch (pData->def.type)
+    {
+    case WfRockType2:
+    case WfRockType1:
+        /* spawn stone pickup */
+        {
+            Au_PlayZzFX(&gDestroyRockSFX);
+            struct WfItemPickupDef def = 
+            {
+                .itemID = WfStoneItem,
+                .itemQuantity = 1
+            };
+            WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
+        }
+        break;
+    case WfLogType1:
+        /* spawn wood pickup */
+        {
+            Au_PlayZzFX(&gLogDestroySFX);
+            struct WfItemPickupDef def = 
+            {
+                .itemID = WfWoodItem,
+                .itemQuantity = 1
+            };
+            WfAddPickupBasedAt(pData->groundContactPoint[0], pData->groundContactPoint[1], &def, pGameLayerData);
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 
 void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, struct WfDebrisDef* def, struct GameLayer2DData* pGameLayerData)
 {
@@ -174,6 +197,15 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
     pComponent2->data.staticCollider.onSensorOverlapEnd = NULL;
     pComponent2->data.staticCollider.bGenerateSensorEvents = false;
 
+
+    struct WfHealthComponent health = {
+        .health = def->health,
+        .onDamageCallback = &OnDamage,
+        .onKill = &OnKill,
+        .damageModifier = &DamageModifier
+    };
+    WfAddHealthComponent(&health, pEnt);
+
     HGeneric hRockData = NULL_HANDLE;
     gDebrisDataPool = GetObjectPoolIndex(gDebrisDataPool, &hRockData);
     struct WfDebrisData* pRockData = &gDebrisDataPool[hRockData];
@@ -197,14 +229,14 @@ void WfMakeEntityIntoDebrisBasedAt(struct Entity2D* pEnt, int xTile, int yTile, 
     pEnt->user.hData = hRockData;
     Et2D_PopulateCommonHandlers(pEnt);
     pEnt->onDestroy = &RockOnDestroy;
-    pEnt->handleEntityMsg = &DebrisHandleEntityMsg;
+    //pEnt->handleEntityMsg = &DebrisHandleEntityMsg;
     pEnt->bSerializeToDisk = true;
     pEnt->bSerializeToNetwork = true; 
 
     // TODO: Put in the quad tree instead - the quad tree is fucked though.
     // re-write the quad tree as a BSP tree as detailed in "Game design patterns"
     pEnt->bKeepInQuadtree = true;
-    pEnt->bKeepInDynamicList = true;
+    pEnt->bKeepInDynamicList = false;
 
 }
 
@@ -243,8 +275,9 @@ void WfDeSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pOu
 void WfSerializeDebrisEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt, struct GameLayer2DData* pData)
 {
     struct WfDebrisData* pRockD = &gDebrisDataPool[pInEnt->user.hData];
+    struct WfHealthComponent* pComponent = WfFindHealthComponent(pInEnt);
     BS_SerializeI32(1, bs); // version
-    BS_SerializeFloat(pRockD->def.health, bs);
+    BS_SerializeFloat(pComponent->health, bs);
     BS_SerializeI32(pRockD->def.type, bs);
     BS_SerializeI32(pRockD->xTile, bs);
     BS_SerializeI32(pRockD->yTile, bs);

@@ -21,5 +21,6 @@ struct WfHealthComponent
 
 
 void WfAddHealthComponent(struct WfHealthComponent* pComponent, struct Entity2D* pEnt);
+struct WfHealthComponent* WfFindHealthComponent(struct Entity2D* pEnt);
 
 #endif

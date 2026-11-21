@@ -1,9 +1,8 @@
 #
 #  Build an appimage using an ubuntu 20 based image and therefore an older glibc 
-#  for maximum compatibility. Only build one configuration as an appimage.
-#  instead of the full matrix as debian packages and windows files
-#
-
+#  for maximum compatibility. Only build this configuration:
+#  "Release baked=false GLFW3 OPENGLES"
+#  and release on itch.io
 name: AppImage CI
 
 on:
@@ -15,32 +14,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: ubuntu:20.04
+    container: ghcr.io/jimmarshall35/appimage-builder:latest
     steps:
-    - name: Install git
-      run: |
-        apt update
-        apt install -y git
     - uses: actions/checkout@v5
       with:
         submodules: recursive
-    - name: Get Dependencies
-      shell: bash
-      run: |
-        cd Stardew
-        export DEBIAN_FRONTEND=noninteractive
-        apt install -y curl wget python3 python3-pip build-essential libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev libgtest-dev zip unzip
 
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
-
-        wget https://github.com/Kitware/CMake/releases/download/v3.29.0/cmake-3.29.0-linux-x86_64.tar.gz
-        tar xzf cmake-3.29.0-linux-x86_64.tar.gz -C /opt
-        ln -s /opt/cmake-3.29.0-linux-x86_64/bin/cmake /usr/local/bin/cmake
-
-        pip install jinja2
-        source "$HOME/.cargo/env"
-        cargo install nu --locked
     # - name: Stamp version
     #   run: | 
     #     cd Stardew

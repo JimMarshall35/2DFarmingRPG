@@ -1,3 +1,4 @@
+# Test to see if all variants will build on the latest ubuntu
 name: Ubuntu CI
 
 on:

@@ -1,3 +1,5 @@
+# builld all variants on windows (Except opengl es).
+# Release SDL / rease / baked=false variant to itch.io
 name: Windows CI
 
 on:

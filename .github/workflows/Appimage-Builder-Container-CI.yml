@@ -1,0 +1,39 @@
+name: Build and push appimage-builder image
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Stardew/appimage/Dockerfile'          # only rebuild when the Dockerfile changes
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: jimmarshall35/appimage-builder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write        # required to push to ghcr.io
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: Stardew/appimage
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

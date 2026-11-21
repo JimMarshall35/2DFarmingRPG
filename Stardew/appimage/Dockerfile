@@ -6,8 +6,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # apt packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    pkg-config git curl wget python3 python3-pip build-essential libfuse2 libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev libopenal-dev libgtest-dev zip unzip \
+    pkg-config git curl wget python3 python3-pip build-essential libfuse2 \
+    libxml2 liblua5.3-dev libxml2-dev libbox2d-dev libglfw3-dev libfreetype-dev \
+    libopenal-dev libgtest-dev zip unzip \
+    file patchelf squashfs-tools \
     && rm -rf /var/lib/apt/lists/*
+    
 # rust (for nushell)
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 

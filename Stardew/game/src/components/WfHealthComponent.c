@@ -25,7 +25,7 @@ static bool ProcessMsg(struct Component2D* pComponent, struct EntityToEntityMess
     float damage = pDamage->damage;
     if(pComponent->data.health.damageModifier)
     {
-        damage = pComponent->data.health.damageModifier(pRecipient, pComponent, pDamage, pSender, pLayer);
+        damage = pComponent->data.health.damageModifier(pRecipient, &pComponent->data.health, pDamage, pSender, pLayer);
     }
     
     if(damage > 1e-5)

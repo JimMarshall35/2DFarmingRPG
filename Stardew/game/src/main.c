@@ -84,7 +84,7 @@ static void KarlMarx()
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠁⠙⣦⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠁⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
     CRESET;
-    printf(marx);
+    printf("%s", marx);
 }
 
 void WfPrintVersion()

@@ -11,7 +11,6 @@ add_executable( WarFarmer
     src/WfWorld.c
     src/WfGameLayer.c
     src/WfScriptFunctions.c
-    src/WfNetwork.c
     src/entities/WfEntityMessages.c
     src/entities/WfDebrisField.c
     src/entities/WfExit.c

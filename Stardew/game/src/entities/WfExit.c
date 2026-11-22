@@ -87,7 +87,6 @@ static void MakeEntityIntoExit(struct Entity2D* pOutEnt, float w, float h, const
     pComponent1->data.staticCollider.shape.data.rect.h = gExitEntityDataPool[hExitData].h;
     pComponent1->data.staticCollider.bGenerateSensorEvents = true;
     pOutEnt->bSerializeToDisk = true;
-    pOutEnt->bSerializeToNetwork = true;
 
 }
 

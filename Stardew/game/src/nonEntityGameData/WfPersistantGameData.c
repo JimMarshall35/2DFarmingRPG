@@ -10,39 +10,18 @@
 
 static struct WfPersistantData gPersistantData;
 
-static struct WfPersistantData gNetworkPlayersPersistantData[3];
 
-static int gOccupiedSpots = 0;
 
-int WfGetNumNetworkPlayerPersistentDataSlots()
-{
-    return gOccupiedSpots;
-}
-
-void WfSetNumNetworkPlayerPersistentDataSlots(int num)
-{
-    gOccupiedSpots = num;
-}
 
 struct WfPersistantData* WfGetLocalPlayerPersistantGameData()
 {
     return &gPersistantData;
 }
 
-struct WfPersistantData* WfGetNetworkPlayerPersistantGameData(int playerNum)
-{
-    return &gNetworkPlayersPersistantData[playerNum];
-}
-
 void WfPersistantDataInit()
 {
     memset(&gPersistantData, 0, sizeof(struct WfPersistantData));
     gPersistantData.inventory.pItems = NEW_VECTOR(struct WfInventoryItem);
-    memset(&gNetworkPlayersPersistantData, 0, sizeof(struct WfPersistantData) * 3);
-    for(int i=0; i<3; i++)
-    {
-        gNetworkPlayersPersistantData->inventory.pItems = NEW_VECTOR(struct WfInventoryItem);
-    }
 }
 
 void WfLoadPersistantDataFileV1(struct BinarySerializer* pBS, struct WfPersistantData* pData)
@@ -160,11 +139,6 @@ struct WfInventory* WfGetInventory()
     return &gPersistantData.inventory;
 }
 
-struct WfInventory* WfGetNetworkPlayersInventory(int player)
-{
-    EASSERT(player <= 2 && player >= 0);
-    return &gNetworkPlayersPersistantData[player].inventory;
-}
 
 struct WfPlayerPreferences* WfGetPreferences()
 {

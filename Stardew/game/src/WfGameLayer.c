@@ -14,8 +14,6 @@
 #include "Scripting.h"
 #include "GameFrameworkEvent.h"
 #include "WfPersistantGameData.h"
-#include "Network.h"
-#include "WfNetwork.h"
 #include "main.h"
 #include "cwalk.h"
 #include "WfItem.h"
@@ -101,7 +99,6 @@ void WfGameLayerOnPush(struct GameFrameworkLayer* pLayer, DrawContext* drawConte
 void WfPreLoadLevel(struct GameLayer2DData* pEngineLayer)
 {
     WfInitGameLayerData(pEngineLayer, (struct WfGameLayerData*)pEngineLayer->pUserData);
-    WfNetworkInit(pEngineLayer);
 }
 
 void WfGameLayerOnPop(struct GameFrameworkLayer* pLayer, DrawContext* drawContext, InputContext* inputContext)

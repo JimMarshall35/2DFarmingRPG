@@ -8,7 +8,6 @@
 #include "WfWorld.h"
 #include "string.h"
 #include "Log.h"
-#include "Network.h"
 #include "WfGameLayerData.h"
 #include "WfExit.h"
 #include "EngineUtils.h"
@@ -50,7 +49,6 @@ void WfPlayerStartEntityOnInit(struct Entity2D* pEnt, struct GameFrameworkLayer*
         };
         WfMakeIntoPlayerEntity(&ent, pLayer, spawnPos);
         hCurrentLocalPlayer = Et2D_AddEntity(&pLayerData->entities, &ent);
-        Log_Info("Local player entity ID %i, net id %i", hCurrentLocalPlayer, Et2D_GetEntity(&pLayerData->entities, hCurrentLocalPlayer)->networkID);
         WfWorld_SetCurrentLocationName(gPlayerStartDataPool[pEnt->user.hData].thisLocation);
     }
 }
@@ -71,7 +69,6 @@ static void MakeEntityIntoPlayerStartEntity(struct Entity2D* pOutEnt, struct WfP
     pOutEnt->bKeepInDynamicList = false;
     pOutEnt->bKeepInQuadtree = false;
     pOutEnt->bSerializeToDisk = true;
-    pOutEnt->bSerializeToNetwork = true;
 }
 
 void WfDeSerializePlayerStartEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)

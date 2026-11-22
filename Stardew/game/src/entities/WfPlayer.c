@@ -17,10 +17,6 @@
 #include "Scripting.h"
 #include <string.h>
 #include "Log.h"
-#include "Network.h"
-#include "Game2DLayerNetwork.h"
-#include "Network.h"
-#include "NetworkID.h"
 #include "Maths.h"
 #include "main.h"
 
@@ -46,7 +42,7 @@
 #define WALKING_RIGHT_FEMALE "walk-base-female-right"
 
 
-static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos, bool bNetworkControlled, int networkPlayerNum);
+static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos);
 
 static OBJECT_POOL(struct WfPlayerEntData) gPlayerEntDataPool = NULL;
 
@@ -89,33 +85,13 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     pPlayerEntData->speedMultiplier = 3.0f;
     pPlayerEntData->movementBits = 0;
     
-    if(pPlayerEntData->bNetworkControlled)
-    {
-        WfMakeIntoPlayerEntityBase(pEnt, pLayer, pPlayerEntData->createNetPlayerOnInitArgs.netPlayerSpawnAtPos, true, pPlayerEntData->createNetPlayerOnInitArgs.netPlayerSlot);
-        Entity2DOnInit(pEnt,pLayer, pDrawCtx, pInputCtx);
-        vec2 vel = {0,0};
-        Ph_SetDynamicBodyVelocity(
-            pEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider.id,
-            vel
-        );
-        return;
-    }
-    else if(NW_GetRole() != GR_Singleplayer)
-    {
-        /* serialize the local players entity in network game state updates */
-        pEnt->bSerializeInNetworkUpdate = true;
-    }
-    if(!pPlayerEntData->bNetworkControlled)
-    {
-        pPlayerEntData->DebugLayerPoppedEventListener = Ev_SubscribeEvent("onDebugLayerPopped", &WfOnDebugLayerPopped, pLayer);
-        gLocalPlayerEntData = pEnt->user.hData;
-        gLocalPlayerEnt = pEnt->thisEntity;
-    }
+
+    pPlayerEntData->DebugLayerPoppedEventListener = Ev_SubscribeEvent("onDebugLayerPopped", &WfOnDebugLayerPopped, pLayer);
+    gLocalPlayerEntData = pEnt->user.hData;
+    gLocalPlayerEnt = pEnt->thisEntity;
 
     Entity2DOnInit(pEnt,pLayer, pDrawCtx, pInputCtx);
 
-    pPlayerEntData->bNetworkControlled = false;
-    pPlayerEntData->networkPlayerNum = -1;
 
     pPlayerEntData->movementBits = 0;
     pPlayerEntData->freeLookModeBinding = In_FindButtonMapping(pInputCtx, "freeLookMode");
@@ -145,17 +121,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
     
     ClampCameraToTileLayer(pLayer->userData, 0);
 
-    if(NW_GetRole() == GR_Client && !pPlayerEntData->bNetworkControlled)
-    {
-        /* client has made their player entity, cause it to be created on server + other clients */
-        struct CreateEntity_RPC rpc = 
-        {
-            .pData = pLayer->userData,
-            .pEnt = pEnt
-        };
-        Log_Info("Sending G2DRPC_CreateEntity for clients player entity");
-        G2D_SendRPC(-1, G2DRPC_CreateEntity, &rpc);
-    }
+
     struct WfInventory* pInventory = WfGetPlayerInventory(pPlayerEntData);
     if (pInventory->legItem >= 0)
     {
@@ -172,10 +138,7 @@ static void OnInitPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLaye
 static void OnDestroyPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pData)
 {
     struct WfPlayerEntData* pPlayerEntData = &gPlayerEntDataPool[pEnt->user.hData];
-    if(!pPlayerEntData->bNetworkControlled)
-    {
-        Ev_UnsubscribeEvent(pPlayerEntData->DebugLayerPoppedEventListener);
-    }
+    Ev_UnsubscribeEvent(pPlayerEntData->DebugLayerPoppedEventListener);
     FreeObjectPoolIndex(gPlayerEntDataPool, pEnt->user.hData);
     Entity2DOnDestroy(pEnt, pData);
     
@@ -479,10 +442,6 @@ static void OnUpdatePlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLa
 
 struct WfInventory* WfGetPlayerInventory(struct WfPlayerEntData* pEntData)
 {
-    if(pEntData->bNetworkControlled)
-    {
-        return WfGetNetworkPlayersInventory(pEntData->networkPlayerNum);
-    }
     return WfGetInventory();
 }
 
@@ -506,10 +465,7 @@ static void ChangeItem(struct GameFrameworkLayer* pLayer, struct Entity2D* pEnt,
     arg.val.i = pInv->selectedItem;
     struct LuaListenedEventArgs args = { .numArgs = 1, .args = &arg };
     
-    if(!pPlayerEntData->bNetworkControlled)
-    {
-        Ev_FireEvent("SelectedItemChanged", &args);
-    }
+    Ev_FireEvent("SelectedItemChanged", &args);
 
     struct WfItemDef* pOldItem = WfGetItemDef(pInv->pItems[oldIndex].itemIndex);
     struct WfItemDef* pNewItem = WfGetItemDef(pInv->pItems[pInv->selectedItem].itemIndex);
@@ -530,11 +486,6 @@ static void OnInputPlayer(struct Entity2D* pEnt, struct GameFrameworkLayer* pLay
     /* network players need to do this part too so that their sprite animation is reset when they stop moving,
      but bMovingThisFrame and the movement vector is set from the network not input */
     pPlayerEntData->bMovingLastFrame = pPlayerEntData->movementBits != 0;
-
-    if(pPlayerEntData->bNetworkControlled)
-    {
-        return;
-    }
 
     Entity2DInput(pEnt, pLayer, context);
     pPlayerEntData->movementBits = 0;
@@ -625,19 +576,12 @@ void WfPlayerPostPhys(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, 
     Ph_PhysicsCoords2PixelCoords(pLayerData->hPhysicsWorld, physPos, pixelsPos);
     glm_vec2_add(pixelsPos, pPlayerEntData->groundColliderCenter2EntTransform, pEnt->transform.position);
 
-    if(!pPlayerEntData->bNetworkControlled && !pLayerData->bDebugLayerAttatched)
-    {
-        CenterCameraAt(pixelsPos[0], pixelsPos[1], &pLayerData->camera, pLayerData->windowW, pLayerData->windowH);
-    }
+    CenterCameraAt(pixelsPos[0], pixelsPos[1], &pLayerData->camera, pLayerData->windowW, pLayerData->windowH);
 }
 
 static void WfPrintPlayerInfo(struct Entity2D* pEnt)
 {
     struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pEnt->user.hData];
-    Log_Info("Network controlled? : %s Network player number: %i",
-        pEntData->bNetworkControlled ? "true" : "false",
-        pEntData->networkPlayerNum
-    );
 }
 
 static void WfPlayerDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, struct Transform2D* pCam, VECTOR(WorldspaceLineVertex)* outVerts)
@@ -653,7 +597,7 @@ static void WfPlayerDrawDebugLines(struct Entity2D* pEnt, struct GameFrameworkLa
     }
 }
 
-static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos, bool bNetworkControlled, int networkPlayerNum)
+static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos)
 {
     struct GameLayer2DData* pData = pLayer->userData;
     
@@ -669,13 +613,8 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEntData->animationSet.layersMask = 0;
     pEntData->animationSet.bgLayersMask = 0;
     pEntData->state = WfWalking;
-    pEntData->bNetworkControlled = bNetworkControlled;
-    pEntData->networkPlayerNum = networkPlayerNum - 1;
     pEntData->actionAnimation = WfNoActionAnim;
-    if(!bNetworkControlled && NW_GetRole() == GR_Client)
-    {
-        pEnt->networkID = NetID_GetID();
-    }
+    
 
     pEnt->numComponents = 0;
     pEnt->type = WfEntityType_Player;
@@ -770,7 +709,6 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
     pEnt->bKeepInQuadtree = false;
     pEnt->bKeepInDynamicList = true;
     pEnt->bSerializeToDisk = false;
-    pEnt->bSerializeToNetwork = true;
 
     struct WfInventory* pInv = WfGetPlayerInventory(pEntData);
     struct WfInventoryItem* pItem = &pInv->pItems[pInv->selectedItem];
@@ -783,111 +721,17 @@ static void WfMakeIntoPlayerEntityBase(struct Entity2D* pEnt, struct GameFramewo
 
 void WfSerializePlayerEntity(struct BinarySerializer* bs, struct Entity2D* pInEnt, struct GameLayer2DData* pData)
 {
-    /* 
-        to serialize:
-            - ground position
-            - persistent data index
-    */
-    struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pInEnt->user.hData];
-    BS_SerializeU32(1, bs); /* version */
-    if(bs->ctx == SCTX_ToNetworkUpdate)
-    {
-        struct DynamicCollider* pCollider = &pInEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider;
-        vec2 physPos;
-        Ph_GetDynamicBodyPosition(pCollider->id, physPos);
 
-        /* physics position */
-        BS_SerializeFloat(physPos[0], bs);
-        BS_SerializeFloat(physPos[1], bs);
-
-        /* pack movement bits and selected inventory item into an 8 bit val */
-        u8 val = pEntData->movementBits;
-        struct WfInventory* pInv = WfGetInventory();
-        val |= ((u8)pInv->selectedItem << 4);
-        BS_SerializeU8(val, bs);
-    }
-    else
-    {
-        vec2 out;
-        WfPlayerGetGroundContactPoint(pInEnt, out);
-        BS_SerializeFloat(out[0], bs);
-        BS_SerializeFloat(out[1], bs);
-        /* get the index of the next network player */
-        int numSlots = WfGetNumNetworkPlayerPersistentDataSlots();
-        BS_SerializeI32(numSlots, bs);
-    }
 }
 
 void WfDeSerializePlayerEntity(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)
 {
-    u32 val;
-    BS_DeSerializeU32(&val, bs);
-    switch(val)
-    {
-    case 1:
-        {
-            if(bs->ctx == SCTX_ToNetworkUpdate)
-            {
-                struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pOutEnt->user.hData];
-                
-                /* physics position */
-                vec2 physPos;
-                BS_DeSerializeFloat(&physPos[0], bs);
-                BS_DeSerializeFloat(&physPos[1], bs);
-                struct DynamicCollider* pCollider = &pOutEnt->components[PLAYER_COLLIDER_COMP_INDEX].data.dynamicCollider;
-                Ph_SetDynamicBodyPosition(pCollider->id, physPos);
-                u8 val = 0;
 
-                /* movement enum and selected item */
-                BS_DeSerializeU8(&val, bs);
-                u8 movement = val & 0xf;
-                u8 selectedItem = (val >> 4);
-                pEntData->movementBits = movement;
-                
-
-                struct WfInventory* pInv = WfGetPlayerInventory(pEntData);
-                if(pInv->selectedItem != selectedItem)
-                {
-                    if(selectedItem > pInv->selectedItem)
-                    {
-                        ChangeItem(pData->pLayer, pOutEnt, pEntData, selectedItem - pInv->selectedItem);
-                    }
-                    else
-                    {
-                        ChangeItem(pData->pLayer, pOutEnt, pEntData, selectedItem - pInv->selectedItem);
-                    }   
-                }
-            }
-            else
-            {
-                Log_Info("WfDeSerializePlayerEntity");
-                vec2 groundPoint = {0.0f, 0.0f};
-                i32 slotNum = 0;
-                gPlayerEntDataPool = GetObjectPoolIndex(gPlayerEntDataPool, &pOutEnt->user.hData);
-                struct WfPlayerEntData* pEntData = &gPlayerEntDataPool[pOutEnt->user.hData];
-                BS_DeSerializeFloat(&pEntData->createNetPlayerOnInitArgs.netPlayerSpawnAtPos[0], bs);
-                BS_DeSerializeFloat(&pEntData->createNetPlayerOnInitArgs.netPlayerSpawnAtPos[1], bs);
-                BS_DeSerializeI32(&pEntData->createNetPlayerOnInitArgs.netPlayerSlot, bs);
-                Log_Info("WfDeSerializePlayerEntity Player slot: %i netID: %i", pEntData->createNetPlayerOnInitArgs.netPlayerSlot, pOutEnt->networkID);
-                pEntData->bNetworkControlled = true;
-                pOutEnt->init = &OnInitPlayer; /* set this one and in the init function the rest will be bootstrapped */
-                pOutEnt->update = NULL;
-                pOutEnt->postPhys = NULL;
-                pOutEnt->draw = NULL;
-                Log_Info("Player pos: x %.2f, y %.2f. Player slot %i", 
-                    pEntData->createNetPlayerOnInitArgs.netPlayerSpawnAtPos[0], 
-                    pEntData->createNetPlayerOnInitArgs.netPlayerSpawnAtPos[1], slotNum);
-            }
-        }
-        break;
-    default:
-        Log_Error("DeserializePlayer unknown schema version %u", val);
-    }
 }
 
 void WfMakeIntoPlayerEntity(struct Entity2D* pEnt, struct GameFrameworkLayer* pLayer, vec2 spawnAtGroundPos)
 {
-    WfMakeIntoPlayerEntityBase(pEnt, pLayer, spawnAtGroundPos, false, -1);
+    WfMakeIntoPlayerEntityBase(pEnt, pLayer, spawnAtGroundPos);
 }
 
 struct WfAnimationSet* WfGetPlayerAnimationSet(struct Entity2D* pInPlayerEnt)

@@ -136,7 +136,6 @@ void WfDeSerializeDebrisFieldEntity(struct BinarySerializer* bs, struct Entity2D
             pOutEnt->bKeepInDynamicList = false;
             pOutEnt->bKeepInQuadtree = false;
             pOutEnt->bSerializeToDisk = false;
-            pOutEnt->bSerializeToNetwork = false;
         }
         break;
     default:

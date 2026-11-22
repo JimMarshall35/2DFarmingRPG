@@ -158,7 +158,6 @@ static void MakeEntityIntoProceduralDungeonEntrance(struct Entity2D* pOutEnt, fl
     pComponent1->data.staticCollider.shape.data.rect.h = gProceduralEntranceEntityDataPool[hExitData].h;
     pComponent1->data.staticCollider.bGenerateSensorEvents = true;
     pOutEnt->bSerializeToDisk = true;
-    pOutEnt->bSerializeToNetwork = true;
 }
 
 static void WfDeSerializeProceduralDungeonEntranceEntityV1(struct BinarySerializer* bs, struct Entity2D* pOutEnt, struct GameLayer2DData* pData)

@@ -49,10 +49,7 @@ void WfOnPickupSensorOverlapBegin(struct GameFrameworkLayer* pLayer, HEntity2D h
         struct WfPlayerEntData* pPlayerEntData = WfGetPlayerEntData(pOverlappingEnt);
         struct WfInventory* pInv = WfGetPlayerInventory(pPlayerEntData);
         WfAddToInventory(pInv, pEntData->def.itemID, pEntData->def.itemQuantity);
-        if(!pPlayerEntData->bNetworkControlled)
-        {
-            WfPublishInventoryChangedEvent();
-        }
+        WfPublishInventoryChangedEvent();
         const struct WfItemDef* pDef = WfGetItemDef(pEntData->def.itemID);
         if(pDef->bSoundEffectOnPickup)
         {
@@ -119,7 +116,6 @@ void WfMakeEntityIntoPickupBasedAt(float x, float y, struct WfItemPickupDef* def
     //pEnt->handleEntityMsg = &TreeHandleEntityMsg;
     //pEnt->update = &TreeUpdate;
     pEnt->bSerializeToDisk = true;
-    pEnt->bSerializeToNetwork = true;
 }
 
 HEntity2D WfAddPickupBasedAt(float x, float y, struct WfItemPickupDef* def, struct GameLayer2DData* pGameLayerData)

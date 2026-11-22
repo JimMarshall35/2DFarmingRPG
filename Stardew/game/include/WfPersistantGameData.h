@@ -48,19 +48,11 @@ struct WfInventory* WfGetInventory();
 
 struct WfPlayerPreferences* WfGetPreferences();
 
-struct WfInventory* WfGetNetworkPlayersInventory(int player);
-
-int WfGetNumNetworkPlayerPersistentDataSlots();
-
-void WfSetNumNetworkPlayerPersistentDataSlots(int num);
-
 void WfSavePersistantDataFileInternal(struct BinarySerializer* bs, struct WfPersistantData* pGameData);
 
 void WfLoadPersistantDataFileInternal(struct BinarySerializer* pBS, struct WfPersistantData* pData);
 
 struct WfPersistantData* WfGetLocalPlayerPersistantGameData();
-
-struct WfPersistantData* WfGetNetworkPlayerPersistantGameData(int playerNum);
 
 void WfPersistantDataInit();
 

@@ -9,7 +9,26 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Stardew/build/game/WarFarmer",
-            "args": [],
+            "args": ["--savesDir", "./WfAssets/Saves", "--log_level", "info"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Stardew",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+            ]
+        },
+        {
+            "name": "(gdb) zzfx cli",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Stardew/build/zzfxTest/zzfx",
+            "args": ["1.4,.05,61,.03,.27,.38,4,1.2,0,0,0,0,0,1.6,0,.4,.37,.35,.15,0,1256", "-r", "3", "-w", "1.0"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/Stardew",
             "environment": [],
@@ -30,86 +49,11 @@
             ]
         },
         {
-            "name": "(gdb) Launch Game Server",
+            "name": "(gdb) Launch Game Client Matchmaking",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Stardew/build/game/WarFarmer",
-            "args": ["-r", "s", "-s", "127.0.0.1:666", "-l", "i"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/Stardew",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "${workspaceRoot}/Stardew/SudoGDB.sh",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description":  "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "(gdb) Launch Game Client",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Stardew/build/game/WarFarmer",
-            "args": ["-r", "c", "-s", "127.0.0.1:666", "-l", "i"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/Stardew",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description":  "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "(gdb) Launch nettest Client",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Stardew/build/game/WarFarmer",
-            "args": ["-r", "c", "-s", "127.0.0.1:666", "-l", "i", "--input_file_path", "./enginenettest/test.bin", "--output_file_path", "./enginenettest/test_clientout.bin"],
-            "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/Stardew",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "miDebuggerPath": "/usr/bin/gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description":  "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
-        },
-        {
-            "name": "(gdb) Launch nettest Server",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/Stardew/build/enginenettest/EngineNetTest",
-            "args": ["-r", "s", "-s", "127.0.0.1:666", "-l", "i", "--output_file_path", "./enginenettest/test_serverout.bin"],
+            "args": ["-r", "c", "-s", "127.0.0.1:666", "-m", "138.68.179.24:40000", "-l", "i"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/Stardew",
             "environment": [],
@@ -183,8 +127,8 @@
             "name": "(gdb) Launch Atlas Tool",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Stardew/build/atlastool/AtlasTool",
-            "args": ["./Assets/out/ui_atlas.xml", "-o", "out.atlas", "-bmp", "Atlas.bmp"],
+            "program": "${workspaceFolder}/Stardew/build/engine/atlastool/AtlasTool",
+            "args": ["./WfAssets/out/ui_atlas.xml", "-o", "out.atlas", "-bmp", "Atlas.bmp"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/Stardew",
             "environment": [],

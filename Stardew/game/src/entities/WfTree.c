@@ -328,7 +328,6 @@ static void WfMakeEntityIntoTreeBasedAt(struct Entity2D* pEnt, float x, float y,
     //pEnt->handleEntityMsg = &TreeHandleEntityMsg;
     pEnt->update = &TreeUpdate;
     pEnt->bSerializeToDisk = true;
-    pEnt->bSerializeToNetwork = true;
 }
 
 

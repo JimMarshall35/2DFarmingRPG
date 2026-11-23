@@ -1,0 +1,127 @@
+#include "<<WidgetName>>.h"
+#include "Widget.h"
+#include <libxml/tree.h>
+#include "XMLUIGameLayer.h"
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "Atlas.h"
+#include "AssertLib.h"
+
+struct <<WidgetDataStructName>>
+{
+	<[WidgetDataStructMembers]>
+};
+
+static float GetWidth(struct UIWidget* pWidget, struct UIWidget* pParent)
+{
+	return 0.0f;
+}
+
+static float GetHeight(struct UIWidget* pWidget, struct UIWidget* pParent)
+{
+	return 0.0f;
+}
+
+static void LayoutChildren(struct UIWidget* pWidget, struct UIWidget* pParent)
+{
+}
+
+static void OnDestroy(struct UIWidget* pWidget)
+{
+	free(pWidget->pImplementationData);
+}
+
+static void OnDebugPrint(int indentLvl, struct UIWidget* pWidget, PrintfFn printfFn)
+{
+}
+
+static void* OnOutputVerts(struct UIWidget* pWidget, VECTOR(struct WidgetVertex) pOutVerts)
+{
+	return NULL;
+}
+
+static void OnPropertyChanged(struct UIWidget* pThisWidget, struct WidgetPropertyBinding* pBinding)
+{
+
+}
+
+static void RecieveKeystrokeCallback(struct UIWidget* pWidget, int keystroke)
+{
+}
+
+<<ifdef bMouseDownCallback>>
+static void MouseButtonDownCallback(struct UIWidget* pWidget, float x, float y, int btn)
+{
+}
+<<endif >>
+
+<<ifdef bMouseUpCallback>>
+static void MouseButtonUpCallback(struct UIWidget* pWidget, float x, float y, int btn)
+{
+	
+}
+<<endif >>
+
+<<ifdef bMouseLeaveCallback>>
+static void MouseLeaveCallback(struct UIWidget* pWidget, float x, float y)
+{
+	
+}
+<<endif >>
+
+<<ifdef bMouseMoveCallback>>
+static void MouseMoveCallback(struct UIWidget* pWidget, float x, float y)
+{
+	
+}
+<<endif >>
+
+
+
+static void MakeWidgetInto<<WidgetName>>(HWidget hWidget, xmlNode* pXMLNode, struct XMLUIData* pUILayerData)
+{
+	struct UIWidget* pWidget = UI_GetWidget(hWidget);
+	pWidget->hNext = -1;
+	pWidget->hPrev = -1;
+	pWidget->hParent = -1;
+	pWidget->hFirstChild = -1;
+	pWidget->fnGetHeight = &GetHeight;
+	pWidget->fnGetWidth = &GetWidth;
+	pWidget->fnLayoutChildren = &LayoutChildren;
+	pWidget->fnOnDestroy = &OnDestroy;
+	pWidget->fnOnDebugPrint = &OnDebugPrint;
+	pWidget->fnOutputVertices = &OnOutputVerts;
+	pWidget->fnOnBoundPropertyChanged = &OnPropertyChanged;
+	pWidget->fnRecieveKeystroke = &RecieveKeystrokeCallback;
+	pWidget->pImplementationData = malloc(sizeof(struct <<WidgetDataStructName>>));
+
+<<ifdef bMouseDownCallback>>
+	pWidget->cCallbacks.Callbacks[WC_OnMouseDown].type = WC_OnMouseDown;
+	pWidget->cCallbacks.Callbacks[WC_OnMouseDown].callback.mouseBtnFn = &MouseButtonDownCallback;
+<<endif >>
+	
+<<ifdef bMouseUpCallback>>
+	pWidget->cCallbacks.Callbacks[WC_OnMouseUp].type = WC_OnMouseUp;
+	pWidget->cCallbacks.Callbacks[WC_OnMouseUp].callback.mouseBtnFn = &MouseButtonUpCallback;
+<<endif >>
+
+<<ifdef bMouseLeaveCallback>>
+	pWidget->cCallbacks.Callbacks[WC_OnMouseLeave].type = WC_OnMouseLeave;
+	pWidget->cCallbacks.Callbacks[WC_OnMouseLeave].callback.mouseBtnFn = &MouseLeaveCallback;
+<<endif >>
+
+<<ifdef bMouseMoveCallback>>
+	pWidget->cCallbacks.Callbacks[WC_OnMouseMove].type = WC_OnMouseMove;
+	pWidget->cCallbacks.Callbacks[WC_OnMouseMove].callback.mouseBtnFn = &MouseMoveCallback;
+<<endif >>
+
+	memset(pWidget->pImplementationData, 0, sizeof(struct <<WidgetDataStructName>>));
+}
+
+HWidget <<WidgetName>>New(HWidget hParent, xmlNode* pXMLNode, struct XMLUIData* pUILayerData)
+{
+	HWidget hWidget = UI_NewBlankWidget();
+	MakeWidgetInto<<WidgetName>>(hWidget, pXMLNode, pUILayerData);
+	return hWidget;
+}

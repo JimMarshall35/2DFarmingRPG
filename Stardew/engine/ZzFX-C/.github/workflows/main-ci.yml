@@ -1,0 +1,50 @@
+name: Ubuntu CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: true
+    - name: Get Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install podman libopenal-dev
+
+    - name: anaylse simd
+      run: |
+        podman pull ghcr.io/jimmarshall35/simd-detective:main
+        podman run --rm --volume ./core:/zzfx-core simd-detective:main \
+          simd-detective -f /zzfx-core/src/ZzFX.c \
+          --list-operation \
+          --list-info \
+          --list-cpuid
+
+    - name: Version
+      run: |
+        python3 ./version.py
+
+    - name: Build
+      run: |
+        # build
+        ./Build.sh
+        # package
+        ./BuildDebianPkg.sh
+    - uses: actions/upload-artifact@v4
+      with:
+        name: my-artifact
+        path: |
+          ./
+          
+

@@ -284,6 +284,18 @@ def "main build_linux_dev" [
         false)
 }
 
+def "main build_linux_release" [
+] {
+    (build_linux 
+        "Release" 
+        false
+        "GLFW3"
+        "OPENGL"
+        false)
+}
+
+
+
 def "main build_linux_tracy" [
 ] {
     (build_linux 

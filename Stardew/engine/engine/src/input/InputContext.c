@@ -12,6 +12,7 @@
 #include "StringKeyHashMap.h"
 #include "cwalk.h"
 #include "main.h"
+#include "FilesystemUtils.h"
 
 static int gJoystick = -1;
 
@@ -926,6 +927,10 @@ InputContext In_InitInputContext()
 
 	char buf[256];
 	cwk_path_join(gCmdArgs.configDir, "Keymap.json", buf, 256);
+	if(!FS_DoesFileExist(buf))
+	{
+		cwk_path_join(gCmdArgs.assetsDir, "Keymap.json", buf, 256);
+	}
 
 	int size = 0;
 	char* data = LoadFile(buf, &size);

@@ -8,10 +8,59 @@
 #include "WfPersistantGameData.h"
 #include "WfCmdArgs.h"
 #include "FilesystemUtils.h"
+#include "main.h"
+#include "Log.h"
 
 static VECTOR(struct WfGameSave) gSaves = NULL;
 
 char gTempFolderPath[512];
+
+static void InitializeSavesDirectory()
+{
+    char src[256];
+    char dest[256];
+    char line[256];
+    char intermediate[256];
+
+    char srcFull[256];
+    char destFull[256];
+    size_t len = 0;
+    size_t read;
+    cwk_path_join(gCmdArgs.assetsDir, "Saves/saves.txt", src, 256);
+    cwk_path_join(gGameArgs.savesDir, "saves.txt", dest, 256);
+    FS_CopyFile(src, dest);
+
+    FILE* fp = fopen(dest, "r");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    memset(line, 0, sizeof(line));
+    while (fgets(line, sizeof(line), fp))
+    {
+        // src = src saves folder
+        cwk_path_join("Saves", line, intermediate, 256);
+        cwk_path_join(gCmdArgs.assetsDir, intermediate, src, 256);
+        
+        // dest = dest saves folder
+        cwk_path_join(gGameArgs.savesDir, line, dest, 256);
+
+        Log_Info("src folder %s dst folder %s", src, dest);
+
+        FS_CreateDir(dest);
+        
+        size_t numSrcFiles = 0;
+        FilesArray srcFiles = FS_GetFilesInDir(src, &numSrcFiles);
+        Log_Info("num source files %i", numSrcFiles);
+        for(int i = 0; i < numSrcFiles; i++)
+        {
+            cwk_path_join(src, srcFiles[i], srcFull, 256);
+            cwk_path_join(dest, srcFiles[i], destFull, 256);
+            FS_CopyFile(srcFull, destFull);
+        }
+    }
+
+    fclose(fp);
+}
 
 static void PopulateSavesList()
 {
@@ -25,7 +74,10 @@ static void PopulateSavesList()
 
     fp = fopen(line, "r");
     if (fp == NULL)
-        exit(EXIT_FAILURE);
+    {
+        InitializeSavesDirectory();
+        fp = fopen(line, "r");
+    }
 
     memset(line, 0, sizeof(line));
     while (fgets(line, sizeof(line), fp))

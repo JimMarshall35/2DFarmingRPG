@@ -18,6 +18,137 @@
 #include "Log.h"
 
 
+int FS_CreateDir(const char* dir)
+{
+#ifdef WIN32
+    BOOL result = CreateDirectoryA(dir, NULL);
+    return result ? 0 : GetLastError();
+#else
+    return mkdir(dir, 0755);
+#endif
+}
+
+FilesArray FS_GetFilesInDir(const char* dirPath, size_t* pOutFilesArraySize)
+{
+#ifdef WIN32
+    // AI GENERATED!!
+    char** r = NULL;
+    WIN32_FIND_DATAA findData;
+
+    char searchPath[MAX_PATH];
+    snprintf(searchPath, sizeof(searchPath), "%s\\*", dirPath);
+
+    HANDLE handle = FindFirstFileA(searchPath, &findData);
+
+    if (handle == INVALID_HANDLE_VALUE) {
+        fprintf(stderr, "FindFirstFile failed: %lu\n", GetLastError());
+        return NULL;
+    }
+
+    int fileCount = 0;
+
+    // First pass: count regular files
+    do {
+        if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+            fileCount++;
+        }
+    } while (FindNextFileA(handle, &findData));
+
+    *pOutFilesArraySize = (size_t)fileCount;
+
+    FindClose(handle);
+
+    r = malloc(sizeof(char*) * fileCount);
+
+    if (!r && fileCount > 0) {
+        return NULL;
+    }
+
+    // Second pass: collect filenames
+    handle = FindFirstFileA(searchPath, &findData);
+
+    if (handle == INVALID_HANDLE_VALUE) {
+        free(r);
+        return NULL;
+    }
+
+    int i = 0;
+
+    do {
+        if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+            size_t len = strlen(findData.cFileName);
+            r[i] = malloc(len + 1);
+
+            if (!r[i]) {
+                for (int j = 0; j < i; j++)
+                    free(r[j]);
+
+                free(r);
+                FindClose(handle);
+                return NULL;
+            }
+
+            strcpy(r[i++], findData.cFileName);
+        }
+    } while (FindNextFileA(handle, &findData));
+
+    FindClose(handle);
+
+    *outFileCount = fileCount;
+
+    return r;
+#else
+    char** r = NULL;
+    DIR *dir = opendir(dirPath);
+
+    if (!dir) {
+        perror("opendir");
+        return NULL;
+    }
+
+    struct dirent *entry;
+
+    int fileCount = 0;
+    while ((entry = readdir(dir)) != NULL)
+    {
+        if (entry->d_type == DT_REG)
+        {
+            fileCount++;
+        }
+    }
+
+    *pOutFilesArraySize = (size_t)fileCount;
+
+    r = malloc(sizeof(char*) * fileCount);
+    
+    rewinddir(dir); /* when the crowd say bo selecta */
+
+    int i = 0;
+    while ((entry = readdir(dir)) != NULL)
+    {
+        if (entry->d_type == DT_REG)
+        {
+            size_t len = strlen(entry->d_name);
+            r[i] = malloc(len + 1);
+            strcpy(r[i++], entry->d_name);
+        }
+    }
+
+    closedir(dir);
+
+    return r;
+#endif
+}
+
+void FS_FreeFilesArray(FilesArray f, size_t size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        free(f[i]);
+    }
+    free(f);
+}
+
 int FS_GetTempDir(char* outBuf, int size)
 {
     #ifdef WIN32
@@ -129,6 +260,7 @@ int FS_DeleteDirRecursive(char* path)
 
 int FS_CopyFile(char* src, char* dst)
 {
+    Log_Info("copying %s to %s", src, dst);
     FILE* psrc = fopen(src, "rb");
     if (!psrc) 
     {
@@ -207,9 +339,11 @@ int FS_CopyFile(char* src, char* dst)
 
 bool FS_DoesFileExist(char* filePath)
 {
-#ifdef _WIN32
-    return _access(filePath, 0) == 0;
-#else
-    return access(filePath, F_OK) == 0;
-#endif
+    FILE* fp = fopen(filePath, "rb");
+    if(fp)
+    {
+        fclose(fp);
+        return true;
+    }
+    return false;
 }

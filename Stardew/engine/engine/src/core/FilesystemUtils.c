@@ -93,9 +93,6 @@ FilesArray FS_GetFilesInDir(const char* dirPath, size_t* pOutFilesArraySize)
     } while (FindNextFileA(handle, &findData));
 
     FindClose(handle);
-
-    *outFileCount = fileCount;
-
     return r;
 #else
     char** r = NULL;
